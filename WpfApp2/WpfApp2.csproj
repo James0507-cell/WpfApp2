@@ -1,0 +1,103 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Logo-Final_noname_1.png" />
+    <None Remove="Screenshot 2025-09-08 204143.png" />
+    <None Remove="Screenshot 2025-09-09 125002.png" />
+    <None Remove="Screenshot 2025-09-10 165422.png" />
+    <None Remove="Screenshot 2025-09-10 173441.png" />
+    <None Remove="Screenshot 2025-09-10 174636.png" />
+    <None Remove="Screenshot 2025-09-10 184406.png" />
+    <None Remove="Screenshot 2025-09-10 194657.png" />
+    <None Remove="Screenshot 2025-09-10 195404.png" />
+    <None Remove="Screenshot 2025-09-10 195621.png" />
+    <None Remove="Screenshot 2025-09-10 195902.png" />
+    <None Remove="Screenshot 2025-09-10 200116.png" />
+    <None Remove="Screenshot 2025-09-10 200458.png" />
+    <None Remove="Screenshot 2025-09-10 203147.png" />
+    <None Remove="Screenshot 2025-09-10 212722.png" />
+    <None Remove="Screenshot 2025-09-10 213011.png" />
+    <None Remove="Screenshot 2025-09-11 132021.png" />
+    <None Remove="Screenshot 2025-09-11 132116.png" />
+    <None Remove="Screenshot 2025-09-11 132428.png" />
+    <None Remove="Screenshot 2025-09-11 132553.png" />
+    <None Remove="Screenshot 2025-09-11 134956.png" />
+    <None Remove="Screenshot 2025-09-14 224107.png" />
+    <None Remove="Screenshot 2025-09-14 224118.png" />
+    <None Remove="Screenshot 2025-09-14 224135.png" />
+    <None Remove="Screenshot 2025-09-14 224153.png" />
+    <None Remove="Screenshot 2025-09-14 231802.png" />
+    <None Remove="Screenshot 2025-09-14 233303.png" />
+    <None Remove="Screenshot 2025-09-14 234044.png" />
+    <None Remove="Screenshot 2025-09-14 234231.png" />
+    <None Remove="Screenshot 2025-09-15 000839.png" />
+    <None Remove="Screenshot 2025-09-15 112327.png" />
+    <None Remove="Screenshot 2025-09-15 112720.png" />
+    <None Remove="Your paragraph text %281%29.png" />
+    <None Remove="Your paragraph text %282%29.png" />
+    <None Remove="Your paragraph text %283%29.png" />
+    <None Remove="Your paragraph text %284%29.png" />
+    <None Remove="Your paragraph text %285%29.png" />
+    <None Remove="Your paragraph text %286%29.png" />
+    <None Remove="Your paragraph text %287%29.png" />
+    <None Remove="Your paragraph text %288%29.png" />
+    <None Remove="Your paragraph text %289%29.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Logo-Final_noname_1.png" />
+    <Resource Include="Screenshot 2025-09-08 204143.png" />
+    <Resource Include="Screenshot 2025-09-09 125002.png" />
+    <Resource Include="Screenshot 2025-09-10 165422.png" />
+    <Resource Include="Screenshot 2025-09-10 173441.png" />
+    <Resource Include="Screenshot 2025-09-10 174636.png" />
+    <Resource Include="Screenshot 2025-09-10 184406.png" />
+    <Resource Include="Screenshot 2025-09-10 194657.png" />
+    <Resource Include="Screenshot 2025-09-10 195404.png" />
+    <Resource Include="Screenshot 2025-09-10 195621.png" />
+    <Resource Include="Screenshot 2025-09-10 195902.png" />
+    <Resource Include="Screenshot 2025-09-10 200116.png" />
+    <Resource Include="Screenshot 2025-09-10 200458.png" />
+    <Resource Include="Screenshot 2025-09-10 203147.png" />
+    <Resource Include="Screenshot 2025-09-10 212722.png" />
+    <Resource Include="Screenshot 2025-09-10 213011.png" />
+    <Resource Include="Screenshot 2025-09-11 132021.png" />
+    <Resource Include="Screenshot 2025-09-11 132116.png" />
+    <Resource Include="Screenshot 2025-09-11 132428.png" />
+    <Resource Include="Screenshot 2025-09-11 132553.png" />
+    <Resource Include="Screenshot 2025-09-11 134956.png" />
+    <Resource Include="Screenshot 2025-09-14 224107.png" />
+    <Resource Include="Screenshot 2025-09-14 224118.png" />
+    <Resource Include="Screenshot 2025-09-14 224135.png" />
+    <Resource Include="Screenshot 2025-09-14 224153.png" />
+    <Resource Include="Screenshot 2025-09-14 231802.png" />
+    <Resource Include="Screenshot 2025-09-14 233303.png" />
+    <Resource Include="Screenshot 2025-09-14 234044.png" />
+    <Resource Include="Screenshot 2025-09-14 234231.png" />
+    <Resource Include="Screenshot 2025-09-15 000839.png" />
+    <Resource Include="Screenshot 2025-09-15 112327.png" />
+    <Resource Include="Screenshot 2025-09-15 112720.png" />
+    <Resource Include="Your paragraph text (1).png" />
+    <Resource Include="Your paragraph text (2).png" />
+    <Resource Include="Your paragraph text (3).png" />
+    <Resource Include="Your paragraph text (4).png" />
+    <Resource Include="Your paragraph text (5).png" />
+    <Resource Include="Your paragraph text (6).png" />
+    <Resource Include="Your paragraph text (7).png" />
+    <Resource Include="Your paragraph text (8).png" />
+    <Resource Include="Your paragraph text (9).png" />
+  </ItemGroup>
+
+</Project>

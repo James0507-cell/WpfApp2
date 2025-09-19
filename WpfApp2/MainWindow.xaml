@@ -1,0 +1,80 @@
+﻿<Window x:Name="LoginForm" x:Class="WpfApp2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="836" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterScreen">
+
+    <Border CornerRadius="13" Background="#FFF6F6F6" Margin="0,0,0,-54">
+        <Grid Margin="5,0,5,0" RenderTransformOrigin="0.503,0.521">
+
+            <!-- ✅ FIXED Column Definitions -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="375*"/>
+                <ColumnDefinition Width="451*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ✅ Border with only one Margin -->
+            <Border BorderBrush="#FFE2DEDE" BorderThickness="0.5"
+                    Margin="83,84,84,84"
+                    CornerRadius="5" Background="White" Grid.Column="1">
+                <Grid Height="282" VerticalAlignment="Top">
+                    <!-- ✅ Proper Row Definitions -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55*"/>
+                        <RowDefinition Height="27*"/>
+                        <RowDefinition Height="27*"/>
+                        <RowDefinition Height="15*"/>
+                        <RowDefinition Height="47*"/>
+                        <RowDefinition Height="14*"/>
+                        <RowDefinition Height="45*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="22*"/>
+                    </Grid.RowDefinitions>
+
+                    <Image HorizontalAlignment="Center" Height="55" VerticalAlignment="Top" Width="64" Source="/Logo-Final_noname_1.png" Margin="0,10,0,0" Grid.RowSpan="2"/>
+                    <Label Content="MediCare MMCM" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Microsoft Tai Le" Foreground="#FF9E0000" Height="26" Width="104" Grid.Row="1" Margin="0,5,0,0" Grid.RowSpan="2"/>
+                    <Label Content="Mapua Malayan Colleges Mindanao" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" FontSize="8" FontFamily="Microsoft Tai Le" Foreground="#FF8A0000" Height="20" Width="136"/>
+                    <Label Content="Username" HorizontalAlignment="Left" Margin="18,0,0,0" Grid.Row="3" VerticalAlignment="Center" Foreground="#FF9E0000" FontSize="8" FontWeight="Bold" Height="20" Width="48"/>
+                    <Label Content="Password" HorizontalAlignment="Left" Margin="18,0,0,0" Grid.Row="5" VerticalAlignment="Center" Foreground="#FF9E0000" FontWeight="Bold" FontSize="8" Height="21" Width="45"/>
+                    <Label Content="Contact Help Center" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Center" Foreground="#FF9E0000" FontSize="8" Height="20" Width="82"/>
+
+                    <!-- Username Field -->
+                    <Grid Grid.Row="4" Height="40" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="18*"/>
+                            <ColumnDefinition Width="0*"/>
+                            <ColumnDefinition Width="131*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Height="24" VerticalAlignment="Center" Source="/Screenshot 2025-09-09 125002.png" Margin="24,0,0,0" HorizontalAlignment="Left" Width="9"/>
+                        <Border BorderBrush="#FFD6D6D6" BorderThickness="0.5" Margin="2,0,35,0" CornerRadius="5" Background="#FFE8E6E6" Height="20.7" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1">
+                            <TextBox x:Name="TxtUserName" TextWrapping="Wrap" Text="Enter your password" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#CCB50000" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="0,0,11,0"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Password Field -->
+                    <Grid Grid.Row="6" Margin="0,5,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="261*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image HorizontalAlignment="Left" Height="13" Margin="23,0,0,0" VerticalAlignment="Center" Width="12" Source="/Screenshot 2025-09-08 204143.png"/>
+                        <Border BorderThickness="0.5" Grid.Column="1" Margin="1,4,33,4" CornerRadius="5" Background="#FFE8E6E6" BorderBrush="#FFD6D6D6" Height="20.7">
+                            <TextBox x:Name="TxtPassword" TextWrapping="Wrap" Text="Enter your password" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#CCB50000" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="3,0,9,0"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Button Background -->
+                    <Border BorderThickness="1" Grid.Row="7" Margin="30,5,30,3" CornerRadius="5" Background="#FFE90000">
+                        <Button x:Name="BtnSignIn" Content="Sign In" FontSize="8" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnSignIn_Click"/>
+                    </Border>
+                    <Label Content="Contact Help Desk" HorizontalAlignment="Left" Margin="106,0,0,0" Grid.Row="8" VerticalAlignment="Center" FontSize="8" Foreground="#FFA70000"/>
+                </Grid>
+            </Border>
+
+            <!-- Sign In Button -->
+        </Grid>
+    </Border>
+</Window>

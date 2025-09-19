@@ -1,0 +1,126 @@
+﻿<Window x:Class="WpfApp2.UserForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="UserForm" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen">
+
+    <Border BorderThickness="1" Background="#FFF9F9F9" CornerRadius="15">
+        <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+            <Grid Margin="1,1,0,0">
+                <Grid.FocusVisualStyle>
+                    <Style/>
+                </Grid.FocusVisualStyle>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="59*"/>
+                    <RowDefinition Height="51*"/>
+                    <RowDefinition Height="116*"/>
+                    <RowDefinition Height="322*"/>
+                    <RowDefinition Height="177*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Grid in Row 2 -->
+                <Grid Grid.Row="1" Focusable="True" Margin="0,43,0,1" Grid.RowSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="283*"/>
+                        <ColumnDefinition Width="181*"/>
+                        <ColumnDefinition Width="103*"/>
+                        <ColumnDefinition Width="283*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border BorderThickness="0.2" Margin="20,34,20,10" CornerRadius="8" BorderBrush="Black" Background="#FFFDFDFD">
+                        <Button Content="" Margin="21,3,10,3" BorderBrush="{x:Null}" Click="Button_Click_5" UseLayoutRounding="True">
+                            <Button.FocusVisualStyle>
+                                <Style/>
+                            </Button.FocusVisualStyle>
+                            <Button.Background>
+                                <ImageBrush ImageSource="/Your paragraph text (2).png" Stretch="UniformToFill"/>
+                                
+                            </Button.Background>
+                        </Button>
+                    </Border>
+
+                    <Border BorderBrush="Black" BorderThickness="0.2" Grid.Column="1" Margin="23,34,23,10" CornerRadius="8" Grid.ColumnSpan="2" Background="White"/>
+
+                    <Border BorderBrush="Black" BorderThickness="0.2" Grid.Column="3" Margin="23,34,26,10" CornerRadius="8" Background="White">
+                        <Button Content="" Margin="23,0,0,0" HorizontalAlignment="Left" Width="204" BorderBrush="{x:Null}" UseLayoutRounding="True">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/Your paragraph text (5).png" Stretch="UniformToFill"/>
+                            </Button.Background>
+                        </Button>
+                    </Border>
+                </Grid>
+
+                <Button Content="" HorizontalAlignment="Left" Margin="326,32,0,0" Grid.Row="2" VerticalAlignment="Top" Height="64" Width="206" Click="Button_Click_2" BorderBrush="{x:Null}" UseLayoutRounding="True">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Your paragraph text (3).png" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+
+                <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="25,18,434,18" CornerRadius="10" Background="White">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" UseLayoutRounding="False">
+                        <Grid Height="286" Width="345">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="107*"/>
+                                <ColumnDefinition Width="201*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image HorizontalAlignment="Left" Height="19" Margin="10,10,0,0" VerticalAlignment="Top" Width="18" Source="/Screenshot 2025-09-10 173441.png" RenderTransformOrigin="-0.45,-1.341"/>
+                            <Label Content="Upcoming Appointment" HorizontalAlignment="Left" Margin="33,8,0,0" VerticalAlignment="Top" Height="32" Foreground="#FF00104D" FontSize="10" Grid.ColumnSpan="2" FontWeight="DemiBold"/>
+                        </Grid>
+                    </ScrollViewer>
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="429,18,27,18" CornerRadius="10" Background="White">
+                    <Grid>
+                        <Image HorizontalAlignment="Left" Height="16" Margin="10,10,0,0" VerticalAlignment="Top" Width="26" Source="/Screenshot 2025-09-10 174636.png"/>
+                    </Grid>
+                </Border>
+
+                <Label Content="Recent Activity" HorizontalAlignment="Left" Margin="471,24,0,0" Grid.Row="3" VerticalAlignment="Top" Foreground="#FF00104D" FontSize="10" Height="23" Width="92" FontWeight="DemiBold"/>
+
+                <Border BorderThickness="0.5,0.5,0.5,0.5" Grid.Row="3" Margin="79,268,496,42" CornerRadius="5" BorderBrush="#FF00104D">
+                    <Button Content="Book New Appointment" Margin="8,2,0,2" Background="{x:Null}" Foreground="#FF00104D" FontSize="8" BorderBrush="{x:Null}" HorizontalAlignment="Left" Width="256" FontWeight="SemiBold" Click="Button_Click_6"/>
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="0.2,0.2,0.2,0.2" Grid.Row="4" Margin="25,10,27,0" CornerRadius="8" Background="White" Height="146" VerticalAlignment="Top">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="115*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderThickness="1" Margin="540,18,24,10" CornerRadius="8" Background="#FFFDD7D7">
+                            <Grid/>
+                        </Border>
+                        <Border BorderThickness="1" Margin="282,18,282,10" CornerRadius="8,8,8,8" Background="#FFB9FFE3">
+                            <Grid/>
+                        </Border>
+                        <Border BorderThickness="1" Margin="25,18,541,10" CornerRadius="8,8,8,8" Background="#FF9BCDFF">
+                            <Grid>
+                                <Image HorizontalAlignment="Left" Height="34" Margin="90,10,0,0" VerticalAlignment="Top" Width="32" Source="/Screenshot 2025-09-10 195621.png" RenderTransformOrigin="1.017,0.365"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Margin="0,0,0,4" Background="White">
+                    <Label Content="Student Portal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="72,7,0,0" Width="110" FontWeight="DemiBold" FontSize="15"/>
+                </Border>
+                <Image HorizontalAlignment="Left" Height="51" Margin="10,0,0,0" VerticalAlignment="Center" Width="58" Source="/Logo-Final_noname_1.png"/>
+                <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="25,16,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="37" Width="140" Grid.RowSpan="2"/>
+                <Label Content="Welcome back, (First Name)" HorizontalAlignment="Left" Margin="72,30,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="21" Width="108"/>
+                <Button Content="" HorizontalAlignment="Left" Margin="727,0,0,0" VerticalAlignment="Center" Width="72" BorderBrush="{x:Null}" Click="Button_Click_4" Height="20">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Screenshot 2025-09-10 194657.png"/>
+                    </Button.Background>
+                </Button>
+                <Image HorizontalAlignment="Left" Height="38" Margin="397,37,0,0" Grid.Row="4" VerticalAlignment="Top" Width="37" Source="/Screenshot 2025-09-10 195902.png" RenderTransformOrigin="0.841,-0.093"/>
+                <Image HorizontalAlignment="Left" Height="38" Margin="667,37,0,0" Grid.Row="4" VerticalAlignment="Top" Width="38" Source="/Screenshot 2025-09-10 203147.png" RenderTransformOrigin="0.861,0.455"/>
+                <Label Content="Latest BMI" HorizontalAlignment="Left" Margin="136,71,0,0" Grid.Row="4" VerticalAlignment="Top" FontSize="7" Foreground="#FF737373"/>
+                <Label Content="Last Check-up" HorizontalAlignment="Left" Margin="389,73,0,0" Grid.Row="4" VerticalAlignment="Top" Foreground="#FF818181" FontSize="7"/>
+                <Label Content="Active Prescription" HorizontalAlignment="Left" Margin="651,71,0,0" Grid.Row="4" VerticalAlignment="Top" FontSize="7" Foreground="#FF707070"/>
+
+            </Grid>
+        </ScrollViewer>
+    </Border>
+</Window>
