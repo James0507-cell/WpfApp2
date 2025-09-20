@@ -74,7 +74,9 @@
                 </Border>
 
                 <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="429,18,27,18" CornerRadius="10" Background="White">
-                    <Image Source="/Logo-Final_noname_1.png"/>
+                    <Grid>
+                        <Image HorizontalAlignment="Left" Height="16" Margin="10,10,0,0" VerticalAlignment="Top" Width="26" Source="/Screenshot 2025-09-10 174636.png"/>
+                    </Grid>
                 </Border>
 
                 <Label Content="Recent Activity" HorizontalAlignment="Left" Margin="471,24,0,0" Grid.Row="3" VerticalAlignment="Top" Foreground="#FF00104D" FontSize="10" Height="23" Width="92" FontWeight="DemiBold"/>
