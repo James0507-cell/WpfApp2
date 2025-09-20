@@ -8,7 +8,7 @@
         Title="UserForm" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen">
 
     <Border BorderThickness="1" Background="#FFF9F9F9" CornerRadius="15">
-        <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="samplelbl" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
             <Grid Margin="1,1,0,0">
                 <Grid.FocusVisualStyle>
                     <Style/>
@@ -110,6 +110,7 @@
                 <Label Content="Latest BMI" HorizontalAlignment="Left" Margin="136,71,0,0" Grid.Row="4" VerticalAlignment="Top" FontSize="7" Foreground="#FF737373"/>
                 <Label Content="Last Check-up" HorizontalAlignment="Left" Margin="389,73,0,0" Grid.Row="4" VerticalAlignment="Top" Foreground="#FF818181" FontSize="7"/>
                 <Label Content="Active Prescription" HorizontalAlignment="Left" Margin="651,71,0,0" Grid.Row="4" VerticalAlignment="Top" FontSize="7" Foreground="#FF707070"/>
+                <Label Content="testing" HorizontalAlignment="Left" Margin="292,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
 
             </Grid>
         </ScrollViewer>
