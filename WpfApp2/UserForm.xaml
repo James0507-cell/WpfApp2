@@ -62,14 +62,7 @@
 
                 <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="25,18,434,18" CornerRadius="10" Background="White">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden" UseLayoutRounding="False">
-                        <Grid Height="286" Width="345">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="107*"/>
-                                <ColumnDefinition Width="201*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image HorizontalAlignment="Left" Height="19" Margin="10,10,0,0" VerticalAlignment="Top" Width="18" Source="/Screenshot 2025-09-10 173441.png" RenderTransformOrigin="-0.45,-1.341"/>
-                            <Label Content="Upcoming Appointment" HorizontalAlignment="Left" Margin="33,8,0,0" VerticalAlignment="Top" Height="32" Foreground="#FF00104D" FontSize="10" Grid.ColumnSpan="2" FontWeight="DemiBold"/>
-                        </Grid>
+                        <Image Height="100" Width="100" Source="/Screenshot 2025-09-10 173441.png"/>
                     </ScrollViewer>
                 </Border>
 
