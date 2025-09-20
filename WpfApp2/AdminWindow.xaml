@@ -1,13 +1,24 @@
-﻿<Window x:Class="WpfApp2.AdminWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApp2.AdminWindow"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="450" Width="800">
-    <Grid>
-        <Label Content="sadadasdada" HorizontalAlignment="Left" Margin="196,144,0,0" VerticalAlignment="Top"/>
-
-    </Grid>
+        Title="AdminWindow" Height="450" Width="800" Background="{x:Null}">
+    <Border BorderThickness="1" Background="White" CornerRadius="20,20,20,20">
+        <Grid Margin="9,9,-9,-9">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="79.007"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Black" BorderThickness="0,0,0,1" Margin="-10,-10,10,20">
+                <Label Content="Admin Portal" Margin="62,2,-62,33" FontSize="20" Foreground="#FF00104D" FontWeight="SemiBold"/>
+            </Border>
+            <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="52,16,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979"/>
+            <Image HorizontalAlignment="Left" Height="34" Margin="15,3,0,0" VerticalAlignment="Top" Width="36" Source="/mcm logo.png" RenderTransformOrigin="1.025,-0.28"/>
+            <Button Content="Log out" HorizontalAlignment="Left" Margin="726,16,0,0" VerticalAlignment="Top"/>
+        </Grid>
+    </Border>
 </Window>

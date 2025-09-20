@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <None Remove="Logo-Final_noname_1.png" />
+    <None Remove="logo.png" />
+    <None Remove="mcm logo.png" />
     <None Remove="Screenshot 2025-09-08 204143.png" />
     <None Remove="Screenshot 2025-09-09 125002.png" />
     <None Remove="Screenshot 2025-09-10 165422.png" />
@@ -58,6 +60,8 @@
 
   <ItemGroup>
     <Resource Include="Logo-Final_noname_1.png" />
+    <Resource Include="logo.png" />
+    <Resource Include="mcm logo.png" />
     <Resource Include="Screenshot 2025-09-08 204143.png" />
     <Resource Include="Screenshot 2025-09-09 125002.png" />
     <Resource Include="Screenshot 2025-09-10 165422.png" />

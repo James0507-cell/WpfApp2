@@ -95,7 +95,7 @@
                     </Grid>
                 </Border>
                 <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Margin="0,0,0,4" Background="White">
-                    <Label Content="Student Portal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="72,7,0,0" Width="110" FontWeight="DemiBold" FontSize="15"/>
+                    <Label Content="Student Portal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="72,7,0,0" Width="110" FontWeight="DemiBold" FontSize="15" Foreground="#FF00104D"/>
                 </Border>
                 <Image HorizontalAlignment="Left" Height="51" Margin="10,0,0,0" VerticalAlignment="Center" Width="58" Source="/Logo-Final_noname_1.png"/>
                 <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="25,16,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="37" Width="140" Grid.RowSpan="2"/>
