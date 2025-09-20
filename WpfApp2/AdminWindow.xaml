@@ -10,15 +10,36 @@
     <Border BorderThickness="1" Background="White" CornerRadius="20,20,20,20">
         <Grid Margin="9,9,-9,-9">
             <Grid.RowDefinitions>
-                <RowDefinition Height="79.007"/>
+                <RowDefinition Height="71"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border BorderBrush="Black" BorderThickness="0,0,0,1" Margin="-10,-10,10,20">
-                <Label Content="Admin Portal" Margin="62,2,-62,33" FontSize="20" Foreground="#FF00104D" FontWeight="SemiBold"/>
+            <Border BorderBrush="Black" BorderThickness="0,0,0,1" RenderTransformOrigin="0.5,0.5" Margin="-24,-1,7,20">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.225"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Label Content="Admin Portal" Margin="77,1,-63,17" FontSize="20" Foreground="#FF00104D" FontWeight="SemiBold"/>
             </Border>
-            <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="52,16,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979"/>
-            <Image HorizontalAlignment="Left" Height="34" Margin="15,3,0,0" VerticalAlignment="Top" Width="36" Source="/mcm logo.png" RenderTransformOrigin="1.025,-0.28"/>
-            <Button Content="Log out" HorizontalAlignment="Left" Margin="726,16,0,0" VerticalAlignment="Top"/>
+            <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="54,0,0,0" VerticalAlignment="Center" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
+            <Image HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="49" Source="/mcm logo.png" RenderTransformOrigin="1.025,-0.28" Margin="10,2,0,0"/>
+            <Button Content="Log out" HorizontalAlignment="Left" Margin="699,10,0,0" VerticalAlignment="Top" Height="20" Width="72" Click="Button_Click">
+                <Button.Background>
+                    <ImageBrush/>
+                </Button.Background>
+            </Button>
+            <TabControl Margin="32,62,63,62" Grid.RowSpan="2">
+                <TabControl.Background>
+                    <ImageBrush/>
+                </TabControl.Background>
+                <TabItem Height="28" Margin="76,-3,-119,3"  />
+                <TabItem Margin="177,-4,-225,2" RenderTransformOrigin="0.885,0.546" />
+                <TabItem Margin="279,-3,-327,1" />
+                <TabItem Margin="399,-3,-447,1" />
+            </TabControl>
         </Grid>
     </Border>
 </Window>
