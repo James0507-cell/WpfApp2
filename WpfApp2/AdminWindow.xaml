@@ -22,16 +22,7 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </Border.RenderTransform>
-                <Label Margin="77,1,-63,17" FontSize="20" Foreground="#FF00104D" FontWeight="SemiBold">
-                    <mah:MetroAnimatedSingleRowTabControl>
-                        <TabItem Header="TabItem">
-                            <Grid Background="#FFE5E5E5"/>
-                        </TabItem>
-                        <TabItem Header="TabItem">
-                            <Grid Background="#FFE5E5E5"/>
-                        </TabItem>
-                    </mah:MetroAnimatedSingleRowTabControl>
-                </Label>
+                <Label Margin="644,1,24,17" FontSize="20" Foreground="#FF00104D" FontWeight="SemiBold"/>
             </Border>
             <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="64,0,0,0" VerticalAlignment="Center" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
             <Image HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="49" Source="/mcm logo.png" RenderTransformOrigin="1.025,-0.28" Margin="20,2,0,0"/>
