@@ -22,9 +22,9 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </Border.RenderTransform>
-                <Label Margin="644,1,24,17" FontSize="20" Foreground="#FF00104D" FontWeight="SemiBold"/>
+                <Label Content="Admin Portal" Margin="75,0,684,27" Foreground="#FF00104D" FontWeight="SemiBold"/>
             </Border>
-            <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="64,0,0,0" VerticalAlignment="Center" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
+            <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="61,16,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
             <Image HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="49" Source="/mcm logo.png" RenderTransformOrigin="1.025,-0.28" Margin="20,2,0,0"/>
             <Button Content="Log out" HorizontalAlignment="Left" Margin="709,10,0,0" VerticalAlignment="Top" Height="20" Width="72" Click="Button_Click">
                 <Button.Background>
@@ -32,20 +32,86 @@
                 </Button.Background>
             </Button>
             <Grid Grid.Row="1" Margin="0,0,0,10">
+                <Border BorderBrush="Black" BorderThickness="1" Margin="93,35,110,512" CornerRadius="15,15,15,15"/>
                 <TabControl Margin="40,54,40,53" BorderBrush="{x:Null}">
-                    <TabItem Header="TabItem" BorderBrush="{x:Null}" Background="{x:Null}"/>
-                    <TabItem Header="TabItem" Margin="178,-4,-182,2" BorderBrush="{x:Null}" Background="{x:Null}"/>
-                    <TabItem Margin="-2,-2,-28,0" Header="tabitem" RenderTransformOrigin="0.5,0.5">
+                    <TabItem Header="Overview" Background="{x:Null}" Margin="60,-2,-85,0" BorderThickness="5,0,0,0">
+                        <TabItem.BorderBrush>
+                            <ImageBrush/>
+                        </TabItem.BorderBrush>
+                        <Grid Height="510" Margin="0,0,-1,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="121*"/>
+                                <RowDefinition Height="389*"/>
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Border BorderBrush="Black" BorderThickness="1" Margin="10,34,10,33" CornerRadius="5,5,5,5"/>
+                                <Label Content="Pending Appointmens" HorizontalAlignment="Left" Margin="49,35,0,0" VerticalAlignment="Top"/>
+                                <Image HorizontalAlignment="Left" Height="30" Margin="15,0,0,0" VerticalAlignment="Center" Width="36" Source="/times.jpg"/>
+                                <Border BorderBrush="Black" BorderThickness="1" Margin="10,35,10,33" Grid.Column="1" CornerRadius="5,5,5,5"/>
+                                <Label Grid.Column="1" Content="Medicine Request" HorizontalAlignment="Left" Margin="59,34,0,0" VerticalAlignment="Top"/>
+                                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Margin="8,35,9,33" CornerRadius="5,5,5,5">
+                                    <Image Margin="8,5,132,12" Source="/iconcaustiosn.jpg"/>
+                                </Border>
+                                <Label Grid.Column="2" Content="Low Stacks Items" HorizontalAlignment="Left" Margin="60,34,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.356,0.403"/>
+                                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Margin="10,34,10,34" CornerRadius="5,5,5,5">
+                                    <StackPanel>
+                                        <Grid Height="50">
+                                            <Image HorizontalAlignment="Left" Height="32" Margin="8,6,0,0" VerticalAlignment="Top" Width="41" Source="/persons.jpg"/>
+                                            <Label Content="Active Status" HorizontalAlignment="Left" Margin="54,-1,0,0" VerticalAlignment="Top"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <Border BorderThickness="1,1,1,1" BorderBrush="#FF595959" CornerRadius="15,15,15,15" Margin="0,0,24,31">
+                                        <Grid Margin="0,0,-2,-1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="3*"/>
+                                                <RowDefinition Height="40*"/>
+                                            </Grid.RowDefinitions>
+                                            <Image HorizontalAlignment="Left" Height="14" Margin="11,5,0,0" VerticalAlignment="Top" Width="73" Source="/sadasdasdasd.jpg"/>
+                                            <Image HorizontalAlignment="Left" Height="30" Margin="209,-77,0,0" VerticalAlignment="Top" Width="34" Source="/capsule.jpg"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Border BorderBrush="Red" BorderThickness="5,1,1,1" CornerRadius="15,15,15,15" Margin="19,0,0,34">
+                                        <Grid Margin="0,0,0,-1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="3*"/>
+                                                <RowDefinition Height="40*"/>
+                                            </Grid.RowDefinitions>
+                                            <Image HorizontalAlignment="Left" Height="12" Margin="10,0,0,0" VerticalAlignment="Center" Width="77" Source="/sadasdasda.jpg"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+
+                    <TabItem Header="Medicine" Margin="339,-2,-338,0" BorderBrush="{x:Null}" Background="{x:Null}" Width="85.8466666666667"/>
+                    <TabItem Margin="77,-3,-77,0" Header="Appointment" RenderTransformOrigin="0.5,0.5" Width="85.8466666666667" Height="20" VerticalAlignment="Top">
                         <TabItem.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
                                 <SkewTransform AngleY="0.794"/>
-                                <RotateTransform/>
+                                <RotateTransform Angle="-0.719"/>
                                 <TranslateTransform Y="1.053"/>
                             </TransformGroup>
                         </TabItem.RenderTransform>
                     </TabItem>
-                    <TabItem Margin="198,1,-199,-3" Header="tab item"/>
+                    <TabItem Margin="312,-5,-313,3" Header="Students" Width="85.8466666666667"/>
                 </TabControl>
             </Grid>
         </Grid>

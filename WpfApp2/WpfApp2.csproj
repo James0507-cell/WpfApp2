@@ -11,6 +11,8 @@
   <ItemGroup>
     <None Remove="ads.jpg" />
     <None Remove="appointment.jpg" />
+    <None Remove="capsule.jpg" />
+    <None Remove="iconcaustiosn.jpg" />
     <None Remove="Logo-Final_noname_1.png" />
     <None Remove="logo.png" />
     <None Remove="mcm logo.png" />
@@ -18,7 +20,10 @@
     <None Remove="medicine reqs.jpg" />
     <None Remove="medine.jpg" />
     <None Remove="overview.png" />
+    <None Remove="persons.jpg" />
     <None Remove="sa.jpg" />
+    <None Remove="sadasdasda.jpg" />
+    <None Remove="sadasdasdasd.jpg" />
     <None Remove="Screenshot %281%29.png" />
     <None Remove="Screenshot 2025-09-08 204143.png" />
     <None Remove="Screenshot 2025-09-09 125002.png" />
@@ -53,6 +58,7 @@
     <None Remove="Screenshot 2025-09-15 112720.png" />
     <None Remove="Screenshot_20230225_074826.png" />
     <None Remove="students.jpg" />
+    <None Remove="times.jpg" />
     <None Remove="Your paragraph text %281%29.png" />
     <None Remove="Your paragraph text %282%29.png" />
     <None Remove="Your paragraph text %283%29.png" />
@@ -71,6 +77,8 @@
   <ItemGroup>
     <Resource Include="ads.jpg" />
     <Resource Include="appointment.jpg" />
+    <Resource Include="capsule.jpg" />
+    <Resource Include="iconcaustiosn.jpg" />
     <Resource Include="Logo-Final_noname_1.png" />
     <Resource Include="logo.png" />
     <Resource Include="mcm logo.png" />
@@ -78,7 +86,10 @@
     <Resource Include="medicine reqs.jpg" />
     <Resource Include="medine.jpg" />
     <Resource Include="overview.png" />
+    <Resource Include="persons.jpg" />
     <Resource Include="sa.jpg" />
+    <Resource Include="sadasdasda.jpg" />
+    <Resource Include="sadasdasdasd.jpg" />
     <Resource Include="Screenshot (1).png" />
     <Resource Include="Screenshot 2025-09-08 204143.png" />
     <Resource Include="Screenshot 2025-09-09 125002.png" />
@@ -113,6 +124,7 @@
     <Resource Include="Screenshot 2025-09-15 112720.png" />
     <Resource Include="Screenshot_20230225_074826.png" />
     <Resource Include="students.jpg" />
+    <Resource Include="times.jpg" />
     <Resource Include="Your paragraph text (1).png" />
     <Resource Include="Your paragraph text (2).png" />
     <Resource Include="Your paragraph text (3).png" />
