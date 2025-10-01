@@ -82,7 +82,7 @@
                     <ImageBrush ImageSource="/sa.jpg" Stretch="Uniform"/>
                 </TabItem.Background>
             </TabItem>
-            <Grid Grid.Row="1" Margin="41,59,52,30">
+            <Grid Grid.Row="1" Margin="32,59,52,30">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="19*"/>
                     <RowDefinition Height="68*"/>
