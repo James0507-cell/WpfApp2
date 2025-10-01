@@ -97,7 +97,10 @@
                         </Grid>
                     </TabItem>
 
-                    <TabItem Header="Medicine" Margin="339,-5,-339,3" BorderBrush="{x:Null}" Background="{x:Null}" Width="85.8466666666667"/>
+                    <TabItem Header="Medicine" Margin="339,-5,-339,3" BorderBrush="{x:Null}" Background="{x:Null}" Width="85.8466666666667">
+                        <Grid/>
+                    </TabItem>
+
                     <TabItem Margin="77,-6,-77,0" Header="Appointment" RenderTransformOrigin="0.5,0.5" Width="85.8466666666667" Height="20" VerticalAlignment="Top" mah:HeaderedControlHelper.HeaderForeground="{x:Null}" BorderThickness="5,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}">
                         <TabItem.RenderTransform>
                             <TransformGroup>
@@ -107,8 +110,13 @@
                                 <TranslateTransform Y="1.053"/>
                             </TransformGroup>
                         </TabItem.RenderTransform>
+                        <Grid/>
                     </TabItem>
-                    <TabItem Margin="318,-6,-319,4" Header="Students" Width="85.8466666666667" Background="{x:Null}" BorderBrush="{x:Null}"/>
+
+                    <TabItem Margin="318,-6,-319,4" Header="Students" Width="85.8466666666667" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <Grid/>
+                    </TabItem>
+
                 </TabControl>
             </Grid>
         </Grid>
