@@ -6,15 +6,14 @@
         xmlns:local="clr-namespace:WpfApp2"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApp2.AdminWindow"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="450" Width="800" Background="{x:Null}">
+        Title="AdminWindow" Height="744" Width="852" Background="{x:Null}">
     <Border BorderThickness="1" Background="White" CornerRadius="20,20,20,20">
-        <Grid Margin="9,9,-9,-9">
+        <Grid Margin="-1,9,-1,-9">
             <Grid.RowDefinitions>
                 <RowDefinition Height="71"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border BorderBrush="Black" BorderThickness="1" Margin="41,66,52,327" Grid.RowSpan="2" CornerRadius="20,20,20,20"/>
-            <Border BorderBrush="Black" BorderThickness="0,0,0,1" RenderTransformOrigin="0.5,0.5" Margin="-24,-1,7,20">
+            <Border BorderBrush="Black" BorderThickness="0,0,0,1" RenderTransformOrigin="0.5,0.5" Margin="-14,-1,7,20">
                 <Border.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -23,83 +22,29 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </Border.RenderTransform>
-                <Label Content="Admin Portal" Margin="77,1,-63,17" FontSize="20" Foreground="#FF00104D" FontWeight="SemiBold"/>
+                <Label Margin="77,1,-63,17" FontSize="20" Foreground="#FF00104D" FontWeight="SemiBold">
+                    <mah:MetroAnimatedSingleRowTabControl>
+                        <TabItem Header="TabItem">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                        <TabItem Header="TabItem">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                    </mah:MetroAnimatedSingleRowTabControl>
+                </Label>
             </Border>
-            <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="54,0,0,0" VerticalAlignment="Center" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
-            <Image HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="49" Source="/mcm logo.png" RenderTransformOrigin="1.025,-0.28" Margin="10,2,0,0"/>
-            <Button Content="Log out" HorizontalAlignment="Left" Margin="699,10,0,0" VerticalAlignment="Top" Height="20" Width="72" Click="Button_Click">
+            <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="64,0,0,0" VerticalAlignment="Center" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
+            <Image HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="49" Source="/mcm logo.png" RenderTransformOrigin="1.025,-0.28" Margin="20,2,0,0"/>
+            <Button Content="Log out" HorizontalAlignment="Left" Margin="709,10,0,0" VerticalAlignment="Top" Height="20" Width="72" Click="Button_Click">
                 <Button.Background>
                     <ImageBrush/>
                 </Button.Background>
             </Button>
-            <TabControl Margin="32,55,52,30" Grid.Row="1">
-                <TabControl.Resources>
-                    <!-- Style to make the image background persist on selected tabs -->
-                    <Style TargetType="{x:Type TabItem}">
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="Margin" Value="0,0,10,0"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type TabItem}">
-                                    <Grid x:Name="grid" SnapsToDevicePixels="True" >
-                                        <!-- This border will hold the image background -->
-                                        <Border x:Name="mainBorder" Background="{TemplateBinding Background}" />
-                                        <ContentPresenter x:Name="contentPresenter"
-                                                ContentSource="Header"
-                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                Margin="{TemplateBinding Padding}" />
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <!-- This trigger ensures the image remains when selected -->
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="mainBorder" Property="Background" Value="{TemplateBinding Background}"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.Resources>
-            </TabControl>
-            <TabItem Height="28" Margin="213,0,430,333" Grid.Row="1" >
-                <TabItem.Background>
-                    <ImageBrush ImageSource="/appointment.jpg" Stretch="Uniform" />
-                </TabItem.Background>
-            </TabItem>
-            <TabItem Height="28" Margin="54,1,606,332" Grid.Row="1">
-                <TabItem.Background>
-                    <ImageBrush ImageSource="/overview.png" Stretch="Uniform"/>
-                </TabItem.Background>
-            </TabItem>
-            <TabItem Height="28" Margin="572,1,79,332" Grid.Row="1">
-                <TabItem.Background>
-                    <ImageBrush ImageSource="/students.jpg" Stretch="Fill"/>
-                </TabItem.Background>
-            </TabItem>
-            <TabItem Height="28" Margin="389,1,250,332" Grid.Row="1">
-                <TabItem.Background>
-                    <ImageBrush ImageSource="/sa.jpg" Stretch="Uniform"/>
-                </TabItem.Background>
-            </TabItem>
-            <Grid Grid.Row="1" Margin="41,59,52,30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="19*"/>
-                    <RowDefinition Height="68*"/>
-                </Grid.RowDefinitions>
-                <Grid Margin="0,-14,0,0" Height="59" VerticalAlignment="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Border BorderBrush="Black" BorderThickness="1" Margin="10,5,27,3" CornerRadius="10,10,10,10"/>
-                    <Border BorderBrush="Black" BorderThickness="1" Margin="19,5,18,3" Grid.Column="1" CornerRadius="10,10,10,10"/>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Margin="18,5,19,3" CornerRadius="10,10,10,10"/>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Margin="18,5,19,3" CornerRadius="10,10,10,10"/>
-                </Grid>
-                <Label Content="Testing" HorizontalAlignment="Left" Margin="238,77,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <Grid Grid.Row="1" Margin="0,0,0,10">
+                <TabControl Margin="40,54,40,53" BorderBrush="{x:Null}">
+                    <TabItem Header="TabItem" BorderBrush="{x:Null}" Background="{x:Null}"/>
+                    <TabItem Header="TabItem" Margin="178,-4,-182,2" BorderBrush="{x:Null}" Background="{x:Null}"/>
+                </TabControl>
             </Grid>
         </Grid>
     </Border>

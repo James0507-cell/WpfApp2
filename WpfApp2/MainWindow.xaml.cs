@@ -31,9 +31,12 @@ public partial class MainWindow : Window
 
         if (username.Equals("admin") && password.Equals("admin123"))
         {
-            UserForm userForm = new UserForm();
-            userForm.Show();
+            AdminWindow admin = new AdminWindow();
+            admin.Show();
             this.Hide();
+            //UserForm userForm = new UserForm();
+            //userForm.Show();
+            //this.Hide();
         }
         else
         {
