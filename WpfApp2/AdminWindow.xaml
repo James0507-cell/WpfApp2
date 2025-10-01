@@ -32,12 +32,9 @@
                 </Button.Background>
             </Button>
             <Grid Grid.Row="1" Margin="0,0,0,10">
-                <Border BorderBrush="Black" BorderThickness="1" Margin="93,35,110,512" CornerRadius="15,15,15,15"/>
-                <TabControl Margin="40,54,40,53" BorderBrush="{x:Null}">
-                    <TabItem Header="Overview" Background="{x:Null}" Margin="60,-2,-85,0" BorderThickness="5,0,0,0">
-                        <TabItem.BorderBrush>
-                            <ImageBrush/>
-                        </TabItem.BorderBrush>
+                <Border BorderBrush="Black" BorderThickness="1" Margin="88,46,116,540" CornerRadius="15,15,15,15"/>
+                <TabControl Margin="40,54,40,53" BorderBrush="{x:Null}" Background="{x:Null}">
+                    <TabItem Header="Overview" Background="{x:Null}" Margin="60,-5,-85,3" BorderThickness="5,0,0,0" BorderBrush="{x:Null}">
                         <Grid Height="510" Margin="0,0,-1,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="121*"/>
@@ -86,7 +83,7 @@
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Column="1">
-                                    <Border BorderBrush="Red" BorderThickness="5,1,1,1" CornerRadius="15,15,15,15" Margin="19,0,0,34">
+                                    <Border BorderBrush="Red" BorderThickness="5,0.5,0.5,0.5" CornerRadius="15,15,15,15" Margin="19,0,0,34">
                                         <Grid Margin="0,0,0,-1">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="3*"/>
@@ -100,8 +97,8 @@
                         </Grid>
                     </TabItem>
 
-                    <TabItem Header="Medicine" Margin="339,-2,-338,0" BorderBrush="{x:Null}" Background="{x:Null}" Width="85.8466666666667"/>
-                    <TabItem Margin="77,-3,-77,0" Header="Appointment" RenderTransformOrigin="0.5,0.5" Width="85.8466666666667" Height="20" VerticalAlignment="Top">
+                    <TabItem Header="Medicine" Margin="339,-5,-339,3" BorderBrush="{x:Null}" Background="{x:Null}" Width="85.8466666666667"/>
+                    <TabItem Margin="77,-6,-77,0" Header="Appointment" RenderTransformOrigin="0.5,0.5" Width="85.8466666666667" Height="20" VerticalAlignment="Top" mah:HeaderedControlHelper.HeaderForeground="{x:Null}" BorderThickness="5,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}">
                         <TabItem.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -111,7 +108,7 @@
                             </TransformGroup>
                         </TabItem.RenderTransform>
                     </TabItem>
-                    <TabItem Margin="312,-5,-313,3" Header="Students" Width="85.8466666666667"/>
+                    <TabItem Margin="318,-6,-319,4" Header="Students" Width="85.8466666666667" Background="{x:Null}" BorderBrush="{x:Null}"/>
                 </TabControl>
             </Grid>
         </Grid>
