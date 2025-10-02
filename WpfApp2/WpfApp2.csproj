@@ -9,8 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="123123123.jpg" />
     <None Remove="ads.jpg" />
     <None Remove="appointment.jpg" />
+    <None Remove="asdasda.jpg" />
     <None Remove="capsule.jpg" />
     <None Remove="iconcaustiosn.jpg" />
     <None Remove="Logo-Final_noname_1.png" />
@@ -24,6 +26,7 @@
     <None Remove="sa.jpg" />
     <None Remove="sadasdasda.jpg" />
     <None Remove="sadasdasdasd.jpg" />
+    <None Remove="sadsadsad.jpg" />
     <None Remove="Screenshot %281%29.png" />
     <None Remove="Screenshot 2025-09-08 204143.png" />
     <None Remove="Screenshot 2025-09-09 125002.png" />
@@ -75,8 +78,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="123123123.jpg" />
     <Resource Include="ads.jpg" />
     <Resource Include="appointment.jpg" />
+    <Resource Include="asdasda.jpg" />
     <Resource Include="capsule.jpg" />
     <Resource Include="iconcaustiosn.jpg" />
     <Resource Include="Logo-Final_noname_1.png" />
@@ -90,6 +95,7 @@
     <Resource Include="sa.jpg" />
     <Resource Include="sadasdasda.jpg" />
     <Resource Include="sadasdasdasd.jpg" />
+    <Resource Include="sadsadsad.jpg" />
     <Resource Include="Screenshot (1).png" />
     <Resource Include="Screenshot 2025-09-08 204143.png" />
     <Resource Include="Screenshot 2025-09-09 125002.png" />
