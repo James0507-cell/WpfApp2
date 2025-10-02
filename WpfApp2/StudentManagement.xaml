@@ -1,0 +1,32 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApp2.StudentManagement"
+        mc:Ignorable="d"
+        Title="StudentManagement" Height="744" Width="852" Background="{x:Null}">
+    <Border BorderThickness="1" CornerRadius="15,15,15,15" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="71*"/>
+                <RowDefinition Height="655*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Border BorderBrush="Black" BorderThickness="1"/>
+            </Grid>
+            <Grid>
+                <Button Content="" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="72" Foreground="{x:Null}" Cursor="Hand" mah:ControlsHelper.FocusBorderBrush="{x:Null}" BorderBrush="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/goback.jpg"/>
+                    </Button.Background>
+                </Button>
+                <Image HorizontalAlignment="Left" Height="48" Margin="87,13,0,0" VerticalAlignment="Top" Width="54" Source="/mcm logo.png"/>
+                <Label Content="Student Management" HorizontalAlignment="Left" Margin="135,13,0,0" VerticalAlignment="Top" Width="173" Foreground="#FF00104D" FontSize="14" FontWeight="SemiBold"/>
+            </Grid>
+            <Label Content="Manage student accounts and information" HorizontalAlignment="Left" Margin="136,32,0,0" VerticalAlignment="Top" Width="245" Foreground="#FFAFAFAF" Height="26"/>
+            <Grid Grid.Row="1"/>
+        </Grid>
+    </Border>
+</Window>

@@ -29,16 +29,10 @@ using System.Windows.Shapes;
 namespace WpfApp2
 
 {
-
-    /// <summary>
-
-    /// Interaction logic for AdminWindow.xaml
-
-    /// </summary>
-
     public partial class AdminWindow : Window
 
     {
+        StudentManagement studentManagement = new StudentManagement();
 
         public AdminWindow()
 
@@ -68,7 +62,12 @@ namespace WpfApp2
 
         }
 
-        
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            //studentManagement.Show();
+            studentManagement.Show();
+            this.Hide();
+        }
     }
 
 }
