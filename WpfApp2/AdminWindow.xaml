@@ -163,7 +163,7 @@
         Margin="0,148,0,0"
         Grid.Row="1"
         VerticalAlignment="Top"
-        Width="108"
+        Width="114"
         Height="31" Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
@@ -178,7 +178,7 @@
                                         </Button.Template>
 
                                         <Button.Background>
-                                            <ImageBrush ImageSource="/sadsadsad.jpg" Stretch="Fill"/>
+                                            <ImageBrush ImageSource="/dsadasdasdasda.jpg" Stretch="Fill"/>
                                         </Button.Background>
                                     </Button>
                                     <Label Content="• Add new student accounts with comprehensive information&#xD;&#xA;    • Edit existing student details and medical information&#xD;&#xA;         • View enrollment analytics and program statistics&#xD;&#xA;             • Search and filter students by various criteria" HorizontalAlignment="Left" Margin="184,170,0,0" Grid.Row="1" VerticalAlignment="Top" Width="357" Height="79" Foreground="#FFAFAFAF"/>

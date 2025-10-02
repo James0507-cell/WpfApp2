@@ -14,6 +14,7 @@
     <None Remove="appointment.jpg" />
     <None Remove="asdasda.jpg" />
     <None Remove="capsule.jpg" />
+    <None Remove="dsadasdasdasda.jpg" />
     <None Remove="iconcaustiosn.jpg" />
     <None Remove="Logo-Final_noname_1.png" />
     <None Remove="logo.png" />
@@ -83,6 +84,7 @@
     <Resource Include="appointment.jpg" />
     <Resource Include="asdasda.jpg" />
     <Resource Include="capsule.jpg" />
+    <Resource Include="dsadasdasdasda.jpg" />
     <Resource Include="iconcaustiosn.jpg" />
     <Resource Include="Logo-Final_noname_1.png" />
     <Resource Include="logo.png" />
