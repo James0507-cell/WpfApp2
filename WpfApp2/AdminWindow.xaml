@@ -98,7 +98,20 @@
                     </TabItem>
 
                     <TabItem Header="Medicine" Margin="382,-6,-381,4" BorderBrush="{x:Null}" Background="{x:Null}" Width="85.8466666666667">
-                        <Grid/>
+                        <Grid>
+                            <Grid>
+                                <Border BorderBrush="Black" BorderThickness="1" Margin="18,73,18,30" Width="730" CornerRadius="15,15,15,15">
+                                    <Grid Margin="-9,-1,9,1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="81*"/>
+                                            <RowDefinition Height="322*"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Content="Medicine Requests" HorizontalAlignment="Left" Margin="26,10,0,0" VerticalAlignment="Top" Width="203" Foreground="#FF00104D" FontSize="14"/>
+                                        <Label Content="Review and approve medicine requests" HorizontalAlignment="Left" Margin="26,31,0,0" VerticalAlignment="Top" Width="244" Foreground="#FFAFAFAF"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
                     </TabItem>
 
                     <TabItem Margin="0,0,-98,7" Header="Appointment" RenderTransformOrigin="0.5,0.5" Width="86" Height="20" VerticalAlignment="Bottom" mah:HeaderedControlHelper.HeaderForeground="{x:Null}" BorderThickness="5,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right">
@@ -134,7 +147,18 @@
                     </TabItem>
 
                     <TabItem Margin="351,-6,-352,4" Header="Students" Width="85.8466666666667" Background="{x:Null}" BorderBrush="{x:Null}">
-                        <Grid/>
+                        <Grid>
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="28,72,31,35" CornerRadius="15,15,15,15">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="31*"/>
+                                        <RowDefinition Height="177*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Content="Student Management" HorizontalAlignment="Left" Margin="18,10,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF00104D" FontSize="14"/>
+                                    <Label Content="Manage student accounts and records" HorizontalAlignment="Left" Margin="18,26,0,0" VerticalAlignment="Top" Width="217" Foreground="#FFAFAFAF"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
                     </TabItem>
 
                 </TabControl>
