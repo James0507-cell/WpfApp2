@@ -16,6 +16,8 @@ namespace WpfApp2;
 /// </summary>
 public partial class MainWindow : Window
 {
+    Login login = new Login();
+
     public MainWindow()
     {
         InitializeComponent();
@@ -29,22 +31,28 @@ public partial class MainWindow : Window
         string username = TxtUserName.Text;
         string password = TxtPassword.Text;
 
-        if (username.Equals("admin") && password.Equals("admin123"))
+        string role = login.loginUser(username, password);
+
+        if (role == "Admin")
         {
-            AdminWindow admin = new AdminWindow();
-            admin.Show();
-            this.Hide();
-            //UserForm userForm = new UserForm();
-            //userForm.Show();
-            //this.Hide();
+            AdminWindow adminForm = new AdminWindow();
+            adminForm.Show();
+        }
+        else if (role == "Student")
+        {
+            UserForm studentForm = new UserForm();
+            studentForm.Show();
         }
         else
         {
-           MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Invalid username or password.");
         }
+
     }
 
-    
+    private void LoginForm_Loaded(object sender, RoutedEventArgs e)
+    {
+        login.dbConnection();
 
-
+    }
 }

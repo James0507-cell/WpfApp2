@@ -65,6 +65,10 @@
     <None Remove="Screenshot 2025-09-15 000839.png" />
     <None Remove="Screenshot 2025-09-15 112327.png" />
     <None Remove="Screenshot 2025-09-15 112720.png" />
+    <None Remove="Screenshot 2025-10-03 114355.png" />
+    <None Remove="Screenshot 2025-10-03 114755.png" />
+    <None Remove="Screenshot 2025-10-03 115209.png" />
+    <None Remove="Screenshot 2025-10-03 115810.png" />
     <None Remove="Screenshot_20230225_074826.png" />
     <None Remove="students.jpg" />
     <None Remove="times.jpg" />
@@ -81,6 +85,7 @@
 
   <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.11" />
+    <PackageReference Include="MySql.Data" Version="9.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -140,6 +145,10 @@
     <Resource Include="Screenshot 2025-09-15 000839.png" />
     <Resource Include="Screenshot 2025-09-15 112327.png" />
     <Resource Include="Screenshot 2025-09-15 112720.png" />
+    <Resource Include="Screenshot 2025-10-03 114355.png" />
+    <Resource Include="Screenshot 2025-10-03 114755.png" />
+    <Resource Include="Screenshot 2025-10-03 115209.png" />
+    <Resource Include="Screenshot 2025-10-03 115810.png" />
     <Resource Include="Screenshot_20230225_074826.png" />
     <Resource Include="students.jpg" />
     <Resource Include="times.jpg" />
