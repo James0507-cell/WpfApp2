@@ -6,12 +6,13 @@
         xmlns:local="clr-namespace:WpfApp2"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApp2.AdminWindow"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="744" Width="852" Background="{x:Null}">
+        Title="AdminWindow" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen">
     <Border BorderThickness="1" Background="White" CornerRadius="20,20,20,20">
         <Grid Margin="-1,9,-1,-9">
             <Grid.RowDefinitions>
                 <RowDefinition Height="71"/>
-                <RowDefinition/>
+                <RowDefinition Height="198*"/>
+                <RowDefinition Height="457*"/>
             </Grid.RowDefinitions>
             <Border BorderBrush="Black" BorderThickness="0,0,0,1" RenderTransformOrigin="0.5,0.5" Margin="-14,-1,7,20">
                 <Border.RenderTransform>
@@ -31,7 +32,7 @@
                     <ImageBrush/>
                 </Button.Background>
             </Button>
-            <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid Grid.Row="1" Margin="0,0,0,10" Grid.RowSpan="2">
                 <Border BorderBrush="Black" BorderThickness="1" Margin="102,47,102,539" CornerRadius="15,15,15,15"/>
                 <TabControl Margin="40,54,40,53" BorderBrush="{x:Null}" Background="{x:Null}">
                     <TabItem Header="Overview" Background="{x:Null}" Margin="109,-7,-134,5" BorderThickness="5,0,0,0" BorderBrush="{x:Null}">

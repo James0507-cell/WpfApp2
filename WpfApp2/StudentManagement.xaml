@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp2"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApp2.StudentManagement"
         mc:Ignorable="d"
-        Title="StudentManagement" Height="744" Width="852" Background="{x:Null}">
+        Title="StudentManagement" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen">
     <Border BorderThickness="1" CornerRadius="15,15,15,15" Background="White">
         <Grid>
             <Grid.RowDefinitions>
@@ -35,12 +35,12 @@
                             <RowDefinition Height="41*"/>
                         </Grid.RowDefinitions>
                         <Image HorizontalAlignment="Left" Height="21" Margin="13,16,0,0" VerticalAlignment="Top" Width="23" Source="/Screenshot 2025-10-03 114355.png"/>
-                        <TextBox x:Name="txtSearch" HorizontalAlignment="Left"
+                        <TextBox HorizontalAlignment="Left"
          Margin="43,0,0,0"
          TextWrapping="Wrap"
          Text="TextBox"
          VerticalAlignment="Center"
-         Width="193" Height="28" TextChanged="TextBox_TextChanged">
+         Width="193" Height="28">
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}">
                                     <Setter Property="Template">
@@ -127,8 +127,8 @@
                                 <ImageBrush ImageSource="/Screenshot 2025-10-03 115810.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <StackPanel x:Name="StudentListPanel" Orientation="Vertical"/>
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="StudentListPanel" Margin="10"/>
                         </ScrollViewer>
 
                     </Grid>
