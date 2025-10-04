@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="123123123.jpg" />
+    <None Remove="213sda.jpg" />
     <None Remove="add new s tudents.jpg" />
     <None Remove="ads.jpg" />
     <None Remove="all students.jpg" />
@@ -29,6 +30,7 @@
     <None Remove="medine.jpg" />
     <None Remove="overview.png" />
     <None Remove="persons.jpg" />
+    <None Remove="resad.jpg" />
     <None Remove="sa.jpg" />
     <None Remove="sadasdasda.jpg" />
     <None Remove="sadasdasdasd.jpg" />
@@ -70,6 +72,7 @@
     <None Remove="Screenshot 2025-10-03 115209.png" />
     <None Remove="Screenshot 2025-10-03 115810.png" />
     <None Remove="Screenshot_20230225_074826.png" />
+    <None Remove="sdasd.jpg" />
     <None Remove="students.jpg" />
     <None Remove="times.jpg" />
     <None Remove="Your paragraph text %281%29.png" />
@@ -90,6 +93,7 @@
 
   <ItemGroup>
     <Resource Include="123123123.jpg" />
+    <Resource Include="213sda.jpg" />
     <Resource Include="add new s tudents.jpg" />
     <Resource Include="ads.jpg" />
     <Resource Include="all students.jpg" />
@@ -109,6 +113,7 @@
     <Resource Include="medine.jpg" />
     <Resource Include="overview.png" />
     <Resource Include="persons.jpg" />
+    <Resource Include="resad.jpg" />
     <Resource Include="sa.jpg" />
     <Resource Include="sadasdasda.jpg" />
     <Resource Include="sadasdasdasd.jpg" />
@@ -150,6 +155,7 @@
     <Resource Include="Screenshot 2025-10-03 115209.png" />
     <Resource Include="Screenshot 2025-10-03 115810.png" />
     <Resource Include="Screenshot_20230225_074826.png" />
+    <Resource Include="sdasd.jpg" />
     <Resource Include="students.jpg" />
     <Resource Include="times.jpg" />
     <Resource Include="Your paragraph text (1).png" />

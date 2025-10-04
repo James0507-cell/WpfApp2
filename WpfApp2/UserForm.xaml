@@ -38,7 +38,7 @@
                             </Button.FocusVisualStyle>
                             <Button.Background>
                                 <ImageBrush ImageSource="/Your paragraph text (2).png" Stretch="UniformToFill"/>
-                                
+
                             </Button.Background>
                         </Button>
                     </Border>
@@ -60,11 +60,11 @@
                     </Button.Background>
                 </Button>
 
-                <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="25,18,434,18" CornerRadius="10" Background="White">
+                <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="25,18,434,18" CornerRadius="15,15,15,15" Background="White">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden" UseLayoutRounding="False"/>
                 </Border>
 
-                <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="429,18,27,18" CornerRadius="10" Background="White">
+                <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="429,18,27,18" CornerRadius="15,15,15,15" Background="White">
                     <Grid>
                         <Image HorizontalAlignment="Left" Height="16" Margin="10,10,0,0" VerticalAlignment="Top" Width="26" Source="/Screenshot 2025-09-10 174636.png"/>
                     </Grid>
@@ -72,11 +72,11 @@
 
                 <Label Content="Recent Activity" HorizontalAlignment="Left" Margin="471,24,0,0" Grid.Row="3" VerticalAlignment="Top" Foreground="#FF00104D" FontSize="10" Height="23" Width="92" FontWeight="DemiBold"/>
 
-                <Border BorderThickness="0.5,0.5,0.5,0.5" Grid.Row="3" Margin="79,268,496,42" CornerRadius="5" BorderBrush="#FF00104D">
+                <Border BorderThickness="0.5,0.5,0.5,0.5" Grid.Row="3" Margin="79,268,496,42" CornerRadius="15,15,15,15" BorderBrush="#FF00104D">
                     <Button Content="Book New Appointment" Margin="8,2,0,2" Background="{x:Null}" Foreground="#FF00104D" FontSize="8" BorderBrush="{x:Null}" HorizontalAlignment="Left" Width="256" FontWeight="SemiBold" Click="Button_Click_6"/>
                 </Border>
 
-                <Border BorderBrush="Black" BorderThickness="0.2,0.2,0.2,0.2" Grid.Row="4" Margin="25,10,27,0" CornerRadius="8" Background="White" Height="146" VerticalAlignment="Top">
+                <Border BorderBrush="Black" BorderThickness="0.2,0.2,0.2,0.2" Grid.Row="4" Margin="25,10,27,0" CornerRadius="1,1,1,1" Background="White" Height="146" VerticalAlignment="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="115*"/>
@@ -94,11 +94,11 @@
                         </Border>
                     </Grid>
                 </Border>
-                <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Margin="0,0,0,4" Background="White">
-                    <Label Content="Student Portal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="72,7,0,0" Width="110" FontWeight="DemiBold" FontSize="15" Foreground="#FF00104D"/>
+                <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Margin="0,0,0,4" Background="White" CornerRadius="1,1,1,1">
+                    <Border BorderBrush="Black" BorderThickness="1"/>
                 </Border>
                 <Image HorizontalAlignment="Left" Height="51" Margin="10,0,0,0" VerticalAlignment="Center" Width="58" Source="/Logo-Final_noname_1.png"/>
-                <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="25,16,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="37" Width="140" Grid.RowSpan="2"/>
+                <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="69,4,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="36" Width="140"/>
                 <Label Content="Welcome back, (First Name)" HorizontalAlignment="Left" Margin="72,30,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="21" Width="108"/>
                 <Button Content="" HorizontalAlignment="Left" Margin="727,0,0,0" VerticalAlignment="Center" Width="72" BorderBrush="{x:Null}" Click="Button_Click_4" Height="20">
                     <Button.Background>

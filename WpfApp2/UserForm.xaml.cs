@@ -19,6 +19,7 @@ namespace WpfApp2
     /// </summary>
     public partial class UserForm : Window
     {
+        ShortCheck shortcheck = new ShortCheck();
         public UserForm()
         {
             InitializeComponent();
@@ -46,7 +47,8 @@ namespace WpfApp2
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
+            shortcheck.Show();
+            this.Close();
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)

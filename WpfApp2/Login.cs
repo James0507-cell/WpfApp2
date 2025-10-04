@@ -51,7 +51,7 @@ namespace WpfApp2
                     dbCommand.Parameters.AddWithValue("@username", username);
                     dbCommand.Parameters.AddWithValue("@password", password);
 
-                    using (MySqlDataReader reader = dbCommand.ExecuteReader())
+                    using (MySqlDataReader reader = dbCommand.ExecuteReader())  
                     {
                         if (reader.Read())
                         {
