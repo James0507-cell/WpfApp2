@@ -14,10 +14,10 @@
             </Grid.RowDefinitions>
             <Label Content="Add New Student" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14"/>
             <Grid Grid.Row="1">
-                <TabControl>
-                    <TabItem Header="TabItem"/>
-                    <TabItem Header="TabItem"/>
-                    <TabItem Margin="-2,-2,-8,0" Header="TabItem"/>
+                <TabControl Margin="10,10,10,16" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <TabItem Header="TabItem" Margin="20,-3,-69,1"/>
+                    <TabItem Header="TabItem" Margin="115,-2,-119,0" Width="102.973333333333"/>
+                    <TabItem Margin="130,-2,-140,0" Header="TabItem"/>
                 </TabControl>
             </Grid>
         </Grid>
