@@ -61,7 +61,7 @@
                 </Button>
 
                 <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="25,18,434,18" CornerRadius="15,15,15,15" Background="White">
-                    <ScrollViewer VerticalScrollBarVisibility="Hidden" UseLayoutRounding="False"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" UseLayoutRounding="False" Width="395"/>
                 </Border>
 
                 <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="429,18,27,18" CornerRadius="15,15,15,15" Background="White">
