@@ -50,7 +50,7 @@
                         </Grid.ColumnDefinitions>
                         <Image Height="24" VerticalAlignment="Center" Source="/Screenshot 2025-09-09 125002.png" Margin="24,0,0,0" HorizontalAlignment="Left" Width="9"/>
                         <Border BorderBrush="#FFD6D6D6" BorderThickness="0.5" Margin="2,0,35,0" CornerRadius="5" Background="#FFE8E6E6" Height="20.7" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1">
-                            <TextBox x:Name="TxtUserName" TextWrapping="Wrap" Text="Enter your password" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#CCB50000" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="0,0,11,0"/>
+                            <TextBox x:Name="TxtUserName" TextWrapping="Wrap" Text="Enter Username" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#CCB50000" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="0,0,11,0" GotFocus="TxtUserName_GotFocus" LostFocus="TxtUserName_LostFocus"/>
                         </Border>
                     </Grid>
 
@@ -62,7 +62,7 @@
                         </Grid.ColumnDefinitions>
                         <Image HorizontalAlignment="Left" Height="13" Margin="23,0,0,0" VerticalAlignment="Center" Width="12" Source="/Screenshot 2025-09-08 204143.png"/>
                         <Border BorderThickness="0.5" Grid.Column="1" Margin="1,4,33,4" CornerRadius="5" Background="#FFE8E6E6" BorderBrush="#FFD6D6D6" Height="20.7">
-                            <TextBox x:Name="TxtPassword" TextWrapping="Wrap" Text="Enter your password" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#CCB50000" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="3,0,9,0"/>
+                            <TextBox x:Name="TxtPassword" TextWrapping="Wrap" Text="Enter Password" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#CCB50000" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="3,0,9,0" GotFocus="TxtPassword_GotFocus" LostFocus="TxtPassword_LostFocus"/>
                         </Border>
                     </Grid>
 

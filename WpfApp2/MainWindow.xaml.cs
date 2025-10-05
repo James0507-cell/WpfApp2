@@ -55,4 +55,37 @@ public partial class MainWindow : Window
         login.dbConnection();
 
     }
+
+    private void TxtUserName_GotFocus(object sender, RoutedEventArgs e)
+    {
+        if(TxtUserName.Text == "Enter Username")
+        {
+            TxtUserName.Text = "";
+        }
+    }
+
+    private void TxtUserName_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(TxtUserName.Text))
+        {
+            TxtUserName.Text = "Enter Username";
+        }
+    }
+
+    private void TxtPassword_GotFocus(object sender, RoutedEventArgs e)
+    {
+        if (TxtPassword.Text == "Enter Password")
+        {
+            TxtPassword.Text = "";
+        }
+    }
+
+    private void TxtPassword_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(TxtPassword.Text))
+        {
+            TxtPassword.Text = "Enter Password";
+        }
+
+    }
 }
