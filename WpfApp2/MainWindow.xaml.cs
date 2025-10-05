@@ -17,6 +17,8 @@ namespace WpfApp2;
 public partial class MainWindow : Window
 {
     Login login = new Login();
+    private String username = "";
+    private String password = "";
 
     public MainWindow()
     {
@@ -28,8 +30,8 @@ public partial class MainWindow : Window
     }
     private void BtnSignIn_Click(object sender, RoutedEventArgs e)
     {
-        string username = TxtUserName.Text;
-        string password = TxtPassword.Text;
+        username = TxtUserName.Text;
+        password = TxtPassword.Text;
 
         string role = login.loginUser(username, password);
 
@@ -87,5 +89,10 @@ public partial class MainWindow : Window
             TxtPassword.Text = "Enter Password";
         }
 
+    }
+    public String  getUsername()
+    {
+        username = TxtUserName.Text;
+        return username;
     }
 }
