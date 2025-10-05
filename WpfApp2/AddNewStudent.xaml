@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="AddNewStudent" Height="292.64" Width="389" Background="{x:Null}">
+        Title="AddNewStudent" Height="500" Width="436" Background="{x:Null}" WindowStartupLocation="CenterScreen">
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="15,15,15,15" Background="White">
         <Grid>
             <Grid.RowDefinitions>
@@ -14,18 +14,152 @@
             </Grid.RowDefinitions>
             <Label Content="Add New Student" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14"/>
             <Grid Grid.Row="1">
-                <TabControl Margin="51,30,51,30" BorderBrush="{x:Null}">
-                    <TabItem Header="TabItem" Margin="1,-2,-5,0" BorderBrush="{x:Null}">
-                        <Grid/>
+                <Border BorderBrush="Black" BorderThickness="1" Margin="26,0,29,382" CornerRadius="15,15,15,15"/>
+                <TabControl Margin="26,10,23,10" BorderBrush="{x:Null}">
+                    <TabItem Header="Personal" Margin="9,-9,-50,7" BorderBrush="{x:Null}" Background="{x:Null}">
+                        <Grid Margin="0,10,0,0">
+                            <Label Content="First Name *" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
+                            <Label Content="Last Name *" HorizontalAlignment="Left" Margin="200,29,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
+                            <TextBox HorizontalAlignment="Left" Margin="10,55,0,0" 
+         TextWrapping="Wrap" Text="TextBox" 
+         VerticalAlignment="Top" Width="165" Height="23">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="TextBox">
+                                        <Border CornerRadius="5" 
+                    BorderBrush="Gray" 
+                    BorderThickness="1" 
+                    Background="White">
+                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+                            <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Margin="10,55,0,0" 
+                                TextWrapping="Wrap" 
+                                VerticalAlignment="Top" Width="165" Height="23">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="{x:Type TextBox}">
+                                        <Border CornerRadius="5" 
+                                            BorderBrush="Gray" 
+                                            BorderThickness="1" 
+                                            Background="White">
+                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+                            <TextBox x:Name="txtLastName" HorizontalAlignment="Left" Margin="200,55,0,0" 
+                                TextWrapping="Wrap" 
+                                VerticalAlignment="Top" Width="165" Height="23">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="{x:Type TextBox}">
+                                        <Border CornerRadius="5" 
+                                            BorderBrush="Gray" 
+                                            BorderThickness="1" 
+                                            Background="White">
+                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+                            <Label Content="Student ID *" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
+                            <Label Content="Date of Birth *" Margin="200,91,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
+                            <TextBox x:Name="txtStudentID" HorizontalAlignment="Left" Margin="10,117,0,0" 
+                                TextWrapping="Wrap" 
+                                VerticalAlignment="Top" Width="165" Height="23" TextChanged="txtStudentID_TextChanged">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="{x:Type TextBox}">
+                                        <Border CornerRadius="5" 
+                                            BorderBrush="Gray" 
+                                            BorderThickness="1" 
+                                            Background="White">
+                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+                            <Label Margin="10,160,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
+                            <Label Content="Email Address *" Margin="10,155,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
+                            <Label Content="Phone Number *" Margin="200,155,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
+                            <TextBox x:Name="txtEmailAddress" HorizontalAlignment="Left" Margin="10,181,0,0" 
+                                TextWrapping="Wrap" 
+                                VerticalAlignment="Top" Width="165" Height="23" TextChanged="txtEmailAddress_TextChanged">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="{x:Type TextBox}">
+                                        <Border CornerRadius="5" 
+                                            BorderBrush="Gray" 
+                                            BorderThickness="1" 
+                                            Background="White">
+                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+                            <TextBox x:Name="txtPhoneNumber" HorizontalAlignment="Left" Margin="200,181,0,0" 
+                                TextWrapping="Wrap" 
+                                VerticalAlignment="Top" Width="164" Height="23">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="{x:Type TextBox}">
+                                        <Border CornerRadius="5" 
+                                            BorderBrush="Gray" 
+                                            BorderThickness="1" 
+                                            Background="White">
+                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+                            <Label Content="Address *" Margin="10,217,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
+                            <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Margin="10,243,0,0" 
+                                TextWrapping="Wrap" Text="TextBox" 
+                                VerticalAlignment="Top" Width="354" Height="64">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="{x:Type TextBox}">
+                                        <Border CornerRadius="5" 
+                                            BorderBrush="Gray" 
+                                            BorderThickness="1" 
+                                            Background="White">
+                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+                            <Button Content="" HorizontalAlignment="Left" Margin="222,330,0,0" VerticalAlignment="Top" Height="31" Width="70" BorderBrush="{x:Null}">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/cancel.jpg"/>
+                                </Button.Background>
+                            </Button>
+                            <Button Content="" HorizontalAlignment="Left" Margin="297,333,0,0" VerticalAlignment="Top" Height="24" Width="64" BorderBrush="{x:Null}">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/add student.jpg"/>
+                                </Button.Background>
+                            </Button>
+                            <DatePicker x:Name="dpDate" HorizontalAlignment="Left" Margin="200,117,0,0" 
+            VerticalAlignment="Top" Width="164" Height="23">
+                                <DatePicker.Template>
+                                    <ControlTemplate TargetType="DatePicker">
+                                        <Grid>
+                                            <Border CornerRadius="5" 
+                        BorderBrush="Gray" 
+                        BorderThickness="1" 
+                        Background="White"/>
+                                            <DatePickerTextBox x:Name="PART_TextBox" 
+                                   Background="Transparent"
+                                   Margin="0"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </DatePicker.Template>
+                            </DatePicker>
+                        </Grid>
                     </TabItem>
-                    <TabItem Header="TabItem" Margin="60,-2,-64,0" BorderBrush="{x:Null}">
+                    <TabItem Header="Academic" Margin="95,-9,-95,7" BorderBrush="{x:Null}" Background="{x:Null}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="22*"/>
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="TabItem" Margin="115,-2,-119,0" BorderBrush="{x:Null}">
+                    <TabItem Header="Medical" Margin="133,-8,-133,7" BorderBrush="{x:Null}" Width="94.9733333333333" Background="{x:Null}">
                         <Grid Margin="0,0,-3,0" Height="157"/>
                     </TabItem>
                 </TabControl>

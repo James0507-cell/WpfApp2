@@ -12,10 +12,12 @@
     <None Remove="123123123.jpg" />
     <None Remove="213sda.jpg" />
     <None Remove="add new s tudents.jpg" />
+    <None Remove="add student.jpg" />
     <None Remove="ads.jpg" />
     <None Remove="all students.jpg" />
     <None Remove="appointment.jpg" />
     <None Remove="asdasda.jpg" />
+    <None Remove="cancel.jpg" />
     <None Remove="capsule.jpg" />
     <None Remove="ddas.jpg" />
     <None Remove="dsadasdasdasda.jpg" />
@@ -95,10 +97,12 @@
     <Resource Include="123123123.jpg" />
     <Resource Include="213sda.jpg" />
     <Resource Include="add new s tudents.jpg" />
+    <Resource Include="add student.jpg" />
     <Resource Include="ads.jpg" />
     <Resource Include="all students.jpg" />
     <Resource Include="appointment.jpg" />
     <Resource Include="asdasda.jpg" />
+    <Resource Include="cancel.jpg" />
     <Resource Include="capsule.jpg" />
     <Resource Include="ddas.jpg" />
     <Resource Include="dsadasdasdasda.jpg" />

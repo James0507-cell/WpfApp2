@@ -23,5 +23,20 @@ namespace WpfApp2
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void txtStudentID_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void txtEmailAddress_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

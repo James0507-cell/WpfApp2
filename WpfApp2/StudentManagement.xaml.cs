@@ -133,7 +133,10 @@ namespace WpfApp2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            LoadStudentList();
+            //LoadStudentList();
+            AddNewStudent addNewStudent = new AddNewStudent();
+            addNewStudent.Show();
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
