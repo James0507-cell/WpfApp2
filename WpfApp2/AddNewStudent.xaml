@@ -17,6 +17,7 @@
                 <TabControl>
                     <TabItem Header="TabItem"/>
                     <TabItem Header="TabItem"/>
+                    <TabItem Margin="-2,-2,-8,0" Header="TabItem"/>
                 </TabControl>
             </Grid>
         </Grid>
