@@ -23,7 +23,7 @@ namespace WpfApp2
     public partial class AddNewStudent : Window
     {
 
-
+        StudentManagement student = new StudentManagement();
         String strconn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
         public AddNewStudent()
         {
@@ -139,7 +139,8 @@ namespace WpfApp2
                 {
                     MessageBox.Show("Error: " + ex.Message); 
                 }
-
+                student.displayUsers("SELECT * FROM users WHERE role = 'Student'");
+                
 
             }
         }

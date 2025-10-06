@@ -8,6 +8,7 @@ namespace WpfApp2
 {
     public partial class StudentManagement : Window
     {
+
         Admin admin = new Admin();
         String SQL = "";
         public StudentManagement()
