@@ -1,56 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace WpfApp2
 {
-    /// <summary>
-    /// Interaction logic for UserForm.xaml
-    /// </summary>
     public partial class UserForm : Window
-
     {
-        MainWindow mainWindow = new MainWindow();
-        String username = "";
+        private string username;
         Users userForm = new Users();
-        String SQL = "";
-
         ShortCheck shortcheck = new ShortCheck();
-        public UserForm()
+        string SQL = "";
+
+        public UserForm(string username)
         {
             InitializeComponent();
-            
-        }
-
-        private void dfs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
+            this.username = username;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -59,57 +25,41 @@ namespace WpfApp2
             this.Close();
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+            var mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
         }
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
-            BookingAppointment bookingAppointment = new BookingAppointment(mainWindow);
+            BookingAppointment bookingAppointment = new BookingAppointment
+            {
+                username = this.username 
+            };
             bookingAppointment.Show();
             this.Close();
         }
 
-
-        private void Button_Click_6(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            SQL = "Select * from appointments where username = '" + "jdelacruz" + "'";
+            SQL = $"SELECT * FROM appointments WHERE username = '{username}'";
             displayAppointment(SQL);
         }
-        private void displayAppointment(String query)
-        {
-            String username = mainWindow.getUsername();
-            DataTable dt = userForm.displayRecords(query);
 
-            AppointmentStackPanel.Children.Clear(); // Clear previous entries
+        private void displayAppointment(string query)
+        {
+            DataTable dt = userForm.displayRecords(query);
+            AppointmentStackPanel.Children.Clear();
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                String date = dt.Rows[i]["appointment_date"].ToString();
-                String time = dt.Rows[i]["appointment_time"].ToString();
-                String status = dt.Rows[i]["status"].ToString();
-                String email = dt.Rows[i]["email"].ToString();
-                String phone = dt.Rows[i]["phone_number"].ToString();
-                String purpose = dt.Rows[i]["purpose_of_visit"].ToString();
-                String allergies = dt.Rows[i]["known_allergies"].ToString();
-                String previousVisit = dt.Rows[i]["previous_visit"].ToString();
-                String emergencyName = dt.Rows[i]["emergency_contact_name"].ToString();
-                String emergencyPhone = dt.Rows[i]["emergency_contact_phone"].ToString();
+                string date = dt.Rows[i]["appointment_date"].ToString();
+                string time = dt.Rows[i]["appointment_time"].ToString();
+                string status = dt.Rows[i]["status"].ToString();
+                string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
 
-                // Create the panel for one appointment
                 StackPanel appointmentPanel = new StackPanel();
                 var foreColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
 
@@ -141,9 +91,6 @@ namespace WpfApp2
                     Foreground = foreColor
                 });
 
-
-
-                // Wrap in a rounded border
                 Border border = new Border
                 {
                     BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9E9E9E")),
@@ -155,10 +102,8 @@ namespace WpfApp2
                     Child = appointmentPanel
                 };
 
-
                 AppointmentStackPanel.Children.Add(border);
             }
         }
-
     }
 }
