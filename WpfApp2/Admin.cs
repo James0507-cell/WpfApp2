@@ -11,6 +11,7 @@ namespace WpfApp2
 {
     internal class Admin
     {
+        
         private MySqlConnection dbConn;
         private MySqlCommand dbCommand;
         private MySqlDataAdapter da;
@@ -45,6 +46,10 @@ namespace WpfApp2
             dbConn.Close();
 
         }
+
+
+
+        
 
 
     }
