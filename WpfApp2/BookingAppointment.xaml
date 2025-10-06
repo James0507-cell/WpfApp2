@@ -178,7 +178,7 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
-                                            <Calendar HorizontalAlignment="Center" Margin="0,9,0,0" VerticalAlignment="Top" Grid.RowSpan="6" Grid.Row="1"/>
+                                            <Calendar x:Name="cldDate" HorizontalAlignment="Center" Margin="0,9,0,0" VerticalAlignment="Top" Grid.RowSpan="6" Grid.Row="1"/>
 
                                             <Button Content="9:00 AM" Grid.Column="1" Grid.Row="0" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
                                             <Button Content="9:30 AM" Grid.Column="2" Grid.Row="0" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
@@ -238,27 +238,27 @@
                                                 <StackPanel Grid.Column="0" Margin="0,0,5,0">
                                                     <Label Content="First Name *" FontWeight="Normal" Foreground="#FF666666"/>
                                                     <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                        <TextBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding FirstName}"/>
+                                                        <TextBox x:Name="txtFirstName" Padding="5" Margin="0" BorderThickness="0" Text="{Binding FirstName}"/>
                                                     </Border>
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="1" Margin="5,0,0,0">
                                                     <Label Content="Last Name *" FontWeight="Normal" Foreground="#FF666666"/>
                                                     <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                        <TextBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding LastName}"/>
+                                                        <TextBox x:Name="txtLastName" Padding="5" Margin="0" BorderThickness="0" Text="{Binding LastName}"/>
                                                     </Border>
                                                 </StackPanel>
                                             </Grid>
                                             <Label Content="Student ID *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding StudentID}"/>
+                                                <TextBox x:Name="txtStudentID" Padding="5" Margin="0" BorderThickness="0" Text="{Binding StudentID}"/>
                                             </Border>
                                             <Label Content="Email Address *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding EmailAddress}"/>
+                                                <TextBox x:Name="txtEmail" Padding="5" Margin="0" BorderThickness="0" Text="{Binding EmailAddress}"/>
                                             </Border>
                                             <Label Content="Phone Number *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                <TextBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding PhoneNumber}"/>
+                                                <TextBox x:Name="txtPhoneNumber" Padding="5" Margin="0" BorderThickness="0" Text="{Binding PhoneNumber}"/>
                                             </Border>
                                         </StackPanel>
 
@@ -266,26 +266,26 @@
                                             <TextBlock Text="Medical Information" FontWeight="SemiBold" FontSize="16" Foreground="#FF00104D" Margin="0,0,0,5"/>
                                             <Label Content="Purpose of Visit *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <ComboBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding PurposeOfVisit}">
+                                                <ComboBox x:Name="cmbPurpose" Padding="5" Margin="0" BorderThickness="0" Text="{Binding PurposeOfVisit}">
                                                     <ComboBoxItem Content="Injury"/>
                                                     <ComboBoxItem Content="Check-up"/>
                                                 </ComboBox>
                                             </Border>
                                             <Label Content="Current Symptoms/Concerns" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding CurrentSymptoms}"/>
+                                                <TextBox x:Name="txtSymptoms" Padding="5" Margin="0" BorderThickness="0" Text="{Binding CurrentSymptoms}"/>
                                             </Border>
                                             <Label Content="Known Allergies" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding KnownAllergies}"/>
+                                                <TextBox x:Name="txtAllergies" Padding="5" Margin="0" BorderThickness="0" Text="{Binding KnownAllergies}"/>
                                             </Border>
                                             <Label Content="Current Medications" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding CurrentMedications}"/>
+                                                <TextBox x:Name="txtCurrentMedication" Padding="5" Margin="0" BorderThickness="0" Text="{Binding CurrentMedications}"/>
                                             </Border>
                                             <Label Content="Previous visits to MMCM clinic?" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                <ComboBox Padding="5" Margin="0" BorderThickness="0" Text="{Binding PreviousVisits}">
+                                                <ComboBox x:Name="cmbPreviousVisit" Padding="5" Margin="0" BorderThickness="0" Text="{Binding PreviousVisits}">
                                                     <ComboBoxItem Content="Yes"/>
                                                     <ComboBoxItem Content="No"/>
                                                 </ComboBox>
@@ -368,7 +368,6 @@
                                                     </Grid.ColumnDefinitions>
                                                     <StackPanel Grid.Column="0">
                                                         <TextBlock Text="{Binding PatientName}" Foreground="#FF00104D" Margin="0,0,0,5"/>
-                                                        <TextBlock Text="{Binding PatientEmail}" Foreground="#FF00104D" Margin="0,0,0,5"/>
                                                         <TextBlock Text="{Binding PurposeOfVisit}" FontWeight="SemiBold" Foreground="#FF00104D" Margin="0,0,0,5"/>
                                                         <TextBlock Text="{Binding PatientSymptoms}" Foreground="#FF00104D"/>
                                                     </StackPanel>
@@ -462,6 +461,8 @@
                     <Button Content="Back To Dashboard" HorizontalAlignment="Left" Margin="43,31,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="14" Foreground="#FF00104D" FontWeight="DemiBold" Width="160" Click="Button_Click_1"/>
                 </Grid>
             </Border>
+            <Label Content="Label" HorizontalAlignment="Left" Margin="192,230,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" RenderTransformOrigin="0.436,0.109"/>
+            <Label Content="Label" HorizontalAlignment="Left" Margin="245,248,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         </Grid>
     </Border>
 </Window>

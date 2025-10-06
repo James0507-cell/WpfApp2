@@ -110,29 +110,50 @@ namespace WpfApp2
 
                 // Create the panel for one appointment
                 StackPanel appointmentPanel = new StackPanel();
+                var foreColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
 
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Date: {date}", FontWeight = FontWeights.Bold, Margin = new Thickness(0, 0, 0, 5) });
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Time: {time}", FontWeight = FontWeights.Bold, Margin = new Thickness(0, 0, 0, 5) });
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Status: {status}", FontWeight = FontWeights.Bold, Margin = new Thickness(0, 0, 0, 5) });
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Email: {email}", Margin = new Thickness(0, 0, 0, 5) });
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Phone: {phone}", Margin = new Thickness(0, 0, 0, 5) });
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Purpose: {purpose}", Margin = new Thickness(0, 0, 0, 5) });
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Known Allergies: {allergies}", Margin = new Thickness(0, 0, 0, 5) });
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Previous Visit: {previousVisit}", Margin = new Thickness(0, 0, 0, 5) });
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Emergency Contact: {emergencyName}", Margin = new Thickness(0, 0, 0, 5) });
-                appointmentPanel.Children.Add(new TextBlock { Text = $"Emergency Phone: {emergencyPhone}", Margin = new Thickness(0, 0, 0, 5) });
+                appointmentPanel.Children.Add(new TextBlock
+                {
+                    Text = $"Date: {date}",
+                    FontWeight = FontWeights.DemiBold,
+                    Margin = new Thickness(0, 0, 0, 5),
+                    Foreground = foreColor
+                });
+                appointmentPanel.Children.Add(new TextBlock
+                {
+                    Text = $"Time: {time}",
+                    FontWeight = FontWeights.DemiBold,
+                    Margin = new Thickness(0, 0, 0, 5),
+                    Foreground = foreColor
+                });
+                appointmentPanel.Children.Add(new TextBlock
+                {
+                    Text = $"Status: {status}",
+                    FontWeight = FontWeights.DemiBold,
+                    Margin = new Thickness(0, 0, 0, 5),
+                    Foreground = foreColor
+                });
+                appointmentPanel.Children.Add(new TextBlock
+                {
+                    Text = $"Purpose: {purpose}",
+                    Margin = new Thickness(0, 0, 0, 5),
+                    Foreground = foreColor
+                });
+
+
 
                 // Wrap in a rounded border
                 Border border = new Border
                 {
-                    BorderBrush = Brushes.Gray,
+                    BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9E9E9E")),
                     BorderThickness = new Thickness(1),
                     CornerRadius = new CornerRadius(10),
                     Margin = new Thickness(8),
                     Padding = new Thickness(10),
-                    Background = new SolidColorBrush(Color.FromRgb(245, 245, 245)),
+                    Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
                     Child = appointmentPanel
                 };
+
 
                 AppointmentStackPanel.Children.Add(border);
             }
