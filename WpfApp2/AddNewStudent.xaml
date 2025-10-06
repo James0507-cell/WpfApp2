@@ -461,9 +461,16 @@
                     </TabItem>
                 </TabControl>
             </Grid>
-            <ComboBox HorizontalAlignment="Left" Margin="226,145,0,0" VerticalAlignment="Top" Width="166" Grid.Row="1">
-                <Calendar/>
-            </ComboBox>
+            <DatePicker HorizontalAlignment="Left" Margin="228,145,0,0" VerticalAlignment="Top" Grid.Row="1" Width="153">
+                <DatePicker.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                        <GradientStop Color="#FFA3AEB9"/>
+                        <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                        <GradientStop Color="#FF718597" Offset="0.375"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </DatePicker.BorderBrush>
+            </DatePicker>
         </Grid>
     </Border>
 </Window>
