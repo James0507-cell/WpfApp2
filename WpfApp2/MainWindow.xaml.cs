@@ -24,6 +24,9 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    // Add the following property to the MainWindow class to fix the CS1061 error.  
+    public string Username { get; set; }
     private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         
