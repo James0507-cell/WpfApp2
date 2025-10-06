@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="AddNewStudent" Height="500" Width="436" Background="{x:Null}" WindowStartupLocation="CenterScreen">
+        Title="AddNewStudent" Height="500" Width="436" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1">
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="15,15,15,15" Background="White">
         <Grid>
             <Grid.RowDefinitions>
