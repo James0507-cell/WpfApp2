@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
+using System.Data;
+
 
 namespace WpfApp2
 {
@@ -19,14 +22,19 @@ namespace WpfApp2
     /// </summary>
     public partial class AddNewStudent : Window
     {
+
+        String strconn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
         public AddNewStudent()
         {
             InitializeComponent();
         }
 
+        
+        
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+           
         }
 
         private void txtStudentID_TextChanged(object sender, TextChangedEventArgs e)
@@ -39,6 +47,30 @@ namespace WpfApp2
 
         }
 
-       
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            cboCourse.Items.Add("BS Computer Science");
+            cboCourse.Items.Add("BS Civil Engineering");
+            cboCourse.Items.Add("BS Information Technology");
+
+            cboYearLevel.Items.Add("1st Year");
+            cboYearLevel.Items.Add("2nd Year");
+            cboYearLevel.Items.Add("3rd Year");
+            cboYearLevel.Items.Add("4th Year");
+
+            cboEnrolledStatus.Items.Add("Enrolled");
+            cboEnrolledStatus.Items.Add("Pending");
+            cboEnrolledStatus.Items.Add("Dropped");
+            cboEnrolledStatus.Items.Add("Graduated");
+
+            cboBloodType.Items.Add("A+");
+            cboBloodType.Items.Add("A-");
+            cboBloodType.Items.Add("B+");
+            cboBloodType.Items.Add("B-");
+            cboBloodType.Items.Add("AB+");
+            cboBloodType.Items.Add("AB-");
+            cboBloodType.Items.Add("O+");
+            cboBloodType.Items.Add("O-");
+        }
     }
 }
