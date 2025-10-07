@@ -162,7 +162,7 @@
                                     </Grid>
                                 </Border>
 
-                                <Border BorderBrush="#FFABAAAA" BorderThickness="1" Margin="33,60,37,80" CornerRadius="10">
+                                <Border BorderBrush="#FFABAAAA" BorderThickness="1" Margin="33,60,37,142" CornerRadius="10">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="205*"/>

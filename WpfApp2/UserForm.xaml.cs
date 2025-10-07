@@ -55,6 +55,7 @@ namespace WpfApp2
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
+                string appointmentId = dt.Rows[i]["appointment_id"].ToString();
                 string date = dt.Rows[i]["appointment_date"].ToString();
                 string time = dt.Rows[i]["appointment_time"].ToString();
                 string status = dt.Rows[i]["status"].ToString();
@@ -102,70 +103,50 @@ namespace WpfApp2
                     Child = appointmentPanel
                 };
 
+                string currentAppointmentId = appointmentId;
+
+                border.MouseRightButtonDown += (s, e) =>
+                {
+                    ContextMenu contextMenu = new ContextMenu();
+
+                    MenuItem updateItem = new MenuItem { Header = "Update" };
+                    updateItem.Click += (s2, e2) =>
+                    {
+                        UpdateAppointment updateAppointmentWindow = new UpdateAppointment(
+                            currentAppointmentId,
+                            date,
+                            time,
+                            purpose
+                        );
+                        bool? result = updateAppointmentWindow.ShowDialog();
+                        if (result == true)
+                        {
+                            displayAppointment(SQL);
+                        }
+                    };
+                    contextMenu.Items.Add(updateItem);
+
+                    MenuItem deleteItem = new MenuItem { Header = "Cancel Appointment" };
+                    deleteItem.Click += (s3, e3) =>
+                    {
+                        cancelAppointment(currentAppointmentId);
+                    };
+                    contextMenu.Items.Add(deleteItem);
+
+                    border.ContextMenu = contextMenu;
+                    contextMenu.IsOpen = true;
+                };
+
                 AppointmentStackPanel.Children.Add(border);
-
             }
-
         }
+
         public void cancelAppointment(string appointmentId)
         {
             string deleteQuery = $"DELETE FROM appointments WHERE appointment_id = {appointmentId}";
             userForm.sqlManager(deleteQuery);
             displayAppointment(SQL);
         }
-        public void rightclickPanel(Panel panel)
-        {
-            // Floating panel window
-            Window window = new Window
-            {
-                Title = "Update Student",
-                Width = 50,
-                Height = 50,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                ResizeMode = ResizeMode.NoResize,
-                Owner = this,
-                Background = Brushes.White,
-                WindowStyle = WindowStyle.None
-            };
-
-            Border mainBorder = new Border
-            {
-                CornerRadius = new CornerRadius(20),
-                BorderThickness = new Thickness(1),
-                BorderBrush = Brushes.LightGray,
-                Background = Brushes.White,
-                Padding = new Thickness(20),
-                Margin = new Thickness(10),
-                Effect = new System.Windows.Media.Effects.DropShadowEffect
-                {
-                    Color = Colors.Black,
-                    Direction = 270,
-                    ShadowDepth = 5,
-                    Opacity = 0.3,
-                    BlurRadius = 10
-                }
-            };
-
-            StackPanel innerPanel = new StackPanel { Margin = new Thickness(10) }; // Renamed to avoid conflict
-            Button update = new Button
-            {
-                Content = "Update",
-                Width = 30,
-                Height = 15
-            };
-            innerPanel.Children.Add(update);
-
-            Button delete = new Button
-            {
-                Content = "Delete",
-                Width = 30,
-                Height = 15
-            };
-            innerPanel.Children.Add(delete);
-
-            mainBorder.Child = innerPanel;
-            window.Content = mainBorder;
-            window.ShowDialog();
-        }
+        
     }
 }
