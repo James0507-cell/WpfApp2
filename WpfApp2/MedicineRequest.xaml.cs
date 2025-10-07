@@ -12,18 +12,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Windows.Media.Effects; // Added for DropShadowEffect
+using System.Windows.Media.Effects; 
 
 namespace WpfApp2
 {
-    /// <summary>
-    /// Interaction logic for MedicineRequest.xaml
-    /// </summary>
+    
     public partial class MedicineRequest : Window
     {
         public string username = MainWindow.Username;
         Users user = new Users();
         String SQL = "";
+        int userId = 0;
         public MedicineRequest()
         {
             InitializeComponent();
@@ -51,11 +50,7 @@ namespace WpfApp2
                 txtSearch.Text = "Search medicines...";
         }
 
-        /// <summary>
-        /// Creates the styled availability pill/tag element.
-        /// Since availability data (stock) isn't in the provided SQL structure,
-        /// this function simulates a value and styles it based on that value (e.g., > 50 is green).
-        /// </summary>
+        
         private Border CreateAvailabilityTag(int stock)
         {
             string stockText = $"{stock} available";
@@ -84,14 +79,11 @@ namespace WpfApp2
             };
         }
 
-        /// <summary>
-        /// Creates a TextBlock for the descriptive details (Generic Name, Description).
-        /// </summary>
+        
         private TextBlock CreateDetailBlock(string label, string value, Brush foregroundBrush)
         {
             return new TextBlock
             {
-                // This uses an Inline Run to style the label bold and the value normal
                 Inlines =
                 {
                     new Run { Text = $"{label}: ", FontWeight = FontWeights.DemiBold, Foreground = foregroundBrush },
@@ -112,8 +104,7 @@ namespace WpfApp2
 
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
 
-            // NOTE: Assuming medicine_id is dt.Rows[i][0] and medicine_name is dt.Rows[i][1]
-            
+
             for (int i = 0; i < n; i++)
             {
 
@@ -146,21 +137,18 @@ namespace WpfApp2
                     }
                 };
 
-                // 2. Main StackPanel to hold all content vertically
                 StackPanel medicineContent = new StackPanel();
 
 
-                // --- Row 1: Medicine Icon, Title, Dosage, and Availability Tag (using Grid) ---
                 Grid headerGrid = new Grid();
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Icon
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Name & Dosage
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Availability Tag
                 headerGrid.Margin = new Thickness(0, 0, 0, 10);
 
-                // Icon (Simulated using TextBlock for a vector look)
                 TextBlock iconBlock = new TextBlock
                 {
-                    Text = "💊", // Medicine icon
+                    Text = "💊",
                     FontSize = 24,
                     Margin = new Thickness(0, 0, 10, 0),
                     VerticalAlignment = VerticalAlignment.Top
@@ -169,10 +157,8 @@ namespace WpfApp2
                 headerGrid.Children.Add(iconBlock);
 
 
-                // Name and Dosage StackPanel
                 StackPanel nameDosagePanel = new StackPanel();
 
-                // Name
                 TextBlock txtName = new TextBlock
                 {
                     Text = medicineName,
@@ -183,10 +169,9 @@ namespace WpfApp2
                 };
                 nameDosagePanel.Children.Add(txtName);
 
-                // Dosage/Strength
                 TextBlock txtDosage = new TextBlock
                 {
-                    Text = $"{dosage} Tablet", // Assuming 'dosage' column holds the strength like '500mg'
+                    Text = $"{dosage} Tablet", 
                     FontWeight = FontWeights.Normal,
                     FontSize = 12,
                     Foreground = Brushes.Gray
@@ -196,7 +181,6 @@ namespace WpfApp2
                 Grid.SetColumn(nameDosagePanel, 1);
                 headerGrid.Children.Add(nameDosagePanel);
 
-                // Replace 'simulatedStock' with the actual stock value 'quant' which is already defined in the loop
                 Border availabilityTag = CreateAvailabilityTag(quant);
                 Grid.SetColumn(availabilityTag, 2);
                 headerGrid.Children.Add(availabilityTag);
@@ -204,7 +188,6 @@ namespace WpfApp2
                 medicineContent.Children.Add(headerGrid);
 
 
-                // --- Row 2: Generic Name and Description ---
                 medicineContent.Children.Add(CreateDetailBlock("Generic Name", genericName, darkBlueBrush));
                 medicineContent.Children.Add(CreateDetailBlock("Description", description, darkBlueBrush));
 
@@ -212,7 +195,7 @@ namespace WpfApp2
                 // --- Row 3: Action Button ---
                 Border buttonWrapper = new Border
                 {
-                    CornerRadius = new CornerRadius(6), // Apply rounded corners here
+                    CornerRadius = new CornerRadius(6), 
                     Margin = new Thickness(0, 15, 0, 0),
                     Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFCC0000")), // Match button color
 
@@ -221,46 +204,187 @@ namespace WpfApp2
                 Button requestButton = new Button
                 {
                     Content = "Request Medicine",
-                    Background = Brushes.Transparent, // Make button background transparent so the Border color shows through
+                    Background = Brushes.Transparent, 
                     Foreground = Brushes.White,
-                    BorderThickness = new Thickness(0), // Remove button border
+                    BorderThickness = new Thickness(0), 
                     FontWeight = FontWeights.Bold,
                     Padding = new Thickness(10),
                     Cursor = Cursors.Hand
                 };
-                requestButton.Click += (s, e) => RequestMedicine_Click(medicineId, medicineName);
+                requestButton.Click += (s, e) => RequestMedicine_Click(medicineId, medicineName, dosage, genericName);
 
                 buttonWrapper.Child = requestButton; // Place button inside the rounded border
 
                 medicineContent.Children.Add(buttonWrapper);
 
 
-                // 3. Attach Content to Card Border
                 cardBorder.Child = medicineContent;
 
                 StackPanelMedicines.Children.Add(cardBorder);
             }
         }
 
-        // Placeholder for the actual request logic
-        private void RequestMedicine_Click(string medicineId, string medicineName)
+        private void RequestMedicine_Click(string medicineId, string medicineName, string dose, string genericName)
         {
-            DataTable dt = user.displayRecords("select * from users where username = '" + username + "'");
-            String userId = dt.Rows[0][0].ToString();
-
-
-
+            MedicineRequestConfirmation requestConfirm = new MedicineRequestConfirmation(dose, medicineName, genericName);
+            requestConfirm.Show();
         }
 
         public void RequestMedicine()
         {
-            // Placeholder for main request flow if needed
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             user.dbConnection();
             displayMedicine("Select * from medicine_info");
+
+            DataTable dt = new DataTable();
+            dt = user.displayRecords($"select user_id from users where username = '{username}'");
+            userId = Convert.ToInt32(dt.Rows[0][0].ToString());
+            displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + userId);
+        }
+        private Border CreateRequestStatusTag(string status)
+        {
+            Color bgColor;
+            Brush fgColor;
+            string statusText = status.ToUpper();
+
+            switch (statusText)
+            {
+                case "PENDING":
+                    bgColor = (Color)ColorConverter.ConvertFromString("#FFFDE7"); // Light Yellow
+                    fgColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFC107")); // Amber
+                    break;
+                case "APPROVED":
+                    bgColor = (Color)ColorConverter.ConvertFromString("#E8F5E9"); // Light Green
+                    fgColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#388E3C")); // Dark Green
+                    break;
+                case "DENIED":
+                    bgColor = (Color)ColorConverter.ConvertFromString("#FFEBEE"); // Light Red
+                    fgColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D32F2F")); // Dark Red
+                    break;
+                default:
+                    bgColor = (Color)ColorConverter.ConvertFromString("#E0E0E0"); // Light Gray
+                    fgColor = Brushes.Gray;
+                    break;
+            }
+
+            return new Border
+            {
+                Background = new SolidColorBrush(bgColor),
+                CornerRadius = new CornerRadius(4),
+                Padding = new Thickness(8, 2, 8, 2),
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Center,
+                Child = new TextBlock
+                {
+                    Text = statusText,
+                    Foreground = fgColor,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 10
+                }
+            };
+        }
+
+
+        private void displayMedicineRequest(String querry)
+        {
+            DataTable dt = new DataTable();
+            dt = user.displayRecords(querry);
+
+            
+            StackPanelMedicineRequests.Children.Clear();
+
+            int n = dt.Rows.Count;
+            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
+
+            
+
+            for (int i = 0; i < n; i++)
+            {
+                
+                String medicineName = dt.Rows[i][2].ToString();
+                String reason = dt.Rows[i][3].ToString();
+                String quantity = dt.Rows[i][4].ToString();
+                String status = dt.Rows[i][5].ToString();
+                String requestedAt = dt.Rows[i][6].ToString();
+                String approvedAt = dt.Rows[i][7].ToString();
+
+                // 1. Create the Card Container (Border)
+                Border cardBorder = new Border
+                {
+                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+                    BorderThickness = new Thickness(1),
+                    Background = Brushes.White,
+                    CornerRadius = new CornerRadius(8),
+                    Margin = new Thickness(10, 6, 10, 6),
+                    Padding = new Thickness(15),
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    Effect = new DropShadowEffect
+                    {
+                        Color = Colors.LightGray,
+                        Direction = 315,
+                        ShadowDepth = 2,
+                        BlurRadius = 5,
+                        Opacity = 0.5
+                    }
+                };
+
+                StackPanel requestContent = new StackPanel();
+
+                Grid headerGrid = new Grid();
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Name & Quantity
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Status Tag
+                headerGrid.Margin = new Thickness(0, 0, 0, 10);
+
+                StackPanel nameQuantityPanel = new StackPanel();
+
+                TextBlock txtName = new TextBlock
+                {
+                    Text = medicineName,
+                    FontWeight = FontWeights.DemiBold,
+                    FontSize = 16,
+                    Foreground = darkBlueBrush,
+                    TextWrapping = TextWrapping.Wrap
+                };
+                nameQuantityPanel.Children.Add(txtName);
+
+                TextBlock txtQuantity = new TextBlock
+                {
+                    Text = $"Quantity Requested: {quantity}",
+                    FontWeight = FontWeights.Normal,
+                    FontSize = 12,
+                    Foreground = Brushes.Gray
+                };
+                nameQuantityPanel.Children.Add(txtQuantity);
+
+                Grid.SetColumn(nameQuantityPanel, 0);
+                headerGrid.Children.Add(nameQuantityPanel);
+
+                Border statusTag = CreateRequestStatusTag(status);
+                Grid.SetColumn(statusTag, 1);
+                headerGrid.Children.Add(statusTag);
+
+                requestContent.Children.Add(headerGrid);
+
+                requestContent.Children.Add(CreateDetailBlock("Reason", reason, darkBlueBrush));
+
+                requestContent.Children.Add(CreateDetailBlock("Requested On", requestedAt, darkBlueBrush));
+
+                if (!string.IsNullOrWhiteSpace(approvedAt) && status.ToUpper() != "PENDING")
+                {
+                    requestContent.Children.Add(CreateDetailBlock(
+                        status.ToUpper() == "APPROVED" ? "Approved On" : "Handled On",
+                        approvedAt,
+                        darkBlueBrush));
+                }
+
+                cardBorder.Child = requestContent;
+
+                StackPanelMedicineRequests.Children.Add(cardBorder);
+            }
+
         }
     }
-}
+} 
