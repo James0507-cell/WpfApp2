@@ -1,0 +1,21 @@
+﻿<Window x:Class="WpfApp2.MedicineRequestConfirmation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"              
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="MedicineRequestConfirmation" Height="357" Width="402" Background="{x:Null}">
+    <Border BorderThickness="1" Background="White" CornerRadius="10,10,10,10">
+        <Grid>
+            <Label x:Name="lblMedicineName" Content="Label" HorizontalAlignment="Left" Margin="11,10,0,0" VerticalAlignment="Top" Width="176"/>
+            <Label x:Name="lblDose" Content="Label" HorizontalAlignment="Left" Margin="11,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.132,0.926" Width="213"/>
+            <Label x:Name="lblGenericName" Content="Label" HorizontalAlignment="Left" Margin="11,37,0,0" VerticalAlignment="Top" Width="176"/>
+            <TextBox x:Name="txtPurpose" HorizontalAlignment="Left" Margin="81,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" Height="103"/>
+            <TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Margin="81,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Notes" HorizontalAlignment="Left" Margin="25,117,0,0" VerticalAlignment="Top"/>
+            <Label Content="Label" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center"/>
+            <Button x:Name="btnConfirmRequest" Content="Confirm" HorizontalAlignment="Left" Margin="138,284,0,0" VerticalAlignment="Top" Width="146" Click="btnConfirmRequest_Click"/>
+        </Grid>
+    </Border>
+</Window>
