@@ -1,8 +1,13 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Input;
+using System.Windows.Documents;
+using System.Windows.Media.Effects;
+using System.Windows.Data;
 
 namespace WpfApp2
 {
@@ -14,18 +19,39 @@ namespace WpfApp2
         public StudentManagement()
         {
             InitializeComponent();
-            //LoadStudentList(); 
-            
         }
+
+        /// <summary>
+        /// Helper function to create a styled TextBlock for detail fields.
+        /// </summary>
+        private TextBlock CreateDetailBlock(string label, string value, FontWeight weight = default)
+        {
+            if (weight == default) weight = FontWeights.Normal;
+            return new TextBlock
+            {
+                Text = $"{label}: {value}",
+                FontSize = 12,
+                Margin = new Thickness(0, 2, 0, 2),
+                FontWeight = weight,
+                TextWrapping = TextWrapping.Wrap,
+                Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")) // Dark blue
+            };
+        }
+
+        /// <summary>
+        /// Displays student user records in a modern card layout.
+        /// </summary>
         public void displayUsers(String strQuerry)
         {
+            StackPanel targetStackPanel = this.StudentListPanel;
 
-            StudentListPanel.Children.Clear();
+            targetStackPanel.Children.Clear();
             DataTable dt = admin.displayRecors(strQuerry);
 
             int num = dt.Rows.Count;
             for (int i = 0; i < num; i++)
             {
+                // 1. Extract Data from DataTable row
                 String username = dt.Rows[i]["username"].ToString();
                 String email = dt.Rows[i]["email"].ToString();
                 String adress = dt.Rows[i]["address"].ToString();
@@ -38,164 +64,168 @@ namespace WpfApp2
                 String phone = dt.Rows[i]["phone_number"].ToString();
 
 
-                Border border = new Border
+                // 2. Create the Card Container (Border)
+                Border cardBorder = new Border
                 {
-                    BorderBrush = Brushes.LightGray,
+                    BorderBrush = new SolidColorBrush(Colors.LightGray),
                     BorderThickness = new Thickness(1),
-                    CornerRadius = new CornerRadius(10),
-                    Background = Brushes.White,
-                    Margin = new Thickness(5),
-                    Padding = new Thickness(10)
+                    Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA)), // Very light blue/gray background
+                    CornerRadius = new CornerRadius(8),
+                    Margin = new Thickness(10, 6, 10, 6),
+                    Padding = new Thickness(15),
+                    Width = 590,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Effect = new DropShadowEffect
+                    {
+                        Color = Colors.Gray,
+                        Direction = 315,
+                        ShadowDepth = 2,
+                        BlurRadius = 5,
+                        Opacity = 0.3
+                    }
                 };
 
-                StackPanel studentPanel = new StackPanel();
-                TextBlock name = new TextBlock
+                // 3. Main Grid Layout for the Card
+                Grid mainLayoutGrid = new Grid();
+                mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Header
+                mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Divider
+                mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Details/Buttons
+
+                // 4. Header Section (Row 0)
+                StackPanel headerPanel = new StackPanel { Orientation = Orientation.Vertical, Margin = new Thickness(0, 0, 0, 4) };
+
+                TextBlock txtName = new TextBlock
                 {
                     Text = fullname,
-                    FontSize = 16,
-                    FontWeight = FontWeights.Bold
+                    FontSize = 18,
+                    FontWeight = FontWeights.Bold,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")),
+                    Margin = new Thickness(0, 0, 0, 4)
                 };
-                TextBlock details = new TextBlock
+                headerPanel.Children.Add(txtName);
+
+                TextBlock txtIdUsername = new TextBlock
                 {
-                    Text = StudentId + "\n" + email + "\n" + course + "\n" + year + "\n" + phone + "\n" + adress,
-                    FontSize = 12,
-                    Foreground = Brushes.Gray,
-                    Margin = new Thickness(0, 5, 0, 5)
+                    Text = $"Student ID: {StudentId} | Username: {username}",
+                    FontSize = 13,
+                    FontWeight = FontWeights.DemiBold,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4D7399")),
+                };
+                headerPanel.Children.Add(txtIdUsername);
+
+                Grid.SetRow(headerPanel, 0);
+                mainLayoutGrid.Children.Add(headerPanel);
+
+                // 5. Divider (Row 1)
+                Separator separator = new Separator
+                {
+                    Margin = new Thickness(0, 8, 0, 8),
+                    Foreground = new SolidColorBrush(Colors.LightGray)
+                };
+                Grid.SetRow(separator, 1);
+                mainLayoutGrid.Children.Add(separator);
+
+                // 6. Details and Button Section (Row 2)
+                Grid detailsAndButtonsGrid = new Grid();
+                detailsAndButtonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) }); // Details
+                detailsAndButtonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Buttons
+
+                // Details Panel - Two-column layout within the first grid column
+                Grid detailsGrid = new Grid
+                {
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }, // Left Column (Course/Year)
+                        new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }  // Right Column (Contact/Address)
+                    },
+                    Margin = new Thickness(0, 0, 10, 0)
                 };
 
+                // Left Column: Academic
+                StackPanel leftPanel = new StackPanel { Margin = new Thickness(0, 0, 10, 0) };
+                leftPanel.Children.Add(CreateDetailBlock("Course", course, FontWeights.DemiBold));
+                leftPanel.Children.Add(CreateDetailBlock("Year Level", year));
+
+                Grid.SetColumn(leftPanel, 0);
+                detailsGrid.Children.Add(leftPanel);
+
+                // Right Column: Contact
+                StackPanel rightPanel = new StackPanel { Margin = new Thickness(10, 0, 0, 0) };
+                rightPanel.Children.Add(CreateDetailBlock("Email", email));
+                rightPanel.Children.Add(CreateDetailBlock("Phone", phone));
+                rightPanel.Children.Add(CreateDetailBlock("Address", adress));
+
+                Grid.SetColumn(rightPanel, 1);
+                detailsGrid.Children.Add(rightPanel);
+
+                Grid.SetColumn(detailsGrid, 0);
+                detailsAndButtonsGrid.Children.Add(detailsGrid);
+
+
+                // Button Panel 
                 StackPanel buttonPanel = new StackPanel
                 {
                     Orientation = Orientation.Horizontal,
                     HorizontalAlignment = HorizontalAlignment.Right,
-                    Margin = new Thickness(0, 5, 0, 0)
+                    VerticalAlignment = VerticalAlignment.Center
                 };
 
-                Button updateBtn = new Button
+                // Helper for styled buttons
+                Func<string, Brush, RoutedEventHandler, Border> createStyledButton = (string content, Brush bg, RoutedEventHandler handler) =>
                 {
-                    Content = "Update",
-                    Width = 70,
-                    Margin = new Thickness(5, 0, 5, 0),
-                    BorderThickness = new Thickness(0)
+                    Button button = new Button
+                    {
+                        Content = content,
+                        Background = Brushes.Transparent,
+                        Foreground = Brushes.White,
+                        BorderThickness = new Thickness(0),
+                        Padding = new Thickness(12, 6, 12, 6),
+                        FontWeight = FontWeights.SemiBold,
+                        Cursor = Cursors.Hand
+                    };
+
+                    button.Click += handler;
+
+                    Border btnBorder = new Border
+                    {
+                        CornerRadius = new CornerRadius(5),
+                        Background = bg,
+                        Margin = new Thickness(5, 0, 5, 0),
+                        Child = button
+                    };
+                    return btnBorder;
                 };
-                updateBtn.Click += (s, e) =>
-                {
-                    UpdateStudent(StudentId, course, year, fullname, email, adress, phone);
-                };
 
-                Button deleteBtn = new Button
-                {
-                    Content = "Delete",
-                    Width = 70,
-                    Margin = new Thickness(5, 0, 5, 0),
-                    Background = Brushes.Red,
-                    Foreground = Brushes.White,
-                    BorderThickness = new Thickness(0)
-                };
-                deleteBtn.Click += (s, e) =>
-                {
-                    DeleteStudent(StudentId);
-                };
+                // Update Button (Blue)
+                var updateBtnBorder = createStyledButton("Update",
+                    new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2196F3")), // Blue 
+                    (s, e) =>
+                    {
+                        UpdateStudent(StudentId, course, year, fullname, email, adress, phone);
+                    });
 
-                buttonPanel.Children.Add(updateBtn);
-                buttonPanel.Children.Add(deleteBtn);
+                // Delete Button (Red)
+                var deleteBtnBorder = createStyledButton("Delete",
+                    new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF44336")), // Red
+                    (s, e) =>
+                    {
+                        DeleteStudent(StudentId);
+                    });
 
+                buttonPanel.Children.Add(updateBtnBorder);
+                buttonPanel.Children.Add(deleteBtnBorder);
 
-                studentPanel.Children.Add(name);
-                studentPanel.Children.Add(details);
-                studentPanel.Children.Add(buttonPanel);
-                border.Child = studentPanel;
-                StudentListPanel.Children.Add(border);
+                Grid.SetColumn(buttonPanel, 1);
+                detailsAndButtonsGrid.Children.Add(buttonPanel);
 
+                Grid.SetRow(detailsAndButtonsGrid, 2);
+                mainLayoutGrid.Children.Add(detailsAndButtonsGrid);
 
-
+                // 7. Add the Card to the Main StackPanel
+                cardBorder.Child = mainLayoutGrid;
+                targetStackPanel.Children.Add(cardBorder);
             }
         }
-        /*private void LoadStudentList()
-        {
-            StudentListPanel.Children.Clear();
-
-            SQL = "SELECT first_name, last_name, student_id, email, course_program, year_level FROM users WHERE role = 'Student'";
-            DataTable dt = admin.displayRecors(SQL);
-
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                Border panel = CreateStudentPanel(dt.Rows[i]);
-                StudentListPanel.Children.Add(panel);
-            }
-        }*/
-
-        /*private Border CreateStudentPanel(DataRow row)
-        {
-            Border border = new Border
-            {
-                BorderBrush = Brushes.LightGray,
-                BorderThickness = new Thickness(1),
-                CornerRadius = new CornerRadius(10),
-                Background = Brushes.White,
-                Margin = new Thickness(5),
-                Padding = new Thickness(10)
-            };
-
-            StackPanel studentPanel = new StackPanel();
-
-            TextBlock name = new TextBlock
-            {
-                Text = $"{row["first_name"]} {row["last_name"]}",
-                FontSize = 16,
-                FontWeight = FontWeights.Bold
-            };
-
-            TextBlock details = new TextBlock
-            {
-                Text = $"ID: {row["student_id"]}\nEmail: {row["email"]}\nCourse: {row["course_program"]}\nYear: {row["year_level"]}",
-                FontSize = 12,
-                Foreground = Brushes.Gray,
-                Margin = new Thickness(0, 5, 0, 5)
-            };
-
-            StackPanel buttonPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Margin = new Thickness(0, 5, 0, 0)
-            };
-
-            Button updateBtn = new Button
-            {
-                Content = "Update",
-                Width = 70,
-                Margin = new Thickness(5, 0, 5, 0),
-                BorderThickness = new Thickness(0)
-            };
-            updateBtn.Click += (s, e) =>
-            {
-                UpdateStudent(row["student_id"].ToString(), row["course_program"].ToString(), row["year_level"].ToString());
-            };
-
-            Button deleteBtn = new Button
-            {
-                Content = "Delete",
-                Width = 70,
-                Margin = new Thickness(5, 0, 5, 0),
-                Background = Brushes.Red,
-                Foreground = Brushes.White,
-                BorderThickness = new Thickness(0)
-            };
-            deleteBtn.Click += (s, e) =>
-            {
-                DeleteStudent(row["student_id"].ToString());
-            };
-
-            buttonPanel.Children.Add(updateBtn);
-            buttonPanel.Children.Add(deleteBtn);
-
-            studentPanel.Children.Add(name);
-            studentPanel.Children.Add(details);
-            studentPanel.Children.Add(buttonPanel);
-
-            border.Child = studentPanel;
-            return border;
-        } */
 
         private void UpdateStudent(string studentId, string oldCourse, string oldYear, string fullname, string email, string address, string phone)
         {
@@ -331,12 +361,12 @@ namespace WpfApp2
                     string newPhone = phoneBox.Text;
 
                     string updateSQL = $"UPDATE users SET " +
-                                       $"course_program = '{newCourse}', " +
-                                       $"year_level = '{newYear}', " +
-                                       $"email = '{newEmail}', " +
-                                       $"address = '{newAddress}', " +
-                                       $"phone_number = '{newPhone}' " +
-                                       $"WHERE student_id = '{studentId}'";
+                                        $"course_program = '{newCourse}', " +
+                                        $"year_level = '{newYear}', " +
+                                        $"email = '{newEmail}', " +
+                                        $"address = '{newAddress}', " +
+                                        $"phone_number = '{newPhone}' " +
+                                        $"WHERE student_id = '{studentId}'";
 
                     admin.sqlManager(updateSQL);
                     MessageBox.Show("Student updated successfully!", "Update", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -360,22 +390,6 @@ namespace WpfApp2
             updateWindow.ShowDialog();
         }
 
-
-
-
-        /*private void DeleteStudent(string studentId)
-        {
-            if (MessageBox.Show($"Are you sure you want to delete student {studentId}?",
-                                "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-            {
-                SQL = $"DELETE FROM users WHERE student_id = '{studentId}'";
-                admin.sqlManager(SQL);
-
-                MessageBox.Show("Student deleted successfully!", "Delete", MessageBoxButton.OK, MessageBoxImage.Information);
-                LoadStudentList(); 
-            }
-        }*/
-
         private void DeleteStudent(String studentId)
         {
             SQL = $"Delete from users where student_id = '{studentId}'";
@@ -384,7 +398,7 @@ namespace WpfApp2
             "Confirm Delete",
             MessageBoxButton.YesNo,
             MessageBoxImage.Question
-    );
+        );
 
             if (result == MessageBoxResult.Yes)
             {
@@ -397,14 +411,12 @@ namespace WpfApp2
             }
             displayUsers($"SELECT * FROM users WHERE role = 'Student'");
         }
-        
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //LoadStudentList();
             AddNewStudent addNewStudent = new AddNewStudent();
             addNewStudent.Show();
-
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

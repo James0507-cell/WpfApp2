@@ -17,7 +17,6 @@ namespace WpfApp2
             InitializeComponent();
         }
 
-        // ✅ Calendar selection
         private void ClsDate_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cldDate.SelectedDate.HasValue)
@@ -26,43 +25,36 @@ namespace WpfApp2
             }
         }
 
-        // Fix for IDE0090: Simplify 'new' expression
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MyTabBooking.SelectedIndex = 1;
         }
 
-        // Fix for CS7036: Pass the required 'username' parameter to the UserForm constructor
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            UserForm userForm = new UserForm(username); // Pass the 'username' field as an argument
+            UserForm userForm = new UserForm(username); 
             userForm.Show();
             this.Close();
         }
 
-        // ✅ Navigate to confirmation tab
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             PopulateConfirmationTab();
             MyTabBooking.SelectedIndex = 2;
         }
 
-        // ✅ Select appointment time
         private void Appointment_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button clickedButton)
             {
                 selectedTime = clickedButton.Tag.ToString();
 
-                // Reset styles for all time buttons
                 ClearPreviousSelection();
 
-                // Highlight selected button
                 clickedButton.Style = (Style)FindResource("SelectedAppointmentButtonStyle");
             }
         }
 
-        // ✅ Reset appointment button style
         private void ClearPreviousSelection()
         {
             foreach (var child in TimeSelectionGrid.Children)
@@ -74,21 +66,18 @@ namespace WpfApp2
             }
         }
 
-        // ✅ Back navigation between tabs
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (MyTabBooking.SelectedIndex > 0)
                 MyTabBooking.SelectedIndex--;
         }
 
-        // ✅ Next button to confirmation
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
             PopulateConfirmationTab();
             MyTabBooking.SelectedIndex = 1;
         }
 
-        // ✅ Populates confirmation tab with all entered info
         private void PopulateConfirmationTab()
         {
             txtConfirmPatientName.Text = $"{txtFirstName.Text} {txtLastName.Text}";
@@ -105,7 +94,6 @@ namespace WpfApp2
             txtConfirmTime.Text = string.IsNullOrEmpty(selectedTime) ? "N/A" : selectedTime;
         }
 
-        // ✅ Confirm and insert appointment
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             string username = MainWindow.Username;
@@ -119,7 +107,6 @@ namespace WpfApp2
             int userId = 0;
             string studentId = "";
 
-            // 🔹 Get user_id and student_id
             booking.dbConnection();
             string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
             string getUserQuery = $"SELECT user_id, student_id FROM users WHERE username = '{username}' LIMIT 1";
@@ -143,7 +130,6 @@ namespace WpfApp2
                 }
             }
 
-            // 🔹 Insert appointment
             string insertQuery = $@"
                 INSERT INTO appointments 
                 (user_id, username, student_id, appointment_date, appointment_time, email, phone_number, 
@@ -161,14 +147,12 @@ namespace WpfApp2
             MyTabBooking.SelectedIndex = 2;
         }
 
-        // ✅ Second "Next" button
         private void NextButton2_Click(object sender, RoutedEventArgs e)
         {
             PopulateConfirmationTab();
             MyTabBooking.SelectedIndex = 2;
         }
 
-        // ✅ Text & ComboBox events (empty stubs)
         private void txtFirstName_TextChanged(object sender, TextChangedEventArgs e) { }
         private void txtLastName_TextChanged(object sender, TextChangedEventArgs e) { }
         private void txtStudentID_TextChanged(object sender, TextChangedEventArgs e) { }
@@ -182,7 +166,6 @@ namespace WpfApp2
         private void txtEmergencyContactName_TextChanged(object sender, TextChangedEventArgs e) { }
         private void txtEmergencyContactPhone_TextChanged(object sender, TextChangedEventArgs e) { }
 
-        // ✅ Window Loaded
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             booking.dbConnection();
