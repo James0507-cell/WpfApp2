@@ -14,7 +14,7 @@ namespace WpfApp2
         Users userForm = new Users();
         ShortCheck shortcheck = new ShortCheck();
         string SQL = "";
-
+        
         public UserForm(string username)
         {
             InitializeComponent();
@@ -288,5 +288,11 @@ namespace WpfApp2
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MedicineRequest medicineRequest = new MedicineRequest();
+            medicineRequest.Show();
+            this.Close();
+        }
     }
 }

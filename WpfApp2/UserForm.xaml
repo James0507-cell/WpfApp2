@@ -52,7 +52,7 @@
                     </Border>
 
                     <Border BorderBrush="Black" BorderThickness="0.2" Grid.Column="3" Margin="23,34,26,10" CornerRadius="8" Background="White">
-                        <Button Content="" Margin="23,0,0,0" HorizontalAlignment="Left" Width="204" BorderBrush="{x:Null}" UseLayoutRounding="True">
+                        <Button Content="" Margin="23,0,0,0" HorizontalAlignment="Left" Width="204" BorderBrush="{x:Null}" UseLayoutRounding="True" Click="Button_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="/Your paragraph text (5).png" Stretch="UniformToFill"/>
                             </Button.Background>
