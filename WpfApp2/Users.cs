@@ -36,6 +36,7 @@ namespace WpfApp2
         }
         public void sqlManager(String strQuesrry)
         {
+
             dbConn.Open();
             dbCommand = new MySqlCommand(strQuesrry, dbConn);
             dbCommand.ExecuteNonQuery();

@@ -109,6 +109,9 @@
                                         </Grid.RowDefinitions>
                                         <Label Content="Medicine Requests" HorizontalAlignment="Left" Margin="26,10,0,0" VerticalAlignment="Top" Width="203" Foreground="#FF00104D" FontSize="14"/>
                                         <Label Content="Review and approve medicine requests" HorizontalAlignment="Left" Margin="26,31,0,0" VerticalAlignment="Top" Width="244" Foreground="#FFAFAFAF"/>
+                                        <ScrollViewer Grid.Row="1">
+                                            <StackPanel x:Name="StackPanelMedicineReuqests" Width="600"/>
+                                        </ScrollViewer>
                                     </Grid>
                                 </Border>
                             </Grid>
