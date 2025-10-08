@@ -15,12 +15,9 @@ namespace WpfApp2
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Handles the Calculate BMI button click event.
-        /// </summary>
+        
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Input Validation and Parsing
             if (!double.TryParse(HeightTextBox.Text, out double heightCm) || heightCm <= 0)
             {
                 BmiResultTextBlock.Text = "Error: Invalid Height.";
