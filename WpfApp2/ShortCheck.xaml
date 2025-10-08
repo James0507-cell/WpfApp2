@@ -193,7 +193,7 @@
             <Grid>
                 <Border BorderBrush="Black" BorderThickness="1" Margin="-6,0,0,0">
                     <Grid>
-                        <Button Content="" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="22" Width="112">
+                        <Button Content="" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="22" Width="112" Click="Button_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="/goback.jpg"/>
                             </Button.Background>
