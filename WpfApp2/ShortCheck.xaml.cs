@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
+using MySql.Data.MySqlClient;
+
 
 namespace WpfApp2
 {
@@ -86,5 +88,7 @@ namespace WpfApp2
             userForm.Show();
             this.Close();
         }
+
+
     }
 }

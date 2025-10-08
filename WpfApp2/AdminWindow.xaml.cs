@@ -19,6 +19,7 @@ namespace WpfApp2
     {
         String SQL = "";
         Admin admin = new Admin();
+        String username = MainWindow.Username;
         StudentManagement studentManagement = new StudentManagement();
 
         public AdminWindow()
@@ -28,6 +29,9 @@ namespace WpfApp2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            UserForm userForm = new UserForm(username);
+            userForm.Show();
+            this.Close();
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

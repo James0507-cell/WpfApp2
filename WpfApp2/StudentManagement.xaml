@@ -7,28 +7,28 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApp2.StudentManagement"
         mc:Ignorable="d"
         Title="StudentManagement" Height="744" Width="858" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
-    <Border BorderThickness="1" CornerRadius="15,15,15,15" Background="White" d:IsLocked="True">
-        <Grid d:IsLocked="True">
+    <Border BorderThickness="1" CornerRadius="15,15,15,15" Background="White">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="71*"/>
                 <RowDefinition Height="655*"/>
             </Grid.RowDefinitions>
-            <Border BorderBrush="Black" BorderThickness="1" Margin="78,57,78,551" Grid.Row="1" CornerRadius="15,15,15,15" d:IsLocked="True"/>
-            <Grid d:IsLocked="True">
+            <Border BorderBrush="Black" BorderThickness="1" Margin="78,57,78,541" Grid.Row="1" CornerRadius="15,15,15,15"/>
+            <Grid>
                 <Border BorderBrush="Black" BorderThickness="1" d:IsLocked="True"/>
             </Grid>
-            <Grid d:IsLocked="True">
-                <Button Content="" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="72" Foreground="{x:Null}" Cursor="Hand" mah:ControlsHelper.FocusBorderBrush="{x:Null}" BorderBrush="{x:Null}" d:IsLocked="True">
+            <Grid>
+                <Button Content="" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="72" Foreground="{x:Null}" Cursor="Hand" mah:ControlsHelper.FocusBorderBrush="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click_1">
                     <Button.Background>
                         <ImageBrush ImageSource="/goback.jpg"/>
                     </Button.Background>
                 </Button>
-                <Image HorizontalAlignment="Left" Height="48" Margin="87,13,0,0" VerticalAlignment="Top" Width="54" Source="/mcm logo.png" d:IsLocked="True"/>
-                <Label Content="Student Management" HorizontalAlignment="Left" Margin="135,13,0,0" VerticalAlignment="Top" Width="173" Foreground="#FF00104D" FontSize="14" FontWeight="SemiBold" d:IsLocked="True"/>
-                <Label Content="Manage student accounts and information" HorizontalAlignment="Left" Margin="135,35,0,0" VerticalAlignment="Top" Width="245" Foreground="#FFAFAFAF" Height="26" d:IsLocked="True"/>
+                <Image HorizontalAlignment="Left" Height="48" Margin="87,13,0,0" VerticalAlignment="Top" Width="54" Source="/mcm logo.png"/>
+                <Label Content="Student Management" HorizontalAlignment="Left" Margin="135,13,0,0" VerticalAlignment="Top" Width="173" Foreground="#FF00104D" FontSize="14" FontWeight="SemiBold"/>
+                <Label Content="Manage student accounts and information" HorizontalAlignment="Left" Margin="135,35,0,0" VerticalAlignment="Top" Width="245" Foreground="#FFAFAFAF" Height="26"/>
             </Grid>
-            <TabControl Grid.Row="1" Margin="78,67,78,53" BorderBrush="{x:Null}" d:IsLocked="True">
-                <TabItem Header="Student List" Margin="9,-8,-155,12" BorderBrush="{x:Null}" Background="{x:Null}" d:IsLocked="True">
+            <TabControl Grid.Row="1" Margin="78,67,78,53" BorderBrush="{x:Null}">
+                <TabItem Header="Student List" Margin="9,-8,-155,12" BorderBrush="{x:Null}" Background="{x:Null}">
                     <Grid Margin="0,47,0,0" d:IsLocked="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="5*"/>
@@ -132,8 +132,53 @@
 
                     </Grid>
                 </TabItem>
-                <TabItem Header="Analytics" BorderBrush="{x:Null}" Background="{x:Null}" Margin="188,-9,-365,11" d:IsLocked="True">
-                    <Grid d:IsLocked="True"/>
+                <TabItem Header="Analytics" BorderBrush="{x:Null}" Background="{x:Null}" Margin="188,-9,-346,11">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="107*"/>
+                            <RowDefinition Height="400*"/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="14,14,14,13" CornerRadius="5,5,5,5">
+                                <Grid>
+                                    <Label Content="Total Student" HorizontalAlignment="Left" Margin="44,7,0,0" VerticalAlignment="Top" Width="100" FontWeight="SemiBold" Foreground="#FF00104D"/>
+                                    <Image HorizontalAlignment="Left" Height="35" Margin="7,20,0,0" VerticalAlignment="Top" Width="44" Source="/asd.jpg"/>
+                                </Grid>
+                            </Border>
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="14,14,14,13" Grid.Column="1" CornerRadius="5,5,5,5">
+                                <Grid>
+                                    <Label Content="Active Student" HorizontalAlignment="Left" Margin="46,5,0,0" VerticalAlignment="Top" Width="98" Foreground="#FF00104D" FontWeight="SemiBold"/>
+                                    <Image HorizontalAlignment="Left" Height="30" Margin="9,0,0,0" VerticalAlignment="Center" Width="32" Source="/dsdasd.jpg"/>
+                                </Grid>
+                            </Border>
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="14,14,14,13" Grid.Column="2" CornerRadius="5,5,5,5">
+                                <Grid>
+                                    <Label Content="Programs" HorizontalAlignment="Left" Margin="61,5,0,0" VerticalAlignment="Top" Width="98" Foreground="#FF00104D" FontWeight="SemiBold"/>
+                                    <Image HorizontalAlignment="Left" Height="30" Margin="10,0,0,0" VerticalAlignment="Center" Width="39" Source="/asdasdasd.jpg"/>
+                                </Grid>
+                            </Border>
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="10,14,18,13" Grid.Column="3" CornerRadius="5,5,5,5">
+                                <Grid>
+                                    <Label Content="Medical alerts" HorizontalAlignment="Left" Margin="46,5,0,0" VerticalAlignment="Top" Width="98" Foreground="#FF00104D" FontWeight="SemiBold"/>
+                                    <Image HorizontalAlignment="Left" Height="29" Margin="10,26,0,0" VerticalAlignment="Top" Width="32" Source="/hearthbeatsad.jpg"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="16,28,17,27" CornerRadius="5,5,5,5"/>
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="17,28,16,27" Grid.Column="1" CornerRadius="5,5,5,5"/>
+                        </Grid>
+                    </Grid>
                 </TabItem>
             </TabControl>
         </Grid>

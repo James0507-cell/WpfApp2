@@ -436,5 +436,12 @@ namespace WpfApp2
             SQL = "SELECT * FROM users WHERE student_id LIKE '%" + txtSearch.Text + "%'";
             displayUsers(SQL);
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            AdminWindow admin = new AdminWindow();
+            admin.Show();
+            this.Close();
+        }
     }
 }
