@@ -108,7 +108,7 @@ namespace WpfApp2
             string studentId = "";
 
             booking.dbConnection();
-            string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
+            /*string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
             string getUserQuery = $"SELECT user_id, student_id FROM users WHERE username = '{username}' LIMIT 1";
 
             using (MySqlConnection conn = new MySqlConnection(strConn))
@@ -128,7 +128,7 @@ namespace WpfApp2
                         return;
                     }
                 }
-            }
+            }*/
 
             string insertQuery = $@"
                 INSERT INTO appointments 
