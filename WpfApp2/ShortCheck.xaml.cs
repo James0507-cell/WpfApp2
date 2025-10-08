@@ -9,17 +9,15 @@ namespace WpfApp2
 {
     public partial class ShortCheck : Window
     {
+        String username = MainWindow.Username;
         public ShortCheck()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Handles the Calculate BMI button click event.
-        /// </summary>
+        
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Input Validation and Parsing
             if (!double.TryParse(HeightTextBox.Text, out double heightCm) || heightCm <= 0)
             {
                 BmiResultTextBlock.Text = "Error: Invalid Height.";
@@ -74,16 +72,19 @@ namespace WpfApp2
             BmiResultTextBlock.Foreground = categoryColor;
         }
 
-        /// <summary>
-        /// Prevents non-numeric input (including decimal separators based on culture) 
-        /// to ensure only valid numbers can be entered in the textboxes.
-        /// This method is wired up in the XAML's PreviewTextInput property.
-        /// </summary>
+      
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             // Regex that allows digits and a single decimal point (based on current culture)
             Regex regex = new Regex("[^0-9,.]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           UserForm userForm = new UserForm(username);
+            userForm.Show();
+            this.Close();
         }
     }
 }
