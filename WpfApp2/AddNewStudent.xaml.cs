@@ -79,7 +79,7 @@ namespace WpfApp2
 
         private void btnAddStudent_Click(object sender, RoutedEventArgs e)
         {
-            CreateStudentAccount createStudent = new CreateStudentAccount();
+            Admin createStudent = new Admin();
 
             createStudent.AddStudent(
                 txtStudentID.Text,
