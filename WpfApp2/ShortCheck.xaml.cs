@@ -1,27 +1,89 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
+using System.Text.RegularExpressions;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace WpfApp2
 {
-    /// <summary>
-    /// Interaction logic for ShortCheck.xaml
-    /// </summary>
     public partial class ShortCheck : Window
     {
         public ShortCheck()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Handles the Calculate BMI button click event.
+        /// </summary>
+        private void CalculateButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 1. Input Validation and Parsing
+            if (!double.TryParse(HeightTextBox.Text, out double heightCm) || heightCm <= 0)
+            {
+                BmiResultTextBlock.Text = "Error: Invalid Height.";
+                BmiResultTextBlock.Foreground = Brushes.Red;
+                return;
+            }
+
+            if (!double.TryParse(WeightTextBox.Text, out double weightKg) || weightKg <= 0)
+            {
+                BmiResultTextBlock.Text = "Error: Invalid Weight.";
+                BmiResultTextBlock.Foreground = Brushes.Red;
+                return;
+            }
+
+            // 2. BMI Calculation
+            // Convert height from centimeters (cm) to meters (m)
+            double heightM = heightCm / 100.0;
+
+            // BMI Formula: weight (kg) / height (m)^2
+            double bmi = weightKg / (heightM * heightM);
+
+            // Round the BMI for display
+            string roundedBmi = Math.Round(bmi, 1).ToString();
+
+            // 3. Determine Category and Set UI
+            string category;
+            Brush categoryColor;
+
+            if (bmi < 18.5)
+            {
+                category = "Underweight";
+                categoryColor = Brushes.Blue;
+            }
+            else if (bmi >= 18.5 && bmi <= 24.9)
+            {
+                category = "Normal Weight";
+                categoryColor = Brushes.Green;
+            }
+            else if (bmi >= 25.0 && bmi <= 29.9)
+            {
+                category = "Overweight";
+                categoryColor = Brushes.Orange;
+            }
+            else
+            {
+                category = "Obese";
+                categoryColor = Brushes.Red;
+            }
+
+            // 4. Update the Result TextBlock
+            BmiResultTextBlock.Text = $"Your BMI: {roundedBmi} ({category})";
+            BmiResultTextBlock.Foreground = categoryColor;
+        }
+
+        /// <summary>
+        /// Prevents non-numeric input (including decimal separators based on culture) 
+        /// to ensure only valid numbers can be entered in the textboxes.
+        /// This method is wired up in the XAML's PreviewTextInput property.
+        /// </summary>
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            // Regex that allows digits and a single decimal point (based on current culture)
+            Regex regex = new Regex("[^0-9,.]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

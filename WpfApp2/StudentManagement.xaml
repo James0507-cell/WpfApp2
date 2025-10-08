@@ -6,40 +6,40 @@
         xmlns:local="clr-namespace:WpfApp2"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApp2.StudentManagement"
         mc:Ignorable="d"
-        Title="StudentManagement" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
-    <Border BorderThickness="1" CornerRadius="15,15,15,15" Background="White">
-        <Grid>
+        Title="StudentManagement" Height="744" Width="858" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Border BorderThickness="1" CornerRadius="15,15,15,15" Background="White" d:IsLocked="True">
+        <Grid d:IsLocked="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="71*"/>
                 <RowDefinition Height="655*"/>
             </Grid.RowDefinitions>
-            <Border BorderBrush="Black" BorderThickness="1" Margin="78,57,78,551" Grid.Row="1" CornerRadius="15,15,15,15"/>
-            <Grid>
-                <Border BorderBrush="Black" BorderThickness="1"/>
+            <Border BorderBrush="Black" BorderThickness="1" Margin="78,57,78,551" Grid.Row="1" CornerRadius="15,15,15,15" d:IsLocked="True"/>
+            <Grid d:IsLocked="True">
+                <Border BorderBrush="Black" BorderThickness="1" d:IsLocked="True"/>
             </Grid>
-            <Grid>
-                <Button Content="" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="72" Foreground="{x:Null}" Cursor="Hand" mah:ControlsHelper.FocusBorderBrush="{x:Null}" BorderBrush="{x:Null}">
+            <Grid d:IsLocked="True">
+                <Button Content="" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="72" Foreground="{x:Null}" Cursor="Hand" mah:ControlsHelper.FocusBorderBrush="{x:Null}" BorderBrush="{x:Null}" d:IsLocked="True">
                     <Button.Background>
                         <ImageBrush ImageSource="/goback.jpg"/>
                     </Button.Background>
                 </Button>
-                <Image HorizontalAlignment="Left" Height="48" Margin="87,13,0,0" VerticalAlignment="Top" Width="54" Source="/mcm logo.png"/>
-                <Label Content="Student Management" HorizontalAlignment="Left" Margin="135,13,0,0" VerticalAlignment="Top" Width="173" Foreground="#FF00104D" FontSize="14" FontWeight="SemiBold"/>
-                <Label Content="Manage student accounts and information" HorizontalAlignment="Left" Margin="135,35,0,0" VerticalAlignment="Top" Width="245" Foreground="#FFAFAFAF" Height="26"/>
+                <Image HorizontalAlignment="Left" Height="48" Margin="87,13,0,0" VerticalAlignment="Top" Width="54" Source="/mcm logo.png" d:IsLocked="True"/>
+                <Label Content="Student Management" HorizontalAlignment="Left" Margin="135,13,0,0" VerticalAlignment="Top" Width="173" Foreground="#FF00104D" FontSize="14" FontWeight="SemiBold" d:IsLocked="True"/>
+                <Label Content="Manage student accounts and information" HorizontalAlignment="Left" Margin="135,35,0,0" VerticalAlignment="Top" Width="245" Foreground="#FFAFAFAF" Height="26" d:IsLocked="True"/>
             </Grid>
-            <TabControl Grid.Row="1" Margin="78,67,78,53" BorderBrush="{x:Null}">
-                <TabItem Header="Student List" Margin="9,-8,-155,12" BorderBrush="{x:Null}" Background="{x:Null}">
-                    <Grid Margin="0,47,0,0">
+            <TabControl Grid.Row="1" Margin="78,67,78,53" BorderBrush="{x:Null}" d:IsLocked="True">
+                <TabItem Header="Student List" Margin="9,-8,-155,12" BorderBrush="{x:Null}" Background="{x:Null}" d:IsLocked="True">
+                    <Grid Margin="0,47,0,0" d:IsLocked="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="5*"/>
                             <RowDefinition Height="41*"/>
                         </Grid.RowDefinitions>
-                        <Image HorizontalAlignment="Left" Height="21" Margin="13,16,0,0" VerticalAlignment="Top" Width="23" Source="/Screenshot 2025-10-03 114355.png"/>
+                        <Image HorizontalAlignment="Left" Height="21" Margin="13,16,0,0" VerticalAlignment="Top" Width="23" Source="/Screenshot 2025-10-03 114355.png" d:IsLocked="True"/>
                         <TextBox x:Name="txtSearch" HorizontalAlignment="Left"
          Margin="43,0,0,0"
          TextWrapping="Wrap"
          VerticalAlignment="Center"
-         Width="193" Height="28" TextChanged="txtSearch_TextChanged">
+         Width="193" Height="28" TextChanged="txtSearch_TextChanged" d:IsLocked="True">
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}">
                                     <Setter Property="Template">
@@ -58,11 +58,11 @@
                                 </Style>
                             </TextBox.Style>
                         </TextBox>
-                        <Image HorizontalAlignment="Left" Height="24" Margin="244,0,0,0" VerticalAlignment="Center" Width="27" Source="/Screenshot 2025-10-03 114755.png"/>
+                        <Image HorizontalAlignment="Left" Height="24" Margin="244,0,0,0" VerticalAlignment="Center" Width="27" Source="/Screenshot 2025-10-03 114755.png" d:IsLocked="True"/>
                         <ComboBox HorizontalAlignment="Left"
           Margin="278,0,0,0"
           VerticalAlignment="Center"
-          Width="120" Height="28">
+          Width="120" Height="28" d:IsLocked="True">
                             <ComboBox.Style>
                                 <Style TargetType="{x:Type ComboBox}">
                                     <Setter Property="Template">
@@ -121,19 +121,19 @@
                                 </Style>
                             </ComboBox.Style>
                         </ComboBox>
-                        <Button Content="" HorizontalAlignment="Left" Margin="531,0,0,0" VerticalAlignment="Center" Width="147" Height="51" BorderBrush="{x:Null}" Click="Button_Click">
+                        <Button Content="" HorizontalAlignment="Left" Margin="531,0,0,0" VerticalAlignment="Center" Width="147" Height="51" BorderBrush="{x:Null}" Click="Button_Click" d:IsLocked="True">
                             <Button.Background>
                                 <ImageBrush ImageSource="/Screenshot 2025-10-03 115810.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
-                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                            <StackPanel x:Name="StudentListPanel" Margin="10"/>
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" d:IsLocked="True">
+                            <StackPanel x:Name="StudentListPanel" Margin="10" d:IsLocked="True"/>
                         </ScrollViewer>
 
                     </Grid>
                 </TabItem>
-                <TabItem Header="Analytics" BorderBrush="{x:Null}" Background="{x:Null}" Margin="188,-9,-365,11">
-                    <Grid/>
+                <TabItem Header="Analytics" BorderBrush="{x:Null}" Background="{x:Null}" Margin="188,-9,-365,11" d:IsLocked="True">
+                    <Grid d:IsLocked="True"/>
                 </TabItem>
             </TabControl>
         </Grid>
