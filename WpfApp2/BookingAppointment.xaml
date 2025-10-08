@@ -460,7 +460,7 @@
                 </TabItem>
 
             </TabControl>
-            <Label Content="Book Appointment" HorizontalAlignment="Left" Margin="133,31,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="SemiBold"/>
+            <Label Content="Book Appointment" HorizontalAlignment="Left" Margin="131,20,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="SemiBold"/>
             <Label Content="Use this form to book an appointment with our clinic." HorizontalAlignment="Left" Margin="133,52,0,0" VerticalAlignment="Top" Foreground="#FF8A8A8A"/>
             <Button Content="Go Back" HorizontalAlignment="Left" Margin="738,39,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click_1" Height="18" Background="{x:Null}" FontWeight="DemiBold" BorderBrush="{x:Null}"/>
             <Button Content="Date &amp; Time" HorizontalAlignment="Left" Margin="176,95,0,0" VerticalAlignment="Top" Click="Button_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF00104D" FontWeight="Bold"/>

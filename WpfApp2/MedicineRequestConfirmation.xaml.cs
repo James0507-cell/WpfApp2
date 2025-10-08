@@ -27,6 +27,7 @@ namespace WpfApp2
         String username = MainWindow.Username;
         int userId =0;
         Users user = new Users();
+        MedicineRequest Confirmation = new MedicineRequest();
         public MedicineRequestConfirmation(string dose, string medicineName, string genericName)
         {
             InitializeComponent();
@@ -41,6 +42,8 @@ namespace WpfApp2
                   $"VALUES ('{userId}', '{medicineName}', '{txtPurpose.Text}', '{txtQuantity.Text}', 'Pending')";
             user.sqlManager(SQL);
             MessageBox.Show("Request is send!");
+            Confirmation.displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + userId);
+
 
         }
 

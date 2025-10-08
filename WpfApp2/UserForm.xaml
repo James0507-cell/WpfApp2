@@ -15,11 +15,11 @@
                 </Grid.FocusVisualStyle>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="51*"/>
-                    <RowDefinition Height="40*"/>
-                    <RowDefinition Height="96*"/>
-                    <RowDefinition Height="362*"/>
-                    <RowDefinition Height="176*"/>
+                    <RowDefinition Height="55*"/>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="75*"/>
+                    <RowDefinition Height="366*"/>
+                    <RowDefinition Height="221*"/>
                 </Grid.RowDefinitions>
 
                 <!-- Grid in Row 2 -->
@@ -31,7 +31,7 @@
                         <ColumnDefinition Width="283*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border BorderThickness="0.2" Margin="20,34,20,10" CornerRadius="8" BorderBrush="Black" Background="#FFFDFDFD">
+                    <Border x:Name="___No_Name_" BorderThickness="0.2" Margin="25,10,15,10" CornerRadius="8" BorderBrush="Black" Background="#FFFDFDFD" IsMouseDirectlyOverChanged="___No_Name__IsMouseDirectlyOverChanged">
                         <Button Content="" Margin="21,3,10,3" BorderBrush="{x:Null}" Click="Button_Click_5" UseLayoutRounding="True">
                             <Button.FocusVisualStyle>
                                 <Style/>
@@ -43,16 +43,16 @@
                         </Button>
                     </Border>
 
-                    <Border BorderBrush="Black" BorderThickness="0.2" Grid.Column="1" Margin="23,34,23,10" CornerRadius="8" Grid.ColumnSpan="2" Background="White">
-                        <Button Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Height="52" Width="206" Click="Button_Click_2" BorderBrush="{x:Null}" UseLayoutRounding="True">
+                    <Border BorderBrush="Black" BorderThickness="0.2" Grid.Column="1" Margin="37,10,45,10" CornerRadius="8" Grid.ColumnSpan="2" Background="White">
+                        <Button Content="" HorizontalAlignment="Center" VerticalAlignment="Center" Height="52" Width="206" Click="Button_Click_2" BorderBrush="{x:Null}" UseLayoutRounding="True" RenderTransformOrigin="0.5,0.5">
                             <Button.Background>
-                                <ImageBrush ImageSource="/Your paragraph text (3).png" Stretch="UniformToFill"/>
+                                <ImageBrush ImageSource="/Your paragraph text (3).png" Stretch="UniformToFill" TileMode="None"/>
                             </Button.Background>
                         </Button>
                     </Border>
 
-                    <Border BorderBrush="Black" BorderThickness="0.2" Grid.Column="3" Margin="23,34,26,10" CornerRadius="8" Background="White">
-                        <Button Content="" Margin="23,0,0,0" HorizontalAlignment="Left" Width="204" BorderBrush="{x:Null}" UseLayoutRounding="True" Click="Button_Click">
+                    <Border BorderBrush="Black" BorderThickness="0.2" Grid.Column="3" Margin="10,10,27,10" CornerRadius="8" Background="White">
+                        <Button Content="" Margin="9,0,0,0" HorizontalAlignment="Left" Width="204" BorderBrush="{x:Null}" UseLayoutRounding="True" Click="Button_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="/Your paragraph text (5).png" Stretch="UniformToFill"/>
                             </Button.Background>
@@ -70,7 +70,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Example Label on top -->
-                        <Label Grid.Row="0" Content="Appointments" FontWeight="Bold" FontSize="14" Margin="10,10,0,10" Foreground="#FF00104D"/>
+                        <Label Grid.Row="0" Content="Appointments" FontWeight="Bold" FontSize="14" Margin="10,5,17,15" Foreground="#FF00104D"/>
 
                         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="250">
                             <StackPanel x:Name="AppointmentStackPanel" HorizontalAlignment="Stretch"/>
@@ -95,7 +95,7 @@
                     </Grid>
                 </Border>
 
-                <Border BorderBrush="Black" BorderThickness="0.2,0.2,0.2,0.2" Grid.Row="4" Margin="25,10,27,0" CornerRadius="1,1,1,1" Background="White" Height="146" VerticalAlignment="Top">
+                <Border BorderBrush="Black" BorderThickness="0.2,0.2,0.2,0.2" Grid.Row="4" Margin="25,0,27,0" CornerRadius="1,1,1,1" Background="White" Height="146" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="115*"/>
@@ -125,10 +125,10 @@
                         <ImageBrush ImageSource="/Screenshot 2025-09-10 194657.png"/>
                     </Button.Background>
                 </Button>
-                <Image HorizontalAlignment="Left" Height="38" Margin="397,37,0,0" Grid.Row="4" VerticalAlignment="Top" Width="37" Source="/Screenshot 2025-09-10 195902.png" RenderTransformOrigin="0.841,-0.093"/>
-                <Image HorizontalAlignment="Left" Height="38" Margin="667,37,0,0" Grid.Row="4" VerticalAlignment="Top" Width="38" Source="/Screenshot 2025-09-10 203147.png" RenderTransformOrigin="0.861,0.455"/>
+                <Image HorizontalAlignment="Left" Height="38" Margin="397,59,0,0" Grid.Row="4" VerticalAlignment="Top" Width="37" Source="/Screenshot 2025-09-10 195902.png" RenderTransformOrigin="0.841,-0.093"/>
+                <Image HorizontalAlignment="Left" Height="38" Margin="667,60,0,0" Grid.Row="4" VerticalAlignment="Top" Width="38" Source="/Screenshot 2025-09-10 203147.png" RenderTransformOrigin="0.861,0.455"/>
                 <Label Content="Latest BMI" HorizontalAlignment="Left" Margin="136,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="7" Foreground="#FF737373" Height="19" Width="42"/>
-                <Label Content="Last Check-up" HorizontalAlignment="Left" Margin="389,73,0,0" Grid.Row="4" VerticalAlignment="Top" Foreground="#FF818181" FontSize="7" Height="19" Width="54"/>
+                <Label Content="Last Check-up" HorizontalAlignment="Left" Margin="389,0,0,0" Grid.Row="4" VerticalAlignment="Center" Foreground="#FF818181" FontSize="7" Height="19" Width="54"/>
                 <Label Content="Active Prescription" HorizontalAlignment="Left" Margin="651,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="7" Foreground="#FF707070" Height="19" Width="67"/>
                 <Button Content="Button" HorizontalAlignment="Left" Margin="-27,-316,0,0" VerticalAlignment="Top" Height="20" Width="40"/>
 

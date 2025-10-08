@@ -125,12 +125,12 @@ namespace WpfApp2
                 // 2. Create the Card Container (Border)
                 Border cardBorder = new Border
                 {
-                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)), // Very light, transparent border
+                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
                     BorderThickness = new Thickness(1),
                     Background = Brushes.White,
                     CornerRadius = new CornerRadius(8),
-                    Margin = new Thickness(10, 6, 10, 6),
-                    Padding = new Thickness(15),
+                    Margin = new Thickness(10, 4, 10, 4),
+                    Padding = new Thickness(12, 8, 12, 8), // Reduced padding to lower height
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     Effect = new DropShadowEffect
                     {
@@ -141,6 +141,7 @@ namespace WpfApp2
                         Opacity = 0.5
                     }
                 };
+
 
                 // 3. Main StackPanel to hold all content vertically
                 StackPanel appointmentContent = new StackPanel();
@@ -293,6 +294,11 @@ namespace WpfApp2
             MedicineRequest medicineRequest = new MedicineRequest();
             medicineRequest.Show();
             this.Close();
+        }
+
+        private void ___No_Name__IsMouseDirectlyOverChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }

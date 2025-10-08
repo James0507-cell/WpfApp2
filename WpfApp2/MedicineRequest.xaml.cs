@@ -294,7 +294,7 @@ namespace WpfApp2
         }
 
 
-        private void displayMedicineRequest(String querry)
+        public void displayMedicineRequest(String querry)
         {
             DataTable dt = new DataTable();
             dt = user.displayRecords(querry);
