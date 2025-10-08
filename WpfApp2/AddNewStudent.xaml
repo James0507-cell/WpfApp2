@@ -220,7 +220,7 @@
                             </TextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Academic" Margin="95,-9,-95,7" BorderBrush="{x:Null}" Background="{x:Null}">
+                    <TabItem Header="Academic" Margin="95,0,-95,7" BorderBrush="{x:Null}" Background="{x:Null}" Height="22" VerticalAlignment="Bottom">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="22*"/>

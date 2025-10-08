@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using MySql.Data.MySqlClient;
-using System.Data;
+using static WpfApp2.Admin;
 
 
 namespace WpfApp2
@@ -51,9 +52,12 @@ namespace WpfApp2
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            cboCourse.Items.Add("BS Computer Science");
-            cboCourse.Items.Add("BS Civil Engineering");
-            cboCourse.Items.Add("BS Information Technology");
+                courseRepo courseRepo = new courseRepo();
+               var courseList = courseRepo.GetAllCourses();
+
+            cboCourse.ItemsSource = courseList;
+            cboCourse.DisplayMemberPath = "CourseName";
+            cboCourse.SelectedValuePath = "CourseId";
 
             cboYearLevel.Items.Add("1st Year");
             cboYearLevel.Items.Add("2nd Year");
