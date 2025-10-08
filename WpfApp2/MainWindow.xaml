@@ -17,9 +17,17 @@
             </Grid.ColumnDefinitions>
 
             <!-- ✅ Border with only one Margin -->
-            <Border BorderBrush="#FFE2DEDE" BorderThickness="0.5"
+            <Border x:Name="___No_Name_" BorderBrush="#FFE2DEDE" BorderThickness="0.5"
                     Margin="83,84,84,84"
                     CornerRadius="5" Background="White" Grid.Column="1">
+                <Border.Effect>
+                    <DropShadowEffect 
+            Color="Black"
+            ShadowDepth="8"
+            BlurRadius="15"
+            Opacity="0.5"
+            Direction="315"/>
+                </Border.Effect>
                 <Grid Height="282" VerticalAlignment="Top">
                     <!-- ✅ Proper Row Definitions -->
                     <Grid.RowDefinitions>

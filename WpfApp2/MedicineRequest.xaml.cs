@@ -197,7 +197,7 @@ namespace WpfApp2
                 {
                     CornerRadius = new CornerRadius(6), 
                     Margin = new Thickness(0, 15, 0, 0),
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFCC0000")), // Match button color
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")), // Match button color
 
                 };
 
@@ -217,6 +217,12 @@ namespace WpfApp2
 
                 medicineContent.Children.Add(buttonWrapper);
 
+                if (quant == 0)
+                {
+                    requestButton.IsEnabled = false;
+                    requestButton.Content = "Out of Stock";
+                    buttonWrapper.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB0B0B0")); // Gray background for disabled state
+                }
 
                 cardBorder.Child = medicineContent;
 
