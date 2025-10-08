@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using static WpfApp2.Admin;
 
 
 namespace WpfApp2
@@ -52,8 +51,8 @@ namespace WpfApp2
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-                courseRepo courseRepo = new courseRepo();
-               var courseList = courseRepo.GetAllCourses();
+             CourseRepo courseRepo = new CourseRepo();
+             var courseList = courseRepo.GetAllCourses();
 
             cboCourse.ItemsSource = courseList;
             cboCourse.DisplayMemberPath = "CourseName";

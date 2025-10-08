@@ -46,7 +46,7 @@ namespace WpfApp2
             StackPanel targetStackPanel = this.StudentListPanel;
 
             targetStackPanel.Children.Clear();
-            DataTable dt = admin.displayRecors(strQuerry);
+            DataTable dt = admin.displayRecords(strQuerry);
 
             int num = dt.Rows.Count;
             for (int i = 0; i < num; i++)

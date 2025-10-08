@@ -122,7 +122,7 @@ namespace WpfApp2
 
             DataTable dt = new DataTable();
 
-            dt = admin.displayRecors(querry);
+            dt = admin.displayRecords(querry);
 
             int n = dt.Rows.Count;
             targetStackPanel.Children.Clear();
@@ -373,7 +373,7 @@ namespace WpfApp2
             // Assuming StackPanelMedicineReuqests is correctly named in your XAML
             StackPanel targetStackPanel = this.StackPanelMedicineReuqests;
             DataTable dt = new DataTable();
-            dt = admin.displayRecors(strquerry);
+            dt = admin.displayRecords(strquerry);
             int n = dt.Rows.Count;
             targetStackPanel.Children.Clear();
 
