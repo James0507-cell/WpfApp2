@@ -79,20 +79,33 @@ namespace WpfApp2
             };
         }
 
-        
-        private TextBlock CreateDetailBlock(string label, string value, Brush foregroundBrush)
+
+        // Helper Method Definition (should be outside the displayMedicine method)
+        private StackPanel CreateDetailBlock(string title, string content, Brush colorBrush)
         {
-            return new TextBlock
+            StackPanel panel = new StackPanel(); // <--- This is the object being returned
+
+            TextBlock titleBlock = new TextBlock
             {
-                Inlines =
-                {
-                    new Run { Text = $"{label}: ", FontWeight = FontWeights.DemiBold, Foreground = foregroundBrush },
-                    new Run { Text = value, FontWeight = FontWeights.Normal, Foreground = foregroundBrush }
-                },
+                Text = title,
+                FontWeight = FontWeights.SemiBold,
                 FontSize = 13,
-                Margin = new Thickness(0, 4, 0, 0),
+                Foreground = Brushes.Black,
+                Margin = new Thickness(0, 0, 0, 2)
+            };
+            panel.Children.Add(titleBlock);
+
+            TextBlock contentBlock = new TextBlock
+            {
+                Text = content,
+                FontWeight = FontWeights.Normal,
+                FontSize = 13,
+                Foreground = Brushes.DarkGray,
                 TextWrapping = TextWrapping.Wrap
             };
+            panel.Children.Add(contentBlock);
+
+            return panel; // <--- The method must explicitly return StackPanel
         }
 
         public void displayMedicine(String querry)
@@ -102,16 +115,16 @@ namespace WpfApp2
             StackPanelMedicines.Children.Clear();
             int n = dt.Rows.Count;
 
+            // Define the color for consistency (Dark Blue/Red)
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-
+            Brush buttonRedBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD0021B"));
 
             for (int i = 0; i < n; i++)
             {
-
-
+                // Data Retrieval (Simplified for presentation)
                 String medicineId = dt.Rows[i][0].ToString();
                 String medicineName = dt.Rows[i][1].ToString();
-                String dosage = dt.Rows[i][2].ToString(); // This should be the strength (e.g., 500mg)
+                String dosage = dt.Rows[i][2].ToString();
                 String genericName = dt.Rows[i][3].ToString();
                 String description = dt.Rows[i][4].ToString();
                 DataTable quantity = user.displayRecords("select amount from medicineinventory where medicine_id = '" + medicineId + "'");
@@ -120,13 +133,16 @@ namespace WpfApp2
                 // 1. Create the Card Container (Border)
                 Border cardBorder = new Border
                 {
-                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)), // Very light, transparent border
+                    Width = 280,
+                    Height = 300, // Fixed height is essential for DockPanel to work
+                    Margin = new Thickness(10),
+
+                    // Styling remains the same...
+                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
                     BorderThickness = new Thickness(1),
                     Background = Brushes.White,
-                    CornerRadius = new CornerRadius(8),
-                    Margin = new Thickness(10, 6, 10, 6),
+                    CornerRadius = new CornerRadius(10),
                     Padding = new Thickness(15),
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
                     Effect = new DropShadowEffect
                     {
                         Color = Colors.LightGray,
@@ -137,32 +153,93 @@ namespace WpfApp2
                     }
                 };
 
-                StackPanel medicineContent = new StackPanel();
+                // *** KEY FIX: Use DockPanel instead of StackPanel ***
+                DockPanel medicineContent = new DockPanel();
 
+                // --- Row 3: Action Button (Docked to the Bottom) ---
+                Border buttonWrapper = new Border
+                {
+                    CornerRadius = new CornerRadius(6),
+                    Margin = new Thickness(0, 15, 0, 0), // Top margin separates it from content
+                    Background = buttonRedBrush,
+                };
 
+                // *** DOCKING THE BUTTON TO THE BOTTOM ***
+                DockPanel.SetDock(buttonWrapper, Dock.Bottom);
+
+                Button requestButton = new Button
+                {
+                    Content = "Request Medicine",
+                    Background = Brushes.Transparent,
+                    Foreground = Brushes.White,
+                    BorderThickness = new Thickness(0),
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 13,
+                    Padding = new Thickness(10),
+                    Cursor = Cursors.Hand,
+                    HorizontalAlignment = HorizontalAlignment.Stretch
+                };
+                requestButton.Click += (s, e) => RequestMedicine_Click(medicineId, medicineName, dosage, genericName);
+
+                buttonWrapper.Child = requestButton;
+
+                // Add the button wrapper FIRST, so it takes the bottom slot
+                medicineContent.Children.Add(buttonWrapper);
+
+                // Handle out of stock state
+                if (quant == 0)
+                {
+                    requestButton.IsEnabled = false;
+                    requestButton.Content = "Out of Stock";
+                    buttonWrapper.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB0B0B0"));
+                }
+
+                // --- Row 1 & 2: Content (Header, Separator, Details) ---
+                // All remaining content must be added inside a StackPanel so it flows
+                // correctly and takes up the remaining space left by the DockPanel.
+                StackPanel mainContentStack = new StackPanel();
+
+                // Header Grid (existing code)
                 Grid headerGrid = new Grid();
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Icon
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Name & Dosage
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Availability Tag
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                 headerGrid.Margin = new Thickness(0, 0, 0, 10);
 
+                // Icon 
+                Border iconWrapper = new Border
+                {
+                    Background = new SolidColorBrush(Color.FromArgb(255, 255, 230, 230)),
+                    CornerRadius = new CornerRadius(4),
+                    Padding = new Thickness(5),
+                    Width = 36,
+                    Height = 36,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
                 TextBlock iconBlock = new TextBlock
                 {
                     Text = "💊",
-                    FontSize = 24,
-                    Margin = new Thickness(0, 0, 10, 0),
-                    VerticalAlignment = VerticalAlignment.Top
+                    FontSize = 18,
+                    Foreground = Brushes.Red,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
                 };
-                Grid.SetColumn(iconBlock, 0);
-                headerGrid.Children.Add(iconBlock);
+                iconWrapper.Child = iconBlock;
+                Grid.SetColumn(iconWrapper, 0);
+                headerGrid.Children.Add(iconWrapper);
 
-
-                StackPanel nameDosagePanel = new StackPanel();
+                // Name and Dosage
+                StackPanel nameDosagePanel = new StackPanel
+                {
+                    Margin = new Thickness(8, 0, 0, 0),
+                    VerticalAlignment = VerticalAlignment.Center
+                };
 
                 TextBlock txtName = new TextBlock
                 {
                     Text = medicineName,
-                    FontWeight = FontWeights.DemiBold,
+                    FontWeight = FontWeights.ExtraBold,
                     FontSize = 16,
                     Foreground = darkBlueBrush,
                     TextWrapping = TextWrapping.Wrap
@@ -171,7 +248,7 @@ namespace WpfApp2
 
                 TextBlock txtDosage = new TextBlock
                 {
-                    Text = $"{dosage} Tablet", 
+                    Text = $"{dosage} Tablet",
                     FontWeight = FontWeights.Normal,
                     FontSize = 12,
                     Foreground = Brushes.Gray
@@ -181,54 +258,41 @@ namespace WpfApp2
                 Grid.SetColumn(nameDosagePanel, 1);
                 headerGrid.Children.Add(nameDosagePanel);
 
+                // Availability Tag
                 Border availabilityTag = CreateAvailabilityTag(quant);
                 Grid.SetColumn(availabilityTag, 2);
                 headerGrid.Children.Add(availabilityTag);
 
-                medicineContent.Children.Add(headerGrid);
+                mainContentStack.Children.Add(headerGrid);
 
-
-                medicineContent.Children.Add(CreateDetailBlock("Generic Name", genericName, darkBlueBrush));
-                medicineContent.Children.Add(CreateDetailBlock("Description", description, darkBlueBrush));
-
-
-                // --- Row 3: Action Button ---
-                Border buttonWrapper = new Border
+                // Separator Line 
+                Rectangle separator = new Rectangle
                 {
-                    CornerRadius = new CornerRadius(6), 
-                    Margin = new Thickness(0, 15, 0, 0),
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")), // Match button color
-
+                    Fill = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+                    Height = 1,
+                    Margin = new Thickness(0, 0, 0, 10)
                 };
+                mainContentStack.Children.Add(separator);
 
-                Button requestButton = new Button
-                {
-                    Content = "Request Medicine",
-                    Background = Brushes.Transparent, 
-                    Foreground = Brushes.White,
-                    BorderThickness = new Thickness(0), 
-                    FontWeight = FontWeights.Bold,
-                    Padding = new Thickness(10),
-                    Cursor = Cursors.Hand
-                };
-                requestButton.Click += (s, e) => RequestMedicine_Click(medicineId, medicineName, dosage, genericName);
 
-                buttonWrapper.Child = requestButton; // Place button inside the rounded border
+                // Details (Generic Name & Description)
+                mainContentStack.Children.Add(CreateDetailBlock("Generic Name", genericName, darkBlueBrush));
 
-                medicineContent.Children.Add(buttonWrapper);
+                StackPanel descriptionBlock = CreateDetailBlock("Description", description, darkBlueBrush);
+                descriptionBlock.Margin = new Thickness(0, 8, 0, 0);
+                mainContentStack.Children.Add(descriptionBlock);
 
-                if (quant == 0)
-                {
-                    requestButton.IsEnabled = false;
-                    requestButton.Content = "Out of Stock";
-                    buttonWrapper.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB0B0B0")); // Gray background for disabled state
-                }
+                // Add the main content stack to the DockPanel.
+                // The last element added to a DockPanel automatically fills the remaining space.
+                medicineContent.Children.Add(mainContentStack);
+
 
                 cardBorder.Child = medicineContent;
-
                 StackPanelMedicines.Children.Add(cardBorder);
             }
         }
+        // You should ensure CreateDetailBlock and CreateAvailabilityTag helper methods are defined
+        // in your class as they were in the previous response's context.
 
         private void RequestMedicine_Click(string medicineId, string medicineName, string dose, string genericName)
         {
@@ -299,17 +363,15 @@ namespace WpfApp2
             DataTable dt = new DataTable();
             dt = user.displayRecords(querry);
 
-            
             StackPanelMedicineRequests.Children.Clear();
 
             int n = dt.Rows.Count;
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-
-            
+            Brush lightGrayBrush = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230)); // Background for icon
 
             for (int i = 0; i < n; i++)
             {
-                
+
                 String medicineName = dt.Rows[i][2].ToString();
                 String reason = dt.Rows[i][3].ToString();
                 String quantity = dt.Rows[i][4].ToString();
@@ -320,12 +382,13 @@ namespace WpfApp2
                 // 1. Create the Card Container (Border)
                 Border cardBorder = new Border
                 {
+                    // Adjusted Margin/Padding for a slightly more compact look
                     BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
                     BorderThickness = new Thickness(1),
                     Background = Brushes.White,
-                    CornerRadius = new CornerRadius(8),
-                    Margin = new Thickness(10, 6, 10, 6),
-                    Padding = new Thickness(15),
+                    CornerRadius = new CornerRadius(10), // Slightly rounder
+                    Margin = new Thickness(0, 8, 0, 8), // Adjusted vertical margin
+                    Padding = new Thickness(20), // Increased internal padding
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     Effect = new DropShadowEffect
                     {
@@ -339,18 +402,46 @@ namespace WpfApp2
 
                 StackPanel requestContent = new StackPanel();
 
+                // --- 1. Header Section ---
                 Grid headerGrid = new Grid();
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Icon
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Name & Quantity
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Status Tag
-                headerGrid.Margin = new Thickness(0, 0, 0, 10);
+                headerGrid.Margin = new Thickness(0, 0, 0, 15); // Increased margin for separator
 
+                // 1a. Icon (New Addition)
+                Border iconWrapper = new Border
+                {
+                    Background = lightGrayBrush,
+                    CornerRadius = new CornerRadius(5),
+                    Padding = new Thickness(5),
+                    Width = 36,
+                    Height = 36,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(0, 0, 10, 0) // Space from name
+                };
+                TextBlock medicineIcon = new TextBlock
+                {
+                    Text = "💊", // Medicine Icon
+                    FontSize = 18,
+                    Foreground = darkBlueBrush,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                iconWrapper.Child = medicineIcon;
+                Grid.SetColumn(iconWrapper, 0);
+                headerGrid.Children.Add(iconWrapper);
+
+
+                // 1b. Name & Quantity
                 StackPanel nameQuantityPanel = new StackPanel();
 
                 TextBlock txtName = new TextBlock
                 {
                     Text = medicineName,
-                    FontWeight = FontWeights.DemiBold,
-                    FontSize = 16,
+                    FontWeight = FontWeights.ExtraBold, // Increased emphasis
+                    FontSize = 18,
                     Foreground = darkBlueBrush,
                     TextWrapping = TextWrapping.Wrap
                 };
@@ -359,31 +450,61 @@ namespace WpfApp2
                 TextBlock txtQuantity = new TextBlock
                 {
                     Text = $"Quantity Requested: {quantity}",
-                    FontWeight = FontWeights.Normal,
-                    FontSize = 12,
+                    FontWeight = FontWeights.SemiBold, // Slightly more emphasis
+                    FontSize = 13,
                     Foreground = Brushes.Gray
                 };
                 nameQuantityPanel.Children.Add(txtQuantity);
 
-                Grid.SetColumn(nameQuantityPanel, 0);
+                Grid.SetColumn(nameQuantityPanel, 1);
                 headerGrid.Children.Add(nameQuantityPanel);
 
+                // 1c. Status Tag
                 Border statusTag = CreateRequestStatusTag(status);
-                Grid.SetColumn(statusTag, 1);
+                Grid.SetColumn(statusTag, 2);
                 headerGrid.Children.Add(statusTag);
 
                 requestContent.Children.Add(headerGrid);
 
-                requestContent.Children.Add(CreateDetailBlock("Reason", reason, darkBlueBrush));
+                // Separator Line
+                Rectangle separator = new Rectangle
+                {
+                    Fill = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+                    Height = 1,
+                    Margin = new Thickness(0, 0, 0, 15)
+                };
+                requestContent.Children.Add(separator);
 
-                requestContent.Children.Add(CreateDetailBlock("Requested On", requestedAt, darkBlueBrush));
+                // --- 2. Details Section (Using Icon Detail Blocks) ---
 
+                // Reason (Icon: 💬 or 📝)
+                requestContent.Children.Add(CreateIconDetailBlock("Reason", reason, darkBlueBrush, "📝"));
+
+                // Requested On (Icon: 🗓️ or 🕒)
+                StackPanel requestedOnBlock = CreateIconDetailBlock("Requested On", requestedAt, darkBlueBrush, "🗓️");
+                requestedOnBlock.Margin = new Thickness(0, 8, 0, 0); // Reduced margin
+                requestContent.Children.Add(requestedOnBlock);
+
+                // Approved/Handled On (Icon: ✅ or ⚙️)
                 if (!string.IsNullOrWhiteSpace(approvedAt) && status.ToUpper() != "PENDING")
                 {
-                    requestContent.Children.Add(CreateDetailBlock(
-                        status.ToUpper() == "APPROVED" ? "Approved On" : "Handled On",
-                        approvedAt,
-                        darkBlueBrush));
+                    string detailTitle;
+                    string icon;
+
+                    if (status.ToUpper() == "APPROVED")
+                    {
+                        detailTitle = "Approved On";
+                        icon = "✅";
+                    }
+                    else // Denied/Handled
+                    {
+                        detailTitle = "Handled On";
+                        icon = "⚙️";
+                    }
+
+                    StackPanel handledOnBlock = CreateIconDetailBlock(detailTitle, approvedAt, darkBlueBrush, icon);
+                    handledOnBlock.Margin = new Thickness(0, 8, 0, 0); // Reduced margin
+                    requestContent.Children.Add(handledOnBlock);
                 }
 
                 cardBorder.Child = requestContent;
@@ -391,6 +512,57 @@ namespace WpfApp2
                 StackPanelMedicineRequests.Children.Add(cardBorder);
             }
 
+        }
+
+        // --- NEW HELPER METHOD FOR ICON DETAIL BLOCKS ---
+        private StackPanel CreateIconDetailBlock(string title, string content, Brush colorBrush, string icon)
+        {
+            Grid grid = new Grid();
+            // Grid columns: Icon | Text Details
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            // 1. Icon (Emoji)
+            TextBlock iconBlock = new TextBlock
+            {
+                Text = icon,
+                FontSize = 16,
+                Margin = new Thickness(0, 0, 10, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            Grid.SetColumn(iconBlock, 0);
+            grid.Children.Add(iconBlock);
+
+            // 2. Text Details
+            StackPanel textPanel = new StackPanel();
+
+            TextBlock titleBlock = new TextBlock
+            {
+                Text = title,
+                FontWeight = FontWeights.SemiBold,
+                FontSize = 13,
+                Foreground = Brushes.Black,
+                Margin = new Thickness(0, 0, 0, 0) // Removed margin for tighter grouping
+            };
+            textPanel.Children.Add(titleBlock);
+
+            TextBlock contentBlock = new TextBlock
+            {
+                Text = content,
+                FontWeight = FontWeights.Normal,
+                FontSize = 13,
+                Foreground = Brushes.DarkGray,
+                TextWrapping = TextWrapping.Wrap
+            };
+            textPanel.Children.Add(contentBlock);
+
+            Grid.SetColumn(textPanel, 1);
+            grid.Children.Add(textPanel);
+
+            // Return the grid, wrapped in a StackPanel for consistent margin application in the calling loop
+            StackPanel wrapperPanel = new StackPanel();
+            wrapperPanel.Children.Add(grid);
+            return wrapperPanel;
         }
     }
 } 

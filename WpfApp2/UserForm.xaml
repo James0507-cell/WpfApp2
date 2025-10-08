@@ -83,7 +83,7 @@
                 </Border>
 
 
-                <Border BorderBrush="Black" BorderThickness="0.5" Grid.Row="3" Margin="429,18,27,18" CornerRadius="15,15,15,15" Background="White">
+                <Border BorderBrush="#FF9E9E9E" BorderThickness="0.5" Grid.Row="3" Margin="429,18,27,18" CornerRadius="15,15,15,15" Background="White">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="257*"/>
@@ -119,8 +119,8 @@
                     </Border>
                 </Border>
                 <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="69,4,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="36" Width="140"/>
-                <Label Content="Welcome back, (First Name)" HorizontalAlignment="Left" Margin="72,30,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="21" Width="108"/>
-                <Button Content="" HorizontalAlignment="Left" Margin="727,0,0,0" VerticalAlignment="Center" Width="72" BorderBrush="{x:Null}" Click="Button_Click_4" Height="20">
+                <Label x:Name="lblName" Content="Welcome back, (First Name)" HorizontalAlignment="Left" Margin="72,30,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="21" Width="166"/>
+                <Button Content="" HorizontalAlignment="Left" Margin="751,0,0,0" VerticalAlignment="Center" Width="72" BorderBrush="{x:Null}" Click="Button_Click_4" Height="20">
                     <Button.Background>
                         <ImageBrush ImageSource="/Screenshot 2025-09-10 194657.png"/>
                     </Button.Background>

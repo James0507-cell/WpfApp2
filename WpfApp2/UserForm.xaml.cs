@@ -48,6 +48,7 @@ namespace WpfApp2
         {
             SQL = $"SELECT * FROM appointments WHERE username = '{username}'";
             displayAppointment(SQL);
+            getName();
         }
 
         /// <summary>
@@ -299,6 +300,13 @@ namespace WpfApp2
         private void ___No_Name__IsMouseDirectlyOverChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
 
+        }
+        private void getName()
+        {
+            SQL = $"select * from users where username = '{username}'";
+            DataTable dt = userForm.displayRecords(SQL);
+            String name = dt.Rows[0]["first_name"].ToString() + " " + dt.Rows[0]["last_name"].ToString();
+            lblName.Content = "Welcome back " + name;
         }
     }
 }

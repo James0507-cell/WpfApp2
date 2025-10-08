@@ -108,27 +108,7 @@ namespace WpfApp2
             string studentId = "";
 
             booking.dbConnection();
-            /*string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
-            string getUserQuery = $"SELECT user_id, student_id FROM users WHERE username = '{username}' LIMIT 1";
-
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                using (MySqlCommand cmd = new MySqlCommand(getUserQuery, conn))
-                using (MySqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        userId = reader.GetInt32("user_id");
-                        studentId = reader.GetString("student_id");
-                    }
-                    else
-                    {
-                        MessageBox.Show("User not found in database.");
-                        return;
-                    }
-                }
-            }*/
+            
 
             string insertQuery = $@"
                 INSERT INTO appointments 

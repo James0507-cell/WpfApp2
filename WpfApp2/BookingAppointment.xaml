@@ -136,7 +136,7 @@
                     </Style>
                 </TabControl.Resources>
 
-                <TabItem x:Name="BookingDate" Margin="178,-3,-197,-14">
+                <TabItem x:Name="BookingDate" Margin="194,-3,-213,-14">
                     <TabItem.Background>
                         <ImageBrush ImageSource="/Screenshot 2025-09-14 224107.png"/>
                     </TabItem.Background>
@@ -228,7 +228,7 @@
 
 
 
-                <TabItem x:Name="PatientDetail" Margin="220,-3,-239,-15">
+                <TabItem x:Name="PatientDetail" Margin="241,-3,-260,-15">
                     <TabItem.Background>
                         <ImageBrush ImageSource="/Screenshot 2025-09-14 224135.png" Stretch="UniformToFill"/>
                     </TabItem.Background>
@@ -361,7 +361,7 @@
                 </TabItem>
 
 
-                <TabItem x:Name="Confirmation" Header="" Margin="262,-3,-281,-15">
+                <TabItem x:Name="Confirmation" Header="" Margin="284,-3,-303,-15">
                     <TabItem.Background>
                         <ImageBrush ImageSource="/Screenshot 2025-09-14 224118.png" Stretch="Uniform"/>
                     </TabItem.Background>

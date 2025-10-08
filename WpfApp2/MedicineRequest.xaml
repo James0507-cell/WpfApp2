@@ -13,31 +13,31 @@
                 <RowDefinition Height="637*"/>
             </Grid.RowDefinitions>
             <Image HorizontalAlignment="Left" Height="69" Margin="24,0,0,0" VerticalAlignment="Center" Width="92" Source="/Logo-Final_noname_1.png"/>
-            <TabControl Grid.Row="1" Margin="114,54,114,103" BorderBrush="{x:Null}">
+            <TabControl Grid.Row="1" Margin="72,22,72,36" BorderBrush="{x:Null}">
                 <TabItem Header="Request Medicine" Margin="110,-2,-114,0" BorderBrush="{x:Null}" Background="{x:Null}">
                     <Grid>
                         <Border BorderBrush="#FFD7D7D7" BorderThickness="1" CornerRadius="10,10,10,10">
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="29*"/>
-                                    <RowDefinition Height="121*"/>
+                                    <RowDefinition Height="80*"/>
+                                    <RowDefinition Height="469*"/>
                                 </Grid.RowDefinitions>
-                                <Border BorderThickness="1" Margin="42,10,42,19" CornerRadius="8,8,8,8" Background="#FFF3F3F3">
+                                <Border BorderThickness="1" Margin="42,10,46,25" CornerRadius="8,8,8,8" Background="#FFF3F3F3">
                                     <Border BorderThickness="1" Margin="19,0,19,0" Height="32" VerticalAlignment="Center" CornerRadius="5,5,5,5" Background="White">
-                                        <Image Margin="5,5,454,5" Source="/Screenshot 2025-10-07 221555.png"/>
+                                        <Image Margin="5,5,525,5" Source="/Screenshot 2025-10-07 221555.png"/>
                                     </Border>
                                 </Border>
-                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                    <StackPanel x:Name="StackPanelMedicines" Width="585" Orientation="Vertical" />
+                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,3,0,0">
+                                    <UniformGrid x:Name="StackPanelMedicines" Columns="2" HorizontalAlignment="Center" Width="660" />
                                 </ScrollViewer>
 
                                 <TextBox x:Name="txtSearch"
          HorizontalAlignment="Left"
-         Margin="105,26,0,0"
+         Margin="102,22,0,0"
          TextWrapping="Wrap"
          VerticalAlignment="Top"
          Width="426"
-         Height="27"
+         Height="21"
          FontSize="13"
          Foreground="#FF8F8F8F"
          VerticalContentAlignment="Center"
