@@ -151,7 +151,7 @@
                             <Image HorizontalAlignment="Center" Height="37" VerticalAlignment="Top" Width="52" Source="/Screenshot 2025-10-09 211031.png"/>
                             <Label Content="Request Medicine" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" FontWeight="DemiBold" Foreground="#FF00235B" Height="24" Width="91" Margin="59,2,0,0" Grid.ColumnSpan="2"/>
                             <Label Content="Request Available medicine" HorizontalAlignment="Left" Margin="60,16,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8" FontSize="8" Height="21" Width="96" Grid.ColumnSpan="2"/>
-                            <Label Grid.Column="2" Content="✚" HorizontalAlignment="Center" Margin="0,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.582,-0.062"/>
+                            <Label Grid.Column="2" Content="✚" HorizontalAlignment="Left" Margin="26,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="0.582,-0.062"/>
                         </Grid>
                     </Button>
                 </Border>
@@ -224,11 +224,7 @@
             </Border>
             <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="69,0,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="36" Width="140"/>
             <Label x:Name="lblName" Content="Welcome back, (First Name)" HorizontalAlignment="Left" Margin="75,25,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="21" Width="166"/>
-            <Button Content="" HorizontalAlignment="Left" Margin="751,0,0,0" VerticalAlignment="Center" Width="72" BorderBrush="{x:Null}" Click="Button_Click_4" Height="20">
-                <Button.Background>
-                    <ImageBrush ImageSource="/Screenshot 2025-09-10 194657.png"/>
-                </Button.Background>
-            </Button>
+            <Button Content="" HorizontalAlignment="Left" Margin="735,0,0,0" VerticalAlignment="Center" Width="88" BorderBrush="{x:Null}" Click="Button_Click_4" Height="27" Background="{x:Null}"/>
 
             <Image HorizontalAlignment="Left" Height="38" Margin="397,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="37" Source="/Screenshot 2025-09-10 195902.png" RenderTransformOrigin="0.841,-0.093"/>
             <Image HorizontalAlignment="Left" Height="38" Margin="667,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="38" Source="/Screenshot 2025-09-10 203147.png" RenderTransformOrigin="0.861,0.455"/>

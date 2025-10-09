@@ -474,5 +474,6 @@ namespace WpfApp2
             dt = userForm.displayRecords(SQL);
             userId = Convert.ToInt64(dt.Rows[0][0].ToString());
         }
+        
     }
 }

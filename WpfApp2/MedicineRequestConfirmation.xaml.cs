@@ -47,6 +47,7 @@ namespace WpfApp2
             INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
             VALUES ({userId}, 'Appointment', 'Request Medicine for {txtPurpose.Text}')";
             user.sqlManager(SQL);
+            
 
         }
 

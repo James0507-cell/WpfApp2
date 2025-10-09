@@ -110,6 +110,7 @@ namespace WpfApp2
             DataTable dt = booking.displayRecords($"Select user_id from users where username = '{username}'");
             userId = Convert.ToInt32(dt.Rows[0]["user_id"]);
             string studentId = "";
+            
 
             booking.dbConnection();
             
