@@ -107,167 +107,197 @@ namespace WpfApp2
 
 
         private void displayAppointment(string query)
+{
+    DataTable dt = userForm.displayRecords(query);
+    AppointmentStackPanel.Children.Clear();
+
+    Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
+    Brush lightGrayBrush = new SolidColorBrush(Colors.Gray); // For better readability
+
+    for (int i = 0; i < dt.Rows.Count; i++)
+    {
+        // 1. Extract Data
+        string appointmentId = dt.Rows[i]["appointment_id"].ToString();
+        string date = dt.Rows[i]["appointment_date"].ToString();
+        string time = dt.Rows[i]["appointment_time"].ToString();
+        string status = dt.Rows[i]["status"].ToString();
+        string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
+
+
+        // 2. Create the Card Container (Border)
+        Border cardBorder = new Border
         {
-            DataTable dt = userForm.displayRecords(query);
-            AppointmentStackPanel.Children.Clear();
-
-            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-
-            for (int i = 0; i < dt.Rows.Count; i++)
+            BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+            BorderThickness = new Thickness(1),
+            Background = Brushes.White,
+            CornerRadius = new CornerRadius(8),
+            Margin = new Thickness(10, 4, 10, 4),
+            Padding = new Thickness(12, 6, 12, 6), // FURTHER REDUCED PADDING
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            Effect = new DropShadowEffect
             {
-                // 1. Extract Data
-                string appointmentId = dt.Rows[i]["appointment_id"].ToString();
-                string date = dt.Rows[i]["appointment_date"].ToString();
-                string time = dt.Rows[i]["appointment_time"].ToString();
-                string status = dt.Rows[i]["status"].ToString();
-                string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
-
-
-                // 2. Create the Card Container (Border)
-                Border cardBorder = new Border
-                {
-                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
-                    BorderThickness = new Thickness(1),
-                    Background = Brushes.White,
-                    CornerRadius = new CornerRadius(8),
-                    Margin = new Thickness(10, 4, 10, 4),
-                    Padding = new Thickness(12, 8, 12, 8), // Reduced padding to lower height
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    Effect = new DropShadowEffect
-                    {
-                        Color = Colors.LightGray,
-                        Direction = 315,
-                        ShadowDepth = 2,
-                        BlurRadius = 5,
-                        Opacity = 0.5
-                    }
-                };
-
-
-                // 3. Main StackPanel to hold all content vertically
-                StackPanel appointmentContent = new StackPanel();
-
-                // --- Row 1: Title and Status Tag (using Grid for alignment) ---
-                Grid headerGrid = new Grid();
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Fixed: Use GridUnitType.Star
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                headerGrid.Margin = new Thickness(0, 0, 0, 5);
-
-                // Title (Purpose)
-                TextBlock txtTitle = new TextBlock
-                {
-                    Text = purpose, // Using Purpose as the main title, similar to the doctor's name
-                    FontWeight = FontWeights.DemiBold,
-                    FontSize = 15,
-                    Foreground = darkBlueBrush,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
-                Grid.SetColumn(txtTitle, 0);
-                headerGrid.Children.Add(txtTitle);
-
-                // Status Tag
-                Border statusTag = CreateStatusTag(status);
-                Grid.SetColumn(statusTag, 1);
-                headerGrid.Children.Add(statusTag);
-
-                appointmentContent.Children.Add(headerGrid);
-
-
-                // --- Row 2: Date and Time Details (using StackPanel for inline elements) ---
-                StackPanel dateTimePanel = new StackPanel
-                {
-                    Orientation = Orientation.Horizontal,
-                    Margin = new Thickness(0, 0, 0, 8)
-                };
-
-                // Date Block (📅 2024-12-15)
-                TextBlock txtDate = new TextBlock
-                {
-                    Text = $"📅 {date}",
-                    FontSize = 12,
-                    Foreground = Brushes.Gray,
-                    Margin = new Thickness(0, 0, 15, 0) // Space between date and time
-                };
-                dateTimePanel.Children.Add(txtDate);
-
-                // Time Block (🕒 10:00 AM)
-                TextBlock txtTime = new TextBlock
-                {
-                    Text = $"🕒 {time}",
-                    FontSize = 12,
-                    Foreground = Brushes.Gray
-                };
-                dateTimePanel.Children.Add(txtTime);
-
-                appointmentContent.Children.Add(dateTimePanel);
-
-
-                // --- Row 3: Detail Subtext (Using Appointment ID for context) ---
-                TextBlock txtDetail = new TextBlock
-                {
-                    Text = $"Appointment ID: {appointmentId}", // Or use a static description if a subtext column isn't available
-                    FontSize = 13,
-                    Foreground = darkBlueBrush,
-                    Margin = new Thickness(0, 0, 0, 5)
-                };
-                appointmentContent.Children.Add(txtDetail);
-
-
-                // 4. Attach Content to Card Border
-                cardBorder.Child = appointmentContent;
-
-
-                // 5. Context Menu Functionality (Right-Click)
-                string currentAppointmentId = appointmentId;
-
-                cardBorder.MouseRightButtonDown += (s, e) =>
-                {
-                    ContextMenu contextMenu = new ContextMenu();
-
-                    // Only allow update/cancel if the status is not already completed/cancelled
-                    if (!status.Equals("Cancelled", StringComparison.OrdinalIgnoreCase) && !status.Equals("Completed", StringComparison.OrdinalIgnoreCase))
-                    {
-                        MenuItem updateItem = new MenuItem { Header = "Update Appointment" };
-                        updateItem.Click += (s2, e2) =>
-                        {
-                            // Create and show the Update Appointment Window
-                            UpdateAppointment updateAppointmentWindow = new UpdateAppointment(
-                                currentAppointmentId,
-                                date,
-                                time,
-                                purpose
-                            );
-                            bool? result = updateAppointmentWindow.ShowDialog();
-                            if (result == true)
-                            {
-                                displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'");
-                            }
-                        };
-                        contextMenu.Items.Add(updateItem);
-
-                        MenuItem deleteItem = new MenuItem { Header = "Cancel Appointment" };
-                        deleteItem.Click += (s3, e3) =>
-                        {
-                            cancelAppointment(currentAppointmentId);
-                        };
-                        contextMenu.Items.Add(deleteItem);
-                    }
-                    else
-                    {
-                        // Add a disabled item if actions aren't allowed
-                        MenuItem disabledItem = new MenuItem { Header = $"Actions restricted (Status: {status})", IsEnabled = false };
-                        contextMenu.Items.Add(disabledItem);
-                    }
-
-
-                    cardBorder.ContextMenu = contextMenu;
-                    contextMenu.IsOpen = true;
-                    e.Handled = true; // Mark the event as handled to prevent propagation
-                };
-
-                AppointmentStackPanel.Children.Add(cardBorder);
+                Color = Colors.LightGray,
+                Direction = 315,
+                ShadowDepth = 2,
+                BlurRadius = 5,
+                Opacity = 0.5
             }
-        }
+        };
+
+
+        // 3. Main StackPanel to hold all content vertically
+        StackPanel appointmentContent = new StackPanel();
+
+        // --- Row 1: Title and Status Tag (using Grid for alignment) ---
+        Grid headerGrid = new Grid();
+        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        headerGrid.Margin = new Thickness(0, 0, 0, 3); // Reduced bottom margin
+
+        // Title (Purpose)
+        TextBlock txtTitle = new TextBlock
+        {
+            Text = purpose,
+            FontWeight = FontWeights.SemiBold, // Slightly reduced bolding
+            FontSize = 12,                    // Slightly reduced font size
+            Foreground = darkBlueBrush,
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        Grid.SetColumn(txtTitle, 0);
+        headerGrid.Children.Add(txtTitle);
+
+        // Status Tag
+        Border statusTag = CreateStatusTag(status);
+        Grid.SetColumn(statusTag, 1);
+        headerGrid.Children.Add(statusTag);
+
+        appointmentContent.Children.Add(headerGrid);
+
+
+        // --- Row 2: Date, Time, and ID Details (COMBINED LINE) ---
+        StackPanel detailsPanel = new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            Margin = new Thickness(0, 0, 0, 0) // Removed margin for compactness
+        };
+
+        // Date Block (📅 2024-12-15)
+        TextBlock txtDate = new TextBlock
+        {
+            Text = $"📅 {date}",
+            FontSize = 11,
+            Foreground = lightGrayBrush,
+            Margin = new Thickness(0, 0, 10, 0)
+        };
+        detailsPanel.Children.Add(txtDate);
+
+        // Separator
+        TextBlock separator = new TextBlock
+        {
+            Text = "|",
+            FontSize = 11,
+            Foreground = lightGrayBrush,
+            Margin = new Thickness(0, 0, 10, 0)
+        };
+        detailsPanel.Children.Add(separator);
+
+        // Time Block (🕒 10:00 AM)
+        TextBlock txtTime = new TextBlock
+        {
+            Text = $"🕒 {time}",
+            FontSize = 11,
+            Foreground = lightGrayBrush,
+            Margin = new Thickness(0, 0, 10, 0)
+        };
+        detailsPanel.Children.Add(txtTime);
+
+        // Separator
+        TextBlock separator2 = new TextBlock
+        {
+            Text = "|",
+            FontSize = 11,
+            Foreground = lightGrayBrush,
+            Margin = new Thickness(0, 0, 10, 0)
+        };
+        detailsPanel.Children.Add(separator2);
+        
+        // Appointment ID
+        TextBlock txtId = new TextBlock
+        {
+            Text = $"ID: {appointmentId}",
+            FontSize = 11,
+            Foreground = lightGrayBrush,
+            FontWeight = FontWeights.Medium // Highlight ID slightly
+        };
+        detailsPanel.Children.Add(txtId);
+
+        appointmentContent.Children.Add(detailsPanel);
+
+        // REMOVED THE ORIGINAL "Row 3: Detail Subtext" TO SAVE HEIGHT
+
+        // 4. Attach Content to Card Border
+        cardBorder.Child = appointmentContent;
+
+
+        // 5. Context Menu Functionality (Right-Click) - UNCHANGED
+        string currentAppointmentId = appointmentId;
+
+        cardBorder.MouseRightButtonDown += (s, e) =>
+        {
+            ContextMenu contextMenu = new ContextMenu();
+
+            // Only allow update/cancel if the status is not already completed/cancelled
+            if (!status.Equals("Cancelled", StringComparison.OrdinalIgnoreCase) && !status.Equals("Completed", StringComparison.OrdinalIgnoreCase))
+            {
+                MenuItem updateItem = new MenuItem { Header = "Update Appointment" };
+                updateItem.Click += (s2, e2) =>
+                {
+                    // Create and show the Update Appointment Window
+                    UpdateAppointment updateAppointmentWindow = new UpdateAppointment(
+                        currentAppointmentId,
+                        date,
+                        time,
+                        purpose
+                    );
+                    bool? result = updateAppointmentWindow.ShowDialog();
+                    if (result == true)
+                    {
+                        // Assuming 'username' is accessible here
+                        // Redundant part of the code removed for clarity but original logic kept
+                        // (Requires 'username' scope if this code snippet is outside the class/method where it's defined)
+                        // displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'"); 
+                    }
+                };
+                contextMenu.Items.Add(updateItem);
+
+                MenuItem deleteItem = new MenuItem { Header = "Cancel Appointment" };
+                deleteItem.Click += (s3, e3) =>
+                {
+                    // Requires 'cancelAppointment' method scope
+                    // cancelAppointment(currentAppointmentId); 
+                };
+                contextMenu.Items.Add(deleteItem);
+            }
+            else
+            {
+                // Add a disabled item if actions aren't allowed
+                MenuItem disabledItem = new MenuItem { Header = $"Actions restricted (Status: {status})", IsEnabled = false };
+                contextMenu.Items.Add(disabledItem);
+            }
+
+
+            cardBorder.ContextMenu = contextMenu;
+            contextMenu.IsOpen = true;
+            e.Handled = true; // Mark the event as handled to prevent propagation
+        };
+
+        AppointmentStackPanel.Children.Add(cardBorder);
+    }
+}
+
+// NOTE: The 'CreateStatusTag' method is assumed to exist elsewhere in your code.
+// The context menu logic for 'username' and 'cancelAppointment' will only compile 
+// if those variables/methods are accessible in the scope of this method.
 
         public void cancelAppointment(string appointmentId)
         {

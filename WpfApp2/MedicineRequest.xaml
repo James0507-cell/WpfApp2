@@ -60,7 +60,7 @@
 
             <TabControl Grid.Row="1" Margin="72,22,72,36" BorderBrush="{x:Null}">
 
-                <TabItem Header="💊Request Medicine" BorderBrush="{x:Null}" Margin="200,1,-199,-1">
+                <TabItem Header="💊Request Medicine" BorderBrush="{x:Null}" Margin="158,1,-157,-1">
                     <Grid>
                         <Border BorderBrush="#FFD7D7D7" BorderThickness="1" CornerRadius="10,10,10,10">
                             <Grid>
@@ -109,10 +109,11 @@
                                     <RowDefinition Height="5*"/>
                                 </Grid.RowDefinitions>
                                 <Label Content="Request History" HorizontalAlignment="Left" Margin="45,10,0,0" VerticalAlignment="Top" Width="141" FontSize="15" FontWeight="DemiBold" Foreground="#FF001B61"/>
-                                <Label Content="View all your previous medicine requests&#x9;" HorizontalAlignment="Left" Margin="45,41,0,0" VerticalAlignment="Top" Foreground="#FF8F8F8F"/>
+                                <Label Content="View all your previous medicine requests&#x9;" HorizontalAlignment="Left" Margin="45,36,0,0" VerticalAlignment="Top" Foreground="#FF8F8F8F"/>
                                 <ScrollViewer x:Name="sdsadada" Grid.Row="1">
                                     <StackPanel x:Name="StackPanelMedicineRequests" Width="570"/>
                                 </ScrollViewer>
+                                <Label Content="📜" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" FontSize="30" Margin="0,13,0,0" Foreground="#FF001B56"/>
                             </Grid>
                         </Border>
                     </Grid>
