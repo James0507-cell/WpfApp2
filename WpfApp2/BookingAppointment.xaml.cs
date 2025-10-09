@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,8 +10,10 @@ namespace WpfApp2
     {
         private DateTime selectedDate;
         private string selectedTime;
-        private readonly Booking booking = new Booking();
+        private Booking booking = new Booking();
         public string username = MainWindow.Username;
+        int userId = 0;
+        Users users = new Users();
 
         public BookingAppointment()
         {
@@ -104,7 +107,8 @@ namespace WpfApp2
                 return;
             }
 
-            int userId = 0;
+            DataTable dt = booking.displayRecords($"Select user_id from users where username = '{username}'");
+            userId = Convert.ToInt32(dt.Rows[0]["user_id"]);
             string studentId = "";
 
             booking.dbConnection();
