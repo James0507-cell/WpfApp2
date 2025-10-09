@@ -43,7 +43,10 @@ namespace WpfApp2
             user.sqlManager(SQL);
             MessageBox.Show("Request is send!");
             Confirmation.displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + userId);
-
+            SQL = $@"
+            INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
+            VALUES ({userId}, 'Appointment', 'Request Medicine for {txtPurpose.Text}')";
+            user.sqlManager(SQL);
 
         }
 

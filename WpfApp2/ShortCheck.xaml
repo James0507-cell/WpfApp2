@@ -198,7 +198,7 @@
                                 <ImageBrush ImageSource="/goback.jpg"/>
                             </Button.Background>
                         </Button>
-                        <Label Content="Short Check" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" FontSize="14" FontWeight="SemiBold" Width="138" Foreground="#FF00104D"/>
+                        <Label Content="Short Check" HorizontalAlignment="Left" Margin="162,0,0,0" VerticalAlignment="Center" FontSize="14" FontWeight="SemiBold" Width="138" Foreground="#FF00104D"/>
                     </Grid>
                 </Border>
             </Grid>

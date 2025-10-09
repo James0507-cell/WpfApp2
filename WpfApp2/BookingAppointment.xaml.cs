@@ -128,6 +128,10 @@ namespace WpfApp2
 
             booking.sqlManager(insertQuery);
             MessageBox.Show("Appointment successfully booked!");
+            string SQL = $@"
+            INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
+            VALUES ({userId}, 'Appointment', 'Booking appointment for {txtConfirmPurpose.Text}')";
+            booking.sqlManager(SQL);
             MyTabBooking.SelectedIndex = 2;
         }
 

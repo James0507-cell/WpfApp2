@@ -18,8 +18,8 @@
                 <RowDefinition Height="55*"/>
                 <RowDefinition Height="8*"/>
                 <RowDefinition Height="75*"/>
-                <RowDefinition Height="387*"/>
-                <RowDefinition Height="200*"/>
+                <RowDefinition Height="392*"/>
+                <RowDefinition Height="195*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="2" Focusable="True" Margin="0,2,0,1">
@@ -30,35 +30,135 @@
                     <ColumnDefinition Width="283*"/>
                 </Grid.ColumnDefinitions>
 
-                <Border x:Name="___No_Name_" BorderThickness="0.2" Margin="25,10,15,10" CornerRadius="8" BorderBrush="Black" Background="#FFFDFDFD" IsMouseDirectlyOverChanged="___No_Name__IsMouseDirectlyOverChanged">
-                    <Button Content="" Margin="10,3,8,0" BorderBrush="{x:Null}" Click="Button_Click_5" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="HighQuality">
-                        <Button.FocusVisualStyle>
-                            <Style/>
-                        </Button.FocusVisualStyle>
-                        <Button.Background>
-                            <ImageBrush ImageSource="/Your paragraph text (2).png" Stretch="UniformToFill"/>
-                        </Button.Background>
+                <Border x:Name="___No_Name_"
+        BorderThickness="0.2"
+        Margin="25,10,15,10"
+        CornerRadius="8"
+        BorderBrush="Black"
+        Background="#FFFDFDFD"
+        IsMouseDirectlyOverChanged="___No_Name__IsMouseDirectlyOverChanged">
+
+                    <Button x:Name="btnAppoint"
+        Background="{x:Null}"
+        BorderBrush="{x:Null}"
+        ClipToBounds="True"
+        HorizontalContentAlignment="Center"
+        VerticalContentAlignment="Center"
+        Click="btnAppoint_Click"
+        Margin="10,0,4,0">
+
+                        <Grid Width="221" Height="50">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="59*" />
+                                <!-- Column 0 -->
+                                <ColumnDefinition Width="121*" />
+                                <!-- Column 1 -->
+                                <ColumnDefinition Width="41*" />
+                                <!-- Column 2 -->
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Column borders for debugging -->
+                            <!--<Border Grid.Column="0" BorderBrush="Red" BorderThickness="1"/>-->
+                            <!--<Border Grid.Column="1" BorderBrush="Green" BorderThickness="1"/>-->
+                            <!--<Border Grid.Column="2" BorderBrush="Blue" BorderThickness="1"/>-->
+
+                            <!-- Centered image inside middle column -->
+                            <Image
+               Source="/Screenshot 2025-10-09 193545.png"
+               Width="40"
+               Height="40"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top" Margin="0,3,0,0"/>
+                            <Label Content="Book Appointment" HorizontalAlignment="Left" Margin="55,7,0,0" VerticalAlignment="Top" Width="108" FontWeight="DemiBold" Foreground="#FF00175E" Height="25" Grid.ColumnSpan="2" FontSize="10"/>
+                            <Label Content="Schedule a visit with your doctor" HorizontalAlignment="Left" Margin="55,20,0,0" VerticalAlignment="Top" FontSize="8" Height="22" Foreground="#FFB5B5B5" Width="125" Grid.ColumnSpan="2" Background="{x:Null}"/>
+                            <Label Grid.Column="2" Content="✚" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="20" Margin="0,10,0,0"/>
+                        </Grid>
+                    </Button>
+
+
+                </Border>
+
+                <Border BorderBrush="Black"
+        BorderThickness="0.2"
+        Grid.Column="1"
+        Margin="37,10,37,10"
+        CornerRadius="8"
+        Grid.ColumnSpan="2"
+        Background="White">
+
+                    <Button x:Name="btnSample"
+            Width="201"
+            Height="48"
+            Click="Button_Click_2"
+            BorderBrush="{x:Null}"
+            Background="{x:Null}"
+            UseLayoutRounding="True"
+            RenderTransformOrigin="0.5,0.5"
+            RenderOptions.BitmapScalingMode="HighQuality"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center">
+
+                        <!-- Centered Grid inside the Button -->
+                        <Grid Width="188" Height="41"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*" />
+                                <ColumnDefinition Width="53*" />
+                                <ColumnDefinition Width="16*" />
+                            </Grid.ColumnDefinitions>
+                            <Image HorizontalAlignment="Center" Height="38" VerticalAlignment="Top" Width="48" Source="/Screenshot 2025-10-09 205206.png"/>
+                            <Label Content="Short Check" HorizontalAlignment="Left" Margin="0,2,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="100" FontSize="10" FontWeight="DemiBold" Foreground="#FF00244A"/>
+                            <Label Grid.Column="1" Content="Record height and weight" HorizontalAlignment="Left" Margin="0,14,0,0" VerticalAlignment="Top" Height="24" Width="102" FontSize="8" Foreground="#FFB2B2B2"/>
+                            <Label Grid.Column="2" Content="✚" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25" Width="20" Margin="0,6,0,0"/>
+
+                            <!-- Optional placeholders -->
+                            <!--<Image Grid.Column="0" Source="your_icon.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                            <!--<TextBlock Grid.Column="1" Text="Label" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                            <!--<TextBlock Grid.Column="2" Text="➕" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                        </Grid>
                     </Button>
                 </Border>
 
-                <Border BorderBrush="Black" BorderThickness="0.2" Grid.Column="1" Margin="37,10,37,10" CornerRadius="8" Grid.ColumnSpan="2" Background="White">
-                    <Button Content="" HorizontalAlignment="Left" VerticalAlignment="Center" Height="45" Width="189" Click="Button_Click_2" BorderBrush="{x:Null}" UseLayoutRounding="True" RenderTransformOrigin="0.5,0.5" Margin="11,0,0,0" RenderOptions.BitmapScalingMode="HighQuality">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/Your paragraph text (3).png" Stretch="UniformToFill" TileMode="None"/>
-                        </Button.Background>
+                <Border BorderBrush="Black"
+        BorderThickness="0.2"
+        Grid.Column="3"
+        Margin="10,10,27,10"
+        CornerRadius="8"
+        Background="White">
+                    <Button x:Name="btnBorder3"
+            Width="240"
+            Height="46"
+            BorderBrush="{x:Null}"
+            Background="{x:Null}"
+            UseLayoutRounding="True"
+            RenderOptions.BitmapScalingMode="HighQuality"
+            Click="Button_Click"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center">
+                        <Grid Width="235" Height="40"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64*" />
+                                <ColumnDefinition Width="111*" />
+                                <ColumnDefinition Width="60*" />
+                            </Grid.ColumnDefinitions>
+                            <Image HorizontalAlignment="Center" Height="37" VerticalAlignment="Top" Width="52" Source="/Screenshot 2025-10-09 211031.png"/>
+                            <Label Content="Request Medicine" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" FontWeight="DemiBold" Foreground="#FF00235B" Height="24" Width="91" Margin="59,2,0,0" Grid.ColumnSpan="2"/>
+                            <Label Content="Request Available medicine" HorizontalAlignment="Left" Margin="60,16,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8" FontSize="8" Height="21" Width="96" Grid.ColumnSpan="2"/>
+                            <Label Grid.Column="2" Content="✚" HorizontalAlignment="Center" Margin="0,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.582,-0.062"/>
+                        </Grid>
                     </Button>
                 </Border>
 
-                <Border BorderBrush="Black" BorderThickness="0.2" Grid.Column="3" Margin="10,10,27,10" CornerRadius="8" Background="White">
-                    <Button Content="" Margin="15,1,0,-1" HorizontalAlignment="Left" Width="204" BorderBrush="{x:Null}" UseLayoutRounding="True" Click="Button_Click" RenderOptions.BitmapScalingMode="HighQuality">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/Your paragraph text (5).png" Stretch="UniformToFill"/>
-                        </Button.Background>
-                    </Button>
-                </Border>
             </Grid>
 
-            <Border BorderBrush="#FF9E9E9E" BorderThickness="0.5" Grid.Row="3" Margin="25,18,434,18" CornerRadius="15,15,15,15" Background="White">
+            <Border BorderBrush="#FF9E9E9E" BorderThickness="0.5" Grid.Row="3" Margin="25,18,434,6" CornerRadius="15,15,15,15" Background="White">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" MinHeight="37"/>
@@ -80,7 +180,7 @@
             </Border>
 
 
-            <Border BorderBrush="#FF9E9E9E" BorderThickness="0.5" Grid.Row="3" Margin="429,18,27,18" CornerRadius="15,15,15,15" Background="White">
+            <Border BorderBrush="#FF9E9E9E" BorderThickness="0.5" Grid.Row="3" Margin="429,18,27,6" CornerRadius="15,15,15,15" Background="White">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -92,13 +192,13 @@
                     <Border Grid.Row="0" BorderBrush="#FFBABABA" BorderThickness="0,0,0,1" Margin="0,35,0,0"/>
 
                     <ScrollViewer Grid.Row="1" Margin="0">
-                        <StackPanel/>
+                        <StackPanel x:Name="StackPanelActivities"/>
                     </ScrollViewer>
 
                 </Grid>
             </Border>
 
-            <Border BorderBrush="#FFCCCCCC" BorderThickness="1,1,1,1" Grid.Row="4" Margin="25,0,27,0" CornerRadius="10,10,10,10" Background="White" Height="146" VerticalAlignment="Center">
+            <Border BorderBrush="#FFCCCCCC" BorderThickness="1,1,1,1" Grid.Row="4" Margin="25,0,27,0" CornerRadius="10,10,10,10" Background="White" Height="154" VerticalAlignment="Center">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="115*"/>
@@ -119,19 +219,19 @@
 
             <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Margin="0,0,0,4" CornerRadius="1,1,1,1">
                 <Border BorderThickness="0,0,0,1" CornerRadius="5,5,5,5">
-                    <Image HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="58" Source="/Logo-Final_noname_1.png" Margin="10,-2,0,0"/>
+                    <Image HorizontalAlignment="Left" Height="51" VerticalAlignment="Center" Width="58" Source="/Logo-Final_noname_1.png" Margin="10,0,0,0"/>
                 </Border>
             </Border>
-            <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="69,4,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="36" Width="140"/>
-            <Label x:Name="lblName" Content="Welcome back, (First Name)" HorizontalAlignment="Left" Margin="72,30,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="21" Width="166"/>
+            <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="69,0,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="36" Width="140"/>
+            <Label x:Name="lblName" Content="Welcome back, (First Name)" HorizontalAlignment="Left" Margin="75,25,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="21" Width="166"/>
             <Button Content="" HorizontalAlignment="Left" Margin="751,0,0,0" VerticalAlignment="Center" Width="72" BorderBrush="{x:Null}" Click="Button_Click_4" Height="20">
                 <Button.Background>
                     <ImageBrush ImageSource="/Screenshot 2025-09-10 194657.png"/>
                 </Button.Background>
             </Button>
 
-            <Image HorizontalAlignment="Left" Height="38" Margin="397,59,0,0" Grid.Row="4" VerticalAlignment="Top" Width="37" Source="/Screenshot 2025-09-10 195902.png" RenderTransformOrigin="0.841,-0.093"/>
-            <Image HorizontalAlignment="Left" Height="38" Margin="667,60,0,0" Grid.Row="4" VerticalAlignment="Top" Width="38" Source="/Screenshot 2025-09-10 203147.png" RenderTransformOrigin="0.861,0.455"/>
+            <Image HorizontalAlignment="Left" Height="38" Margin="397,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="37" Source="/Screenshot 2025-09-10 195902.png" RenderTransformOrigin="0.841,-0.093"/>
+            <Image HorizontalAlignment="Left" Height="38" Margin="667,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="38" Source="/Screenshot 2025-09-10 203147.png" RenderTransformOrigin="0.861,0.455"/>
             <Label Content="Latest BMI" HorizontalAlignment="Left" Margin="136,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="7" Foreground="#FF737373" Height="19" Width="42"/>
             <Label Content="Last Check-up" HorizontalAlignment="Left" Margin="389,0,0,0" Grid.Row="4" VerticalAlignment="Center" Foreground="#FF818181" FontSize="7" Height="19" Width="54"/>
             <Label Content="Active Prescription" HorizontalAlignment="Left" Margin="651,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="7" Foreground="#FF707070" Height="19" Width="67"/>

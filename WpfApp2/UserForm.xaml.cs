@@ -14,6 +14,7 @@ namespace WpfApp2
         Users userForm = new Users();
         ShortCheck shortcheck = new ShortCheck();
         string SQL = "";
+        long userId;
         
         public UserForm(string username)
         {
@@ -46,8 +47,11 @@ namespace WpfApp2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            getUserId(username);
             SQL = $"SELECT * FROM appointments WHERE username = '{username}'";
             displayAppointment(SQL);
+            SQL = $"SELECT * FROM student_activity_log WHERE user_id = '{userId}' ORDER BY activity_date DESC LIMIT 5";
+            displayActivities(SQL);
             getName();
         }
 
@@ -295,9 +299,124 @@ namespace WpfApp2
     }
 }
 
-// NOTE: The 'CreateStatusTag' method is assumed to exist elsewhere in your code.
-// The context menu logic for 'username' and 'cancelAppointment' will only compile 
-// if those variables/methods are accessible in the scope of this method.
+        // NOTE: The 'CreateStatusTag' method is assumed to exist elsewhere in your code.
+        // The context menu logic for 'username' and 'cancelAppointment' will only compile 
+        // if those variables/methods are accessible in the scope of this method.
+
+        public void displayActivities(String query)
+{
+    // Use the class-level userForm object to fetch data
+    DataTable dt = userForm.displayRecords(query); 
+    
+    // Clear the target panel before adding new items (assuming 'StackPanelActivities' is the target)
+    // Make sure 'StackPanelActivities' is defined in your XAML.
+    StackPanelActivities.Children.Clear(); 
+
+    // Define consistent colors (matching the dark blue from displayAppointment)
+    Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
+    Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
+
+    for (int i = 0; i < dt.Rows.Count; i++)
+    {
+        // 1. Correct Data Extraction (using column names and current row index 'i')
+        // NOTE: Column names are inferred from the original method's variable names.
+        string activityId = dt.Rows[i]["activity_id"].ToString();
+        string type = dt.Rows[i]["activity_type"].ToString();
+        string description = dt.Rows[i]["activity_desc"].ToString();
+        string dateTime = dt.Rows[i]["activity_date"].ToString(); // Typically a DateTime, but treating as string for display
+        
+        // 2. Create the Card Container (Border) - Replicating Appointment Style
+        Border cardBorder = new Border
+        {
+            BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+            BorderThickness = new Thickness(1),
+            Background = Brushes.White,
+            CornerRadius = new CornerRadius(8),
+            Margin = new Thickness(10, 4, 10, 4), // Consistent with Appointment style
+            Padding = new Thickness(12, 6, 12, 6),
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            Effect = new DropShadowEffect
+            {
+                Color = Colors.LightGray,
+                Direction = 315,
+                ShadowDepth = 2,
+                BlurRadius = 5,
+                Opacity = 0.5
+            }
+        };
+
+        // 3. Main StackPanel to hold all content vertically
+        StackPanel activityContent = new StackPanel();
+
+        // --- Row 1: Activity Type and ID ---
+        Grid headerGrid = new Grid();
+        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        headerGrid.Margin = new Thickness(0, 0, 0, 3);
+
+        // Activity Type (as Title)
+        TextBlock txtType = new TextBlock
+        {
+            Text = type, // e.g., "Login", "Appointment Booked"
+            FontWeight = FontWeights.SemiBold,
+            FontSize = 12,
+            Foreground = darkBlueBrush,
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        Grid.SetColumn(txtType, 0);
+        headerGrid.Children.Add(txtType);
+
+        // Activity Tag (Using a simplified tag for the ID)
+        Border idTag = new Border
+        {
+            Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F0F0")), // Light Gray background
+            CornerRadius = new CornerRadius(4),
+            Padding = new Thickness(8, 2, 8, 2),
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = VerticalAlignment.Top,
+            Child = new TextBlock
+            {
+                Text = $"ID: {activityId}",
+                Foreground = Brushes.Gray,
+                FontWeight = FontWeights.Medium,
+                FontSize = 10
+            }
+        };
+        Grid.SetColumn(idTag, 1);
+        headerGrid.Children.Add(idTag);
+        
+        activityContent.Children.Add(headerGrid);
+
+        // --- Row 2: Date/Time and Description ---
+        
+        // Date/Time Block (⌚ 2025-10-09 10:00:00)
+        TextBlock txtDateTime = new TextBlock
+        {
+            Text = $"⌚ {dateTime}",
+            FontSize = 11,
+            Foreground = lightGrayBrush,
+            Margin = new Thickness(0, 0, 0, 2)
+        };
+        activityContent.Children.Add(txtDateTime);
+
+        // Description
+        TextBlock txtDescription = new TextBlock
+        {
+            Text = description, // e.g., "User logged in successfully"
+            FontSize = 11,
+            Foreground = darkBlueBrush,
+            TextWrapping = TextWrapping.Wrap // Ensure long text wraps
+        };
+        activityContent.Children.Add(txtDescription);
+
+
+        // 4. Attach Content to Card Border
+        cardBorder.Child = activityContent;
+
+        // 5. Add to the main StackPanel
+        StackPanelActivities.Children.Add(cardBorder);
+    }
+}
 
         public void cancelAppointment(string appointmentId)
         {
@@ -337,6 +456,23 @@ namespace WpfApp2
             DataTable dt = userForm.displayRecords(SQL);
             String name = dt.Rows[0]["first_name"].ToString() + " " + dt.Rows[0]["last_name"].ToString();
             lblName.Content = "Welcome back " + name;
+        }
+
+        private void btnAppoint_Click(object sender, RoutedEventArgs e)
+        {
+            BookingAppointment bookingAppointment = new BookingAppointment
+            {
+                username = this.username
+            };
+            bookingAppointment.Show();
+            this.Close();
+        }
+        public void getUserId(String username)
+        {
+            SQL = $"Select user_id from users where username = '{username}'";
+            DataTable dt = new DataTable();
+            dt = userForm.displayRecords(SQL);
+            userId = Convert.ToInt64(dt.Rows[0][0].ToString());
         }
     }
 }
