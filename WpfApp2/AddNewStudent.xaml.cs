@@ -50,7 +50,7 @@ namespace WpfApp2
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
-        {
+        { 
              CourseRepo courseRepo = new CourseRepo();
              var courseList = courseRepo.GetAllCourses();
 

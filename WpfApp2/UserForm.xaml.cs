@@ -240,7 +240,7 @@ namespace WpfApp2
                             bool? result = updateAppointmentWindow.ShowDialog();
                             if (result == true)
                             {
-                                displayAppointment(SQL);
+                                displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'");
                             }
                         };
                         contextMenu.Items.Add(updateItem);
@@ -286,7 +286,7 @@ namespace WpfApp2
                 string deleteQuery = $"DELETE FROM appointments WHERE appointment_id = {appointmentId}";
                 userForm.sqlManager(deleteQuery);
                 MessageBox.Show("Appointment cancelled successfully!", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
-                displayAppointment(SQL);
+                displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'");
             }
         }
 

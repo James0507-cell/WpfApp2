@@ -564,5 +564,12 @@ namespace WpfApp2
             wrapperPanel.Children.Add(grid);
             return wrapperPanel;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            UserForm userForm = new UserForm(username); 
+            this.Close();
+            userForm.Show();
+        }
     }
 } 
