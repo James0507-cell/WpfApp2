@@ -107,6 +107,7 @@ namespace WpfApp2
 
         private void txtUsername_TextChanged(object sender, TextChangedEventArgs e)
         {
+            //hjgjhgjhgjhgjhg
 
         }
     }
