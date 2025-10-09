@@ -206,7 +206,7 @@
                             <Label Content="Username *" HorizontalAlignment="Left" Margin="200,65,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
                             <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Margin="199,88,0,0" 
                                 TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="164" Height="22">
+                                VerticalAlignment="Top" Width="164" Height="22" TextChanged="txtUsername_TextChanged">
                                 <TextBox.Template>
                                     <ControlTemplate TargetType="{x:Type TextBox}">
                                         <Border CornerRadius="5" 

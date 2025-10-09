@@ -7,6 +7,49 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApp2.MedicineRequest"
         mc:Ignorable="d"
         Title="MedicineRequest" Height="744" Width="852" Background="{x:Null}" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Padding" Value="15,5"/>
+            <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="DemiBold"/>
+            <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="13"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border x:Name="TabBorder"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="15">
+                            <ContentPresenter x:Name="ContentSite"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              ContentSource="Header"
+                                              Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="MidnightBlue"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="MidnightBlue"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#E0E0E0"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="TabBorder" Property="Background" Value="#191970"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border BorderThickness="1" Background="White" CornerRadius="20,20,20,20">
         <Grid>
             <Grid.RowDefinitions>
@@ -14,8 +57,10 @@
                 <RowDefinition Height="637*"/>
             </Grid.RowDefinitions>
             <Image HorizontalAlignment="Left" Height="69" Margin="24,0,0,0" VerticalAlignment="Center" Width="92" Source="/Logo-Final_noname_1.png"/>
+
             <TabControl Grid.Row="1" Margin="72,22,72,36" BorderBrush="{x:Null}">
-                <TabItem Header="💊Request Medicine" Margin="155,-2,-159,0" BorderBrush="{x:Null}" Background="{x:Null}" mah:HeaderedControlHelper.HeaderFontWeight="DemiBold" mah:HeaderedControlHelper.HeaderFontSize="13">
+
+                <TabItem Header="💊Request Medicine" BorderBrush="{x:Null}" Margin="200,1,-199,-1">
                     <Grid>
                         <Border BorderBrush="#FFD7D7D7" BorderThickness="1" CornerRadius="10,10,10,10">
                             <Grid>
@@ -54,7 +99,8 @@
                         </Border>
                     </Grid>
                 </TabItem>
-                <TabItem Header="📜Request Hintory" Margin="322,-1,-326,-1" Background="{x:Null}" BorderBrush="{x:Null}">
+
+                <TabItem Header="📜Request Hintory" BorderBrush="{x:Null}" Margin="262,-1,-263,1">
                     <Grid>
                         <Border BorderBrush="Silver" BorderThickness="1" CornerRadius="10,10,10,10">
                             <Grid>
@@ -72,7 +118,8 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <Button Content="Button" HorizontalAlignment="Left" Margin="736,25,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+            <Button Content="Go Back" HorizontalAlignment="Left" Margin="736,0,0,0" VerticalAlignment="Center" Click="Button_Click" FontSize="14" Foreground="#FF05005F" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="DemiBold"/>
+            <Label Content="Medicine Request" HorizontalAlignment="Left" Margin="118,24,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="DemiBold" Foreground="#FF001751"/>
 
         </Grid>
     </Border>

@@ -25,6 +25,7 @@ namespace WpfApp2
 
 
         StudentManagement student = new StudentManagement();
+        Admin admin = new Admin();
         String strconn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
         public AddNewStudent()
         {
@@ -50,13 +51,13 @@ namespace WpfApp2
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
-        { 
-             CourseRepo courseRepo = new CourseRepo();
-             var courseList = courseRepo.GetAllCourses();
+        {
+            DataTable dtCourse = admin.displayRecords("Select *from course_program");
+            foreach( DataRow row in dtCourse.Rows)
+            {
 
-            cboCourse.ItemsSource = courseList;
-            cboCourse.DisplayMemberPath = "CourseName";
-            cboCourse.SelectedValuePath = "CourseId";
+                cboCourse.Items.Add(row["course_program"].ToString());
+            }
 
             cboYearLevel.Items.Add("1st Year");
             cboYearLevel.Items.Add("2nd Year");
@@ -68,14 +69,11 @@ namespace WpfApp2
             cboEnrolledStatus.Items.Add("Dropped");
             cboEnrolledStatus.Items.Add("Graduated");
 
-            cboBloodType.Items.Add("A+");
-            cboBloodType.Items.Add("A-");
-            cboBloodType.Items.Add("B+");
-            cboBloodType.Items.Add("B-");
-            cboBloodType.Items.Add("AB+");
-            cboBloodType.Items.Add("AB-");
-            cboBloodType.Items.Add("O+");
-            cboBloodType.Items.Add("O-");
+            DataTable dt_blood = admin.displayRecords("Select * from blood_types");
+            foreach (DataRow row in dt_blood.Rows)
+            {
+                cboBloodType.Items.Add(row["blood_type"].ToString());
+            }
 
             cmbRole.Items.Add("Admin");
             cmbRole.Items.Add("Student");
@@ -105,6 +103,11 @@ namespace WpfApp2
 
 
         
+        }
+
+        private void txtUsername_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

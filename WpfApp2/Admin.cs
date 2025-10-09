@@ -96,47 +96,4 @@ namespace WpfApp2
             }
         }
     }
-
-  
-    public class Course
-    {
-        public int CourseId { get; set; }
-        public string CourseName { get; set; }
-
-        public override string ToString()
-        {
-            return CourseName; 
-        }
-    }
-
-    public class CourseRepo
-    {
-        private string connStr = "server=localhost;user id=root;password=;database=db_medicaremmcm";
-
-        public List<Course> GetAllCourses()
-        {
-            var courses = new List<Course>();
-
-            using (MySqlConnection conn = new MySqlConnection(connStr))
-            {
-                conn.Open();
-                string query = "SELECT course_id, course_name FROM course_programs";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                using (MySqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        courses.Add(new Course
-                        {
-                            CourseId = reader.GetInt32("course_id"),
-                            CourseName = reader.GetString("course_name")
-                        });
-                    }
-                }
-            }
-
-            return courses;
-        }
-    }
 }
