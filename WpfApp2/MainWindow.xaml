@@ -7,92 +7,142 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="836" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="LoginForm_Loaded">
 
-    <Border CornerRadius="13" Background="#FFF6F6F6" Margin="0,0,0,-54">
-        <Grid Margin="5,0,5,0" RenderTransformOrigin="0.503,0.521">
-
-            <!-- ✅ FIXED Column Definitions -->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="375*"/>
-                <ColumnDefinition Width="451*"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- ✅ Border with only one Margin -->
-            <Border x:Name="___No_Name_" BorderBrush="#FFE2DEDE" BorderThickness="0.5"
-                    Margin="83,84,84,84"
-                    CornerRadius="5" Background="White" Grid.Column="1">
-                <Border.Effect>
-                    <DropShadowEffect 
-            Color="Black"
-            ShadowDepth="8"
-            BlurRadius="15"
-            Opacity="0.5"
-            Direction="315"/>
-                </Border.Effect>
-                <Grid Height="282" VerticalAlignment="Top">
-                    <!-- ✅ Proper Row Definitions -->
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="55*"/>
-                        <RowDefinition Height="27*"/>
-                        <RowDefinition Height="27*"/>
-                        <RowDefinition Height="15*"/>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="14*"/>
-                        <RowDefinition Height="45*"/>
-                        <RowDefinition Height="30*"/>
-                        <RowDefinition Height="22*"/>
-                    </Grid.RowDefinitions>
-
-                    <Image HorizontalAlignment="Center" Height="55" VerticalAlignment="Top" Width="64" Source="/Logo-Final_noname_1.png" Margin="0,10,0,0" Grid.RowSpan="2"/>
-                    <Label Content="MediCare MMCM" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Microsoft Tai Le" Foreground="#FF9E0000" Height="26" Width="104" Grid.Row="1" Margin="0,5,0,0" Grid.RowSpan="2"/>
-                    <Label Content="Mapua Malayan Colleges Mindanao" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" FontSize="8" FontFamily="Microsoft Tai Le" Foreground="#FF8A0000" Height="20" Width="136"/>
-                    <Label Content="Username" HorizontalAlignment="Left" Margin="18,0,0,0" Grid.Row="3" VerticalAlignment="Center" Foreground="#FF9E0000" FontSize="8" FontWeight="Bold" Height="20" Width="48"/>
-                    <Label Content="Password" HorizontalAlignment="Left" Margin="18,0,0,0" Grid.Row="5" VerticalAlignment="Center" Foreground="#FF9E0000" FontWeight="Bold" FontSize="8" Height="21" Width="45"/>
-                    <Label Content="Contact Help Center" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Center" Foreground="#FF9E0000" FontSize="8" Height="20" Width="82"/>
-
-                    <!-- Username Field -->
-                    <Grid Grid.Row="4" Height="40" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="18*"/>
-                            <ColumnDefinition Width="0*"/>
-                            <ColumnDefinition Width="131*"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Height="24" VerticalAlignment="Center" Source="/Screenshot 2025-09-09 125002.png" Margin="24,0,0,0" HorizontalAlignment="Left" Width="9"/>
-                        <Border BorderBrush="#FFD6D6D6" BorderThickness="0.5" Margin="2,0,35,0" CornerRadius="5" Background="#FFE8E6E6" Height="20.7" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1">
-                            <TextBox x:Name="TxtUserName" TextWrapping="Wrap" Text="Enter Username" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#CCB50000" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="0,0,11,0" GotFocus="TxtUserName_GotFocus" LostFocus="TxtUserName_LostFocus"/>
-                        </Border>
-                    </Grid>
-
-                    <!-- Password Field -->
-                    <Grid Grid.Row="6" Margin="0,5,0,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="37*"/>
-                            <ColumnDefinition Width="261*"/>
-                        </Grid.ColumnDefinitions>
-                        <Image HorizontalAlignment="Left" Height="13" Margin="23,0,0,0" VerticalAlignment="Center" Width="12" Source="/Screenshot 2025-09-08 204143.png"/>
-                        <Border BorderThickness="0.5" Grid.Column="1" Margin="1,4,33,4" CornerRadius="5" Background="#FFE8E6E6" BorderBrush="#FFD6D6D6" Height="20.7">
-                            <TextBox x:Name="TxtPassword" TextWrapping="Wrap" Text="Enter Password" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#CCB50000" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="3,0,9,0" GotFocus="TxtPassword_GotFocus" LostFocus="TxtPassword_LostFocus"/>
-                        </Border>
-                    </Grid>
-
-                    <!-- Button Background -->
-                    <Border BorderThickness="1" Grid.Row="7" Margin="30,5,30,3" CornerRadius="5" Background="#FFE90000">
-                        <Button x:Name="BtnSignIn" Content="Sign In" FontSize="8" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnSignIn_Click"/>
-                    </Border>
-                    <Label Content="Contact Help Desk" HorizontalAlignment="Left" Margin="106,0,0,0" Grid.Row="8" VerticalAlignment="Center" FontSize="8" Foreground="#FFA70000"/>
-                </Grid>
-            </Border>
-            <Image HorizontalAlignment="Left" Height="336" Margin="57,0,0,0" VerticalAlignment="Center" Width="340" Source="/ads.jpg" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5">
+    <Border CornerRadius="13" Background="Black" Margin="0">
+        <Grid>
+            <Image Source="/ewew.png" Stretch="UniformToFill" Margin="0" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
-                        <SkewTransform AngleX="0.229"/>
-                        <RotateTransform/>
-                        <TranslateTransform X="0.663"/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.015"/>
+                        <TranslateTransform/>
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
 
-            <!-- Sign In Button -->
+            <Image HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="52" Source="/Logo-Final_noname_1.png" Margin="27,19,0,0" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.095"/>
+                        <RotateTransform Angle="-0.349"/>
+                        <TranslateTransform X="0" Y="0.041"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+
+            <Label Content="MediCare MMCM" HorizontalAlignment="Left" Margin="82,17,0,0" VerticalAlignment="Top" FontWeight="SemiBold" Width="203" FontSize="15" Foreground="#FF00104D"/>
+
+            <Image HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="52" Source="/Logo-Final_noname_1.png" Margin="775,449,0,0" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.095"/>
+                        <RotateTransform Angle="-0.349"/>
+                        <TranslateTransform X="0" Y="0.041"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+
+            <Label Content="Join the Health Portal" HorizontalAlignment="Left" Margin="68,148,0,0" VerticalAlignment="Top" Width="185" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="17" RenderTransformOrigin="0.5,0.5" Height="31">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0.026"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+            <TextBox x:Name="txtusername" HorizontalAlignment="Left" Margin="70,213,0,0"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top" Width="165" Height="22">
+                <TextBox.Template>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border CornerRadius="5"
+                            BorderBrush="Gray"
+                            BorderThickness="1"
+                            Background="White">
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+
+            <TextBox x:Name="txtpassword" HorizontalAlignment="Left" Margin="70,270,0,0"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top" Width="165" Height="22">
+                <TextBox.Template>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border CornerRadius="5"
+                            BorderBrush="Gray"
+                            BorderThickness="1"
+                            Background="White">
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+
+            <Label Content="Access your medical records and stay updated with your school’s health services." HorizontalAlignment="Left" Margin="66,171,0,0" VerticalAlignment="Top" Width="564" FontSize="8" Foreground="#FF7A7878"/>
+
+            <Image HorizontalAlignment="Left" Height="15" Margin="42,218,0,0" VerticalAlignment="Top" Width="20" Source="/person icon.jpg"/>
+
+            <Image HorizontalAlignment="Left" Height="14" Margin="44,274,0,0" VerticalAlignment="Top" Width="15" Source="/icon lock.jpg"/>
+
+            <Label Content="Username" HorizontalAlignment="Left" Margin="70,187,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
+
+            <Label Content="Password" HorizontalAlignment="Left" Margin="70,247,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
+
+            <Border BorderThickness="1" Margin="70,318,601,164" CornerRadius="5" Background="#FF00104D">
+                <Grid Margin="0">
+                    <Label Content="Sign In" HorizontalAlignment="Center" VerticalAlignment="Center" Width="49" Height="30" Foreground="White"/>
+                </Grid>
+            </Border>
+
+            <Grid Margin="70,213,601,269">
+                <TextBox x:Name="TxtUserName" TextWrapping="Wrap" Text="Enter Username" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#FF00104D" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="10,1,1,1" GotFocus="TxtUserName_GotFocus" LostFocus="TxtUserName_LostFocus"/>
+            </Grid>
+
+            <Grid Margin="70,270,601,212">
+                <TextBox x:Name="TxtPassword" TextWrapping="Wrap" Text="Enter Password" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#FF00104D" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="10,1,5,1" GotFocus="TxtPassword_GotFocus" LostFocus="TxtPassword_LostFocus"/>
+            </Grid>
+            <Label Content="Label" HorizontalAlignment="Left" Height="0" Margin="-515,171,0,0" VerticalAlignment="Top" Width="5"/>
+            <Button x:Name="BtnSignIn" Content="Sign In" HorizontalAlignment="Left" Margin="70,318,0,0" VerticalAlignment="Top" Width="165" Height="24" Click="BtnSignIn_Click_1">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ButtonBorder" 
+                    CornerRadius="5" 
+                    Background="#FF00104D" 
+                    BorderBrush="#FF00104D" 
+                    BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF002875"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF00082E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.Foreground>
+                    <SolidColorBrush Color="White"/>
+                </Button.Foreground>
+            </Button>
+            <Image HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="52" Source="/Logo-Final_noname_1.png" Margin="768,389,0,0" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.095"/>
+                        <RotateTransform Angle="-0.349"/>
+                        <TranslateTransform X="0" Y="0.041"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
         </Grid>
     </Border>
 </Window>

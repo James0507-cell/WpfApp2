@@ -15,31 +15,7 @@ namespace WpfApp2
             InitializeComponent();
         }
 
-        private void BtnSignIn_Click(object sender, RoutedEventArgs e)
-        {
-            Username = TxtUserName.Text.Trim();
-            password = TxtPassword.Text.Trim();
-
-            string role = login.loginUser(Username, password);  
-
-            if (role == "Admin")
-            {
-                AdminWindow adminForm = new AdminWindow();
-                adminForm.Show();
-                this.Close();
-            }
-            else if (role == "Student")
-            {
-                // ✅ Pass username to UserForm
-                UserForm studentForm = new UserForm(Username);
-                studentForm.Show();
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Invalid username or password.");
-            }
-        }
+       
 
         private void LoginForm_Loaded(object sender, RoutedEventArgs e)
         {
@@ -74,5 +50,31 @@ namespace WpfApp2
             // You can leave it empty or handle text changes here if needed
         }
 
+        private void BtnSignIn_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            Username = txtusername.Text.Trim();
+            password = txtpassword.Text.Trim();
+
+            string role = login.loginUser(Username, password);
+
+            if (role == "Admin")
+            {
+                AdminWindow adminForm = new AdminWindow();
+                adminForm.Show();
+                this.Close();
+            }
+            else if (role == "Student")
+            {
+                // ✅ Pass username to UserForm
+                UserForm studentForm = new UserForm(Username);
+                studentForm.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password.");
+            }
+        }
     }
 }
