@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -323,6 +324,7 @@ namespace WpfApp2
         {
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
+            displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 30");
         }
 
         private void txtSearchIDapp_TextChanged(object sender, TextChangedEventArgs e)
@@ -508,7 +510,6 @@ namespace WpfApp2
                     }
                 };
 
-                // Left Panel Details
                 StackPanel leftPanel = new StackPanel { Margin = new Thickness(0, 0, 10, 0) };
                 leftPanel.Children.Add(CreateDetailBlock("Reason", reason, FontWeights.DemiBold));
                 leftPanel.Children.Add(CreateDetailBlock("Requested By User ID", userID));
@@ -517,11 +518,9 @@ namespace WpfApp2
                 Grid.SetColumn(leftPanel, 0);
                 detailsGrid.Children.Add(leftPanel);
 
-                // Right Panel Details
                 StackPanel rightPanel = new StackPanel { Margin = new Thickness(10, 0, 0, 0) };
                 rightPanel.Children.Add(CreateDetailBlock("Request Date", requestDate, FontWeights.DemiBold));
 
-                // Only show Approved Date if the request is handled
                 if (status.ToLower() != "pending" && !string.IsNullOrWhiteSpace(approvedDate))
                 {
                     rightPanel.Children.Add(CreateDetailBlock("Handled Date", approvedDate));
@@ -544,8 +543,7 @@ namespace WpfApp2
         {
             if (sender is Border cardBorder && cardBorder.Tag is string requestID)
             {
-                // Only allow context menu for pending requests (or adjust as needed)
-                // You'd need to fetch the status, but for simplicity, we'll just show the menu.
+
 
                 ContextMenu contextMenu = new ContextMenu
                 {
@@ -609,22 +607,167 @@ namespace WpfApp2
             }
         }
 
-        // Placeholder logic for medicine request approval
         public void approveMedicineRequest(String requestID)
         {
             String querry = $"UPDATE medicinerequests SET status = 'Approved', approved_date = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}' WHERE request_id = {requestID}";
             admin.sqlManager(querry);
-            // Re-fetch all medicine requests to update the view
             displayMedicineRequest("SELECT * FROM medicinerequests");
         }
 
-        // Placeholder logic for medicine request rejection
         public void rejectMedicineRequest(String requestID)
         {
             String querry = $"UPDATE medicinerequests SET status = 'Rejected', approved_date = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}' WHERE request_id = {requestID}";
             admin.sqlManager(querry);
-            // Re-fetch all medicine requests to update the view
             displayMedicineRequest("SELECT * FROM medicinerequests");
         }
+        public void displayMedicineInv(String querry)
+        {
+            DataTable dt = admin.displayRecords(querry);
+
+            StackPanelMedicineInv.Children.Clear();
+
+            // ALERT-FOCUSED COLORS:
+            Brush mainTextBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4A4A4A"));    // Dark Gray/Near Black for contrast
+            Brush alertQuantityBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD86E00")); // Dark Orange/Amber for stock alert
+            Brush alertActionBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFCC3300"));   // Vibrant Orange-Red for the button
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                String medName = dt.Rows[i][1].ToString();
+                String medQty = dt.Rows[i][2].ToString();
+                String medDesc = dt.Rows[i][3].ToString();
+                String medId = dt.Rows[i][0].ToString();
+
+                Border cardBorder = new Border
+                {
+                    // Border color changed to dark gray for contrast against the alert elements
+                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x4A, 0x4A, 0x4A)),
+                    BorderThickness = new Thickness(1),
+                    Background = Brushes.White,
+                    CornerRadius = new CornerRadius(8),
+                    Margin = new Thickness(8, 3, 8, 3),
+                    Padding = new Thickness(10, 8, 10, 8),
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    Effect = new DropShadowEffect
+                    {
+                        Color = Colors.LightGray,
+                        Direction = 315,
+                        ShadowDepth = 1,
+                        BlurRadius = 3,
+                        Opacity = 0.5
+                    }
+                };
+
+                StackPanel medicineContent = new StackPanel();
+
+                // --- Row 1: Medicine Name and Icon ---
+                Grid nameGrid = new Grid();
+                nameGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                nameGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                nameGrid.Margin = new Thickness(0, 0, 0, 4);
+
+                // Icon color set to match the alert quantity color
+                TextBlock iconText = new TextBlock
+                {
+                    Text = "💊",
+                    FontSize = 14,
+                    Foreground = alertQuantityBrush,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(0, 0, 5, 0)
+                };
+                Grid.SetColumn(iconText, 0);
+                nameGrid.Children.Add(iconText);
+
+                // Medicine Name color set to the dark main text color
+                TextBlock txtMedName = new TextBlock
+                {
+                    Text = medName,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 14,
+                    Foreground = mainTextBrush,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    TextTrimming = TextTrimming.CharacterEllipsis
+                };
+                Grid.SetColumn(txtMedName, 1);
+                nameGrid.Children.Add(txtMedName);
+
+                medicineContent.Children.Add(nameGrid);
+
+                // --- Row 2: Quantity (Highlighted Alert Color) ---
+                TextBlock txtMedQty = new TextBlock
+                {
+                    Text = $"Stock: {medQty} units",
+                    FontSize = 11,
+                    FontWeight = FontWeights.SemiBold,
+                    Foreground = alertQuantityBrush, // Uses the dark orange/amber for alertness
+                    Margin = new Thickness(0, 0, 0, 4)
+                };
+                medicineContent.Children.Add(txtMedQty);
+
+                // --- Row 3: Description, ID Tag, and Button ---
+                Grid bottomGrid = new Grid();
+                bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+                StackPanel descriptionPanel = new StackPanel();
+
+                // Description text color set to the dark main text color
+                TextBlock txtMedDesc = new TextBlock
+                {
+                    Text = medDesc,
+                    FontSize = 10,
+                    Foreground = mainTextBrush,
+                    TextWrapping = TextWrapping.Wrap,
+                    MaxHeight = 30,
+                    TextTrimming = TextTrimming.WordEllipsis,
+                    Margin = new Thickness(0, 0, 0, 0)
+                };
+                descriptionPanel.Children.Add(txtMedDesc);
+
+                TextBlock txtMedId = new TextBlock
+                {
+                    Text = $"ID: {medId}",
+                    Foreground = new SolidColorBrush(Colors.Gray), // ID remains gray
+                    FontSize = 9,
+                    Margin = new Thickness(0, 4, 0, 0)
+                };
+                descriptionPanel.Children.Add(txtMedId);
+
+                Grid.SetColumn(descriptionPanel, 0);
+                bottomGrid.Children.Add(descriptionPanel);
+
+                // Update Button (Vibrant Orange-Red for Action Alert)
+                Border buttonBorderWrapper = new Border
+                {
+                    Background = alertActionBrush, // Uses the vibrant orange-red color
+                    CornerRadius = new CornerRadius(5),
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    Margin = new Thickness(8, 0, 0, 0),
+                    Child = new Button
+                    {
+                        Content = "Update 🔄",
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        Padding = new Thickness(8, 3, 8, 3),
+                        FontSize = 10,
+                        FontWeight = FontWeights.SemiBold,
+                        Foreground = Brushes.White, // White text contrasts strongly with the red background
+                        Background = Brushes.Transparent,
+                        BorderBrush = Brushes.Transparent,
+                        Tag = medId
+                    }
+                };
+
+                Grid.SetColumn(buttonBorderWrapper, 1);
+                bottomGrid.Children.Add(buttonBorderWrapper);
+
+                medicineContent.Children.Add(bottomGrid);
+
+                cardBorder.Child = medicineContent;
+
+                StackPanelMedicineInv.Children.Add(cardBorder);
+            }
+        }
     }
-}
+    }
+
