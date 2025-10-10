@@ -20,7 +20,7 @@ namespace WpfApp2
             Username = TxtUserName.Text.Trim();
             password = TxtPassword.Text.Trim();
 
-            string role = login.loginUser(Username, password);
+            string role = login.loginUser(Username, password);  
 
             if (role == "Admin")
             {

@@ -12,9 +12,12 @@ namespace WpfApp2
     public partial class ShortCheck : Window
     {
         String username = MainWindow.Username;
-        public ShortCheck()
+        String strconn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
+        private int _userId;
+        public ShortCheck(int userId)
         {
             InitializeComponent();
+            _userId = userId;
         }
 
         
@@ -69,25 +72,69 @@ namespace WpfApp2
                 categoryColor = Brushes.Red;
             }
 
-            // 4. Update the Result TextBlock
+            
             BmiResultTextBlock.Text = $"Your BMI: {roundedBmi} ({category})";
             BmiResultTextBlock.Foreground = categoryColor;
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(strconn))
+                {
+                    conn.Open();
+
+
+                    int userId = 1; //sample lang na userid
+
+                    string sql = "INSERT INTO checkups (user_id, height_cm, weight_kg, bmi, recorded_at) " +
+                                 "VALUES (@user_id, @height_cm, @weight_kg, @bmi, NOW())";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.Parameters.AddWithValue("@height_cm", heightCm);
+                    cmd.Parameters.AddWithValue("@weight_kg", weightKg);
+                    cmd.Parameters.AddWithValue("@bmi", Math.Round(bmi, 2));
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Saved successfully!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
+
+
         }
 
-      
+
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            // Regex that allows digits and a single decimal point (based on current culture)
+            
             Regex regex = new Regex("[^0-9,.]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           UserForm userForm = new UserForm(username);
-            userForm.Show();
-            this.Close();
+           //UserForm userForm = new UserForm(username);
+           //userForm.Show();
+           //this.Close();
+
+          
+
         }
+        private void HeightTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Add your logic here if needed
+        }
+        private void WeightTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Optional: any code when text changes
+        }
+
+
+
 
 
     }
