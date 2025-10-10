@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="BMI Health Tracker" Height="726" Width="875"
         WindowStartupLocation="CenterScreen"
-        Background="Black">
+        Background="Black" Loaded="Window_Loaded">
 
     <!-- Define reusable styles for a modern look -->
     <Window.Resources>
@@ -193,7 +193,7 @@
             <Grid>
                 <Border BorderBrush="Black" BorderThickness="1" Margin="-6,0,0,0">
                     <Grid>
-                        <Button Content="" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="22" Width="112">
+                        <Button Content="" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" Height="22" Width="81" Click="Button_Click_1">
                             <Button.Background>
                                 <ImageBrush ImageSource="/goback.jpg"/>
                             </Button.Background>

@@ -5,6 +5,8 @@ using System.Windows.Input;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.X509;
+using System.Data;
 
 
 namespace WpfApp2
@@ -13,11 +15,13 @@ namespace WpfApp2
     {
         String username = MainWindow.Username;
         String strconn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
-        private int _userId;
-        public ShortCheck(int userId)
+        String SQL = "";
+        private int userId;
+        Users user  = new Users();
+        public ShortCheck()
         {
             InitializeComponent();
-            _userId = userId;
+          
         }
 
         
@@ -76,31 +80,11 @@ namespace WpfApp2
             BmiResultTextBlock.Text = $"Your BMI: {roundedBmi} ({category})";
             BmiResultTextBlock.Foreground = categoryColor;
 
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(strconn))
-                {
-                    conn.Open();
+            SQL = $"INSERT INTO checkups (user_id, height_cm, weight_kg, bmi) VALUES ('{userId}', '{heightCm}', '{weightKg}', '{bmi}')";
+            user.sqlManager(SQL);
+            SQL = $"Insert into student_activity_log(user_id, activity_type, activity_desc) values ('{userId}', 'Vitals Check', 'BMI Check Up')";
+            user.sqlManager(SQL);
 
-
-                    int userId = 1; //sample lang na userid
-
-                    string sql = "INSERT INTO checkups (user_id, height_cm, weight_kg, bmi, recorded_at) " +
-                                 "VALUES (@user_id, @height_cm, @weight_kg, @bmi, NOW())";
-
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@user_id", userId);
-                    cmd.Parameters.AddWithValue("@height_cm", heightCm);
-                    cmd.Parameters.AddWithValue("@weight_kg", weightKg);
-                    cmd.Parameters.AddWithValue("@bmi", Math.Round(bmi, 2));
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Saved successfully!");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
 
 
 
@@ -133,9 +117,29 @@ namespace WpfApp2
             // Optional: any code when text changes
         }
 
+        public void getID (String username)
+        {
+            SQL = $"Select user_id from users where username = '{username}'";
+            DataTable dt = new DataTable();
+            dt = user.displayRecords(SQL);
+            userId = Convert.ToInt32(dt.Rows[0][0].ToString());
 
 
 
+            
+        }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            getID(username);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            UserForm userform = new UserForm(username);
+
+            this.Close();
+            userform.Show();
+        }
     }
 }
