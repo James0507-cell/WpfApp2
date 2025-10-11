@@ -16,23 +16,23 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="55*"/>
-                <RowDefinition Height="8*"/>
-                <RowDefinition Height="75*"/>
-                <RowDefinition Height="392*"/>
+                <RowDefinition Height="31*"/>
+                <RowDefinition Height="73*"/>
+                <RowDefinition Height="371*"/>
                 <RowDefinition Height="195*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="2" Focusable="True" Margin="0,2,0,1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="283*"/>
-                    <ColumnDefinition Width="181*"/>
-                    <ColumnDefinition Width="103*"/>
-                    <ColumnDefinition Width="283*"/>
+                    <ColumnDefinition Width="279*"/>
+                    <ColumnDefinition Width="287*"/>
+                    <ColumnDefinition Width="11*"/>
+                    <ColumnDefinition Width="272*"/>
                 </Grid.ColumnDefinitions>
 
                 <Border x:Name="___No_Name_"
         BorderThickness="0.2"
-        Margin="25,10,15,10"
+        Margin="25,10,15,0"
         CornerRadius="8"
         BorderBrush="Black"
         Background="#FFFDFDFD"
@@ -44,14 +44,13 @@
         ClipToBounds="True"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
-        Click="btnAppoint_Click"
-        Margin="10,0,4,0">
+        Click="btnAppoint_Click" Margin="0,1,0,-1">
 
                         <Grid Width="221" Height="50">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="59*" />
+                                <ColumnDefinition Width="49*" />
                                 <!-- Column 0 -->
-                                <ColumnDefinition Width="121*" />
+                                <ColumnDefinition Width="131*" />
                                 <!-- Column 1 -->
                                 <ColumnDefinition Width="41*" />
                                 <!-- Column 2 -->
@@ -69,8 +68,8 @@
                Height="40"
                HorizontalAlignment="Center"
                VerticalAlignment="Top" Margin="0,3,0,0"/>
-                            <Label Content="Book Appointment" HorizontalAlignment="Left" Margin="55,7,0,0" VerticalAlignment="Top" Width="108" FontWeight="DemiBold" Foreground="#FF00175E" Height="25" Grid.ColumnSpan="2" FontSize="10"/>
-                            <Label Content="Schedule a visit with your doctor" HorizontalAlignment="Left" Margin="55,20,0,0" VerticalAlignment="Top" FontSize="8" Height="22" Foreground="#FFB5B5B5" Width="125" Grid.ColumnSpan="2" Background="{x:Null}"/>
+                            <Label Content="Book Appointment" HorizontalAlignment="Left" Margin="0,7,0,0" VerticalAlignment="Top" Width="108" FontWeight="DemiBold" Foreground="#FF00175E" Height="25" FontSize="10" Grid.Column="1"/>
+                            <Label Content="Schedule a visit with your doctor" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="8" Height="22" Foreground="#FFB5B5B5" Width="125" Background="{x:Null}" Grid.Column="1"/>
                             <Label Grid.Column="2" Content="✚" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="20" Margin="0,10,0,0"/>
                         </Grid>
                     </Button>
@@ -81,13 +80,12 @@
                 <Border BorderBrush="Black"
         BorderThickness="0.2"
         Grid.Column="1"
-        Margin="37,10,37,10"
+        Margin="25,10,22,0"
         CornerRadius="8"
-        Grid.ColumnSpan="2"
         Background="White">
 
                     <Button x:Name="btnSample"
-            Width="201"
+            Width="240"
             Height="48"
             Click="Button_Click_2"
             BorderBrush="{x:Null}"
@@ -101,7 +99,7 @@
             VerticalContentAlignment="Center">
 
                         <!-- Centered Grid inside the Button -->
-                        <Grid Width="188" Height="41"
+                        <Grid Width="233" Height="41"
               HorizontalAlignment="Center"
               VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
@@ -125,7 +123,7 @@
                 <Border BorderBrush="Black"
         BorderThickness="0.2"
         Grid.Column="3"
-        Margin="10,10,27,10"
+        Margin="10,10,27,0"
         CornerRadius="8"
         Background="White">
                     <Button x:Name="btnBorder3"
@@ -224,15 +222,25 @@
             </Border>
 
             <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Margin="0,0,0,4" CornerRadius="1,1,1,1">
-                <Border BorderThickness="0,0,0,1" CornerRadius="5,5,5,5" Background="White">
+                <Border BorderThickness="0,0,0,1" CornerRadius="5,5,5,5">
                     <Image HorizontalAlignment="Left" Height="51" VerticalAlignment="Center" Width="58" Source="/Logo-Final_noname_1.png" Margin="10,0,0,0"/>
                 </Border>
             </Border>
-            <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="69,0,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="36" Width="140"/>
+            <Label Content="Student Portal" HorizontalAlignment="Left" Margin="69,0,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="36" Width="151"/>
             <Label x:Name="lblName" Content="Welcome back, (First Name)" HorizontalAlignment="Left" Margin="75,25,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="21" Width="166"/>
-            <Button Content="" HorizontalAlignment="Left" Margin="735,0,0,0" VerticalAlignment="Center" Width="88" BorderBrush="{x:Null}" Click="Button_Click_4" Height="27" Background="{x:Null}"/>
+            <Button HorizontalAlignment="Left" Margin="735,0,0,0" VerticalAlignment="Center" Width="64" BorderBrush="{x:Null}" Click="Button_Click_4" Height="27" Background="{x:Null}">
+                <Grid Height="23" Width="60">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="59*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="22" Source="/Screenshot 2025-10-11 192925.png"/>
+                    <Label Grid.Column="1" Content="Logout" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="9" FontWeight="DemiBold" Foreground="#FF02214D"/>
+                </Grid>
+            </Button>
             <Label Content="Latest BMI" HorizontalAlignment="Left" Margin="136,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="7" Foreground="#FF737373" Height="19" Width="42"/>
             <Button Content="Button" HorizontalAlignment="Left" Margin="-27,-316,0,0" VerticalAlignment="Top" Height="20" Width="40"/>
+            <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="21,0,0,0" VerticalAlignment="Center" FontSize="15" FontWeight="DemiBold" Foreground="#FF000E54" Grid.Row="1"/>
 
         </Grid>
     </Border>

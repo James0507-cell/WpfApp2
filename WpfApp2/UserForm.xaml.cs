@@ -31,8 +31,9 @@ namespace WpfApp2
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             var mainWindow = new MainWindow();
-            mainWindow.Show();
             this.Close();
+            mainWindow.Show();
+            
         }
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
@@ -473,6 +474,11 @@ namespace WpfApp2
             DataTable dt = new DataTable();
             dt = userForm.displayRecords(SQL);
             userId = Convert.ToInt64(dt.Rows[0][0].ToString());
+        }
+        public void getBmi (int id)
+        {
+
+
         }
         
     }
