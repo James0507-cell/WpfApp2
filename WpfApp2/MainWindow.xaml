@@ -33,18 +33,7 @@
 
             <Label Content="MediCare MMCM" HorizontalAlignment="Left" Margin="82,17,0,0" VerticalAlignment="Top" FontWeight="SemiBold" Width="203" FontSize="15" Foreground="#FF00104D"/>
 
-            <Image HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="52" Source="/Logo-Final_noname_1.png" Margin="775,449,0,0" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleY="0.095"/>
-                        <RotateTransform Angle="-0.349"/>
-                        <TranslateTransform X="0" Y="0.041"/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-
-            <Label Content="Join the Health Portal" HorizontalAlignment="Left" Margin="68,148,0,0" VerticalAlignment="Top" Width="185" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="17" RenderTransformOrigin="0.5,0.5" Height="31">
+            <Label Content="Join the Health Portal" HorizontalAlignment="Left" Margin="90,114,0,0" VerticalAlignment="Top" Width="185" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="17" RenderTransformOrigin="0.5,0.5" Height="31">
                 <Label.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -55,7 +44,7 @@
                 </Label.RenderTransform>
             </Label>
 
-            <TextBox x:Name="txtusername" HorizontalAlignment="Left" Margin="70,213,0,0"
+            <TextBox x:Name="txtusername" HorizontalAlignment="Left" Margin="106,197,0,0"
                 TextWrapping="Wrap"
                 VerticalAlignment="Top" Width="165" Height="22">
                 <TextBox.Template>
@@ -70,7 +59,7 @@
                 </TextBox.Template>
             </TextBox>
 
-            <TextBox x:Name="txtpassword" HorizontalAlignment="Left" Margin="70,270,0,0"
+            <TextBox x:Name="txtpassword" HorizontalAlignment="Left" Margin="106,258,0,0"
                 TextWrapping="Wrap"
                 VerticalAlignment="Top" Width="165" Height="22">
                 <TextBox.Template>
@@ -85,15 +74,15 @@
                 </TextBox.Template>
             </TextBox>
 
-            <Label Content="Access your medical records and stay updated with your school’s health services." HorizontalAlignment="Left" Margin="66,171,0,0" VerticalAlignment="Top" Width="564" FontSize="8" Foreground="#FF7A7878"/>
+            <Label Content="Access your medical records and stay updated with your school’s health services." HorizontalAlignment="Left" Margin="90,137,0,0" VerticalAlignment="Top" Width="564" FontSize="8" Foreground="#FF7A7878"/>
 
-            <Image HorizontalAlignment="Left" Height="15" Margin="42,218,0,0" VerticalAlignment="Top" Width="20" Source="/person icon.jpg"/>
+            <Image HorizontalAlignment="Left" Height="16" Margin="73,200,0,0" VerticalAlignment="Top" Width="20" Source="/person icon.jpg"/>
 
-            <Image HorizontalAlignment="Left" Height="14" Margin="44,274,0,0" VerticalAlignment="Top" Width="15" Source="/icon lock.jpg"/>
+            <Image HorizontalAlignment="Left" Height="14" Margin="75,262,0,0" VerticalAlignment="Top" Width="15" Source="/icon lock.jpg"/>
 
-            <Label Content="Username" HorizontalAlignment="Left" Margin="70,187,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
+            <Label Content="Username" HorizontalAlignment="Left" Margin="106,171,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
 
-            <Label Content="Password" HorizontalAlignment="Left" Margin="70,247,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
+            <Label Content="Password" HorizontalAlignment="Left" Margin="106,232,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
 
             <Border BorderThickness="1" Margin="70,318,601,164" CornerRadius="5" Background="#FF00104D">
                 <Grid Margin="0">
@@ -109,7 +98,7 @@
                 <TextBox x:Name="TxtPassword" TextWrapping="Wrap" Text="Enter Password" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#FF00104D" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="10,1,5,1" GotFocus="TxtPassword_GotFocus" LostFocus="TxtPassword_LostFocus"/>
             </Grid>
             <Label Content="Label" HorizontalAlignment="Left" Height="0" Margin="-515,171,0,0" VerticalAlignment="Top" Width="5"/>
-            <Button x:Name="BtnSignIn" Content="Sign In" HorizontalAlignment="Left" Margin="70,318,0,0" VerticalAlignment="Top" Width="165" Height="24" Click="BtnSignIn_Click_1">
+            <Button x:Name="BtnSignIn" Content="Sign In" HorizontalAlignment="Left" Margin="106,307,0,0" VerticalAlignment="Top" Width="165" Height="24" Click="BtnSignIn_Click_1">
                 <Button.Template>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="ButtonBorder" 
@@ -133,7 +122,7 @@
                     <SolidColorBrush Color="White"/>
                 </Button.Foreground>
             </Button>
-            <Image HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="52" Source="/Logo-Final_noname_1.png" Margin="768,389,0,0" RenderTransformOrigin="0.5,0.5">
+            <Image HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="52" Source="/Logo-Final_noname_1.png" Margin="747,364,0,0" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
