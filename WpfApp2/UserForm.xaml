@@ -204,10 +204,16 @@
                         <ColumnDefinition Width="115*"/>
                     </Grid.ColumnDefinitions>
                     <Border BorderThickness="1" Margin="540,18,24,10" CornerRadius="8" Background="#FFFDD7D7">
-                        <Grid/>
+                        <Grid>
+                            <Image HorizontalAlignment="Center" Height="38" Margin="0,5,0,0" VerticalAlignment="Top" Width="38" Source="/Screenshot 2025-09-10 203147.png" RenderTransformOrigin="0.861,0.455"/>
+                            <Label Content="Active Prescription" HorizontalAlignment="Center" Margin="0,48,0,0" VerticalAlignment="Top" FontSize="7" Foreground="#FF707070" Height="19" Width="66"/>
+                        </Grid>
                     </Border>
                     <Border BorderThickness="1" Margin="282,18,282,10" CornerRadius="8,8,8,8" Background="#FFB9FFE3">
-                        <Grid/>
+                        <Grid>
+                            <Image HorizontalAlignment="Left" Height="38" Margin="90,5,0,0" VerticalAlignment="Top" Width="37" Source="/Screenshot 2025-09-10 195902.png" RenderTransformOrigin="0.841,-0.093"/>
+                            <Label Content="Last Check-up" HorizontalAlignment="Left" Margin="81,48,0,0" VerticalAlignment="Top" Foreground="#FF818181" FontSize="7" Height="19" Width="54"/>
+                        </Grid>
                     </Border>
                     <Border BorderThickness="1" Margin="25,18,541,10" CornerRadius="8,8,8,8" Background="#FF9BCDFF">
                         <Grid>
@@ -225,12 +231,7 @@
             <Label Content="Quick Actions" HorizontalAlignment="Left" Margin="69,0,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D" Height="36" Width="140"/>
             <Label x:Name="lblName" Content="Welcome back, (First Name)" HorizontalAlignment="Left" Margin="75,25,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="21" Width="166"/>
             <Button Content="" HorizontalAlignment="Left" Margin="735,0,0,0" VerticalAlignment="Center" Width="88" BorderBrush="{x:Null}" Click="Button_Click_4" Height="27" Background="{x:Null}"/>
-
-            <Image HorizontalAlignment="Left" Height="38" Margin="397,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="37" Source="/Screenshot 2025-09-10 195902.png" RenderTransformOrigin="0.841,-0.093"/>
-            <Image HorizontalAlignment="Left" Height="38" Margin="667,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="38" Source="/Screenshot 2025-09-10 203147.png" RenderTransformOrigin="0.861,0.455"/>
             <Label Content="Latest BMI" HorizontalAlignment="Left" Margin="136,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="7" Foreground="#FF737373" Height="19" Width="42"/>
-            <Label Content="Last Check-up" HorizontalAlignment="Left" Margin="389,0,0,0" Grid.Row="4" VerticalAlignment="Center" Foreground="#FF818181" FontSize="7" Height="19" Width="54"/>
-            <Label Content="Active Prescription" HorizontalAlignment="Left" Margin="651,0,0,0" Grid.Row="4" VerticalAlignment="Center" FontSize="7" Foreground="#FF707070" Height="19" Width="67"/>
             <Button Content="Button" HorizontalAlignment="Left" Margin="-27,-316,0,0" VerticalAlignment="Top" Height="20" Width="40"/>
 
         </Grid>
