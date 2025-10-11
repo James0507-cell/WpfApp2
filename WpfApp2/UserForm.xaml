@@ -224,7 +224,7 @@
             </Border>
 
             <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Margin="0,0,0,4" CornerRadius="1,1,1,1">
-                <Border BorderThickness="0,0,0,1" CornerRadius="5,5,5,5">
+                <Border BorderThickness="0,0,0,1" CornerRadius="5,5,5,5" Background="White">
                     <Image HorizontalAlignment="Left" Height="51" VerticalAlignment="Center" Width="58" Source="/Logo-Final_noname_1.png" Margin="10,0,0,0"/>
                 </Border>
             </Border>
