@@ -325,6 +325,11 @@ namespace WpfApp2
             
             int totalStudents  = admin.GetStudentCount();
             lblActiveStatus.Content = totalStudents;
+
+            int totalmedicinereq = admin.GetMedicineCount();
+            lblMedicine.Content = totalmedicinereq;
+
+
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
             displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 30");

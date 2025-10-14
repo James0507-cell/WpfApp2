@@ -108,6 +108,17 @@ namespace WpfApp2
             
         }
 
+        public int GetMedicineCount()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM medicinerequests WHERE status = 'Pending'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
 
     }
 }
