@@ -47,20 +47,33 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Border BorderBrush="Black" BorderThickness="1" Margin="10,34,10,33" CornerRadius="5,5,5,5"/>
-                                <Label Content="Pending Appointmens" HorizontalAlignment="Left" Margin="49,35,0,0" VerticalAlignment="Top"/>
-                                <Image HorizontalAlignment="Left" Height="30" Margin="15,48,0,0" VerticalAlignment="Top" Width="36" Source="/times.jpg"/>
-                                <Border BorderBrush="Black" BorderThickness="1" Margin="10,35,10,33" Grid.Column="1" CornerRadius="5,5,5,5"/>
-                                <Label Grid.Column="1" Content="Medicine Request" HorizontalAlignment="Left" Margin="59,34,0,0" VerticalAlignment="Top"/>
-                                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Margin="8,35,9,33" CornerRadius="5,5,5,5">
-                                    <Image Margin="8,5,132,12" Source="/iconcaustiosn.jpg"/>
+                                <Border BorderBrush="Black" BorderThickness="1" Margin="10,34,10,33" CornerRadius="5,5,5,5">
+                                    <Grid>
+                                        <Image HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="36" Source="/times.jpg" Margin="4,0,0,0"/>
+                                        <Label Content="Pending Appointments" HorizontalAlignment="Left" Margin="34,0,0,0" VerticalAlignment="Top" Width="132"/>
+                                        <Label x:Name="lblPending" Content="0" HorizontalAlignment="Left" Margin="85,20,0,0" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="15"/>
+                                    </Grid>
                                 </Border>
-                                <Label Grid.Column="2" Content="Low Stacks Items" HorizontalAlignment="Left" Margin="60,34,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.356,0.403"/>
+                                <Border BorderBrush="Black" BorderThickness="1" Margin="10,35,10,33" Grid.Column="1" CornerRadius="5,5,5,5">
+                                    <Grid>
+                                        <Image Margin="4,10,133,12" Source="/capsule icon.jpg"/>
+                                        <Label Content="Medicine Request" HorizontalAlignment="Left" Margin="42,-1,0,0" VerticalAlignment="Top" Width="123"/>
+                                        <Label x:Name="lblMedicine" Content="0" HorizontalAlignment="Left" Margin="85,18,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="SemiBold"/>
+                                    </Grid>
+                                </Border>
+                                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Margin="8,35,9,33" CornerRadius="5,5,5,5">
+                                    <Grid>
+                                        <Image Margin="7,7,134,10" Source="/iconcaustiosn.jpg"/>
+                                        <Label Content="Low Stack Items" HorizontalAlignment="Left" Margin="50,-2,0,0" VerticalAlignment="Top" Width="123"/>
+                                        <Label x:Name="lblLowStack" Content="0" HorizontalAlignment="Left" Margin="92,17,0,0" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="15"/>
+                                    </Grid>
+                                </Border>
                                 <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Margin="10,34,10,34" CornerRadius="5,5,5,5">
                                     <StackPanel>
                                         <Grid Height="50">
                                             <Image HorizontalAlignment="Left" Height="32" Margin="8,6,0,0" VerticalAlignment="Top" Width="41" Source="/persons.jpg"/>
-                                            <Label Content="Active Status" HorizontalAlignment="Left" Margin="54,-1,0,0" VerticalAlignment="Top"/>
+                                            <Label Content="Active Status" HorizontalAlignment="Left" Margin="63,-1,0,0" VerticalAlignment="Top"/>
+                                            <Label x:Name="lblActiveStatus" Content="0" HorizontalAlignment="Left" Margin="93,17,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="SemiBold"/>
                                         </Grid>
                                     </StackPanel>
                                 </Border>

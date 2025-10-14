@@ -322,6 +322,19 @@ namespace WpfApp2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
+            int totalStudents  = admin.GetStudentCount();
+            lblActiveStatus.Content = totalStudents;
+
+            int totalmedicinereq = admin.GetMedicineCount();
+            lblMedicine.Content = totalmedicinereq;
+
+            int totalAppoinment =  admin.GetAppointmenCount();
+            lblPending.Content = totalAppoinment;
+
+            int totalLowStock = admin.getMedicineCount();
+            lblLowStack.Content = totalLowStock; 
+
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
             displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 30");

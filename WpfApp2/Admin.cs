@@ -14,7 +14,7 @@ namespace WpfApp2
         private DataTable dt;
 
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
-        private string connectionString = "server=localhost;user id=root;password=;database=db_medicaremmcm";
+        
 
         public void dbConnection()
         {
@@ -60,7 +60,7 @@ namespace WpfApp2
             string bloodType
         )
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (MySqlConnection conn = new MySqlConnection(strConn))
             {
                 try
                 {
@@ -95,5 +95,52 @@ namespace WpfApp2
                 }
             }
         }
+
+        public int GetStudentCount()
+        {
+            using(MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                    conn.Open();
+                    string sql = "SELECT COUNT(*) FROM users WHERE role = 'Student'";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            
+        }
+
+        public int GetMedicineCount()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM medicinerequests WHERE status = 'Pending'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
+        public int GetAppointmenCount()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM appointments";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
+        public int getMedicineCount()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM medicineinventory WHERE amount < 20";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }                                    
+
+
     }
 }
