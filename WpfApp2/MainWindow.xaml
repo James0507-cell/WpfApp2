@@ -84,19 +84,7 @@
 
             <Label Content="Password" HorizontalAlignment="Left" Margin="106,232,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
 
-            <Border BorderThickness="1" Margin="70,318,601,164" CornerRadius="5" Background="#FF00104D">
-                <Grid Margin="0">
-                    <Label Content="Sign In" HorizontalAlignment="Center" VerticalAlignment="Center" Width="49" Height="30" Foreground="White"/>
-                </Grid>
-            </Border>
-
-            <Grid Margin="70,213,601,269">
-                <TextBox x:Name="TxtUserName" TextWrapping="Wrap" Text="Enter Username" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#FF00104D" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="10,1,1,1" GotFocus="TxtUserName_GotFocus" LostFocus="TxtUserName_LostFocus"/>
-            </Grid>
-
-            <Grid Margin="70,270,601,212">
-                <TextBox x:Name="TxtPassword" TextWrapping="Wrap" Text="Enter Password" TextChanged="TextBox_TextChanged" FontSize="8" Foreground="#FF00104D" Background="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" Margin="10,1,5,1" GotFocus="TxtPassword_GotFocus" LostFocus="TxtPassword_LostFocus"/>
-            </Grid>
+            <Border BorderThickness="1" Margin="70,318,601,164" CornerRadius="5" Background="#FF00104D"/>
             <Label Content="Label" HorizontalAlignment="Left" Height="0" Margin="-515,171,0,0" VerticalAlignment="Top" Width="5"/>
             <Button x:Name="BtnSignIn" Content="Sign In" HorizontalAlignment="Left" Margin="106,307,0,0" VerticalAlignment="Top" Width="165" Height="24" Click="BtnSignIn_Click_1">
                 <Button.Template>
