@@ -52,11 +52,11 @@ namespace WpfApp2
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            DataTable dtCourse = admin.displayRecords("Select *from course_program");
+            DataTable dtCourse = admin.displayRecords("Select *from course_programs");
             foreach( DataRow row in dtCourse.Rows)
             {
 
-                cboCourse.Items.Add(row["course_program"].ToString());
+                cboCourse.Items.Add(row["course_name"].ToString());
             }
 
             cboYearLevel.Items.Add("1st Year");

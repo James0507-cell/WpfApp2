@@ -201,7 +201,7 @@ namespace WpfApp2
                     new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2196F3")), // Blue 
                     (s, e) =>
                     {
-                        UpdateStudent(StudentId, course, year, fullname, email, adress, phone);
+                        UpdateStudent();
                     });
 
                 // Delete Button (Red)
@@ -227,167 +227,10 @@ namespace WpfApp2
             }
         }
 
-        private void UpdateStudent(string studentId, string oldCourse, string oldYear, string fullname, string email, string address, string phone)
+        private void UpdateStudent()
         {
-            // Floating panel window
-            Window updateWindow = new Window
-            {
-                Title = "Update Student",
-                Width = 380,
-                Height = 520,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                ResizeMode = ResizeMode.NoResize,
-                Owner = this,
-                Background = Brushes.White,
-
-                WindowStyle = WindowStyle.None
-            };
-
-            Border mainBorder = new Border
-            {
-                CornerRadius = new CornerRadius(20),
-                BorderThickness = new Thickness(1),
-                BorderBrush = Brushes.LightGray,
-                Background = Brushes.White,
-                Padding = new Thickness(20),
-                Margin = new Thickness(10),
-                Effect = new System.Windows.Media.Effects.DropShadowEffect
-                {
-                    Color = Colors.Black,
-                    Direction = 270,
-                    ShadowDepth = 5,
-                    Opacity = 0.3,
-                    BlurRadius = 10
-                }
-            };
-
-            StackPanel panel = new StackPanel { Margin = new Thickness(10) };
-
-            TextBlock header = new TextBlock
-            {
-                Text = $"Update: {fullname}",
-                FontSize = 18,
-                FontWeight = FontWeights.Bold,
-                Margin = new Thickness(0, 0, 0, 15),
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-
-            panel.Children.Add(header);
-
-            // Helper for rounded TextBox
-            Func<string, TextBox> createRoundedTextBox = (string text) =>
-            {
-                TextBox box = new TextBox
-                {
-                    Text = text,
-                    Margin = new Thickness(0, 5, 0, 10),
-                    Padding = new Thickness(10),
-                    Background = Brushes.Transparent,
-                    BorderThickness = new Thickness(0)
-                };
-
-                Border border = new Border
-                {
-                    CornerRadius = new CornerRadius(10),
-                    BorderBrush = Brushes.Gray,
-                    BorderThickness = new Thickness(1),
-                    Background = Brushes.White,
-                    Child = box
-                };
-
-                panel.Children.Add(border);
-                return box;
-            };
-
-            // Labels + fields
-            panel.Children.Add(new TextBlock { Text = "Course Program:", FontWeight = FontWeights.SemiBold });
-            TextBox courseBox = createRoundedTextBox(oldCourse);
-
-            panel.Children.Add(new TextBlock { Text = "Year Level:", FontWeight = FontWeights.SemiBold });
-            TextBox yearBox = createRoundedTextBox(oldYear);
-
-            panel.Children.Add(new TextBlock { Text = "Email:", FontWeight = FontWeights.SemiBold });
-            TextBox emailBox = createRoundedTextBox(email);
-
-            panel.Children.Add(new TextBlock { Text = "Address:", FontWeight = FontWeights.SemiBold });
-            TextBox addressBox = createRoundedTextBox(address);
-
-            panel.Children.Add(new TextBlock { Text = "Phone Number:", FontWeight = FontWeights.SemiBold });
-            TextBox phoneBox = createRoundedTextBox(phone);
-
-            // Helper for rounded button
-            Func<string, Brush, Brush, RoutedEventHandler, Border> createRoundedButton = (string content, Brush bg, Brush fg, RoutedEventHandler handler) =>
-            {
-                Button button = new Button
-                {
-                    Content = content,
-                    Background = Brushes.Transparent,
-                    Foreground = fg,
-                    BorderThickness = new Thickness(0),
-                    Padding = new Thickness(8, 5, 8, 5),
-                    FontWeight = FontWeights.Bold,
-                    Cursor = System.Windows.Input.Cursors.Hand
-                };
-
-                button.Click += handler;
-
-                Border btnBorder = new Border
-                {
-                    CornerRadius = new CornerRadius(10),
-                    Background = bg,
-                    Margin = new Thickness(5, 10, 5, 0),
-                    Child = button
-                };
-
-                return btnBorder;
-            };
-
-            // Buttons
-            StackPanel buttonPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-
-            var saveBtnBorder = createRoundedButton("Save Changes",
-                new SolidColorBrush(Color.FromRgb(52, 152, 219)),
-                Brushes.White,
-                (s, e) =>
-                {
-                    string newCourse = courseBox.Text;
-                    string newYear = yearBox.Text;
-                    string newEmail = emailBox.Text;
-                    string newAddress = addressBox.Text;
-                    string newPhone = phoneBox.Text;
-
-                    string updateSQL = $"UPDATE users SET " +
-                                        $"course_program = '{newCourse}', " +
-                                        $"year_level = '{newYear}', " +
-                                        $"email = '{newEmail}', " +
-                                        $"address = '{newAddress}', " +
-                                        $"phone_number = '{newPhone}' " +
-                                        $"WHERE student_id = '{studentId}'";
-
-                    admin.sqlManager(updateSQL);
-                    MessageBox.Show("Student updated successfully!", "Update", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                    updateWindow.Close();
-                    displayUsers("SELECT * FROM users WHERE role = 'Student'");
-                });
-
-            var cancelBtnBorder = createRoundedButton("Cancel",
-                Brushes.LightGray,
-                Brushes.Black,
-                (s, e) => updateWindow.Close());
-
-            buttonPanel.Children.Add(saveBtnBorder);
-            buttonPanel.Children.Add(cancelBtnBorder);
-            panel.Children.Add(buttonPanel);
-
-            mainBorder.Child = panel;
-            updateWindow.Content = mainBorder;
-
-            updateWindow.ShowDialog();
+            UpdateStudent updateStudent = new UpdateStudent();
+            updateStudent.Show();
         }
 
         private void DeleteStudent(String studentId)
@@ -442,6 +285,11 @@ namespace WpfApp2
             AdminWindow admin = new AdminWindow();
             admin.Show();
             this.Close();
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
