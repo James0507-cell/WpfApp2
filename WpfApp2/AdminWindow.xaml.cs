@@ -329,6 +329,9 @@ namespace WpfApp2
             int totalmedicinereq = admin.GetMedicineCount();
             lblMedicine.Content = totalmedicinereq;
 
+            int totalAppoinment =  admin.GetAppointmenCount();
+            lblPending.Content = totalAppoinment;
+
 
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");

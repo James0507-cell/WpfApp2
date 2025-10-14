@@ -119,6 +119,17 @@ namespace WpfApp2
             }
         }
 
+        public int GetAppointmenCount()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM appointments";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
 
     }
 }
