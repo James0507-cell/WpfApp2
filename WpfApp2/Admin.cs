@@ -130,6 +130,17 @@ namespace WpfApp2
             }
         }
 
+        public int getMedicineCount()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM medicineinventory WHERE amount < 20";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }                                    
+
 
     }
 }
