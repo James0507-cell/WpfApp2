@@ -64,7 +64,7 @@
                             </TextBox>
                             <Label Content="Student ID *" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
                             <Label Content="Date of Birth *" Margin="190,237,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtStudentID" HorizontalAlignment="Left" Margin="10,87,0,0" 
+                            <TextBox x:Name="txtConfirmStudentID" HorizontalAlignment="Left" Margin="10,87,0,0" 
                                 TextWrapping="Wrap" 
                                 VerticalAlignment="Top" Width="165" Height="23" TextChanged="txtStudentID_TextChanged">
                                 <TextBox.Template>

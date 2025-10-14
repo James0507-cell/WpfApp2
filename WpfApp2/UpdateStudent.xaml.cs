@@ -22,82 +22,109 @@ namespace WpfApp2
     {
         String SQL = "";
         Admin admin = new Admin();
-        String username = MainWindow.Username;
+        String username = "";
         int userId = 0;
-        public UpdateStudent()
+        public UpdateStudent(String username)
         {
+            this.username = username;
             InitializeComponent();
         }
 
         private void btnAddStudent_Click(object sender, RoutedEventArgs e)
         {
             SQL = $@"
-            UPDATE users SET 
-            student_id = '{txtStudentID.Text}', 
-            first_name = '{txtFirstName.Text}', 
-            last_name = '{txtLastName.Text}', 
-            username = '{txtUsername.Text}', 
-            password = '{txtPassword.Text}', 
-            date_of_birth = '{dpDatePicker.SelectedDate:yyyy-MM-dd}', 
-            email = '{txtEmailAddress.Text}', 
-            phone_number = '{txtPhoneNumber.Text}', 
-            address = '{txtAddress.Text}', 
-            course_program = '{cboCourse.Text}', 
-            year_level = '{cboYearLevel.Text}', 
-            enrollment_status = '{cboEnrolledStatus.Text}', 
-            blood_type = '{cboBloodType.Text}' 
-            WHERE user_id = {userId}";
+                UPDATE users SET 
+                student_id = '{txtConfirmStudentID.Text}', 
+                first_name = '{txtFirstName.Text}', 
+                last_name = '{txtLastName.Text}', 
+                username = '{txtUsername.Text}', 
+                password = '{txtPassword.Text}', 
+                date_of_birth = '{dpDatePicker.SelectedDate:yyyy-MM-dd}', 
+                email = '{txtEmailAddress.Text}', 
+                phone_number = '{txtPhoneNumber.Text}', 
+                address = '{txtAddress.Text}', 
+                course_program = '{cboCourse.SelectedValue}', 
+                year_level = '{cboYearLevel.SelectedValue}', 
+                enrollment_status = '{cboEnrolledStatus.SelectedValue}', 
+                blood_type = '{cboBloodType.Text}', 
+                role = '{cmbRole.Text}'
+                WHERE user_id = {userId}";
+
             admin.sqlManager(SQL);
-            MessageBox.Show("Student Information Updated!");
+            MessageBox.Show("Student information updated successfully!");
 
         }
-        public void studentInfo ()
+        private void LoadStudentInfo()
         {
-            SQL = "SELECT * FROM users WHERE username = '" + username + "'";
-            DataTable dt  = admin.displayRecords(SQL);
-            if (dt.Rows.Count > 0)
+            SQL = $"SELECT * FROM users WHERE username = '{username}'";
+            DataTable dt = admin.displayRecords(SQL);
+
+            if (dt.Rows.Count == 0)
             {
-                DataRow row = dt.Rows[0];
-                userId = Convert.ToInt32(row["user_id"]);
-                txtStudentID.Text = row["student_id"].ToString();
-                txtFirstName.Text = row["first_name"].ToString();
-                txtLastName.Text = row["last_name"].ToString();
-                txtUsername.Text = row["username"].ToString();
-                txtPassword.Text = row["password"].ToString();
-                if (DateTime.TryParse(row["date_of_birth"].ToString(), out DateTime dob))
-                {
-                    dpDatePicker.SelectedDate = dob;
-                }
-                txtEmailAddress.Text = row["email"].ToString();
-                txtPhoneNumber.Text = row["phone_number"].ToString();
-                txtAddress.Text = row["address"].ToString();
-                cboCourse.SelectedValue = row["course_program"].ToString();
-                cboYearLevel.SelectedItem = row["year_level"].ToString();
-                cboEnrolledStatus.SelectedItem = row["enrollment_status"].ToString();
-                cboBloodType.SelectedValue = row["blood_type"];
+                MessageBox.Show("No student found for this username.");
+                return;
             }
 
+            DataRow row = dt.Rows[0];
+
+            userId = Convert.ToInt32(row["user_id"]);
+            txtConfirmStudentID.Text = row["student_id"].ToString();
+            txtFirstName.Text = row["first_name"].ToString();
+            txtLastName.Text = row["last_name"].ToString();
+            txtUsername.Text = row["username"].ToString();
+            txtPassword.Text = row["password"].ToString();
+            txtEmailAddress.Text = row["email"].ToString();
+            txtPhoneNumber.Text = row["phone_number"].ToString();
+            txtAddress.Text = row["address"].ToString();
+
+            if (DateTime.TryParse(row["date_of_birth"].ToString(), out DateTime dob))
+            {
+                dpDatePicker.SelectedDate = dob;
+            }
+
+            string courseProgram = row["course_program"].ToString().Trim();
+            string yearLevel = row["year_level"].ToString().Trim();
+            string status = row["enrollment_status"].ToString().Trim();
+            string bloodType = row["blood_type"].ToString().Trim();
+            string role = row["role"].ToString().Trim();
+
+            cboCourse.Text = courseProgram;
+            cboYearLevel.Text = yearLevel;
+            cboEnrolledStatus.Text = status;
+            cboBloodType.Text = bloodType;
+            cmbRole.Text = role;
         }
+
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
             admin.dbConnection();
-            DataTable dtCourse = admin.displayRecords("Select *from course_programs");
-            cboCourse.ItemsSource = dtCourse.DefaultView;
-            cboCourse.DisplayMemberPath = "course_name";
-            cboCourse.SelectedValuePath = "course_name";
 
-            cboYearLevel.Items.Add("1st Year");
-            cboYearLevel.Items.Add("2nd Year");
-            cboYearLevel.Items.Add("3rd Year");
-            cboYearLevel.Items.Add("4th Year");
+            LoadComboBoxes();
+            LoadStudentInfo();
 
-            cboEnrolledStatus.Items.Add("Enrolled");
-            cboEnrolledStatus.Items.Add("Pending");
-            cboEnrolledStatus.Items.Add("Dropped");
-            cboEnrolledStatus.Items.Add("Graduated");
+        }
+        private void LoadComboBoxes()
+        {
+            DataTable dtCourse = admin.displayRecords("SELECT * FROM course_programs");
+            foreach (DataRow row in dtCourse.Rows)
+            {
+                cboCourse.Items.Add(row["course_name"].ToString());
+            }
 
-            DataTable dt_blood = admin.displayRecords("Select * from blood_types");
+            DataTable dtYear = admin.displayRecords("SELECT * FROM year_levels");
+            foreach (DataRow row in dtYear.Rows)
+            {
+                cboYearLevel.Items.Add(row["level_name"].ToString());
+            }
+
+            DataTable dtStatus = admin.displayRecords("SELECT * FROM enrollment_statuses");
+            foreach (DataRow row in dtStatus.Rows)
+            {
+                cboEnrolledStatus.Items.Add(row["status_name"].ToString());
+            }
+
+            DataTable dt_blood = admin.displayRecords("SELECT * FROM blood_types");
             foreach (DataRow row in dt_blood.Rows)
             {
                 cboBloodType.Items.Add(row["blood_type"].ToString());
@@ -105,8 +132,6 @@ namespace WpfApp2
 
             cmbRole.Items.Add("Admin");
             cmbRole.Items.Add("Student");
-            studentInfo();
-
         }
 
         private void txtEmailAddress_TextChanged(object sender, TextChangedEventArgs e)

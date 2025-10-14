@@ -16,6 +16,7 @@ namespace WpfApp2
 
         Admin admin = new Admin();
         String SQL = "";
+        String Username = "";
         public StudentManagement()
         {
             InitializeComponent();
@@ -201,7 +202,8 @@ namespace WpfApp2
                     new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2196F3")), // Blue 
                     (s, e) =>
                     {
-                        UpdateStudent();
+                        Username = username;
+                        UpdateStudent(Username);
                     });
 
                 // Delete Button (Red)
@@ -227,9 +229,9 @@ namespace WpfApp2
             }
         }
 
-        private void UpdateStudent()
+        private void UpdateStudent(String usernmae)
         {
-            UpdateStudent updateStudent = new UpdateStudent();
+            UpdateStudent updateStudent = new UpdateStudent(Username);
             updateStudent.Show();
         }
 
