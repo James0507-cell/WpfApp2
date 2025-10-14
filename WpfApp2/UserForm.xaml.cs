@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Input;
+using System.Security.Cryptography.X509Certificates;
 
 namespace WpfApp2
 {
@@ -14,8 +15,8 @@ namespace WpfApp2
         Users userForm = new Users();
         ShortCheck shortcheck = new ShortCheck();
         string SQL = "";
-        long userId;
-        
+        int userId;
+
         public UserForm(string username)
         {
             InitializeComponent();
@@ -33,7 +34,7 @@ namespace WpfApp2
             var mainWindow = new MainWindow();
             this.Close();
             mainWindow.Show();
-            
+
         }
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
@@ -54,6 +55,13 @@ namespace WpfApp2
             SQL = $"SELECT * FROM student_activity_log WHERE user_id = '{userId}' ORDER BY activity_date DESC LIMIT 5";
             displayActivities(SQL);
             getName();
+            displayBMI();
+            displayCheckupDate();
+            displayUpcommingAppointment();
+            displayHeight();
+            displayWeight();
+            displayProgressBar();
+            displaySixMonthsProgress(); 
         }
 
         /// <summary>
@@ -112,312 +120,312 @@ namespace WpfApp2
 
 
         private void displayAppointment(string query)
-{
-    DataTable dt = userForm.displayRecords(query);
-    AppointmentStackPanel.Children.Clear();
-
-    Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-    Brush lightGrayBrush = new SolidColorBrush(Colors.Gray); // For better readability
-
-    for (int i = 0; i < dt.Rows.Count; i++)
-    {
-        // 1. Extract Data
-        string appointmentId = dt.Rows[i]["appointment_id"].ToString();
-        string date = dt.Rows[i]["appointment_date"].ToString();
-        string time = dt.Rows[i]["appointment_time"].ToString();
-        string status = dt.Rows[i]["status"].ToString();
-        string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
-
-
-        // 2. Create the Card Container (Border)
-        Border cardBorder = new Border
         {
-            BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
-            BorderThickness = new Thickness(1),
-            Background = Brushes.White,
-            CornerRadius = new CornerRadius(8),
-            Margin = new Thickness(10, 4, 10, 4),
-            Padding = new Thickness(12, 6, 12, 6), // FURTHER REDUCED PADDING
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            Effect = new DropShadowEffect
+            DataTable dt = userForm.displayRecords(query);
+            AppointmentStackPanel.Children.Clear();
+
+            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
+            Brush lightGrayBrush = new SolidColorBrush(Colors.Gray); // For better readability
+
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                Color = Colors.LightGray,
-                Direction = 315,
-                ShadowDepth = 2,
-                BlurRadius = 5,
-                Opacity = 0.5
-            }
-        };
+                // 1. Extract Data
+                string appointmentId = dt.Rows[i]["appointment_id"].ToString();
+                string date = dt.Rows[i]["appointment_date"].ToString();
+                string time = dt.Rows[i]["appointment_time"].ToString();
+                string status = dt.Rows[i]["status"].ToString();
+                string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
 
 
-        // 3. Main StackPanel to hold all content vertically
-        StackPanel appointmentContent = new StackPanel();
-
-        // --- Row 1: Title and Status Tag (using Grid for alignment) ---
-        Grid headerGrid = new Grid();
-        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        headerGrid.Margin = new Thickness(0, 0, 0, 3); // Reduced bottom margin
-
-        // Title (Purpose)
-        TextBlock txtTitle = new TextBlock
-        {
-            Text = purpose,
-            FontWeight = FontWeights.SemiBold, // Slightly reduced bolding
-            FontSize = 12,                    // Slightly reduced font size
-            Foreground = darkBlueBrush,
-            VerticalAlignment = VerticalAlignment.Center
-        };
-        Grid.SetColumn(txtTitle, 0);
-        headerGrid.Children.Add(txtTitle);
-
-        // Status Tag
-        Border statusTag = CreateStatusTag(status);
-        Grid.SetColumn(statusTag, 1);
-        headerGrid.Children.Add(statusTag);
-
-        appointmentContent.Children.Add(headerGrid);
-
-
-        // --- Row 2: Date, Time, and ID Details (COMBINED LINE) ---
-        StackPanel detailsPanel = new StackPanel
-        {
-            Orientation = Orientation.Horizontal,
-            Margin = new Thickness(0, 0, 0, 0) // Removed margin for compactness
-        };
-
-        // Date Block (📅 2024-12-15)
-        TextBlock txtDate = new TextBlock
-        {
-            Text = $"📅 {date}",
-            FontSize = 11,
-            Foreground = lightGrayBrush,
-            Margin = new Thickness(0, 0, 10, 0)
-        };
-        detailsPanel.Children.Add(txtDate);
-
-        // Separator
-        TextBlock separator = new TextBlock
-        {
-            Text = "|",
-            FontSize = 11,
-            Foreground = lightGrayBrush,
-            Margin = new Thickness(0, 0, 10, 0)
-        };
-        detailsPanel.Children.Add(separator);
-
-        // Time Block (🕒 10:00 AM)
-        TextBlock txtTime = new TextBlock
-        {
-            Text = $"🕒 {time}",
-            FontSize = 11,
-            Foreground = lightGrayBrush,
-            Margin = new Thickness(0, 0, 10, 0)
-        };
-        detailsPanel.Children.Add(txtTime);
-
-        // Separator
-        TextBlock separator2 = new TextBlock
-        {
-            Text = "|",
-            FontSize = 11,
-            Foreground = lightGrayBrush,
-            Margin = new Thickness(0, 0, 10, 0)
-        };
-        detailsPanel.Children.Add(separator2);
-        
-        // Appointment ID
-        TextBlock txtId = new TextBlock
-        {
-            Text = $"ID: {appointmentId}",
-            FontSize = 11,
-            Foreground = lightGrayBrush,
-            FontWeight = FontWeights.Medium // Highlight ID slightly
-        };
-        detailsPanel.Children.Add(txtId);
-
-        appointmentContent.Children.Add(detailsPanel);
-
-        // REMOVED THE ORIGINAL "Row 3: Detail Subtext" TO SAVE HEIGHT
-
-        // 4. Attach Content to Card Border
-        cardBorder.Child = appointmentContent;
-
-
-        // 5. Context Menu Functionality (Right-Click) - UNCHANGED
-        string currentAppointmentId = appointmentId;
-
-        cardBorder.MouseRightButtonDown += (s, e) =>
-        {
-            ContextMenu contextMenu = new ContextMenu();
-
-            // Only allow update/cancel if the status is not already completed/cancelled
-            if (!status.Equals("Cancelled", StringComparison.OrdinalIgnoreCase) && !status.Equals("Completed", StringComparison.OrdinalIgnoreCase))
-            {
-                MenuItem updateItem = new MenuItem { Header = "Update Appointment" };
-                updateItem.Click += (s2, e2) =>
+                // 2. Create the Card Container (Border)
+                Border cardBorder = new Border
                 {
-                    // Create and show the Update Appointment Window
-                    UpdateAppointment updateAppointmentWindow = new UpdateAppointment(
-                        currentAppointmentId,
-                        date,
-                        time,
-                        purpose
-                    );
-                    bool? result = updateAppointmentWindow.ShowDialog();
-                    if (result == true)
+                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+                    BorderThickness = new Thickness(1),
+                    Background = Brushes.White,
+                    CornerRadius = new CornerRadius(8),
+                    Margin = new Thickness(10, 4, 10, 4),
+                    Padding = new Thickness(12, 6, 12, 6), // FURTHER REDUCED PADDING
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    Effect = new DropShadowEffect
                     {
-                        // Assuming 'username' is accessible here
-                        // Redundant part of the code removed for clarity but original logic kept
-                        // (Requires 'username' scope if this code snippet is outside the class/method where it's defined)
-                        // displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'"); 
+                        Color = Colors.LightGray,
+                        Direction = 315,
+                        ShadowDepth = 2,
+                        BlurRadius = 5,
+                        Opacity = 0.5
                     }
                 };
-                contextMenu.Items.Add(updateItem);
 
-                MenuItem deleteItem = new MenuItem { Header = "Cancel Appointment" };
-                deleteItem.Click += (s3, e3) =>
+
+                // 3. Main StackPanel to hold all content vertically
+                StackPanel appointmentContent = new StackPanel();
+
+                // --- Row 1: Title and Status Tag (using Grid for alignment) ---
+                Grid headerGrid = new Grid();
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                headerGrid.Margin = new Thickness(0, 0, 0, 3); // Reduced bottom margin
+
+                // Title (Purpose)
+                TextBlock txtTitle = new TextBlock
                 {
-                    // Requires 'cancelAppointment' method scope
-                    // cancelAppointment(currentAppointmentId); 
+                    Text = purpose,
+                    FontWeight = FontWeights.SemiBold, // Slightly reduced bolding
+                    FontSize = 12,                    // Slightly reduced font size
+                    Foreground = darkBlueBrush,
+                    VerticalAlignment = VerticalAlignment.Center
                 };
-                contextMenu.Items.Add(deleteItem);
+                Grid.SetColumn(txtTitle, 0);
+                headerGrid.Children.Add(txtTitle);
+
+                // Status Tag
+                Border statusTag = CreateStatusTag(status);
+                Grid.SetColumn(statusTag, 1);
+                headerGrid.Children.Add(statusTag);
+
+                appointmentContent.Children.Add(headerGrid);
+
+
+                // --- Row 2: Date, Time, and ID Details (COMBINED LINE) ---
+                StackPanel detailsPanel = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Margin = new Thickness(0, 0, 0, 0) // Removed margin for compactness
+                };
+
+                // Date Block (📅 2024-12-15)
+                TextBlock txtDate = new TextBlock
+                {
+                    Text = $"📅 {date}",
+                    FontSize = 11,
+                    Foreground = lightGrayBrush,
+                    Margin = new Thickness(0, 0, 10, 0)
+                };
+                detailsPanel.Children.Add(txtDate);
+
+                // Separator
+                TextBlock separator = new TextBlock
+                {
+                    Text = "|",
+                    FontSize = 11,
+                    Foreground = lightGrayBrush,
+                    Margin = new Thickness(0, 0, 10, 0)
+                };
+                detailsPanel.Children.Add(separator);
+
+                // Time Block (🕒 10:00 AM)
+                TextBlock txtTime = new TextBlock
+                {
+                    Text = $"🕒 {time}",
+                    FontSize = 11,
+                    Foreground = lightGrayBrush,
+                    Margin = new Thickness(0, 0, 10, 0)
+                };
+                detailsPanel.Children.Add(txtTime);
+
+                // Separator
+                TextBlock separator2 = new TextBlock
+                {
+                    Text = "|",
+                    FontSize = 11,
+                    Foreground = lightGrayBrush,
+                    Margin = new Thickness(0, 0, 10, 0)
+                };
+                detailsPanel.Children.Add(separator2);
+
+                // Appointment ID
+                TextBlock txtId = new TextBlock
+                {
+                    Text = $"ID: {appointmentId}",
+                    FontSize = 11,
+                    Foreground = lightGrayBrush,
+                    FontWeight = FontWeights.Medium // Highlight ID slightly
+                };
+                detailsPanel.Children.Add(txtId);
+
+                appointmentContent.Children.Add(detailsPanel);
+
+                // REMOVED THE ORIGINAL "Row 3: Detail Subtext" TO SAVE HEIGHT
+
+                // 4. Attach Content to Card Border
+                cardBorder.Child = appointmentContent;
+
+
+                // 5. Context Menu Functionality (Right-Click) - UNCHANGED
+                string currentAppointmentId = appointmentId;
+
+                cardBorder.MouseRightButtonDown += (s, e) =>
+                {
+                    ContextMenu contextMenu = new ContextMenu();
+
+                    // Only allow update/cancel if the status is not already completed/cancelled
+                    if (!status.Equals("Cancelled", StringComparison.OrdinalIgnoreCase) && !status.Equals("Completed", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MenuItem updateItem = new MenuItem { Header = "Update Appointment" };
+                        updateItem.Click += (s2, e2) =>
+                        {
+                            // Create and show the Update Appointment Window
+                            UpdateAppointment updateAppointmentWindow = new UpdateAppointment(
+                                currentAppointmentId,
+                                date,
+                                time,
+                                purpose
+                            );
+                            bool? result = updateAppointmentWindow.ShowDialog();
+                            if (result == true)
+                            {
+                                // Assuming 'username' is accessible here
+                                // Redundant part of the code removed for clarity but original logic kept
+                                // (Requires 'username' scope if this code snippet is outside the class/method where it's defined)
+                                // displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'"); 
+                            }
+                        };
+                        contextMenu.Items.Add(updateItem);
+
+                        MenuItem deleteItem = new MenuItem { Header = "Cancel Appointment" };
+                        deleteItem.Click += (s3, e3) =>
+                        {
+                            // Requires 'cancelAppointment' method scope
+                            // cancelAppointment(currentAppointmentId); 
+                        };
+                        contextMenu.Items.Add(deleteItem);
+                    }
+                    else
+                    {
+                        // Add a disabled item if actions aren't allowed
+                        MenuItem disabledItem = new MenuItem { Header = $"Actions restricted (Status: {status})", IsEnabled = false };
+                        contextMenu.Items.Add(disabledItem);
+                    }
+
+
+                    cardBorder.ContextMenu = contextMenu;
+                    contextMenu.IsOpen = true;
+                    e.Handled = true; // Mark the event as handled to prevent propagation
+                };
+
+                AppointmentStackPanel.Children.Add(cardBorder);
             }
-            else
-            {
-                // Add a disabled item if actions aren't allowed
-                MenuItem disabledItem = new MenuItem { Header = $"Actions restricted (Status: {status})", IsEnabled = false };
-                contextMenu.Items.Add(disabledItem);
-            }
-
-
-            cardBorder.ContextMenu = contextMenu;
-            contextMenu.IsOpen = true;
-            e.Handled = true; // Mark the event as handled to prevent propagation
-        };
-
-        AppointmentStackPanel.Children.Add(cardBorder);
-    }
-}
+        }
 
         // NOTE: The 'CreateStatusTag' method is assumed to exist elsewhere in your code.
         // The context menu logic for 'username' and 'cancelAppointment' will only compile 
         // if those variables/methods are accessible in the scope of this method.
 
         public void displayActivities(String query)
-{
-    // Use the class-level userForm object to fetch data
-    DataTable dt = userForm.displayRecords(query); 
-    
-    // Clear the target panel before adding new items (assuming 'StackPanelActivities' is the target)
-    // Make sure 'StackPanelActivities' is defined in your XAML.
-    StackPanelActivities.Children.Clear(); 
-
-    // Define consistent colors (matching the dark blue from displayAppointment)
-    Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-    Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
-
-    for (int i = 0; i < dt.Rows.Count; i++)
-    {
-        // 1. Correct Data Extraction (using column names and current row index 'i')
-        // NOTE: Column names are inferred from the original method's variable names.
-        string activityId = dt.Rows[i]["activity_id"].ToString();
-        string type = dt.Rows[i]["activity_type"].ToString();
-        string description = dt.Rows[i]["activity_desc"].ToString();
-        string dateTime = dt.Rows[i]["activity_date"].ToString(); // Typically a DateTime, but treating as string for display
-        
-        // 2. Create the Card Container (Border) - Replicating Appointment Style
-        Border cardBorder = new Border
         {
-            BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
-            BorderThickness = new Thickness(1),
-            Background = Brushes.White,
-            CornerRadius = new CornerRadius(8),
-            Margin = new Thickness(10, 4, 10, 4), // Consistent with Appointment style
-            Padding = new Thickness(12, 6, 12, 6),
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            Effect = new DropShadowEffect
+            // Use the class-level userForm object to fetch data
+            DataTable dt = userForm.displayRecords(query);
+
+            // Clear the target panel before adding new items (assuming 'StackPanelActivities' is the target)
+            // Make sure 'StackPanelActivities' is defined in your XAML.
+            StackPanelActivities.Children.Clear();
+
+            // Define consistent colors (matching the dark blue from displayAppointment)
+            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
+            Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                Color = Colors.LightGray,
-                Direction = 315,
-                ShadowDepth = 2,
-                BlurRadius = 5,
-                Opacity = 0.5
+                // 1. Correct Data Extraction (using column names and current row index 'i')
+                // NOTE: Column names are inferred from the original method's variable names.
+                string activityId = dt.Rows[i]["activity_id"].ToString();
+                string type = dt.Rows[i]["activity_type"].ToString();
+                string description = dt.Rows[i]["activity_desc"].ToString();
+                string dateTime = dt.Rows[i]["activity_date"].ToString(); // Typically a DateTime, but treating as string for display
+
+                // 2. Create the Card Container (Border) - Replicating Appointment Style
+                Border cardBorder = new Border
+                {
+                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+                    BorderThickness = new Thickness(1),
+                    Background = Brushes.White,
+                    CornerRadius = new CornerRadius(8),
+                    Margin = new Thickness(10, 4, 10, 4), // Consistent with Appointment style
+                    Padding = new Thickness(12, 6, 12, 6),
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    Effect = new DropShadowEffect
+                    {
+                        Color = Colors.LightGray,
+                        Direction = 315,
+                        ShadowDepth = 2,
+                        BlurRadius = 5,
+                        Opacity = 0.5
+                    }
+                };
+
+                // 3. Main StackPanel to hold all content vertically
+                StackPanel activityContent = new StackPanel();
+
+                // --- Row 1: Activity Type and ID ---
+                Grid headerGrid = new Grid();
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                headerGrid.Margin = new Thickness(0, 0, 0, 3);
+
+                // Activity Type (as Title)
+                TextBlock txtType = new TextBlock
+                {
+                    Text = type, // e.g., "Login", "Appointment Booked"
+                    FontWeight = FontWeights.SemiBold,
+                    FontSize = 12,
+                    Foreground = darkBlueBrush,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                Grid.SetColumn(txtType, 0);
+                headerGrid.Children.Add(txtType);
+
+                // Activity Tag (Using a simplified tag for the ID)
+                Border idTag = new Border
+                {
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F0F0")), // Light Gray background
+                    CornerRadius = new CornerRadius(4),
+                    Padding = new Thickness(8, 2, 8, 2),
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Child = new TextBlock
+                    {
+                        Text = $"ID: {activityId}",
+                        Foreground = Brushes.Gray,
+                        FontWeight = FontWeights.Medium,
+                        FontSize = 10
+                    }
+                };
+                Grid.SetColumn(idTag, 1);
+                headerGrid.Children.Add(idTag);
+
+                activityContent.Children.Add(headerGrid);
+
+                // --- Row 2: Date/Time and Description ---
+
+                // Date/Time Block (⌚ 2025-10-09 10:00:00)
+                TextBlock txtDateTime = new TextBlock
+                {
+                    Text = $"⌚ {dateTime}",
+                    FontSize = 11,
+                    Foreground = lightGrayBrush,
+                    Margin = new Thickness(0, 0, 0, 2)
+                };
+                activityContent.Children.Add(txtDateTime);
+
+                // Description
+                TextBlock txtDescription = new TextBlock
+                {
+                    Text = description, // e.g., "User logged in successfully"
+                    FontSize = 11,
+                    Foreground = darkBlueBrush,
+                    TextWrapping = TextWrapping.Wrap // Ensure long text wraps
+                };
+                activityContent.Children.Add(txtDescription);
+
+
+                // 4. Attach Content to Card Border
+                cardBorder.Child = activityContent;
+
+                // 5. Add to the main StackPanel
+                StackPanelActivities.Children.Add(cardBorder);
             }
-        };
-
-        // 3. Main StackPanel to hold all content vertically
-        StackPanel activityContent = new StackPanel();
-
-        // --- Row 1: Activity Type and ID ---
-        Grid headerGrid = new Grid();
-        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-        headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        headerGrid.Margin = new Thickness(0, 0, 0, 3);
-
-        // Activity Type (as Title)
-        TextBlock txtType = new TextBlock
-        {
-            Text = type, // e.g., "Login", "Appointment Booked"
-            FontWeight = FontWeights.SemiBold,
-            FontSize = 12,
-            Foreground = darkBlueBrush,
-            VerticalAlignment = VerticalAlignment.Center
-        };
-        Grid.SetColumn(txtType, 0);
-        headerGrid.Children.Add(txtType);
-
-        // Activity Tag (Using a simplified tag for the ID)
-        Border idTag = new Border
-        {
-            Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F0F0")), // Light Gray background
-            CornerRadius = new CornerRadius(4),
-            Padding = new Thickness(8, 2, 8, 2),
-            HorizontalAlignment = HorizontalAlignment.Right,
-            VerticalAlignment = VerticalAlignment.Top,
-            Child = new TextBlock
-            {
-                Text = $"ID: {activityId}",
-                Foreground = Brushes.Gray,
-                FontWeight = FontWeights.Medium,
-                FontSize = 10
-            }
-        };
-        Grid.SetColumn(idTag, 1);
-        headerGrid.Children.Add(idTag);
-        
-        activityContent.Children.Add(headerGrid);
-
-        // --- Row 2: Date/Time and Description ---
-        
-        // Date/Time Block (⌚ 2025-10-09 10:00:00)
-        TextBlock txtDateTime = new TextBlock
-        {
-            Text = $"⌚ {dateTime}",
-            FontSize = 11,
-            Foreground = lightGrayBrush,
-            Margin = new Thickness(0, 0, 0, 2)
-        };
-        activityContent.Children.Add(txtDateTime);
-
-        // Description
-        TextBlock txtDescription = new TextBlock
-        {
-            Text = description, // e.g., "User logged in successfully"
-            FontSize = 11,
-            Foreground = darkBlueBrush,
-            TextWrapping = TextWrapping.Wrap // Ensure long text wraps
-        };
-        activityContent.Children.Add(txtDescription);
-
-
-        // 4. Attach Content to Card Border
-        cardBorder.Child = activityContent;
-
-        // 5. Add to the main StackPanel
-        StackPanelActivities.Children.Add(cardBorder);
-    }
-}
+        }
 
         public void cancelAppointment(string appointmentId)
         {
@@ -473,13 +481,257 @@ namespace WpfApp2
             SQL = $"Select user_id from users where username = '{username}'";
             DataTable dt = new DataTable();
             dt = userForm.displayRecords(SQL);
-            userId = Convert.ToInt64(dt.Rows[0][0].ToString());
+            userId = Convert.ToInt32(dt.Rows[0][0].ToString());
         }
-        public void getBmi (int id)
+        public void displayBMI()
         {
-
+            SQL = $"Select * from checkups where user_id = '{userId}' order by checkup_id desc limit 1";
+            DataTable dt = userForm.displayRecords(SQL);
+            if (dt.Rows.Count > 0)
+            {
+                String bmi = dt.Rows[0]["bmi"].ToString();
+                lblbmi.Content = bmi;
+            }
+            else
+            {
+                lblbmi.Content = "No BMI record found.";
+            }
 
         }
-        
+        public void displayCheckupDate()
+        {
+            SQL = $"SELECT * FROM checkups WHERE user_id = '{userId}' ORDER BY checkup_id DESC LIMIT 1";
+            DataTable dt = userForm.displayRecords(SQL);
+
+            if (dt.Rows.Count > 0)
+            {
+                DateTime recordedDate = Convert.ToDateTime(dt.Rows[0]["recorded_at"]);
+                lblCheck.Content = recordedDate.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                lblCheck.Content = "No Checkup record found.";
+            }
+        }
+        public void displayUpcommingAppointment()
+        {
+            SQL = $"SELECT * FROM appointments " +
+                  $"WHERE user_id = '{userId}' " +
+                  $"AND status = 'Approved' " +
+                  $"AND TIMESTAMP(appointment_date, appointment_time) >= NOW() " +
+                  $"ORDER BY TIMESTAMP(appointment_date, appointment_time) ASC " +
+                  $"LIMIT 1";
+            DataTable dt = userForm.displayRecords(SQL);
+            if (dt.Rows.Count > 0)
+            {
+                DateTime date = Convert.ToDateTime(dt.Rows[0]["appointment_date"]);
+                TimeSpan time = (TimeSpan)dt.Rows[0]["appointment_time"];
+
+                DateTime fullDateTime = date.Add(time);
+
+                lblIncomingAppointment.Content = fullDateTime.ToString("MMMM dd, yyyy") + "\n" +
+                                         fullDateTime.ToString("hh:mm tt");
+            }
+            else
+            {
+                lblIncomingAppointment.Content = "No upcoming appointment";
+            }
+
+        }
+        public void displayHeight()
+        {
+            SQL = $"Select * from checkups where user_id = '{userId}' order by checkup_id desc limit 1";
+            DataTable dt = userForm.displayRecords(SQL);
+            if (dt.Rows.Count > 0)
+            {
+                String height = dt.Rows[0]["height_cm"].ToString();
+                lblHeight.Content = height + " cm";
+            }
+            else
+            {
+                lblHeight.Content = "No Height record found.";
+            }
+        }
+        public void displayWeight()
+        {
+            SQL = $"Select * from checkups where user_id = '{userId}' order by checkup_id desc limit 1";
+            DataTable dt = userForm.displayRecords(SQL);
+            if (dt.Rows.Count > 0)
+            {
+                String weight = dt.Rows[0]["weight_kg"].ToString();
+                lblWeight.Content = weight + " kg";
+            }
+            else
+            {
+                lblWeight.Content = "No Weight record found.";
+            }
+
+        }
+        public void displayProgressBar()
+        {
+            try
+            {
+                lblTargetRange.Content = "Range: 0 - 40";
+                SQL = $"SELECT bmi FROM checkups WHERE user_id = '{userId}' ORDER BY checkup_id DESC LIMIT 1";
+                DataTable dt = userForm.displayRecords(SQL);
+
+                pbBMI.Minimum = 0;
+                pbBMI.Maximum = 40;
+
+                if (dt.Rows.Count > 0 && dt.Rows[0][0] != DBNull.Value)
+                {
+                    double bmi = Convert.ToDouble(dt.Rows[0][0]);
+
+                    if (bmi > pbBMI.Maximum)
+                        bmi = pbBMI.Maximum;
+                    if (bmi < pbBMI.Minimum)
+                        bmi = pbBMI.Minimum;
+
+                    pbBMI.Value = bmi;
+
+                    if (bmi < 18.5) 
+                    {
+                        pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3")); 
+                        lblBMIRange.Content = "Underweight range";
+                        brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3"));
+                        brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E3F2FD"));
+                    }
+                    else if (bmi >= 18.5 && bmi < 24.9) 
+                    {
+                        pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CAF50")); 
+                        lblBMIRange.Content = "Normal range";
+                        brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CAF50"));
+                        brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E8F5E9"));
+
+                    }
+                    else if (bmi >= 25 && bmi < 29.9) 
+                    {
+                        pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9800")); 
+                        lblBMIRange.Content = "Overweight range";
+                        brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9800"));
+                        brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF3E0"));
+                    }
+                    else if (bmi >= 30)
+                    {
+                        pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F44336")); 
+                        lblBMIRange.Content = "Obese range";
+                        brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F44336"));
+                        brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFEBEE"));
+                    }
+
+                    lblBMIStatus.Content = $"BMI: {bmi:F1}";
+                }
+                else
+                {
+                   
+                    pbBMI.Value = 0;
+                    pbBMI.Foreground = new SolidColorBrush(Colors.Gray);
+                    lblBMIStatus.Content = "BMI: N/A";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error displaying BMI progress: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                pbBMI.Value = 0;
+                pbBMI.Foreground = new SolidColorBrush(Colors.Gray);
+                lblBMIStatus.Content = "BMI: N/A";
+            }
+        }
+        public void displaySixMonthsProgress()
+        {
+            SQL = @"
+                SELECT 
+                    DATE_FORMAT(c.recorded_at, '%M') AS month_name,   -- Full month name (e.g., January)
+                    c.bmi
+                FROM checkups c
+                INNER JOIN (
+                    SELECT 
+                        YEAR(recorded_at) AS y,
+                        MONTH(recorded_at) AS m,
+                        MAX(recorded_at) AS max_date
+                    FROM checkups
+                    WHERE user_id = 8
+                      AND recorded_at >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+                    GROUP BY YEAR(recorded_at), MONTH(recorded_at)
+                ) latest
+                ON YEAR(c.recorded_at) = latest.y
+                AND MONTH(c.recorded_at) = latest.m
+                AND c.recorded_at = latest.max_date
+                WHERE c.user_id = 8
+                ORDER BY latest.y, latest.m ASC;
+                ";
+
+            DataTable dt = userForm.displayRecords(SQL);
+
+            for (int i = 0; i < 6; i++)
+            {
+                ProgressBar pb = null;
+                Label lblMonth = null;
+                Label lblBmi = null;
+
+                switch (i)
+                {
+                    case 0:
+                        pb = pbMonth1; lblMonth = lblMonth1; lblBmi = lblBmi1;
+                        break;
+                    case 1:
+                        pb = pbMonth2; lblMonth = lblMonth2; lblBmi = lblBmi2;
+                        break;
+                    case 2:
+                        pb = pbMonth3; lblMonth = lblMonth3; lblBmi = lblBmi3;
+                        break;
+                    case 3:
+                        pb = pbMonth4; lblMonth = lblMonth4; lblBmi = lblBmi4;
+                        break;
+                    case 4:
+                        pb = pbMonth5; lblMonth = lblMonth5; lblBmi = lblBmi5;
+                        break;
+                    case 5:
+                        pb = pbMonth6; lblMonth = lblMonth6; lblBmi = lblBmi6;
+                        break;
+                }
+
+                if (i < dt.Rows.Count)
+                {
+                    string fullMonthName = dt.Rows[i]["month_name"].ToString();
+                    string shortMonthName = fullMonthName.Length > 3
+                        ? fullMonthName.Substring(0, 3)
+                        : fullMonthName;
+
+                    double bmi = Convert.ToDouble(dt.Rows[i]["bmi"].ToString());
+
+                    lblMonth.Content = shortMonthName;
+                    lblBmi.Content = $"{bmi:F1}";
+                    pb.Value = Math.Min(Math.Max(bmi, 0), 40);
+
+                    if (bmi < 18.5)
+                    {
+                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3")); 
+                    }
+                    else if (bmi >= 18.5 && bmi < 24.9)
+                    {
+                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CAF50"));
+                    }
+                    else if (bmi >= 25 && bmi < 29.9)
+                    {
+                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9800"));
+                    }
+                    else if (bmi >= 30)
+                    {
+                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F44336")); 
+                    }
+                }
+                else
+                {
+                    lblMonth.Content = "—";
+                    lblBmi.Content = "BMI: N/A";
+                    pb.Value = 0;
+                    pb.Foreground = new SolidColorBrush(Colors.Gray);
+                }
+            }
+        }
+
+
+
     }
 }
