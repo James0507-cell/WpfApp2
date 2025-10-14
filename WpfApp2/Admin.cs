@@ -95,5 +95,20 @@ namespace WpfApp2
                 }
             }
         }
+
+        public int GetStudentCount()
+        {
+            using(MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                
+                    conn.Open();
+                    string sql = "SELECT COUNT(*) FROM users WHERE role = 'Student'";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            
+        }
+
+
     }
 }

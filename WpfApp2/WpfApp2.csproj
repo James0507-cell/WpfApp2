@@ -21,6 +21,7 @@
     <None Remove="asdasda.jpg" />
     <None Remove="asdasdasd.jpg" />
     <None Remove="cancel.jpg" />
+    <None Remove="capsule icon.jpg" />
     <None Remove="capsule.jpg" />
     <None Remove="ddas.jpg" />
     <None Remove="desgn iamge.png" />
@@ -128,6 +129,7 @@
     <Resource Include="asdasda.jpg" />
     <Resource Include="asdasdasd.jpg" />
     <Resource Include="cancel.jpg" />
+    <Resource Include="capsule icon.jpg" />
     <Resource Include="capsule.jpg" />
     <Resource Include="ddas.jpg" />
     <Resource Include="desgn iamge.png" />
