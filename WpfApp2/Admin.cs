@@ -101,7 +101,7 @@ namespace WpfApp2
             using(MySqlConnection conn = new MySqlConnection(strConn))
             {
                     conn.Open();
-                    string sql = "SELECT COUNT(*) FROM users WHERE role = 'Student'";
+                    string sql = "SELECT COUNT(*) FROM users WHERE role = 'Student' and enrollment_status = 'Enrolled'";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     return Convert.ToInt32(cmd.ExecuteScalar());
             }

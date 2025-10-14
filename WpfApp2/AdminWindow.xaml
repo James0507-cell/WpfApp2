@@ -33,7 +33,7 @@
             </Button>
             <Grid Grid.Row="1" Margin="0,0,0,10" Grid.RowSpan="2">
                 <Border BorderBrush="Black" BorderThickness="1" Margin="102,47,102,539" CornerRadius="15,15,15,15"/>
-                <TabControl Margin="40,54,40,53" BorderBrush="{x:Null}" Background="{x:Null}">
+                <TabControl Margin="40,54,40,53" BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="TabControl_SelectionChanged_2">
                     <TabItem Header="Overview" Background="{x:Null}" Margin="109,-7,-134,5" BorderThickness="5,0,0,0" BorderBrush="{x:Null}">
                         <Grid Height="510" Margin="0,0,-1,0">
                             <Grid.RowDefinitions>

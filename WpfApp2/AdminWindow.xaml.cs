@@ -781,6 +781,21 @@ namespace WpfApp2
                 StackPanelMedicineInv.Children.Add(cardBorder);
             }
         }
+
+        private void TabControl_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
+        {
+            int totalStudents = admin.GetStudentCount();
+            lblActiveStatus.Content = totalStudents;
+
+            int totalmedicinereq = admin.GetMedicineCount();
+            lblMedicine.Content = totalmedicinereq;
+
+            int totalAppoinment = admin.GetAppointmenCount();
+            lblPending.Content = totalAppoinment;
+
+            int totalLowStock = admin.getMedicineCount();
+            lblLowStack.Content = totalLowStock;
+        }
     }
     }
 
