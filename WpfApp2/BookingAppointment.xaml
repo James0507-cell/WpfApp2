@@ -46,6 +46,36 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="#E53935"/>
         </Style>
+
+        <Style x:Key="BookedAppointmentStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F0F0F0"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,15"/>
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5">
+
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                <ContentPresenter/>
+
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
     <Border BorderThickness="1" CornerRadius="20,20,20,20" Background="#FFF9F9F9">
         <Grid Margin="1,-1,-1,1">
@@ -197,19 +227,19 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
 
-                                            <Button Content="9:00 AM" Tag="9:00 AM" Grid.Column="0" Grid.Row="0" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="9:30 AM" Tag="9:30 AM" Grid.Column="1" Grid.Row="0" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="10:00 AM" Tag="10:00 AM" Grid.Column="0" Grid.Row="1" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="10:30 AM" Tag="10:30 AM" Grid.Column="1" Grid.Row="1" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="1:00 PM" Tag="1:00 PM" Grid.Column="0" Grid.Row="2" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="1:30 PM" Tag="1:30 PM" Grid.Column="1" Grid.Row="2" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="2:00 PM" Tag="2:00 PM" Grid.Column="0" Grid.Row="3" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="2:30 PM" Tag="2:30 PM" Grid.Column="1" Grid.Row="3" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="3:00 PM" Tag="3:00 PM" Grid.Column="0" Grid.Row="4" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="3:30 PM" Tag="3:30 PM" Grid.Column="1" Grid.Row="4" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="4:00 PM" Tag="4:00 PM" Grid.Column="0" Grid.Row="5" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="4:30 PM" Tag="4:30 PM" Grid.Column="1" Grid.Row="5" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
-                                            <Button Content="5:00 PM" Tag="5:00 PM" Grid.Column="0" Grid.Row="6" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn1" Content="9:00 AM" Tag="9:00 AM" Grid.Column="0" Grid.Row="0" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn2" Content="9:30 AM" Tag="9:30 AM" Grid.Column="1" Grid.Row="0" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn3" Content="10:00 AM" Tag="10:00 AM" Grid.Column="0" Grid.Row="1" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn4" Content="10:30 AM" Tag="10:30 AM" Grid.Column="1" Grid.Row="1" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn5" Content="1:00 PM" Tag="1:00 PM" Grid.Column="0" Grid.Row="2" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn6" Content="1:30 PM" Tag="1:30 PM" Grid.Column="1" Grid.Row="2" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn7" Content="2:00 PM" Tag="2:00 PM" Grid.Column="0" Grid.Row="3" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn8" Content="2:30 PM" Tag="2:30 PM" Grid.Column="1" Grid.Row="3" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn9" Content="3:00 PM" Tag="3:00 PM" Grid.Column="0" Grid.Row="4" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn10" Content="3:30 PM" Tag="3:30 PM" Grid.Column="1" Grid.Row="4" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn11" Content="4:00 PM" Tag="4:00 PM" Grid.Column="0" Grid.Row="5" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn12" Content="4:30 PM" Tag="4:30 PM" Grid.Column="1" Grid.Row="5" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
+                                            <Button x:Name="btn13" Content="5:00 PM" Tag="5:00 PM" Grid.Column="0" Grid.Row="6" Click="Appointment_Click" Style="{StaticResource AppointmentButtonStyle}"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -462,7 +492,7 @@
             </TabControl>
             <Label Content="Book Appointment" HorizontalAlignment="Left" Margin="131,20,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="SemiBold"/>
             <Label Content="Use this form to book an appointment with our clinic." HorizontalAlignment="Left" Margin="133,52,0,0" VerticalAlignment="Top" Foreground="#FF8A8A8A"/>
-            <Button Content="Go Back" HorizontalAlignment="Left" Margin="738,39,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click_1" Height="18" Background="{x:Null}" FontWeight="DemiBold" BorderBrush="{x:Null}"/>
+            <Button Content="Go Back" HorizontalAlignment="Left" Margin="740,39,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click_1" Height="18" Background="{x:Null}" FontWeight="DemiBold" BorderBrush="{x:Null}"/>
             <Button Content="Date &amp; Time" HorizontalAlignment="Left" Margin="176,95,0,0" VerticalAlignment="Top" Click="Button_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF00104D" FontWeight="Bold"/>
             <Button Content="Patient Detail" HorizontalAlignment="Left" Margin="302,95,0,0" VerticalAlignment="Top" Click="Button_Click_2" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF00104D" FontWeight="Bold"/>
             <Button Content="Confirmation" HorizontalAlignment="Left" Margin="443,95,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF00104D" FontWeight="Bold"/>
