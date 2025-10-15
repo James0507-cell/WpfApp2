@@ -490,15 +490,15 @@
                 </TabItem>
 
             </TabControl>
-            <Label Content="Book Appointment" HorizontalAlignment="Left" Margin="131,20,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="SemiBold"/>
-            <Label Content="Use this form to book an appointment with our clinic." HorizontalAlignment="Left" Margin="133,52,0,0" VerticalAlignment="Top" Foreground="#FF8A8A8A"/>
-            <Button Content="Go Back" HorizontalAlignment="Left" Margin="740,39,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click_1" Height="18" Background="{x:Null}" FontWeight="DemiBold" BorderBrush="{x:Null}"/>
-            <Button Content="Date &amp; Time" HorizontalAlignment="Left" Margin="176,95,0,0" VerticalAlignment="Top" Click="Button_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF00104D" FontWeight="Bold"/>
-            <Button Content="Patient Detail" HorizontalAlignment="Left" Margin="302,95,0,0" VerticalAlignment="Top" Click="Button_Click_2" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF00104D" FontWeight="Bold"/>
-            <Button Content="Confirmation" HorizontalAlignment="Left" Margin="443,95,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF00104D" FontWeight="Bold"/>
-            <Rectangle Fill="#FF00104D" HorizontalAlignment="Left" Height="1" Margin="176,127,0,0" Stroke="Black" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.5,0.5"/>
-            <Rectangle Fill="#FF00104D" HorizontalAlignment="Left" Height="1" Margin="303,127,0,0" Stroke="Black" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.5,0.5"/>
-            <Rectangle Fill="#FF00104D" HorizontalAlignment="Left" Height="1" Margin="443,127,0,0" Stroke="Black" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.5,0.5"/>
+            <Border BorderBrush="#FFC2C2C2" BorderThickness="0,0,0,1">
+                <Grid>
+                    <Button HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="68" Click="Button_Click_1" Height="52" Background="{x:Null}" FontWeight="DemiBold" BorderBrush="{x:Null}">
+                        <Image Height="41" Width="53" Source="/Screenshot 2025-10-15 174220.png"/>
+                    </Button>
+                    <Label Content="Book Appointment" HorizontalAlignment="Left" Margin="91,12,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="SemiBold"/>
+                    <Label Content="Use this form to book an appointment with our clinic." HorizontalAlignment="Left" Margin="91,44,0,0" VerticalAlignment="Top" Foreground="#FF8A8A8A"/>
+                </Grid>
+            </Border>
         </Grid>
     </Border>
 </Window>

@@ -49,6 +49,7 @@ namespace WpfApp2
             user.sqlManager(SQL);
             
 
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -19,7 +19,7 @@
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="61"/>
                 <RowDefinition/>
-                <RowDefinition Height="227"/>
+                <RowDefinition Height="224.04"/>
             </Grid.RowDefinitions>
 
             <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Grid.Row="0" VerticalAlignment="Top" Height="51">
@@ -184,7 +184,7 @@
                         </ScrollViewer>
 
                         <Border BorderBrush="Black" BorderThickness="1" Margin="96,5,97,5" Grid.Row="2" CornerRadius="5" Background="#FF00104D">
-                            <Button Content="Book Appointment" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="DemiBold" Foreground="White" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Button Content="Book Appointment" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="DemiBold" Foreground="White" VerticalAlignment="Center" VerticalContentAlignment="Center" Click="Button_Click_1"/>
                         </Border>
                     </Grid>
                 </Border>

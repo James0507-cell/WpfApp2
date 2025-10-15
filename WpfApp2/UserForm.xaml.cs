@@ -129,7 +129,6 @@ namespace WpfApp2
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                // 1. Extract Data
                 string appointmentId = dt.Rows[i]["appointment_id"].ToString();
                 string date = dt.Rows[i]["appointment_date"].ToString();
                 string time = dt.Rows[i]["appointment_time"].ToString();
@@ -137,7 +136,6 @@ namespace WpfApp2
                 string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
 
 
-                // 2. Create the Card Container (Border)
                 Border cardBorder = new Border
                 {
                     BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
@@ -145,7 +143,7 @@ namespace WpfApp2
                     Background = Brushes.White,
                     CornerRadius = new CornerRadius(8),
                     Margin = new Thickness(10, 4, 10, 4),
-                    Padding = new Thickness(12, 6, 12, 6), // FURTHER REDUCED PADDING
+                    Padding = new Thickness(12, 6, 12, 6),
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     Effect = new DropShadowEffect
                     {
@@ -158,43 +156,37 @@ namespace WpfApp2
                 };
 
 
-                // 3. Main StackPanel to hold all content vertically
                 StackPanel appointmentContent = new StackPanel();
 
-                // --- Row 1: Title and Status Tag (using Grid for alignment) ---
                 Grid headerGrid = new Grid();
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                headerGrid.Margin = new Thickness(0, 0, 0, 3); // Reduced bottom margin
+                headerGrid.Margin = new Thickness(0, 0, 0, 3);
 
-                // Title (Purpose)
                 TextBlock txtTitle = new TextBlock
                 {
                     Text = purpose,
-                    FontWeight = FontWeights.SemiBold, // Slightly reduced bolding
-                    FontSize = 12,                    // Slightly reduced font size
+                    FontWeight = FontWeights.SemiBold,
+                    FontSize = 12,
                     Foreground = darkBlueBrush,
                     VerticalAlignment = VerticalAlignment.Center
                 };
                 Grid.SetColumn(txtTitle, 0);
                 headerGrid.Children.Add(txtTitle);
 
-                // Status Tag
-                Border statusTag = CreateStatusTag(status);
+                Border statusTag = CreateStatusTag(status); 
                 Grid.SetColumn(statusTag, 1);
                 headerGrid.Children.Add(statusTag);
 
                 appointmentContent.Children.Add(headerGrid);
 
 
-                // --- Row 2: Date, Time, and ID Details (COMBINED LINE) ---
                 StackPanel detailsPanel = new StackPanel
                 {
                     Orientation = Orientation.Horizontal,
-                    Margin = new Thickness(0, 0, 0, 0) // Removed margin for compactness
+                    Margin = new Thickness(0, 0, 0, 0)
                 };
 
-                // Date Block (📅 2024-12-15)
                 TextBlock txtDate = new TextBlock
                 {
                     Text = $"📅 {date}",
@@ -204,7 +196,6 @@ namespace WpfApp2
                 };
                 detailsPanel.Children.Add(txtDate);
 
-                // Separator
                 TextBlock separator = new TextBlock
                 {
                     Text = "|",
@@ -214,7 +205,6 @@ namespace WpfApp2
                 };
                 detailsPanel.Children.Add(separator);
 
-                // Time Block (🕒 10:00 AM)
                 TextBlock txtTime = new TextBlock
                 {
                     Text = $"🕒 {time}",
@@ -224,7 +214,6 @@ namespace WpfApp2
                 };
                 detailsPanel.Children.Add(txtTime);
 
-                // Separator
                 TextBlock separator2 = new TextBlock
                 {
                     Text = "|",
@@ -234,84 +223,81 @@ namespace WpfApp2
                 };
                 detailsPanel.Children.Add(separator2);
 
-                // Appointment ID
                 TextBlock txtId = new TextBlock
                 {
                     Text = $"ID: {appointmentId}",
                     FontSize = 11,
                     Foreground = lightGrayBrush,
-                    FontWeight = FontWeights.Medium // Highlight ID slightly
+                    FontWeight = FontWeights.Medium
                 };
                 detailsPanel.Children.Add(txtId);
 
                 appointmentContent.Children.Add(detailsPanel);
 
-                // REMOVED THE ORIGINAL "Row 3: Detail Subtext" TO SAVE HEIGHT
-
-                // 4. Attach Content to Card Border
                 cardBorder.Child = appointmentContent;
 
 
-                // 5. Context Menu Functionality (Right-Click) - UNCHANGED
                 string currentAppointmentId = appointmentId;
+                string currentStatus = status;
 
                 cardBorder.MouseRightButtonDown += (s, e) =>
                 {
                     ContextMenu contextMenu = new ContextMenu();
 
-                    // Only allow update/cancel if the status is not already completed/cancelled
-                    if (!status.Equals("Cancelled", StringComparison.OrdinalIgnoreCase) && !status.Equals("Completed", StringComparison.OrdinalIgnoreCase))
+                    MenuItem cancelItem = new MenuItem { Header = "Cancel Appointment" };
+                    cancelItem.Click += (s3, e3) =>
+                    {
+                        
+                        MessageBox.Show($"Request to Cancel Appointment ID: {currentAppointmentId}");
+                        SQL = "Delete from appointments where appointment_id = '" + currentAppointmentId + "'";
+                        userForm.sqlManager(SQL);
+                        
+                    };
+
+                    if (currentStatus.Equals("Pending", StringComparison.OrdinalIgnoreCase))
                     {
                         MenuItem updateItem = new MenuItem { Header = "Update Appointment" };
                         updateItem.Click += (s2, e2) =>
                         {
-                            // Create and show the Update Appointment Window
-                            UpdateAppointment updateAppointmentWindow = new UpdateAppointment(
-                                currentAppointmentId,
-                                date,
-                                time,
-                                purpose
-                            );
-                            bool? result = updateAppointmentWindow.ShowDialog();
-                            if (result == true)
-                            {
-                                // Assuming 'username' is accessible here
-                                // Redundant part of the code removed for clarity but original logic kept
-                                // (Requires 'username' scope if this code snippet is outside the class/method where it's defined)
-                                // displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'"); 
-                            }
+                            
+                            MessageBox.Show($"Opening Update Form for ID: {currentAppointmentId}");
+                            UpdateAppointment update = new UpdateAppointment(appointmentId);
+                            this.Hide();
+                            update.Show();
                         };
                         contextMenu.Items.Add(updateItem);
+                        contextMenu.Items.Add(cancelItem);
 
-                        MenuItem deleteItem = new MenuItem { Header = "Cancel Appointment" };
-                        deleteItem.Click += (s3, e3) =>
-                        {
-                            // Requires 'cancelAppointment' method scope
-                            // cancelAppointment(currentAppointmentId); 
-                        };
-                        contextMenu.Items.Add(deleteItem);
+
+
+                    }
+                    else if (currentStatus.Equals("Approved", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MenuItem noUpdateItem = new MenuItem { Header = "Update is disabled (Approved)", IsEnabled = false };
+                        contextMenu.Items.Add(noUpdateItem);
+
+                        contextMenu.Items.Add(cancelItem);
                     }
                     else
                     {
-                        // Add a disabled item if actions aren't allowed
-                        MenuItem disabledItem = new MenuItem { Header = $"Actions restricted (Status: {status})", IsEnabled = false };
+                        MenuItem disabledItem = new MenuItem { Header = $"Actions restricted (Status: {currentStatus})", IsEnabled = false };
                         contextMenu.Items.Add(disabledItem);
+
                     }
 
-
-                    cardBorder.ContextMenu = contextMenu;
-                    contextMenu.IsOpen = true;
-                    e.Handled = true; // Mark the event as handled to prevent propagation
+                    if (contextMenu.Items.Count > 0)
+                    {
+                        cardBorder.ContextMenu = contextMenu;
+                        contextMenu.IsOpen = true;
+                        e.Handled = true; 
+                    }
                 };
 
                 AppointmentStackPanel.Children.Add(cardBorder);
             }
         }
 
-        // NOTE: The 'CreateStatusTag' method is assumed to exist elsewhere in your code.
-        // The context menu logic for 'username' and 'cancelAppointment' will only compile 
-        // if those variables/methods are accessible in the scope of this method.
-
+       
         public void displayActivities(String query)
         {
             // Use the class-level userForm object to fetch data
@@ -731,7 +717,14 @@ namespace WpfApp2
             }
         }
 
-
-
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            BookingAppointment bookingAppointment = new BookingAppointment
+            {
+                username = this.username
+            };
+            bookingAppointment.Show();
+            this.Close();
+        }
     }
 }

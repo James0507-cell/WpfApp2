@@ -3,24 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="BMI Health Tracker" Height="726" Width="875"
         WindowStartupLocation="CenterScreen"
-        Background="Black" Loaded="Window_Loaded">
+        Title="BMI Health Tracker"
+        Loaded="Window_Loaded"
+        Background="Black"
+        MinHeight="600" MinWidth="700" 
+        Height="726" Width="875">
 
-    <!-- Define reusable styles for a modern look -->
     <Window.Resources>
+        <DropShadowEffect x:Key="ShadowDepth1" ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC" BlurRadius="10"/>
 
-        <!-- Resource for standard card shadow effect -->
-        <DropShadowEffect x:Key="ShadowDepth1"
-                          BlurRadius="10"
-                          ShadowDepth="2"
-                          Direction="270"
-                          Color="#CCCCCC"
-                          Opacity="0.5"/>
-
-        <!-- Style for the Input TextBoxes (Rounded corners, light background) -->
-        <Style TargetType="TextBox">
+        <Style TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="#F5F5F5"/>
             <Setter Property="BorderBrush" Value="#E0E0E0"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -31,21 +26,20 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="8"
-                                Padding="{TemplateBinding Padding}">
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        <Border Padding="{TemplateBinding Padding}" x:Name="Border" CornerRadius="8" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                Background="{TemplateBinding Background}">
+                            <ScrollViewer VerticalScrollBarVisibility="Hidden" x:Name="PART_ContentHost" 
+                                          HorizontalScrollBarVisibility="Hidden" Focusable="False"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#C0C0C0"/>
+                                <Setter Property="BorderBrush" TargetName="Border" Value="#C0C0C0"/>
                             </Trigger>
                             <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#F88379"/>
-                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                                <Setter Property="BorderBrush" TargetName="Border" Value="#F88379"/>
+                                <Setter Property="BorderThickness" TargetName="Border" Value="2"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -53,8 +47,7 @@
             </Setter>
         </Style>
 
-        <!-- Style for the main Action Button (Soft red color from the image) -->
-        <Style TargetType="Button">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#F88379"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="16"/>
@@ -62,13 +55,15 @@
             <Setter Property="Height" Value="45"/>
             <Setter Property="Margin" Value="0,20,0,0"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="8">
+                        <Border CornerRadius="8" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -84,122 +79,125 @@
             </Setter>
         </Style>
 
-        <!-- Text style for the BMI Category descriptions -->
-        <Style x:Key="BmiCategoryTextStyle" TargetType="TextBlock">
+        <Style x:Key="BmiCategoryTextStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Margin" Value="0,5"/>
             <Setter Property="FontSize" Value="15"/>
         </Style>
 
-        <!-- Text style for the BMI Category ranges (to be colored dynamically) -->
-        <Style x:Key="BmiRangeTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BmiCategoryTextStyle}">
+        <Style x:Key="BmiRangeTextStyle" BasedOn="{StaticResource BmiCategoryTextStyle}" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
 
     </Window.Resources>
 
-    <!-- NEW: Wrapping the content in a Border with CornerRadius=5 -->
-    <Border BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="15,15,15,15" Background="White" Height="710" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-        <Border.RenderTransform>
-            <TransformGroup>
-                <ScaleTransform/>
-                <SkewTransform AngleX="0.027"/>
-                <RotateTransform/>
-                <TranslateTransform X="0.166"/>
-            </TransformGroup>
-        </Border.RenderTransform>
-        <Grid Margin="0,0,0,9">
+    <Border HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch" 
+            CornerRadius="15" 
+            BorderThickness="1" 
+            BorderBrush="#DDDDDD" 
+            Background="#FFF9F9F9">
+
+        <Grid Margin="0">
             <Grid.RowDefinitions>
-                <!-- Row for the main header (Optional, using simple text here) -->
-                <RowDefinition Height="Auto" MinHeight="44"/>
-                <!-- Row for the main content area (Input and Output) -->
-                <RowDefinition/>
+                <RowDefinition Height="Auto" MinHeight="67"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- HEADER AREA (Simple Title) -->
-            <StackPanel Grid.Row="0" Margin="0,20,0,20" HorizontalAlignment="Center" Width="0"/>
+            <Grid Grid.Row="0">
+                <Border BorderBrush="#FFCECECE" BorderThickness="0,0,0,1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-            <!-- MAIN CONTENT AREA -->
-            <StackPanel Grid.Row="1" Margin="20,20,20,20">
-                <!-- 1. MEASUREMENT INPUT CARD -->
-                <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="10" Padding="25" Margin="0,0,0,20" Effect="{StaticResource ShadowDepth1}" Height="367">
-                    <StackPanel>
+                        <Button x:Name="btnBack" Grid.Column="0" Width="49" VerticalAlignment="Center" Margin="10,0,0,0" Height="46" HorizontalAlignment="Left" 
+                                Click="Button_Click_1" BorderBrush="Transparent" BorderThickness="0" Background="{x:Null}" Style="{x:Null}">
+                            <Image Height="44" Width="49" Source="/Screenshot 2025-10-15 174220.png"/>
+                        </Button>
+
+                        <StackPanel Grid.Column="1" Margin="10,10,0,0" VerticalAlignment="Top">
+                            <Label FontSize="16" FontWeight="SemiBold" Foreground="#FF00104D" Content="Short Check" Padding="0"/>
+                            <Label Content="Use this for the record you height weight and BMI." Foreground="#FF8A8A8A" Padding="0,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="20" HorizontalAlignment="Center" MaxWidth="1000">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" 
+                        Padding="25" 
+                        Effect="{StaticResource ShadowDepth1}" 
+                        CornerRadius="10" 
+                        BorderThickness="1" 
+                        BorderBrush="#E0E0E0" 
+                        Background="White" Margin="0,0,0,181">
+                    <StackPanel VerticalAlignment="Top">
                         <TextBlock Text="Record Your Measurements" FontSize="18" FontWeight="SemiBold" Foreground="#333333"/>
-                        <TextBlock Text="Enter your current height and weight to track your health metrics." FontSize="14" Foreground="#797979" Margin="0,5,0,20"/>
-                        <TextBlock Text="Height (cm)" FontWeight="SemiBold" FontSize="14" Height="20"/>
+                        <TextBlock Text="Enter your current height and weight to track your health metrics." Margin="0,5,0,20" FontSize="14" Foreground="#797979"/>
 
-                        <!-- Height Input -->
-                        <TextBox x:Name="HeightTextBox" Width="Auto" HorizontalAlignment="Stretch" d:Text="e.g., 175" PreviewTextInput="NumberValidationTextBox" TextChanged="HeightTextBox_TextChanged"/>
+                        <TextBlock Text="Height (cm)" Height="20" FontSize="14" FontWeight="SemiBold"/>
+                        <TextBox d:Text="e.g., 175" TextChanged="HeightTextBox_TextChanged" 
+                                 PreviewTextInput="NumberValidationTextBox" x:Name="HeightTextBox" Height="54"/>
 
-                        <!-- Weight Input -->
-                        <TextBlock Text="Weight (kg)" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,5"/>
-                        <TextBox x:Name="WeightTextBox" Width="Auto" HorizontalAlignment="Stretch" d:Text="e.g., 70" PreviewTextInput="NumberValidationTextBox" TextChanged="WeightTextBox_TextChanged"/>
-                        <Button Content="Calculate BMI" x:Name="CalculateButton" Click="CalculateButton_Click" Height="37" Width="233" Background="#FFFF1400"/>
+                        <TextBlock Text="Weight (kg)" Margin="0,0,0,5" FontSize="14" FontWeight="SemiBold"/>
+                        <TextBox d:Text="e.g., 70" TextChanged="WeightTextBox_TextChanged" 
+                                 PreviewTextInput="NumberValidationTextBox" x:Name="WeightTextBox" Height="53"/>
 
-                        <!-- Calculate Button -->
-                        <!-- The Click event is linked to the C# code-behind -->
+                        <Button x:Name="CalculateButton" Content="Calculate BMI" Click="CalculateButton_Click" Background="#FFFF1400" Height="40" Width="Auto"/>
+
                     </StackPanel>
                 </Border>
 
-                <!-- 2. BMI RESULT & CATEGORIES CARD -->
-                <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="10" Padding="25" Effect="{StaticResource ShadowDepth1}" Width="477" Height="219">
-                    <StackPanel>
-                        <TextBlock Text="BMI Categories" FontSize="18" FontWeight="SemiBold" Foreground="#333333" Margin="0,0,0,10"/>
+                <Border Grid.Column="1" 
+                        Padding="25" 
+                        Effect="{StaticResource ShadowDepth1}" 
+                        CornerRadius="10" 
+                        BorderThickness="1" 
+                        BorderBrush="#E0E0E0" 
+                        Background="White" Grid.ColumnSpan="2" Margin="40,0,0,181">
+                    <StackPanel VerticalAlignment="Top">
+                        <TextBlock Text="BMI Categories" Margin="0,0,0,10" FontSize="18" FontWeight="SemiBold" Foreground="#333333"/>
 
-                        <!-- Display BMI Result -->
-                        <TextBlock x:Name="BmiResultTextBlock"
-                                   Text="Your BMI: N/A"
-                                   FontSize="22"
-                                   FontWeight="Bold"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,0,0,15"
-                                   Foreground="#555555" Height="30"/>
+                        <Grid VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                        <!-- Category Table -->
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Text="Your BMI: N/A" x:Name="BmiResultTextBlock" Margin="0,0,0,15" Height="30" 
+                                       HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Foreground="#555555"/>
 
-                            <!-- Static Category Labels (Left Column) -->
-                            <StackPanel Grid.Column="0" Margin="0,-24,0,27">
-                                <TextBlock Text="Underweight" Style="{StaticResource BmiCategoryTextStyle}" Foreground="Blue"/>
-                                <TextBlock Text="Normal weight" Style="{StaticResource BmiCategoryTextStyle}" Foreground="Green"/>
-                                <TextBlock Text="Overweight" Style="{StaticResource BmiCategoryTextStyle}" Foreground="Orange"/>
-                                <TextBlock Text="Obese" Style="{StaticResource BmiCategoryTextStyle}" Foreground="Red" Height="22" RenderTransformOrigin="0.5,0.5">
-                                    <TextBlock.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform/>
-                                            <SkewTransform AngleX="0.477"/>
-                                            <RotateTransform/>
-                                            <TranslateTransform X="0.075"/>
-                                        </TransformGroup>
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
-                            </StackPanel>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                            <!-- Static Range Values (Right Column) -->
-                            <StackPanel Grid.ColumnSpan="2" Margin="353,-24,0,0">
-                                <TextBlock Text="&lt; 18.5" Style="{StaticResource BmiRangeTextStyle}" Foreground="Blue"/>
-                                <TextBlock Text="18.5 - 24.9" Style="{StaticResource BmiRangeTextStyle}" Foreground="Green"/>
-                                <TextBlock Text="25.0 - 29.9" Style="{StaticResource BmiRangeTextStyle}" Foreground="Orange"/>
-                                <TextBlock Text="&gt;= 30.0" Style="{StaticResource BmiRangeTextStyle}" Foreground="Red"/>
-                            </StackPanel>
+                                <StackPanel Grid.Column="0" Margin="0">
+                                    <TextBlock Foreground="Blue" Style="{StaticResource BmiCategoryTextStyle}" Text="Underweight"/>
+                                    <TextBlock Foreground="Green" Style="{StaticResource BmiCategoryTextStyle}" Text="Normal weight"/>
+                                    <TextBlock Foreground="Orange" Style="{StaticResource BmiCategoryTextStyle}" Text="Overweight"/>
+                                    <TextBlock Text="Obese" Style="{StaticResource BmiCategoryTextStyle}" Foreground="Red"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Margin="30, 0, 0, 0">
+                                    <TextBlock Foreground="Blue" Style="{StaticResource BmiRangeTextStyle}" Text="&lt; 18.5"/>
+                                    <TextBlock Foreground="Green" Style="{StaticResource BmiRangeTextStyle}" Text="18.5 - 24.9"/>
+                                    <TextBlock Foreground="Orange" Style="{StaticResource BmiRangeTextStyle}" Text="25.0 - 29.9"/>
+                                    <TextBlock Foreground="Red" Style="{StaticResource BmiRangeTextStyle}" Text="&gt;= 30.0"/>
+                                </StackPanel>
+                            </Grid>
                         </Grid>
                     </StackPanel>
-                </Border>
-            </StackPanel>
-            <Grid>
-                <Border BorderBrush="Black" BorderThickness="1" Margin="-6,0,0,0">
-                    <Grid>
-                        <Button Content="" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" Height="22" Width="81" Click="Button_Click_1">
-                            <Button.Background>
-                                <ImageBrush ImageSource="/goback.jpg"/>
-                            </Button.Background>
-                        </Button>
-                        <Label Content="Short Check" HorizontalAlignment="Left" Margin="162,0,0,0" VerticalAlignment="Center" FontSize="14" FontWeight="SemiBold" Width="138" Foreground="#FF00104D"/>
-                    </Grid>
                 </Border>
             </Grid>
         </Grid>
