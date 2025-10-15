@@ -558,7 +558,7 @@ namespace WpfApp2
 
             Grid.SetColumn(textPanel, 1);
             grid.Children.Add(textPanel);
-
+                    
             // Return the grid, wrapped in a StackPanel for consistent margin application in the calling loop
             StackPanel wrapperPanel = new StackPanel();
             wrapperPanel.Children.Add(grid);
