@@ -202,7 +202,7 @@ namespace WpfApp2
             string studentId = txtStudentID.Text;
            
 
-            string UpdateQuerry = $"Update appointments set student_id = '{studentId}', user_id = {userId}, appointment_date = '{selectedDate:yyyy-MM-dd}', appointment_time = '{dbTimeFormat}', purpose_of_visit = '{cmbPurpose.Text}', known_allergies = '{txtAllergies.Text}', current_medication = '{txtCurrentMedication.Text}', previous_visit = '{cmbPreviousVisit.Text}', emergency_contact_name = '{txtEmergencyContactName.Text}', emergency_contact_phone = '{txtEmergencyContactPhone.Text}', status = 'Pending' where appointment_id = {appointmentID}";
+            string UpdateQuerry = $"Update appointments set student_id = '{studentId}', user_id = {userId}, appointment_date = '{selectedDate:yyyy-MM-dd}', appointment_time = '{dbTimeFormat}', purpose_of_visit = '{cmbPurpose.Text}', known_allergies = '{txtAllergies.Text}', current_medication = '{txtCurrentMedication.Text}', previous_visit = '{cmbPreviousVisit.Text}', emergency_contact_name = '{txtEmergencyContactName.Text}', current_symptoms = '{txtSymptoms.Text}', emergency_contact_phone = '{txtEmergencyContactPhone.Text}', status = 'Pending' where appointment_id = {appointmentID}";
 
             booking.sqlManager(UpdateQuerry);
             MessageBox.Show("Appointment successfully booked! Your appointment is Pending and awaiting approval.");
@@ -231,6 +231,8 @@ namespace WpfApp2
             txtConfirmEmergencyPhone.Text = txtEmergencyContactPhone.Text;
             txtConfirmDate.Text = selectedDate != DateTime.MinValue ? selectedDate.ToString("MMMM dd, yyyy") : "N/A";
             txtConfirmTime.Text = string.IsNullOrEmpty(selectedTime) ? "N/A" : selectedTime;
+            txtComfirmSymptoms.Text = txtSymptoms.Text;
+            
         }
 
         public void setStudentInfo()
@@ -279,6 +281,7 @@ namespace WpfApp2
                 cmbPreviousVisit.Text = dt.Rows[0]["previous_visit"].ToString();
                 txtEmergencyContactName.Text = dt.Rows[0]["emergency_contact_name"].ToString();
                 txtEmergencyContactPhone.Text = dt.Rows[0]["emergency_contact_phone"].ToString();
+                txtSymptoms.Text = dt.Rows[0]["current_symptoms"].ToString();   
             }
         }
 

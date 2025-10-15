@@ -464,12 +464,14 @@
                                             <TextBlock Text="Allergies:" FontWeight="Bold" Margin="0,0,0,5"/>
                                             <TextBlock Text="Medication:" FontWeight="Bold" Margin="0,0,0,5"/>
                                             <TextBlock Text="Previous Visit:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                            <TextBlock TextWrapping="Wrap" Text="Current Symptoms:" FontWeight="Bold"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1">
                                             <TextBlock x:Name="txtConfirmPurpose" Text="[Purpose]" Margin="0,0,0,5"/>
                                             <TextBlock x:Name="txtConfirmAllergies" Text="[Allergies]" Margin="0,0,0,5"/>
                                             <TextBlock x:Name="txtConfirmMedication" Text="[Medication]" Margin="0,0,0,5"/>
                                             <TextBlock x:Name="txtConfirmPreviousVisit" Text="[Previous Visit]" Margin="0,0,0,5"/>
+                                            <TextBlock x:Name="txtConfirmSymptoms" TextWrapping="Wrap" Text="[Current Symptoms]"/>
                                         </StackPanel>
                                     </Grid>
                                 </StackPanel>

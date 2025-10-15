@@ -202,13 +202,13 @@ namespace WpfApp2
                 INSERT INTO appointments
                 (user_id, username, student_id, appointment_date, appointment_time, email, phone_number,
                  purpose_of_visit, known_allergies, current_medication, previous_visit,
-                 emergency_contact_name, emergency_contact_phone, status, created_at)
+                 emergency_contact_name, emergency_contact_phone, status, created_at, current_symptoms)
                 VALUES
                 ({userId}, '{username}', '{studentId}', '{selectedDate:yyyy-MM-dd}', '{dbTimeFormat}', 
                 '{txtConfirmEmail.Text}', '{txtConfirmPhone.Text}', '{txtConfirmPurpose.Text}',
                 '{txtConfirmAllergies.Text}', '{txtConfirmMedication.Text}', '{txtConfirmPreviousVisit.Text}',
                 '{txtConfirmEmergencyName.Text}', '{txtConfirmEmergencyPhone.Text}', 'Pending',
-                '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{txtSymptoms.Text}')";
 
             booking.sqlManager(insertQuery);
             MessageBox.Show("Appointment successfully booked! Your appointment is Pending and awaiting approval.");
@@ -237,6 +237,7 @@ namespace WpfApp2
             txtConfirmEmergencyPhone.Text = txtEmergencyContactPhone.Text;
             txtConfirmDate.Text = selectedDate != DateTime.MinValue ? selectedDate.ToString("MMMM dd, yyyy") : "N/A";
             txtConfirmTime.Text = string.IsNullOrEmpty(selectedTime) ? "N/A" : selectedTime;
+            txtConfirmSymptoms.Text = txtSymptoms.Text;
         }
 
         public void setStudentInfo()
