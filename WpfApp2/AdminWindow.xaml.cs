@@ -159,6 +159,7 @@ namespace WpfApp2
                 String ecn = dt.Rows[i][12].ToString();
                 String ecp = dt.Rows[i][13].ToString();
                 String status = dt.Rows[i][14].ToString();
+                String symptoms = dt.Rows[i][16].ToString();
 
 
 
@@ -201,6 +202,16 @@ namespace WpfApp2
                     Margin = new Thickness(0, 0, 0, 4)
                 };
                 primaryDetails.Children.Add(txtNameID);
+
+                TextBlock txtSymptoms = new TextBlock
+                {
+                    Text = $"Symptoms: {symptoms}",
+                    FontSize = 14,
+                    FontWeight = FontWeights.DemiBold,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4D7399")),
+                    Margin = new Thickness(0, 0, 0, 4)
+                };
+                primaryDetails.Children.Add(txtSymptoms);
 
                 TextBlock txtDateTime = new TextBlock
                 {

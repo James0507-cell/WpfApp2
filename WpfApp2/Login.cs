@@ -24,7 +24,6 @@ namespace WpfApp2
         {
             dbConn = new MySqlConnection(strConn);
             dbConn.Open();
-            MessageBox.Show("Connection Successful");
             dbConn.Close();
         }
         public DataTable displayRecords (String stQuerry)
