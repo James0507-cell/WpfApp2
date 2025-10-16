@@ -140,7 +140,7 @@ namespace WpfApp2
                 {
                     BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
                     BorderThickness = new Thickness(1),
-                    Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA)),
+                    Background = Brushes.White,
                     CornerRadius = new CornerRadius(5),
                     Margin = new Thickness(10, 4, 10, 4),
                     Padding = new Thickness(12, 6, 12, 6),
@@ -318,7 +318,7 @@ namespace WpfApp2
                 {
                     BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
                     BorderThickness = new Thickness(1),
-                    Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA)),
+                    Background = Brushes.White,
                     CornerRadius = new CornerRadius(5),
                     Margin = new Thickness(10, 4, 10, 4), // Consistent with Appointment style
                     Padding = new Thickness(12, 6, 12, 6),
