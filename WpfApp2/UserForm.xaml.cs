@@ -193,9 +193,10 @@ namespace WpfApp2
                 {
                     Text = "|",
                     FontSize = 11,
-                    Foreground = lightGrayBrush,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")),
                     Margin = new Thickness(0, 0, 10, 0)
                 };
+
                 detailsPanel.Children.Add(separator);
 
                 TextBlock txtTime = new TextBlock
@@ -211,7 +212,7 @@ namespace WpfApp2
                 {
                     Text = "|",
                     FontSize = 11,
-                    Foreground = lightGrayBrush,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")),
                     Margin = new Thickness(0, 0, 10, 0)
                 };
                 detailsPanel.Children.Add(separator2);
