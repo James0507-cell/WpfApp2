@@ -117,6 +117,9 @@
     <None Remove="Screenshot 2025-10-16 182255.png" />
     <None Remove="Screenshot 2025-10-16 183954.png" />
     <None Remove="Screenshot 2025-10-16 184024.png" />
+    <None Remove="Screenshot 2025-10-16 190720.png" />
+    <None Remove="Screenshot 2025-10-16 190810.png" />
+    <None Remove="Screenshot 2025-10-16 190947.png" />
     <None Remove="Screenshot_20230225_074826.png" />
     <None Remove="sdasd.jpg" />
     <None Remove="students.jpg" />
@@ -248,6 +251,9 @@
     <Resource Include="Screenshot 2025-10-16 182255.png" />
     <Resource Include="Screenshot 2025-10-16 183954.png" />
     <Resource Include="Screenshot 2025-10-16 184024.png" />
+    <Resource Include="Screenshot 2025-10-16 190720.png" />
+    <Resource Include="Screenshot 2025-10-16 190810.png" />
+    <Resource Include="Screenshot 2025-10-16 190947.png" />
     <Resource Include="Screenshot_20230225_074826.png" />
     <Resource Include="sdasd.jpg" />
     <Resource Include="students.jpg" />
