@@ -252,10 +252,12 @@ namespace WpfApp2
                 txtEmail.Text = dt.Rows[0]["email"].ToString();
                 txtPhoneNumber.Text = dt.Rows[0]["phone_number"].ToString();
 
-                txtFirstName.IsReadOnly = true;
-                txtLastName.IsReadOnly = true;
-                txtStudentID.IsReadOnly = true;
-            }
+                txtFirstName.IsEnabled = false;
+                txtLastName.IsEnabled = false;
+                txtStudentID.IsEnabled = false;
+
+
+            } 
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

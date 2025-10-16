@@ -143,14 +143,7 @@ namespace WpfApp2
                     Background = Brushes.White,
                     CornerRadius = new CornerRadius(10),
                     Padding = new Thickness(15),
-                    Effect = new DropShadowEffect
-                    {
-                        Color = Colors.LightGray,
-                        Direction = 315,
-                        ShadowDepth = 2,
-                        BlurRadius = 5,
-                        Opacity = 0.5
-                    }
+                    
                 };
 
                 // *** KEY FIX: Use DockPanel instead of StackPanel ***
@@ -390,14 +383,7 @@ namespace WpfApp2
                     Margin = new Thickness(0, 8, 0, 8), // Adjusted vertical margin
                     Padding = new Thickness(20), // Increased internal padding
                     HorizontalAlignment = HorizontalAlignment.Stretch,
-                    Effect = new DropShadowEffect
-                    {
-                        Color = Colors.LightGray,
-                        Direction = 315,
-                        ShadowDepth = 2,
-                        BlurRadius = 5,
-                        Opacity = 0.5
-                    }
+                    
                 };
 
                 StackPanel requestContent = new StackPanel();

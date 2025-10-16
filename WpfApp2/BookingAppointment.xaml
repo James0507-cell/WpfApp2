@@ -295,27 +295,27 @@
                                                 <StackPanel Grid.Column="0" Margin="0,0,5,0">
                                                     <Label Content="First Name *" FontWeight="Normal" Foreground="#FF666666"/>
                                                     <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                        <TextBox x:Name="txtFirstName" Padding="5" Margin="0" BorderThickness="0" Text="{Binding FirstName}" TextChanged="txtFirstName_TextChanged"/>
+                                                        <TextBox x:Name="txtFirstName" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtFirstName_TextChanged"/>
                                                     </Border>
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="1" Margin="5,0,0,0">
                                                     <Label Content="Last Name *" FontWeight="Normal" Foreground="#FF666666"/>
                                                     <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                        <TextBox x:Name="txtLastName" Padding="5" Margin="0" BorderThickness="0" Text="{Binding LastName}" TextChanged="txtLastName_TextChanged"/>
+                                                        <TextBox x:Name="txtLastName" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtLastName_TextChanged"/>
                                                     </Border>
                                                 </StackPanel>
                                             </Grid>
                                             <Label Content="Student ID *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox x:Name="txtStudentID" Padding="5" Margin="0" BorderThickness="0" Text="{Binding StudentID}" TextChanged="txtStudentID_TextChanged"/>
+                                                <TextBox x:Name="txtStudentID" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtStudentID_TextChanged"/>
                                             </Border>
                                             <Label Content="Email Address *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox x:Name="txtEmail" Padding="5" Margin="0" BorderThickness="0" Text="{Binding EmailAddress}" TextChanged="txtEmail_TextChanged"/>
+                                                <TextBox x:Name="txtEmail" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtEmail_TextChanged"/>
                                             </Border>
                                             <Label Content="Phone Number *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                <TextBox x:Name="txtPhoneNumber" Padding="5" Margin="0" BorderThickness="0" Text="{Binding PhoneNumber}" TextChanged="txtPhoneNumber_TextChanged"/>
+                                                <TextBox x:Name="txtPhoneNumber" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtPhoneNumber_TextChanged"/>
                                             </Border>
                                         </StackPanel>
 

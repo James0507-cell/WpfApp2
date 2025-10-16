@@ -163,7 +163,7 @@
                                 </StackPanel>
                             </Grid>
 
-                            <ScrollViewer x:Name="sdsadada" Grid.Row="1" Margin="40,0">
+                            <ScrollViewer x:Name="sdsadada" Grid.Row="1" Margin="40,0,40,0" HorizontalContentAlignment="Center">
                                 <StackPanel x:Name="StackPanelMedicineRequests"/>
                             </ScrollViewer>
                         </Grid>
