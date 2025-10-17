@@ -87,9 +87,9 @@ namespace WpfApp2
         {
             string lowerStatus = status.ToLower();
             if (lowerStatus == "approved" || lowerStatus == "confirmed")
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#388E3C")); // Dark Green
+                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF007E4C")); // Dark Green
             if (lowerStatus == "pending" || lowerStatus == "waitlist")
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFC107")); // Amber/Dark Yellow
+                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE0C200")); // Amber/Dark Yellow
             if (lowerStatus == "cancelled" || lowerStatus == "rejected")
                 return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D32F2F")); // Dark Red
 
@@ -112,8 +112,8 @@ namespace WpfApp2
                 {
                     Text = status.ToLower(),
                     Foreground = GetStatusForegroundColor(status),
-                    FontWeight = FontWeights.Bold,
-                    FontSize = 10
+                    FontWeight = FontWeights.Normal,
+                    FontSize = 9
                 }
             };
         }
@@ -136,11 +136,12 @@ namespace WpfApp2
                 string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
 
 
+
                 Border cardBorder = new Border
                 {
-                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+                    BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFCCCCCC")),
                     BorderThickness = new Thickness(1),
-                    Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA)),
+                    Background = Brushes.White,
                     CornerRadius = new CornerRadius(5),
                     Margin = new Thickness(10, 4, 10, 4),
                     Padding = new Thickness(12, 6, 12, 6),
@@ -160,7 +161,7 @@ namespace WpfApp2
                 {
                     Text = purpose,
                     FontWeight = FontWeights.SemiBold,
-                    FontSize = 12,
+                    FontSize = 9,
                     Foreground = darkBlueBrush,
                     VerticalAlignment = VerticalAlignment.Center
                 };
@@ -183,7 +184,7 @@ namespace WpfApp2
                 TextBlock txtDate = new TextBlock
                 {
                     Text = $"📅 {date}",
-                    FontSize = 11,
+                    FontSize = 9,
                     Foreground = lightGrayBrush,
                     Margin = new Thickness(0, 0, 10, 0)
                 };
@@ -192,16 +193,17 @@ namespace WpfApp2
                 TextBlock separator = new TextBlock
                 {
                     Text = "|",
-                    FontSize = 11,
-                    Foreground = lightGrayBrush,
+                    FontSize = 9,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")),
                     Margin = new Thickness(0, 0, 10, 0)
                 };
+
                 detailsPanel.Children.Add(separator);
 
                 TextBlock txtTime = new TextBlock
                 {
                     Text = $"🕒 {time}",
-                    FontSize = 11,
+                    FontSize = 9,
                     Foreground = lightGrayBrush,
                     Margin = new Thickness(0, 0, 10, 0)
                 };
@@ -210,8 +212,8 @@ namespace WpfApp2
                 TextBlock separator2 = new TextBlock
                 {
                     Text = "|",
-                    FontSize = 11,
-                    Foreground = lightGrayBrush,
+                    FontSize = 9,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")),
                     Margin = new Thickness(0, 0, 10, 0)
                 };
                 detailsPanel.Children.Add(separator2);
@@ -219,7 +221,7 @@ namespace WpfApp2
                 TextBlock txtId = new TextBlock
                 {
                     Text = $"ID: {appointmentId}",
-                    FontSize = 11,
+                    FontSize = 9,
                     Foreground = lightGrayBrush,
                     FontWeight = FontWeights.Medium
                 };
@@ -316,7 +318,7 @@ namespace WpfApp2
                 // 2. Create the Card Container (Border) - Replicating Appointment Style
                 Border cardBorder = new Border
                 {
-                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+                    BorderBrush = Brushes.Transparent,
                     BorderThickness = new Thickness(1),
                     Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA)),
                     CornerRadius = new CornerRadius(5),
@@ -340,7 +342,7 @@ namespace WpfApp2
                 {
                     Text = type, // e.g., "Login", "Appointment Booked"
                     FontWeight = FontWeights.SemiBold,
-                    FontSize = 12,
+                    FontSize = 9,
                     Foreground = darkBlueBrush,
                     VerticalAlignment = VerticalAlignment.Center
                 };
@@ -359,8 +361,8 @@ namespace WpfApp2
                     {
                         Text = $"ID: {activityId}",
                         Foreground = Brushes.Gray,
-                        FontWeight = FontWeights.Medium,
-                        FontSize = 10
+                        FontWeight = FontWeights.Normal,
+                        FontSize = 9
                     }
                 };
                 Grid.SetColumn(idTag, 1);
@@ -374,7 +376,7 @@ namespace WpfApp2
                 TextBlock txtDateTime = new TextBlock
                 {
                     Text = $"⌚ {dateTime}",
-                    FontSize = 11,
+                    FontSize = 9,
                     Foreground = lightGrayBrush,
                     Margin = new Thickness(0, 0, 0, 2)
                 };
@@ -384,7 +386,7 @@ namespace WpfApp2
                 TextBlock txtDescription = new TextBlock
                 {
                     Text = description, // e.g., "User logged in successfully"
-                    FontSize = 11,
+                    FontSize = 9,
                     Foreground = darkBlueBrush,
                     TextWrapping = TextWrapping.Wrap // Ensure long text wraps
                 };
