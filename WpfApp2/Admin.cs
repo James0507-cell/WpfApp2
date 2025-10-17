@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace WpfApp2
 {
@@ -96,7 +97,7 @@ namespace WpfApp2
             }
         }
 
-        public int GetStudentCount()
+        public int GetActiveStudentCount()
         {
             using(MySqlConnection conn = new MySqlConnection(strConn))
             {
@@ -108,7 +109,18 @@ namespace WpfApp2
             
         }
 
-        public int GetMedicineCount()
+        public int GetTotalStudentCount()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM users WHERE role != 'Admin'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
+        public int GetMedicineStatusCount()
         {
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
@@ -124,7 +136,7 @@ namespace WpfApp2
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
                 conn.Open();
-                string sql = "SELECT COUNT(*) FROM appointments";
+                string sql = "SELECT COUNT(*) FROM appointments WHERE status = 'Pending'";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
@@ -139,7 +151,20 @@ namespace WpfApp2
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
-        }                                    
+        }    
+
+        public int getTotalProgram()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM users WHERE role = 'Student'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+        
+
 
 
     }
