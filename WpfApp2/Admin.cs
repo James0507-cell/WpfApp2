@@ -46,47 +46,70 @@ namespace WpfApp2
         }
 
         public void AddStudent(
-            string studentID,
-            string firstName,
-            string lastName,
-            string username,
-            string password,
-            DateTime? dateOfBirth,
-            string email,
-            string phone,
-            string address,
-            string course,
-            string yearLevel,
-            string enrollmentStatus,
-            string bloodType
-        )
+     string studentID,
+     string firstName,
+     string lastName,
+     string username,
+     string password,
+     DateTime? dateOfBirth,
+     string email,
+     string phone,
+     string address,
+     string course,
+     string yearLevel,
+     string enrollmentStatus,
+     string bloodType
+ )
         {
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
+                if (string.IsNullOrWhiteSpace(studentID) ||
+                    string.IsNullOrWhiteSpace(firstName) ||
+                    string.IsNullOrWhiteSpace(lastName) ||
+                    string.IsNullOrWhiteSpace(username) ||
+                    string.IsNullOrWhiteSpace(password) ||
+                    string.IsNullOrWhiteSpace(email) ||
+                    string.IsNullOrWhiteSpace(phone) ||
+                    string.IsNullOrWhiteSpace(address) ||
+                    string.IsNullOrWhiteSpace(course) ||
+                    string.IsNullOrWhiteSpace(yearLevel) ||
+                    string.IsNullOrWhiteSpace(enrollmentStatus) ||
+                    string.IsNullOrWhiteSpace(bloodType))
+                {
+                    MessageBox.Show("Please fill in all required fields.");
+                    return; 
+                }
+
                 try
                 {
                     conn.Open();
-                    string sql = "INSERT INTO users " +
-                                 "(student_id, first_name, last_name, username, password, date_of_birth, email, phone_number, address, course_program, year_level, enrollment_status, blood_type) " +
-                                 "VALUES (@student_id, @first_name, @last_name, @username, @password, @date_of_birth, @email, @phone_number, @address, @course_program, @year_level, @enrollment_status, @blood_type)";
 
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    string sql = @"INSERT INTO users 
+                (student_id, first_name, last_name, username, password, date_of_birth, 
+                 email, phone_number, address, course_program, year_level, 
+                 enrollment_status, blood_type)
+                VALUES (@student_id, @first_name, @last_name, @username, @password, 
+                        @date_of_birth, @email, @phone_number, @address, 
+                        @course_program, @year_level, @enrollment_status, @blood_type)";
 
-                    cmd.Parameters.AddWithValue("@student_id", studentID);
-                    cmd.Parameters.AddWithValue("@first_name", firstName);
-                    cmd.Parameters.AddWithValue("@last_name", lastName);
-                    cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@password", password);
-                    cmd.Parameters.AddWithValue("@date_of_birth", dateOfBirth?.ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@phone_number", phone);
-                    cmd.Parameters.AddWithValue("@address", address);
-                    cmd.Parameters.AddWithValue("@course_program", course);
-                    cmd.Parameters.AddWithValue("@year_level", yearLevel);
-                    cmd.Parameters.AddWithValue("@enrollment_status", enrollmentStatus);
-                    cmd.Parameters.AddWithValue("@blood_type", bloodType);
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@student_id", studentID);
+                        cmd.Parameters.AddWithValue("@first_name", firstName);
+                        cmd.Parameters.AddWithValue("@last_name", lastName);
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@password", password);
+                        cmd.Parameters.AddWithValue("@date_of_birth", dateOfBirth?.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@phone_number", phone);
+                        cmd.Parameters.AddWithValue("@address", address);
+                        cmd.Parameters.AddWithValue("@course_program", course);
+                        cmd.Parameters.AddWithValue("@year_level", yearLevel);
+                        cmd.Parameters.AddWithValue("@enrollment_status", enrollmentStatus);
+                        cmd.Parameters.AddWithValue("@blood_type", bloodType);
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
 
                     MessageBox.Show("Student record inserted successfully!");
                 }
@@ -96,6 +119,7 @@ namespace WpfApp2
                 }
             }
         }
+
 
         public int GetActiveStudentCount()
         {

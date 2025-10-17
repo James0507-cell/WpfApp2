@@ -83,6 +83,8 @@ namespace WpfApp2
         {
             Admin createStudent = new Admin();
 
+            
+
             createStudent.AddStudent(
                 txtStudentID.Text,
                 txtFirstName.Text,
@@ -101,14 +103,17 @@ namespace WpfApp2
 
             student.displayUsers("SELECT * FROM users WHERE role = 'Student'");
 
-
-        
         }
 
         private void txtUsername_TextChanged(object sender, TextChangedEventArgs e)
         {
             //hjgjhgjhgjhgjhg
 
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
