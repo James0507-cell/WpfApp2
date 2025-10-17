@@ -62,7 +62,7 @@
             Width="60" Height="25">
                         <Button Content="Logout" 
                 HorizontalAlignment="Center" VerticalAlignment="Center" 
-                Width="48" Height="20" 
+                Width="60" Height="20" 
                 BorderBrush="{x:Null}" Background="{x:Null}" 
                 FontSize="8" Foreground="White" 
                 FontWeight="DemiBold" Padding="1,0,1,1" 
