@@ -376,7 +376,7 @@
 
                                 <!-- Row 0: Title -->
                                 <Label Content="Weight Trend (Last 6 Months) " Grid.ColumnSpan="4" Grid.Row="0"
-                           Margin="10,0,0,5" HorizontalAlignment="Left" FontSize="9" Foreground="#FF001D5E"/>
+                           Margin="10,0,0,5" HorizontalAlignment="Left" FontSize="9" Foreground="#FF001950"/>
 
                                 <!-- Row 1: Month 1 (Jan) -->
                                 <Label x:Name="lblMonth1" Content="Jan" Grid.Column="0" Grid.Row="1" Margin="7,0,0,4" HorizontalAlignment="Left" Foreground="#FF737373" FontSize="10" Padding="0" Grid.ColumnSpan="2"/>
