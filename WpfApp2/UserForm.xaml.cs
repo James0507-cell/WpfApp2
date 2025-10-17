@@ -403,8 +403,7 @@ namespace WpfApp2
 
         public void cancelAppointment(string appointmentId)
         {
-            // IMPORTANT: Since we cannot use alert/confirm in the environment, you would need a custom WPF dialog implementation here.
-            // For now, I will use MessageBox as a placeholder until a custom dialog UI can be implemented.
+            
 
             MessageBoxResult result = MessageBox.Show(
             "Are you sure you want to cancel this appointment? This action cannot be undone.",

@@ -277,7 +277,6 @@
                                                     <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
-
                                             <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Accountancy" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
