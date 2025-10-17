@@ -285,6 +285,9 @@ namespace WpfApp2
             int totalmedicinereq = admin.GetMedicineStatusCount();
             lblMedicalAlerts.Content = totalmedicinereq;
 
+            int totalComputerscience = admin.getComputerScience();
+            computerscience.Content = totalComputerscience + " students";
+
             SQL = "SELECT * FROM users WHERE role = 'Student'";
             displayUsers(SQL);
         }

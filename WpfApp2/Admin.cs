@@ -163,7 +163,18 @@ namespace WpfApp2
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
-        
+
+        public int getComputerScience()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'BS Computer Science' AND role = 'Student'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
 
 
 

@@ -346,6 +346,9 @@ namespace WpfApp2
             int totalLowStock = admin.getMedicineCount();
             lblLowStack.Content = totalLowStock; 
 
+           
+
+
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
             displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 20");

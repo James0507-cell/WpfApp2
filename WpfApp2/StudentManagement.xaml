@@ -195,6 +195,159 @@
                                 <Border.Effect>
                                     <DropShadowEffect ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC"/>
                                 </Border.Effect>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="39*"/>
+                                        <RowDefinition Height="304*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Content="Enrollment by Program" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="176" FontWeight="SemiBold" Foreground="#FF00104D"/>
+
+                                    <ScrollViewer Grid.Row="1">
+                                        <StackPanel>
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Computer Science" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label x:Name="computerscience" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Information Technology" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Information Systems" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Data Science" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Software Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Computer Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Electronics Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Electrical Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Civil Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Mechanical Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Architecture" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Accountancy" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Business Administration" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Marketing Management" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Tourism Management" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Hospitality Management" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Communication" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Political Science" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Elementary Education" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Background="#FFF7F7F7" Padding="15,10" Margin="10,0,10,0">
+                                                <Grid>
+                                                    <Label Content="Secondary Education" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Border>
+                                        </StackPanel>
+                                    </ScrollViewer>
+
+                                </Grid>
                             </Border>
                             <Border BorderBrush="Black" BorderThickness="1" Margin="17,28,16,27" Grid.Column="1" CornerRadius="5,5,5,5" Background="White">
                                 <Border.Effect>
