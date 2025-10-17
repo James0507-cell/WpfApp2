@@ -272,6 +272,22 @@ namespace WpfApp2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+            int totalActiveStudents = admin.GetActiveStudentCount();
+            lblActiveStudent.Content = totalActiveStudents.ToString();
+
+            int totalStudents = admin.GetTotalStudentCount();
+            lblTotalstudent.Content = totalStudents.ToString();
+
+            int totaalCoursePrograms = admin.getTotalProgram();
+            lblPrograms.Content = totaalCoursePrograms.ToString();
+
+            int totalmedicinereq = admin.GetMedicineStatusCount();
+            lblMedicalAlerts.Content = totalmedicinereq;
+
+            int totalComputerscience = admin.getComputerScience();
+            computerscience.Content = totalComputerscience + " students";
+
             SQL = "SELECT * FROM users WHERE role = 'Student'";
             displayUsers(SQL);
         }
@@ -291,6 +307,17 @@ namespace WpfApp2
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            int totalActiveStudents = admin.GetActiveStudentCount();
+            lblActiveStudent.Content = totalActiveStudents.ToString();
+
+            int totalStudents = admin.GetTotalStudentCount();
+            lblTotalstudent.Content = totalStudents.ToString();
+
+            int totaalCoursePrograms = admin.getTotalProgram();
+            lblPrograms.Content = totaalCoursePrograms.ToString();
+
+            int totalmedicinereq = admin.GetMedicineStatusCount();
+            lblMedicalAlerts.Content = totalmedicinereq;
 
         }
     }

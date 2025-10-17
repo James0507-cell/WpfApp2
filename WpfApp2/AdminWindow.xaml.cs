@@ -30,8 +30,8 @@ namespace WpfApp2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            UserForm userForm = new UserForm(username);
-            userForm.Show();
+            MainWindow login = new MainWindow();
+            login.Show();
             this.Close();
         }
 
@@ -334,10 +334,10 @@ namespace WpfApp2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
-            int totalStudents  = admin.GetStudentCount();
+            int totalStudents  = admin.GetActiveStudentCount();
             lblActiveStatus.Content = totalStudents;
 
-            int totalmedicinereq = admin.GetMedicineCount();
+            int totalmedicinereq = admin.GetMedicineStatusCount();
             lblMedicine.Content = totalmedicinereq;
 
             int totalAppoinment =  admin.GetAppointmenCount();
@@ -346,9 +346,12 @@ namespace WpfApp2
             int totalLowStock = admin.getMedicineCount();
             lblLowStack.Content = totalLowStock; 
 
+           
+
+
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
-            displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 30");
+            displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 20");
         }
 
         private void txtSearchIDapp_TextChanged(object sender, TextChangedEventArgs e)
@@ -795,10 +798,10 @@ namespace WpfApp2
 
         private void TabControl_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
         {
-            int totalStudents = admin.GetStudentCount();
+            int totalStudents = admin.GetActiveStudentCount();
             lblActiveStatus.Content = totalStudents;
 
-            int totalmedicinereq = admin.GetMedicineCount();
+            int totalmedicinereq = admin.GetMedicineStatusCount();
             lblMedicine.Content = totalmedicinereq;
 
             int totalAppoinment = admin.GetAppointmenCount();
