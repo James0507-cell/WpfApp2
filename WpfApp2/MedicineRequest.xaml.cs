@@ -26,6 +26,7 @@ namespace WpfApp2
         public MedicineRequest()
         {
             InitializeComponent();
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -380,7 +381,7 @@ namespace WpfApp2
                     BorderThickness = new Thickness(1),
                     Background = Brushes.White,
                     CornerRadius = new CornerRadius(10), // Slightly rounder
-                    Margin = new Thickness(0, 8, 0, 8), // Adjusted vertical margin
+                    Margin = new Thickness(0, 8, 20, 8), // Adjusted vertical margin
                     Padding = new Thickness(20), // Increased internal padding
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     
