@@ -21,6 +21,13 @@ namespace WpfApp2
         {
             InitializeComponent();
             this.username = username;
+
+            
+        }
+        // In UserForm.cs
+        public string GetUsername()
+        {
+            return this.username;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -64,63 +71,10 @@ namespace WpfApp2
             displaySixMonthsProgress(); 
         }
 
-        /// <summary>
-        /// Gets the main background color for the status tag.
-        /// </summary>
-        private Color GetStatusBackgroundColor(string status)
+      
+        public void displayAppointment(string query)
         {
-            string lowerStatus = status.ToLower();
-            if (lowerStatus == "approved" || lowerStatus == "confirmed")
-                return (Color)ColorConverter.ConvertFromString("#E8F5E9"); // Light Green
-            if (lowerStatus == "pending" || lowerStatus == "waitlist")
-                return (Color)ColorConverter.ConvertFromString("#FFFDE7"); // Light Yellow
-            if (lowerStatus == "cancelled" || lowerStatus == "rejected")
-                return (Color)ColorConverter.ConvertFromString("#FFEBEE"); // Light Red
 
-            return (Color)ColorConverter.ConvertFromString("#F0F0F0"); // Default Light Gray
-        }
-
-        /// <summary>
-        /// Gets the foreground text color for the status tag.
-        /// </summary>
-        private Brush GetStatusForegroundColor(string status)
-        {
-            string lowerStatus = status.ToLower();
-            if (lowerStatus == "approved" || lowerStatus == "confirmed")
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF007E4C")); // Dark Green
-            if (lowerStatus == "pending" || lowerStatus == "waitlist")
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE0C200")); // Amber/Dark Yellow
-            if (lowerStatus == "cancelled" || lowerStatus == "rejected")
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D32F2F")); // Dark Red
-
-            return Brushes.Gray;
-        }
-
-        /// <summary>
-        /// Creates the styled status pill/tag element.
-        /// </summary>
-        private Border CreateStatusTag(string status)
-        {
-            return new Border
-            {
-                Background = new SolidColorBrush(GetStatusBackgroundColor(status)),
-                CornerRadius = new CornerRadius(4),
-                Padding = new Thickness(8, 2, 8, 2),
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Top,
-                Child = new TextBlock
-                {
-                    Text = status.ToLower(),
-                    Foreground = GetStatusForegroundColor(status),
-                    FontWeight = FontWeights.Normal,
-                    FontSize = 9
-                }
-            };
-        }
-
-
-        private void displayAppointment(string query)
-        {
             DataTable dt = userForm.displayRecords(query);
             AppointmentStackPanel.Children.Clear();
 
@@ -137,156 +91,7 @@ namespace WpfApp2
 
 
 
-                Border cardBorder = new Border
-                {
-                    BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFCCCCCC")),
-                    BorderThickness = new Thickness(1),
-                    Background = Brushes.White,
-                    CornerRadius = new CornerRadius(5),
-                    Margin = new Thickness(10, 4, 10, 4),
-                    Padding = new Thickness(12, 6, 12, 6),
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    
-                };
-
-
-                StackPanel appointmentContent = new StackPanel();
-
-                Grid headerGrid = new Grid();
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                headerGrid.Margin = new Thickness(0, 0, 0, 3);
-
-                TextBlock txtTitle = new TextBlock
-                {
-                    Text = purpose,
-                    FontWeight = FontWeights.SemiBold,
-                    FontSize = 9,
-                    Foreground = darkBlueBrush,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
-                Grid.SetColumn(txtTitle, 0);
-                headerGrid.Children.Add(txtTitle);
-
-                Border statusTag = CreateStatusTag(status); 
-                Grid.SetColumn(statusTag, 1);
-                headerGrid.Children.Add(statusTag);
-
-                appointmentContent.Children.Add(headerGrid);
-
-
-                StackPanel detailsPanel = new StackPanel
-                {
-                    Orientation = Orientation.Horizontal,
-                    Margin = new Thickness(0, 0, 0, 0)
-                };
-
-                TextBlock txtDate = new TextBlock
-                {
-                    Text = $"📅 {date}",
-                    FontSize = 9,
-                    Foreground = lightGrayBrush,
-                    Margin = new Thickness(0, 0, 10, 0)
-                };
-                detailsPanel.Children.Add(txtDate);
-
-                TextBlock separator = new TextBlock
-                {
-                    Text = "|",
-                    FontSize = 9,
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")),
-                    Margin = new Thickness(0, 0, 10, 0)
-                };
-
-                detailsPanel.Children.Add(separator);
-
-                TextBlock txtTime = new TextBlock
-                {
-                    Text = $"🕒 {time}",
-                    FontSize = 9,
-                    Foreground = lightGrayBrush,
-                    Margin = new Thickness(0, 0, 10, 0)
-                };
-                detailsPanel.Children.Add(txtTime);
-
-                TextBlock separator2 = new TextBlock
-                {
-                    Text = "|",
-                    FontSize = 9,
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")),
-                    Margin = new Thickness(0, 0, 10, 0)
-                };
-                detailsPanel.Children.Add(separator2);
-
-                TextBlock txtId = new TextBlock
-                {
-                    Text = $"ID: {appointmentId}",
-                    FontSize = 9,
-                    Foreground = lightGrayBrush,
-                    FontWeight = FontWeights.Medium
-                };
-                detailsPanel.Children.Add(txtId);
-
-                appointmentContent.Children.Add(detailsPanel);
-
-                cardBorder.Child = appointmentContent;
-
-
-                string currentAppointmentId = appointmentId;
-                string currentStatus = status;
-
-                cardBorder.MouseRightButtonDown += (s, e) =>
-                {
-                    ContextMenu contextMenu = new ContextMenu();
-
-                    MenuItem cancelItem = new MenuItem { Header = "Cancel Appointment" };
-                    cancelItem.Click += (s3, e3) =>
-                    {
-                        
-                        MessageBox.Show($"Request to Cancel Appointment ID: {currentAppointmentId}");
-                        SQL = "Delete from appointments where appointment_id = '" + currentAppointmentId + "'";
-                        userForm.sqlManager(SQL);
-                        
-                    };
-
-                    if (currentStatus.Equals("Pending", StringComparison.OrdinalIgnoreCase))
-                    {
-                        MenuItem updateItem = new MenuItem { Header = "Update Appointment" };
-                        updateItem.Click += (s2, e2) =>
-                        {
-                            
-                            MessageBox.Show($"Opening Update Form for ID: {currentAppointmentId}");
-                            UpdateAppointment update = new UpdateAppointment(appointmentId);
-                            this.Hide();
-                            update.Show();
-                        };
-                        contextMenu.Items.Add(updateItem);
-                        contextMenu.Items.Add(cancelItem);
-
-
-
-                    }
-                    else if (currentStatus.Equals("Approved", StringComparison.OrdinalIgnoreCase))
-                    {
-                        MenuItem noUpdateItem = new MenuItem { Header = "Update is disabled (Approved)", IsEnabled = false };
-                        contextMenu.Items.Add(noUpdateItem);
-
-                        contextMenu.Items.Add(cancelItem);
-                    }
-                    else
-                    {
-                        MenuItem disabledItem = new MenuItem { Header = $"Actions restricted (Status: {currentStatus})", IsEnabled = false };
-                        contextMenu.Items.Add(disabledItem);
-
-                    }
-
-                    if (contextMenu.Items.Count > 0)
-                    {
-                        cardBorder.ContextMenu = contextMenu;
-                        contextMenu.IsOpen = true;
-                        e.Handled = true; 
-                    }
-                };
+                Border cardBorder = userForm.appointmentPanel(appointmentId, date, time, status, purpose);
 
                 AppointmentStackPanel.Children.Add(cardBorder);
             }
@@ -295,131 +100,30 @@ namespace WpfApp2
        
         public void displayActivities(String query)
         {
-            // Use the class-level userForm object to fetch data
+            
             DataTable dt = userForm.displayRecords(query);
 
-            // Clear the target panel before adding new items (assuming 'StackPanelActivities' is the target)
-            // Make sure 'StackPanelActivities' is defined in your XAML.
+            
             StackPanelActivities.Children.Clear();
 
-            // Define consistent colors (matching the dark blue from displayAppointment)
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
             Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                // 1. Correct Data Extraction (using column names and current row index 'i')
-                // NOTE: Column names are inferred from the original method's variable names.
+                
                 string activityId = dt.Rows[i]["activity_id"].ToString();
                 string type = dt.Rows[i]["activity_type"].ToString();
                 string description = dt.Rows[i]["activity_desc"].ToString();
-                string dateTime = dt.Rows[i]["activity_date"].ToString(); // Typically a DateTime, but treating as string for display
+                string dateTime = dt.Rows[i]["activity_date"].ToString(); 
 
-                // 2. Create the Card Container (Border) - Replicating Appointment Style
-                Border cardBorder = new Border
-                {
-                    BorderBrush = Brushes.Transparent,
-                    BorderThickness = new Thickness(1),
-                    Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA)),
-                    CornerRadius = new CornerRadius(5),
-                    Margin = new Thickness(10, 4, 10, 4), // Consistent with Appointment style
-                    Padding = new Thickness(12, 6, 12, 6),
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    
-                };
+                Border cardBorder = userForm.activityPanel(activityId, type, description, dateTime);
 
-                // 3. Main StackPanel to hold all content vertically
-                StackPanel activityContent = new StackPanel();
-
-                // --- Row 1: Activity Type and ID ---
-                Grid headerGrid = new Grid();
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                headerGrid.Margin = new Thickness(0, 0, 0, 3);
-
-                // Activity Type (as Title)
-                TextBlock txtType = new TextBlock
-                {
-                    Text = type, // e.g., "Login", "Appointment Booked"
-                    FontWeight = FontWeights.SemiBold,
-                    FontSize = 9,
-                    Foreground = darkBlueBrush,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
-                Grid.SetColumn(txtType, 0);
-                headerGrid.Children.Add(txtType);
-
-                // Activity Tag (Using a simplified tag for the ID)
-                Border idTag = new Border
-                {
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F0F0")), // Light Gray background
-                    CornerRadius = new CornerRadius(4),
-                    Padding = new Thickness(8, 2, 8, 2),
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Child = new TextBlock
-                    {
-                        Text = $"ID: {activityId}",
-                        Foreground = Brushes.Gray,
-                        FontWeight = FontWeights.Normal,
-                        FontSize = 9
-                    }
-                };
-                Grid.SetColumn(idTag, 1);
-                headerGrid.Children.Add(idTag);
-
-                activityContent.Children.Add(headerGrid);
-
-                // --- Row 2: Date/Time and Description ---
-
-                // Date/Time Block (⌚ 2025-10-09 10:00:00)
-                TextBlock txtDateTime = new TextBlock
-                {
-                    Text = $"⌚ {dateTime}",
-                    FontSize = 9,
-                    Foreground = lightGrayBrush,
-                    Margin = new Thickness(0, 0, 0, 2)
-                };
-                activityContent.Children.Add(txtDateTime);
-
-                // Description
-                TextBlock txtDescription = new TextBlock
-                {
-                    Text = description, // e.g., "User logged in successfully"
-                    FontSize = 9,
-                    Foreground = darkBlueBrush,
-                    TextWrapping = TextWrapping.Wrap // Ensure long text wraps
-                };
-                activityContent.Children.Add(txtDescription);
-
-
-                // 4. Attach Content to Card Border
-                cardBorder.Child = activityContent;
-
-                // 5. Add to the main StackPanel
                 StackPanelActivities.Children.Add(cardBorder);
             }
         }
 
-        public void cancelAppointment(string appointmentId)
-        {
-            
-
-            MessageBoxResult result = MessageBox.Show(
-            "Are you sure you want to cancel this appointment? This action cannot be undone.",
-            "Confirm Cancellation",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Warning
-            );
-
-            if (result == MessageBoxResult.Yes)
-            {
-                string deleteQuery = $"DELETE FROM appointments WHERE appointment_id = {appointmentId}";
-                userForm.sqlManager(deleteQuery);
-                MessageBox.Show("Appointment cancelled successfully!", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
-                displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'");
-            }
-        }
+        
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -712,6 +416,17 @@ namespace WpfApp2
             };
             bookingAppointment.Show();
             this.Close();
+        }
+
+        public void reloadAppointments()
+        {
+            AppointmentStackPanel.Children.Clear();
+            displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'");
+        }
+        public void reloadActivities()
+        {
+            StackPanelActivities.Children.Clear();
+            displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{userId}' ORDER BY activity_date DESC LIMIT 5");
         }
     }
 }
