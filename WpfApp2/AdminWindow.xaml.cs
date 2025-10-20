@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using YourNamespace;
 
 namespace WpfApp2
 {
@@ -120,7 +121,22 @@ namespace WpfApp2
         {
             if (sender is MenuItem menuItem && menuItem.Tag is string appointmentID)
             {
-                rejectAppointment(appointmentID);
+                // 1. Instantiate the custom dialog
+                RejectionReasonDialog dialog = new RejectionReasonDialog();
+
+                // 2. Show the dialog and check if the user clicked "Reject"
+                bool? dialogResult = dialog.ShowDialog();
+
+                // 3. If DialogResult is true (meaning the user entered a reason and clicked "Reject")
+                if (dialogResult == true)
+                {
+                    string rejectionReason = dialog.RejectionReason;
+
+                    // 4. Pass the appointment ID AND the rejection reason to the rejection logic
+                    rejectAppointment(appointmentID, rejectionReason);
+                }
+                // If dialogResult is false or null, the user clicked "Cancel" or closed the dialog, 
+                // and no action is taken.
             }
         }
 
@@ -334,10 +350,10 @@ namespace WpfApp2
             admin.sqlManager(querry);
             displayAppointments("SELECT * FROM appointments");
         }
-
-        public void rejectAppointment(String appointmentID)
+        
+        public void rejectAppointment(String appointmentID, String reason)
         {
-            String querry = $"UPDATE appointments SET status = 'Rejected' WHERE appointment_id = {appointmentID}";
+            String querry = $"UPDATE appointments SET status = 'Rejected', reason = '{reason}' WHERE appointment_id = {appointmentID}";
             admin.sqlManager(querry);
             displayAppointments("SELECT * FROM appointments");
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
@@ -648,10 +664,21 @@ namespace WpfApp2
         {
             if (sender is MenuItem menuItem && menuItem.Tag is string requestID)
             {
-                rejectMedicineRequest(requestID);
-                SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                     $"VALUES ({id}, '{username}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-                admin.sqlManager(SQL);
+                RejectionReasonDialog dialog = new RejectionReasonDialog();
+
+                bool? dialogResult = dialog.ShowDialog();
+
+                if (dialogResult == true)
+                {
+                    string rejectionReason = dialog.RejectionReason;
+
+                    rejectMedicineRequest(requestID, rejectionReason);
+
+
+                    SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                          $"VALUES ({id}, '{username}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}. Reason: {rejectionReason}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                    admin.sqlManager(SQL);
+                }
             }
         }
 
@@ -662,9 +689,9 @@ namespace WpfApp2
             displayMedicineRequest("SELECT * FROM medicinerequests");
         }
 
-        public void rejectMedicineRequest(String requestID)
+        public void rejectMedicineRequest(String requestID, String reason)
         {
-            String querry = $"UPDATE medicinerequests SET status = 'Rejected', approved_date = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}' WHERE request_id = {requestID}";
+            String querry = $"UPDATE medicinerequests SET status = 'Rejected', reject_reason = '{reason}', approved_date = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}' WHERE request_id = {requestID}";
             admin.sqlManager(querry);
             displayMedicineRequest("SELECT * FROM medicinerequests");
         }

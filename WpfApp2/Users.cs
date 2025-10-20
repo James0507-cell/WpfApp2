@@ -114,10 +114,11 @@ namespace WpfApp2
             }
         }
 
-        public Border appointmentPanel(string appointmentId, string date, string time, string status, string purpose)
+        public Border appointmentPanel(string appointmentId, string date, string time, string status, string purpose, string reason)
         {
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
             Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
+            Brush redBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD70000")); // Define a red color for the reason
 
             Border cardBorder = new Border
             {
@@ -201,6 +202,36 @@ namespace WpfApp2
             });
 
             appointmentContent.Children.Add(detailsPanel);
+
+            // =============================================================
+            // NEW: ADD REASON TEXT BLOCK CONDITIONALLY
+            // =============================================================
+            if (status.Equals("Rejected", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(reason))
+            {
+                // Add a separator space
+                appointmentContent.Children.Add(new Separator { Margin = new Thickness(0, 5, 0, 0) });
+
+                // TextBlock for the reason label
+                appointmentContent.Children.Add(new TextBlock
+                {
+                    Text = "Rejection Reason:",
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 9,
+                    Foreground = redBrush,
+                    Margin = new Thickness(0, 0, 0, 2)
+                });
+
+                // TextBlock for the actual reason content
+                appointmentContent.Children.Add(new TextBlock
+                {
+                    Text = reason,
+                    FontSize = 9,
+                    Foreground = redBrush,
+                    TextWrapping = TextWrapping.Wrap // Allows long reasons to wrap
+                });
+            }
+            // =============================================================
+
             cardBorder.Child = appointmentContent;
 
             string currentAppointmentId = appointmentId;
@@ -233,7 +264,7 @@ namespace WpfApp2
 
                         if (activeWindow != null)
                         {
-                            activeWindow.Hide();   
+                            activeWindow.Hide();
                         }
 
                         update.Show();

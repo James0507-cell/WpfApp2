@@ -88,10 +88,12 @@ namespace WpfApp2
                 string time = dt.Rows[i]["appointment_time"].ToString();
                 string status = dt.Rows[i]["status"].ToString();
                 string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
+                string reason = dt.Rows[i]["reason"].ToString();
 
 
 
-                Border cardBorder = userForm.appointmentPanel(appointmentId, date, time, status, purpose);
+
+                Border cardBorder = userForm.appointmentPanel(appointmentId, date, time, status, purpose, reason);
 
                 AppointmentStackPanel.Children.Add(cardBorder);
             }

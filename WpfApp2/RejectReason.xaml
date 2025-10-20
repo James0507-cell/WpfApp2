@@ -1,0 +1,22 @@
+﻿<Window x:Class="YourNamespace.RejectionReasonDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Enter Rejection Reason" Height="200" Width="300"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Please enter the reason for rejecting this appointment:" Margin="0,0,0,5"/>
+
+        <TextBox x:Name="ReasonTextBox" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Reject" Click="Reject_Click" IsDefault="True" MinWidth="75" Margin="0,0,10,0"/>
+            <Button Content="Cancel" IsCancel="True" MinWidth="75"/>
+        </StackPanel>
+    </Grid>
+</Window>

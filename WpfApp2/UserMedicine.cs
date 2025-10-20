@@ -106,19 +106,20 @@ namespace WpfApp2
             return wrapperPanel;
         }
 
-        public Border medicineRequestPanels(String medicineName, String reason,String quantity, String status, String requestedAt, String approvedAt)
+        public Border medicineRequestPanels(String medicineName, String reason, String quantity, String status, String requestedAt, String approvedAt, String rejectReason)
         {
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
             Brush lightGrayBrush = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230)); // Background for icon
+            Brush redBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD70000")); // Red color for rejection reason
 
             Border cardBorder = new Border
             {
                 BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
                 BorderThickness = new Thickness(1),
                 Background = Brushes.White,
-                CornerRadius = new CornerRadius(10), 
-                Margin = new Thickness(0, 8, 20, 8), 
-                Padding = new Thickness(20), 
+                CornerRadius = new CornerRadius(10),
+                Margin = new Thickness(0, 8, 20, 8),
+                Padding = new Thickness(20),
                 HorizontalAlignment = HorizontalAlignment.Stretch,
 
             };
@@ -129,7 +130,7 @@ namespace WpfApp2
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Icon
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Name & Quantity
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Status Tag
-            headerGrid.Margin = new Thickness(0, 0, 0, 15); 
+            headerGrid.Margin = new Thickness(0, 0, 0, 15);
 
             Border iconWrapper = new Border
             {
@@ -140,11 +141,11 @@ namespace WpfApp2
                 Height = 36,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 0, 10, 0) 
+                Margin = new Thickness(0, 0, 10, 0)
             };
             TextBlock medicineIcon = new TextBlock
             {
-                Text = "💊", 
+                Text = "💊",
                 FontSize = 18,
                 Foreground = darkBlueBrush,
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -161,7 +162,7 @@ namespace WpfApp2
             TextBlock txtName = new TextBlock
             {
                 Text = medicineName,
-                FontWeight = FontWeights.ExtraBold, 
+                FontWeight = FontWeights.ExtraBold,
                 FontSize = 18,
                 Foreground = darkBlueBrush,
                 TextWrapping = TextWrapping.Wrap
@@ -171,7 +172,7 @@ namespace WpfApp2
             TextBlock txtQuantity = new TextBlock
             {
                 Text = $"Quantity Requested: {quantity}",
-                FontWeight = FontWeights.SemiBold, 
+                FontWeight = FontWeights.SemiBold,
                 FontSize = 13,
                 Foreground = Brushes.Gray
             };
@@ -198,8 +199,16 @@ namespace WpfApp2
             requestContent.Children.Add(CreateIconDetailBlock("Reason", reason, darkBlueBrush, "📝"));
 
             StackPanel requestedOnBlock = CreateIconDetailBlock("Requested On", requestedAt, darkBlueBrush, "🗓️");
-            requestedOnBlock.Margin = new Thickness(0, 8, 0, 0); // Reduced margin
+            requestedOnBlock.Margin = new Thickness(0, 8, 0, 0);
             requestContent.Children.Add(requestedOnBlock);
+
+            
+            if (status.Equals("Rejected", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(rejectReason))
+            {
+                StackPanel rejectReasonBlock = CreateIconDetailBlock("Rejection Reason", rejectReason, redBrush, "❌");
+                rejectReasonBlock.Margin = new Thickness(0, 8, 0, 0);
+                requestContent.Children.Add(rejectReasonBlock);
+            }
 
             if (!string.IsNullOrWhiteSpace(approvedAt) && status.ToUpper() != "PENDING")
             {
@@ -211,14 +220,14 @@ namespace WpfApp2
                     detailTitle = "Approved On";
                     icon = "✅";
                 }
-                else 
+                else
                 {
                     detailTitle = "Handled On";
                     icon = "⚙️";
                 }
 
                 StackPanel handledOnBlock = CreateIconDetailBlock(detailTitle, approvedAt, darkBlueBrush, icon);
-                handledOnBlock.Margin = new Thickness(0, 8, 0, 0); 
+                handledOnBlock.Margin = new Thickness(0, 8, 0, 0);
                 requestContent.Children.Add(handledOnBlock);
             }
 

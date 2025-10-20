@@ -120,8 +120,9 @@ namespace WpfApp2
                 String status = dt.Rows[i][5].ToString();
                 String requestedAt = dt.Rows[i][6].ToString();
                 String approvedAt = dt.Rows[i][7].ToString();
+                String rejectReason = dt.Rows[i][8].ToString();
 
-                Border cardBorder = medicine.medicineRequestPanels(medicineName, reason, quantity, status, requestedAt, approvedAt);
+                Border cardBorder = medicine.medicineRequestPanels(medicineName, reason, quantity, status, requestedAt, approvedAt, rejectReason);
 
                 StackPanelMedicineRequests.Children.Add(cardBorder);
             }
