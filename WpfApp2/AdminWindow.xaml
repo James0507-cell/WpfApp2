@@ -7,38 +7,112 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WpfApp2.AdminWindow"
         mc:Ignorable="d"
         Title="AdminWindow" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
-    <Border BorderThickness="1" Background="White" CornerRadius="20,20,20,20">
-        <Grid Margin="-1,9,-1,-9">
+    <Window.Resources>
+        <Style TargetType="{x:Type TabControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" HorizontalAlignment="Center">
+                                <TabPanel x:Name="HeaderPanel" 
+                                      IsItemsHost="True" 
+                                      Background="Transparent" 
+                                      Margin="{TemplateBinding Padding}"
+                                      KeyboardNavigation.TabIndex="1" 
+                                      ZIndex="1"/>
+                            </Grid>
+
+                            <Border x:Name="ContentPanel" 
+                                Grid.Row="1" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                KeyboardNavigation.TabIndex="2" 
+                                KeyboardNavigation.TabNavigation="Local">
+                                <ContentPresenter x:Name="PART_SelectedContentHost" 
+                                              ContentSource="SelectedContent" 
+                                              Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Padding" Value="15,5"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border x:Name="TabBorder"
+                            Background="#F0F0F0"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="15">
+                            <ContentPresenter x:Name="ContentSite"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          ContentSource="Header"
+                                          Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Selected tab -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="MidnightBlue"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="MidnightBlue"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+
+                            <!-- Hover on inactive -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#E0E0E0"/>
+                            </Trigger>
+
+                            <!-- Hover on active tab -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="TabBorder" Property="Background" Value="#191970"/>
+                            </MultiTrigger>
+
+                            <!-- Inactive tab -->
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#FFCBCBCB"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <Border BorderThickness="1" Background="#FFF9F9F9" CornerRadius="20,20,20,20">
+        <Grid Margin="-1,-1,-1,-9">
             <Grid.RowDefinitions>
-                <RowDefinition Height="71"/>
-                <RowDefinition Height="103*"/>
+                <RowDefinition Height="57"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border BorderBrush="Black" BorderThickness="0,0,0,1" RenderTransformOrigin="0.5,0.5" Margin="-14,-1,7,20">
-                <Border.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-0.225"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Border.RenderTransform>
-                <Label Content="Admin Portal" Margin="75,0,684,27" Foreground="#FF00104D" FontWeight="SemiBold"/>
-            </Border>
-            <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="61,16,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
-            <Image HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="49" Source="/mcm logo.png" RenderTransformOrigin="1.025,-0.28" Margin="20,2,0,0"/>
-            <Button Content="Log out" HorizontalAlignment="Left" Margin="709,10,0,0" VerticalAlignment="Top" Height="20" Width="72" Click="Button_Click">
+            <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Height="50"/>
+            <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="67,28,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
+            <Image HorizontalAlignment="Left" Height="56" VerticalAlignment="Center" Width="55" Source="/Logo-Final_noname_1.png" RenderTransformOrigin="1.025,-0.28" Margin="12,0,0,0"/>
+            <Button Content="Log out" HorizontalAlignment="Right" Margin="0,10,10,10" VerticalAlignment="Center" Height="20" Width="62" Click="Button_Click">
                 <Button.Background>
                     <ImageBrush/>
                 </Button.Background>
             </Button>
-            <Grid Grid.Row="1" Margin="0,0,0,10" Grid.RowSpan="2">
-                <Border BorderBrush="Black" BorderThickness="1" Margin="102,47,102,539" CornerRadius="15,15,15,15" Background="White">
-                    <Border.Effect>
-                        <DropShadowEffect ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC"/>
-                    </Border.Effect>
-                </Border>
-                <TabControl Margin="40,54,40,53" BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="TabControl_SelectionChanged_2">
-                    <TabItem Header="Overview" Background="{x:Null}" Margin="109,-7,-134,5" BorderThickness="5,0,0,0" BorderBrush="{x:Null}">
+            <Grid Grid.Row="1" Margin="0,0,0,10">
+                <TabControl Margin="40,36,40,71" BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="TabControl_SelectionChanged_2">
+                    <TabItem Header="🏠 Overview" Background="{x:Null}" Margin="-100,-1,61,-1" BorderThickness="5,0,0,0" BorderBrush="{x:Null}">
                         <Grid Height="510" Margin="0,0,-1,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="121*"/>
@@ -51,66 +125,66 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Border BorderBrush="Black" BorderThickness="1" Margin="10,34,10,33" CornerRadius="5,5,5,5" Background="White">
+                                <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="5,34,5,33" CornerRadius="5,5,5,5" Background="White" VerticalAlignment="Center">
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC"/>
                                     </Border.Effect>
-                                    <Grid>
+                                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Image HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="36" Source="/times.jpg" Margin="4,0,0,0"/>
                                         <Label Content="Pending Appointments" HorizontalAlignment="Left" Margin="34,0,0,0" VerticalAlignment="Top" Width="132"/>
-                                        <Label x:Name="lblPending" Content="0" HorizontalAlignment="Left" Margin="85,20,0,0" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="15"/>
+                                        <Label x:Name="lblPending" Content="0" Margin="85,20,0,0" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="15" RenderTransformOrigin="0.069,0.537" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left"/>
                                     </Grid>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="1" Margin="10,35,10,33" Grid.Column="1" CornerRadius="5,5,5,5" Background="White">
+                                <Border BorderBrush="#1A00104D" BorderThickness="1" Grid.Column="1" CornerRadius="5,5,5,5" Background="White" VerticalAlignment="Center" Margin="5,0,5,0">
                                     <Border.Effect>
-                                        <DropShadowEffect ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC"/>
+                                        <DropShadowEffect ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC" RenderingBias="Quality"/>
                                     </Border.Effect>
-                                    <Grid>
+                                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="172">
                                         <Label Content="Medicine Request" HorizontalAlignment="Left" Margin="42,-1,0,0" VerticalAlignment="Top" Width="123"/>
-                                        <Label x:Name="lblMedicine" Content="0" HorizontalAlignment="Left" Margin="85,18,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="SemiBold"/>
+                                        <Label x:Name="lblMedicine" Content="0" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="SemiBold"/>
                                         <Image HorizontalAlignment="Left" Height="34" Margin="6,10,0,0" VerticalAlignment="Top" Width="36" Source="/capsule icon.jpg"/>
                                     </Grid>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Margin="8,35,9,33" CornerRadius="5,5,5,5" Background="White">
+                                <Border BorderBrush="#1A00104D" BorderThickness="1" Grid.Column="2" Margin="5,35,5,35" CornerRadius="5,5,5,5" Background="White">
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC"/>
                                     </Border.Effect>
-                                    <Grid>
+                                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Height="48">
                                         <Image Margin="7,7,134,10" Source="/iconcaustiosn.jpg"/>
                                         <Label Content="Low Stack Items" HorizontalAlignment="Left" Margin="50,-2,0,0" VerticalAlignment="Top" Width="123"/>
-                                        <Label x:Name="lblLowStack" Content="0" HorizontalAlignment="Left" Margin="92,17,0,0" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="15"/>
+                                        <Label x:Name="lblLowStack" Content="0" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="15" HorizontalContentAlignment="Center"/>
                                     </Grid>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Margin="10,34,10,34" CornerRadius="5,5,5,5" Background="White">
+                                <Border BorderBrush="#1A00104D" BorderThickness="1" Grid.Column="3" Margin="5,34,5,34" CornerRadius="5,5,5,5" Background="White" VerticalAlignment="Center">
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC"/>
                                     </Border.Effect>
-                                    <StackPanel>
-                                        <Grid Height="50">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="171">
+                                        <Grid Height="50" HorizontalAlignment="Center" Width="170" VerticalAlignment="Center">
                                             <Image HorizontalAlignment="Left" Height="32" Margin="8,6,0,0" VerticalAlignment="Top" Width="41" Source="/persons.jpg"/>
-                                            <Label Content="Active Status" HorizontalAlignment="Left" Margin="63,-1,0,0" VerticalAlignment="Top"/>
-                                            <Label x:Name="lblActiveStatus" Content="0" HorizontalAlignment="Left" Margin="93,17,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="SemiBold"/>
+                                            <Label Content="Active Status" HorizontalAlignment="Left" Margin="49,-1,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
+                                            <Label x:Name="lblActiveStatus" Content="0" HorizontalAlignment="Center" Margin="0,17,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
                                         </Grid>
                                     </StackPanel>
                                 </Border>
                             </Grid>
-                            <Grid Grid.Row="1">
+                            <Grid Grid.Row="1" Margin="0,0,0,24">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Grid>
-                                    <Border BorderThickness="1,1,1,1" BorderBrush="#FFD1D1D1" CornerRadius="15,15,15,15" Margin="0,0,24,31" Background="White">
+                                    <Border BorderThickness="1,1,1,1" BorderBrush="#FFD1D1D1" CornerRadius="15,15,15,15" Margin="0,0,24,0" Background="White">
                                         <Border.Effect>
                                             <DropShadowEffect ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC"/>
                                         </Border.Effect>
                                         <Grid Margin="0,0,-2,-1">
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="43*"/>
-                                                <RowDefinition Height="293*"/>
-                                                <RowDefinition Height="21*"/>
+                                                <RowDefinition Height="47*"/>
+                                                <RowDefinition Height="312*"/>
+                                                <RowDefinition Height="29*"/>
                                             </Grid.RowDefinitions>
-                                            <ScrollViewer Grid.Row="1" Grid.RowSpan="2">
+                                            <ScrollViewer Grid.Row="1">
                                                 <StackPanel x:Name="StackPanelActivities"/>
                                             </ScrollViewer>
                                             <Border BorderBrush="#FFCBCBCB" BorderThickness="0,0,0,1">
@@ -123,23 +197,26 @@
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Column="1">
-                                    <Border BorderBrush="Red" BorderThickness="5,0,0,0" CornerRadius="10,10,10,10" Margin="19,0,0,34" Background="White">
-                                        <Border BorderBrush="#FFC9C9C9" BorderThickness="0,1,0,1" HorizontalAlignment="Center" Width="359" CornerRadius="10,10,10,10">
+                                    <Border BorderBrush="Red" BorderThickness="5,0,0,0" CornerRadius="10" Background="White">
+                                        <Border BorderBrush="#FFC9C9C9" BorderThickness="0,1,0,1" CornerRadius="10">
                                             <Grid Margin="0,0,-2,-3">
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="41*"/>
-                                                    <RowDefinition Height="293*"/>
-                                                    <RowDefinition Height="21*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
+
                                                 <ScrollViewer Grid.Row="1">
                                                     <StackPanel x:Name="StackPanelMedicineInv"/>
                                                 </ScrollViewer>
-                                                <Border BorderThickness="0,0,1,1" BorderBrush="#FFD1D1D1" CornerRadius="0,10,0,0" Margin="-1,0,1,0">
+
+                                                <Border Grid.Row="0" BorderThickness="0,0,1,1" BorderBrush="#FFD1D1D1" CornerRadius="0,10,0,0" Margin="-1,0,1,0">
                                                     <Grid Margin="0,0,7,0">
-                                                        <Image Margin="7,6,317,9" Source="/Screenshot 2025-10-10 175322.png"/>
+                                                        <Image Margin="7,6,0,9" HorizontalAlignment="Left" Width="30" Source="/Screenshot 2025-10-10 175322.png"/>
                                                         <Label Content="Low Stock Alert " HorizontalAlignment="Left" Margin="44,0,0,0" VerticalAlignment="Center" Foreground="#FFFF5656" FontSize="14" FontWeight="Bold"/>
                                                     </Grid>
                                                 </Border>
+
                                             </Grid>
                                         </Border>
                                     </Border>
@@ -148,7 +225,7 @@
                         </Grid>
                     </TabItem>
 
-                    <TabItem Header="Medicine" Margin="359,-6,-359,4" BorderBrush="{x:Null}" Background="{x:Null}" Width="85.8466666666667">
+                    <TabItem Header="💊 Medicine" Margin="103,-1,-137,-1" BorderBrush="{x:Null}" Background="{x:Null}">
                         <Grid>
                             <Grid>
                                 <Border BorderBrush="Black" BorderThickness="1" Margin="30,73,34,30" CornerRadius="15,15,15,15">
@@ -168,7 +245,9 @@
                         </Grid>
                     </TabItem>
 
-                    <TabItem Margin="110,0,-112,7" Header="Appointment" RenderTransformOrigin="0.5,0.5" Height="20" VerticalAlignment="Bottom" mah:HeaderedControlHelper.HeaderForeground="{x:Null}" BorderThickness="5,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <TabItem Header="📅 Appointment" RenderTransformOrigin="0.5,0.5" Height="30" VerticalAlignment="Top"
+         mah:HeaderedControlHelper.HeaderForeground="{x:Null}" BorderThickness="5,0,0,0" 
+         Background="{x:Null}" BorderBrush="{x:Null}" Margin="-140,-1,140,0">
                         <TabItem.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -177,7 +256,8 @@
                                 <TranslateTransform Y="1.053"/>
                             </TransformGroup>
                         </TabItem.RenderTransform>
-                        <Grid Margin="10,0,0,0">
+
+                        <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="70"/>
                                 <RowDefinition Height="*"/>
@@ -185,7 +265,14 @@
 
                             <Grid Grid.Row="0" Height="70" VerticalAlignment="Top"/>
 
-                            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Width="645" CornerRadius="15,15,15,15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,0,0,0" Height="411">
+                            <!-- Responsive Border -->
+                            <Border Grid.Row="1" 
+                BorderBrush="Black" 
+                BorderThickness="1" 
+                CornerRadius="15"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="20">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
@@ -193,10 +280,34 @@
                                     </Grid.RowDefinitions>
 
                                     <Grid Grid.Row="0">
-                                        <Label Content="Appointments" HorizontalAlignment="Left" Margin="20,15,0,0" VerticalAlignment="Top" Width="344" Height="32" Foreground="#FF00104D" FontSize="14"/>
-                                        <Label Content="Review and manage appointment requests" HorizontalAlignment="Left" Margin="20,33,0,0" VerticalAlignment="Top" Width="259" Height="31" Foreground="#FFAFAFAF"/>
-                                        <TextBox x:Name="txtSearchIDapp" HorizontalAlignment="Left" Margin="367,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="txtSearchIDapp_TextChanged"/>
-                                        <ComboBox x:Name="cmbStatus" HorizontalAlignment="Left" Margin="500,25,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cmbStatus_SelectionChanged">
+                                        <Label Content="Appointments" 
+                           HorizontalAlignment="Left" 
+                           Margin="20,15,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="344" 
+                           Height="32" 
+                           Foreground="#FF00104D" 
+                           FontSize="14"/>
+                                        <Label Content="Review and manage appointment requests" 
+                           HorizontalAlignment="Left" 
+                           Margin="20,33,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="259" 
+                           Height="31" 
+                           Foreground="#FFAFAFAF"/>
+                                        <TextBox x:Name="txtSearchIDapp" 
+                             HorizontalAlignment="Left" 
+                             Margin="367,29,0,0" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Top" 
+                             Width="120" 
+                             TextChanged="txtSearchIDapp_TextChanged"/>
+                                        <ComboBox x:Name="cmbStatus" 
+                              HorizontalAlignment="Left" 
+                              Margin="500,25,0,0" 
+                              VerticalAlignment="Top" 
+                              Width="120" 
+                              SelectionChanged="cmbStatus_SelectionChanged">
                                             <ComboBoxItem Content="All"/>
                                             <ComboBoxItem Content="Pending"/>
                                             <ComboBoxItem Content="Approved"/>
@@ -212,7 +323,8 @@
                         </Grid>
                     </TabItem>
 
-                    <TabItem Margin="330,-6,-330,4" Header="Students" Width="85.8466666666667" Background="{x:Null}" BorderBrush="{x:Null}">
+
+                    <TabItem Margin="37,-2,-82,0" Header="👩‍🎓 Students" Background="{x:Null}" BorderBrush="{x:Null}">
                         <Grid>
                             <Border BorderBrush="Black" BorderThickness="1" Margin="28,72,31,35" CornerRadius="15,15,15,15">
                                 <Grid>
@@ -232,7 +344,7 @@
         Width="162"
         Height="36" Cursor="Hand" Click="Button_Click_1">
                                         <Button.Template>
-                                            <ControlTemplate TargetType="Button">
+                                            <ControlTemplate TargetType="{x:Type Button}">
                                                 <Border CornerRadius="4"
                     BorderThickness="1"
                     BorderBrush="Black"
@@ -247,14 +359,25 @@
                                             <ImageBrush ImageSource="/dsadasdasdasda.jpg" Stretch="Fill"/>
                                         </Button.Background>
                                     </Button>
-                                    <Label Content="• Add new student accounts with comprehensive information&#xD;&#xA;    • Edit existing student details and medical information&#xD;&#xA;         • View enrollment analytics and program statistics&#xD;&#xA;             • Search and filter students by various criteria" HorizontalAlignment="Left" Margin="184,184,0,0" Grid.Row="1" VerticalAlignment="Top" Width="357" Height="79" Foreground="#FFAFAFAF"/>
+                                    <Label Content="• Add new student accounts with comprehensive information&#xA;    • Edit existing student details and medical information&#xA;         • View enrollment analytics and program statistics&#xA;             • Search and filter students by various criteria" Margin="0,189,0,83" Grid.Row="1" Width="357" Foreground="#FFAFAFAF" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
                                 </Grid>
                             </Border>
                         </Grid>
                     </TabItem>
 
                 </TabControl>
+                <Label Content="Admin Portal" HorizontalAlignment="Left" Margin="64,-56,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
             </Grid>
+            <mah:HamburgerMenu Content="HamburgerMenu" HorizontalAlignment="Left" Margin="327,-63,0,0" VerticalAlignment="Top" Height="1" RenderTransformOrigin="0.5,0.5" Width="6">
+                <mah:HamburgerMenu.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </mah:HamburgerMenu.RenderTransform>
+            </mah:HamburgerMenu>
         </Grid>
     </Border>
 </Window>

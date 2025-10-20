@@ -38,6 +38,7 @@ namespace WpfApp2
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
+            logoutborder.Background = Brushes.Red;
             var mainWindow = new MainWindow();
             this.Close();
             mainWindow.Show();
@@ -429,6 +430,11 @@ namespace WpfApp2
         {
             StackPanelActivities.Children.Clear();
             displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{userId}' ORDER BY activity_date DESC LIMIT 5");
+        }
+
+        private void Button_IsMouseDirectlyOverChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }

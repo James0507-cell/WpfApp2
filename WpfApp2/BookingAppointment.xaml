@@ -10,6 +10,7 @@
     Title="BookingAppointment" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
     <Window.Resources>
+
         <Style x:Key="AppointmentButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#F5F5F5"/>
             <Setter Property="Foreground" Value="#1C3E61"/>
@@ -166,7 +167,7 @@
                     </Style>
                 </TabControl.Resources>
 
-                <TabItem x:Name="BookingDate" Margin="194,-3,-213,-14">
+                <TabItem x:Name="BookingDate" Margin="194,-3,-213,-16" mah:HeaderedControlHelper.HeaderVerticalContentAlignment="Center">
                     <TabItem.Background>
                         <ImageBrush ImageSource="/Screenshot 2025-09-14 224107.png"/>
                     </TabItem.Background>
@@ -182,7 +183,7 @@
                                 <Image HorizontalAlignment="Left" Height="40" Margin="10,15,0,0" VerticalAlignment="Top" Width="46" 
                        Source="/Screenshot 2025-09-14 231802.png"/>
 
-                                <Border BorderThickness="1" Margin="24,294,24,66" CornerRadius="7" BorderBrush="#FF7BA9FF" Background="#FFB3D6FF">
+                                <Border BorderThickness="1" Margin="0,309,0,0" CornerRadius="7" BorderBrush="#FF7BA9FF" Background="#FFB3D6FF" VerticalAlignment="Top" HorizontalAlignment="Center" Width="454">
                                     <Grid>
                                         <Label Content="Clinic Hours" HorizontalAlignment="Left" Margin="35,-2,0,0" VerticalAlignment="Top" FontWeight="DemiBold"/>
                                         <Label Content="Monday to Friday: (00 AM - 6:00 PM)&#xA;Closed on weekends and holidays" 
@@ -495,7 +496,7 @@
             <Border BorderBrush="#FFC2C2C2" BorderThickness="0,0,0,1">
                 <Grid>
                     <Button HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="68" Click="Button_Click_1" Height="52" Background="{x:Null}" FontWeight="DemiBold" BorderBrush="{x:Null}">
-                        <Image Height="41" Width="53" Source="/Screenshot 2025-10-15 174220.png"/>
+                        <Image Height="41" Width="53" Source="/Screenshot 2025-10-15 174220.png" RenderTransformOrigin="1.062,0.667"/>
                     </Button>
                     <Label Content="Book Appointment" HorizontalAlignment="Left" Margin="91,12,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="SemiBold"/>
                     <Label Content="Use this form to book an appointment with our clinic." HorizontalAlignment="Left" Margin="91,44,0,0" VerticalAlignment="Top" Foreground="#FF8A8A8A"/>
