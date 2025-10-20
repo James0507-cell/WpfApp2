@@ -22,23 +22,23 @@
 
                             <Grid Grid.Row="0" HorizontalAlignment="Center">
                                 <TabPanel x:Name="HeaderPanel" 
-                                          IsItemsHost="True" 
-                                          Background="Transparent" 
-                                          Margin="{TemplateBinding Padding}"
-                                          KeyboardNavigation.TabIndex="1" 
-                                          ZIndex="1"/>
+                              IsItemsHost="True" 
+                              Background="Transparent" 
+                              Margin="{TemplateBinding Padding}"
+                              KeyboardNavigation.TabIndex="1" 
+                              ZIndex="1"/>
                             </Grid>
 
                             <Border x:Name="ContentPanel" 
-                                    Grid.Row="1" 
-                                    Background="{TemplateBinding Background}" 
-                                    BorderBrush="{TemplateBinding BorderBrush}" 
-                                    BorderThickness="{TemplateBinding BorderThickness}" 
-                                    KeyboardNavigation.TabIndex="2" 
-                                    KeyboardNavigation.TabNavigation="Local">
+                        Grid.Row="1" 
+                        Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        KeyboardNavigation.TabIndex="2" 
+                        KeyboardNavigation.TabNavigation="Local">
                                 <ContentPresenter x:Name="PART_SelectedContentHost" 
-                                                  ContentSource="SelectedContent" 
-                                                  Margin="{TemplateBinding Padding}"/>
+                                      ContentSource="SelectedContent" 
+                                      Margin="{TemplateBinding Padding}"/>
                             </Border>
                         </Grid>
                     </ControlTemplate>
@@ -48,31 +48,35 @@
 
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Padding" Value="15,5"/>
-            <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="DemiBold"/>
-            <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="13"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabItem}">
                         <Border x:Name="TabBorder"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="15">
+                    Background="#F0F0F0"
+                    BorderBrush="Transparent"
+                    BorderThickness="1"
+                    CornerRadius="15">
                             <ContentPresenter x:Name="ContentSite"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"
-                                              ContentSource="Header"
-                                              Margin="{TemplateBinding Padding}" />
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  ContentSource="Header"
+                                  Margin="{TemplateBinding Padding}" />
                         </Border>
                         <ControlTemplate.Triggers>
+                            <!-- Selected tab -->
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="TabBorder" Property="Background" Value="MidnightBlue"/>
                                 <Setter TargetName="TabBorder" Property="BorderBrush" Value="MidnightBlue"/>
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
+
+                            <!-- Hover on inactive -->
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="TabBorder" Property="Background" Value="#E0E0E0"/>
+                                <Setter TargetName="TabBorder" Property="Background" Value="#FFEEEEEE"/>
                             </Trigger>
+
+                            <!-- Hover on active tab -->
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsSelected" Value="True"/>
@@ -80,6 +84,12 @@
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="TabBorder" Property="Background" Value="#191970"/>
                             </MultiTrigger>
+
+                            <!-- Inactive tab -->
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#FFCBCBCB"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>

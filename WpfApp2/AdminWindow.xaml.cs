@@ -728,14 +728,7 @@ namespace WpfApp2
                     Margin = new Thickness(8, 3, 8, 3),
                     Padding = new Thickness(10, 8, 10, 8),
                     HorizontalAlignment = HorizontalAlignment.Stretch,
-                    Effect = new DropShadowEffect
-                    {
-                        Color = Colors.LightGray,
-                        Direction = 315,
-                        ShadowDepth = 1,
-                        BlurRadius = 3,
-                        Opacity = 0.5
-                    }
+                    
                 };
 
                 StackPanel medicineContent = new StackPanel();
@@ -930,6 +923,7 @@ namespace WpfApp2
                 };
 
                 StackPanel activityContent = new StackPanel();
+
 
                 // --- Header Grid (Username and Admin ID) ---
                 Grid headerGrid = new Grid();
