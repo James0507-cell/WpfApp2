@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -22,10 +23,17 @@ namespace WpfApp2
         Admin admin = new Admin();
         String username = MainWindow.Username;
         StudentManagement studentManagement = new StudentManagement();
+        int id;
 
         public AdminWindow()
         {
             InitializeComponent();
+        }
+        public void setId(String username)
+        {
+            SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = admin.displayRecords(SQL);   
+            id = int.Parse(dt.Rows[0][0].ToString());
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -321,6 +329,9 @@ namespace WpfApp2
         {
             String querry = $"UPDATE appointments SET status = 'Approved' WHERE appointment_id = {appointmentID}";
             admin.sqlManager(querry);
+            querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                     $"VALUES ({id}, '{username}', 'Appointment Approved', 'Approved appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+            admin.sqlManager(querry);
             displayAppointments("SELECT * FROM appointments");
         }
 
@@ -329,6 +340,9 @@ namespace WpfApp2
             String querry = $"UPDATE appointments SET status = 'Rejected' WHERE appointment_id = {appointmentID}";
             admin.sqlManager(querry);
             displayAppointments("SELECT * FROM appointments");
+            querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                     $"VALUES ({id}, '{username}', 'Appointment Rejected', 'Rejected appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+            admin.sqlManager(querry);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -346,12 +360,13 @@ namespace WpfApp2
             int totalLowStock = admin.getMedicineCount();
             lblLowStack.Content = totalLowStock; 
 
-           
+           setId(username);
 
 
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
             displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 20");
+            displayActivity();
         }
 
         private void txtSearchIDapp_TextChanged(object sender, TextChangedEventArgs e)
@@ -623,6 +638,9 @@ namespace WpfApp2
             if (sender is MenuItem menuItem && menuItem.Tag is string requestID)
             {
                 approveMedicineRequest(requestID);
+                SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                     $"VALUES ({id}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                admin.sqlManager(SQL);
             }
         }
 
@@ -631,6 +649,9 @@ namespace WpfApp2
             if (sender is MenuItem menuItem && menuItem.Tag is string requestID)
             {
                 rejectMedicineRequest(requestID);
+                SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                     $"VALUES ({id}, '{username}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                admin.sqlManager(SQL);
             }
         }
 
@@ -654,9 +675,14 @@ namespace WpfApp2
             StackPanelMedicineInv.Children.Clear();
 
             // ALERT-FOCUSED COLORS:
-            Brush mainTextBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4A4A4A"));    // Dark Gray/Near Black for contrast
-            Brush alertQuantityBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD86E00")); // Dark Orange/Amber for stock alert
-            Brush alertActionBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFCC3300"));   // Vibrant Orange-Red for the button
+            Brush mainTextBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4A4A4A"));
+            // Dark Gray/Near Black for contrast
+
+            Brush alertQuantityBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD86E00"));
+            // Dark Orange/Amber for stock alert
+
+            Brush alertActionBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFCC3300"));
+            // Vibrant Orange-Red for the button
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -764,6 +790,22 @@ namespace WpfApp2
                 bottomGrid.Children.Add(descriptionPanel);
 
                 // Update Button (Vibrant Orange-Red for Action Alert)
+                Button updateButton = new Button
+                {
+                    Content = "Update 🔄",
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    Padding = new Thickness(8, 3, 8, 3),
+                    FontSize = 10,
+                    FontWeight = FontWeights.SemiBold,
+                    Foreground = Brushes.White, // White text contrasts strongly with the red background
+                    Background = Brushes.Transparent,
+                    BorderBrush = Brushes.Transparent,
+                    Tag = medId
+                };
+
+                
+                updateButton.Click += UpdateMedicineInventory_Click;
+
                 Border buttonBorderWrapper = new Border
                 {
                     Background = alertActionBrush, // Uses the vibrant orange-red color
@@ -771,18 +813,7 @@ namespace WpfApp2
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom,
                     Margin = new Thickness(8, 0, 0, 0),
-                    Child = new Button
-                    {
-                        Content = "Update 🔄",
-                        HorizontalAlignment = HorizontalAlignment.Stretch,
-                        Padding = new Thickness(8, 3, 8, 3),
-                        FontSize = 10,
-                        FontWeight = FontWeights.SemiBold,
-                        Foreground = Brushes.White, // White text contrasts strongly with the red background
-                        Background = Brushes.Transparent,
-                        BorderBrush = Brushes.Transparent,
-                        Tag = medId
-                    }
+                    Child = updateButton // Use the button we just created
                 };
 
                 Grid.SetColumn(buttonBorderWrapper, 1);
@@ -795,6 +826,163 @@ namespace WpfApp2
                 StackPanelMedicineInv.Children.Add(cardBorder);
             }
         }
+        private void UpdateMedicineInventory_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+
+            if (clickedButton != null && clickedButton.Tag is string medId)
+            {
+
+
+                string input = Microsoft.VisualBasic.Interaction.InputBox(
+                    $"Enter the quantity to ADD to medicine ID: {medId}",
+                    "Add Inventory Stock",
+                    "0");
+
+                if (int.TryParse(input, out int amountToAdd) && amountToAdd > 0)
+                {
+                    SQL = $"UPDATE medicineinventory SET amount = amount + {amountToAdd} WHERE inventory_id = {medId}";
+                    admin.sqlManager(SQL);
+                    MessageBox.Show($"Successfully added {amountToAdd} units to inventory for ID {medId}.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    
+                    displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 20");
+                    SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                         $"VALUES ({id}, '{username}', 'Medicine Inventory Updated', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                    admin.sqlManager(SQL);
+                }
+                else if (amountToAdd == 0)
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("Invalid input. Please enter a positive number for the quantity.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 20");
+        }
+        public void displayActivity()
+        {
+            // --- 1. Data Fetching ---
+            // Assuming 'userForm' is an instance that handles database calls
+            SQL = "SELECT * FROM admin_activity_log ORDER BY activity_date DESC";
+            DataTable dt = admin.displayRecords(SQL);
+
+            // --- 2. UI Initialization ---
+            // Clear the StackPanel where activities are displayed
+            StackPanelActivities.Children.Clear();
+
+            // Color definitions for consistent styling
+            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
+            Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
+            Brush lightBackground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA));
+            Brush idTagBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F0F0"));
+
+
+            // --- 3. Iterate and Build UI Cards ---
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                // Extract all fields from the DataTable row
+                string adminId = dt.Rows[i]["admin_id"].ToString();
+                string username = dt.Rows[i]["username"].ToString();
+                string type = dt.Rows[i]["activity_type"].ToString();
+                string description = dt.Rows[i]["activity_desc"].ToString();
+                string dateTime = dt.Rows[i]["activity_date"].ToString();
+
+                // --- Activity Card Container (Border) ---
+                Border cardBorder = new Border
+                {
+                    BorderBrush = Brushes.Transparent,
+                    BorderThickness = new Thickness(1),
+                    Background = lightBackground,
+                    CornerRadius = new CornerRadius(5),
+                    Margin = new Thickness(10, 4, 10, 4),
+                    Padding = new Thickness(12, 8, 12, 8), // Increased padding for a better look
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                };
+
+                StackPanel activityContent = new StackPanel();
+
+                // --- Header Grid (Username and Admin ID) ---
+                Grid headerGrid = new Grid();
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // For Username
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // For ID Tag
+                headerGrid.Margin = new Thickness(0, 0, 0, 4);
+
+                // 1. Username (Bold and Primary)
+                TextBlock txtUsername = new TextBlock
+                {
+                    Text = username,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 10,
+                    Foreground = darkBlueBrush,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                Grid.SetColumn(txtUsername, 0);
+                headerGrid.Children.Add(txtUsername);
+
+                // 2. Admin ID Tag
+                Border idTag = new Border
+                {
+                    Background = idTagBackground,
+                    CornerRadius = new CornerRadius(4),
+                    Padding = new Thickness(8, 2, 8, 2),
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Child = new TextBlock
+                    {
+                        Text = $"ID: {adminId}",
+                        Foreground = Brushes.Gray,
+                        FontWeight = FontWeights.Normal,
+                        FontSize = 9
+                    }
+                };
+                Grid.SetColumn(idTag, 1);
+                headerGrid.Children.Add(idTag);
+
+                activityContent.Children.Add(headerGrid);
+
+                // --- Activity Type (Secondary detail) ---
+                TextBlock txtActivityType = new TextBlock
+                {
+                    Text = $"Action: {type}",
+                    FontWeight = FontWeights.SemiBold,
+                    FontSize = 9,
+                    Foreground = darkBlueBrush,
+                    Margin = new Thickness(0, 0, 0, 2)
+                };
+                activityContent.Children.Add(txtActivityType);
+
+                // --- Date Time ---
+                TextBlock txtDateTime = new TextBlock
+                {
+                    Text = $"⌚ {dateTime}",
+                    FontSize = 9,
+                    Foreground = lightGrayBrush,
+                    Margin = new Thickness(0, 0, 0, 6)
+                };
+                activityContent.Children.Add(txtDateTime);
+
+                // --- Description ---
+                TextBlock txtDescription = new TextBlock
+                {
+                    Text = description,
+                    FontSize = 9,
+                    Foreground = darkBlueBrush,
+                    TextWrapping = TextWrapping.Wrap
+                };
+                activityContent.Children.Add(txtDescription);
+
+                // Assign the content to the card border
+                cardBorder.Child = activityContent;
+
+                // --- 4. Add card to the main StackPanel ---
+                StackPanelActivities.Children.Add(cardBorder);
+            }
+
+        }
+        
 
         private void TabControl_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
         {
@@ -809,6 +997,8 @@ namespace WpfApp2
 
             int totalLowStock = admin.getMedicineCount();
             lblLowStack.Content = totalLowStock;
+
+            displayActivity();
         }
     }
     }

@@ -16,7 +16,9 @@ namespace WpfApp2
 
         Admin admin = new Admin();
         String SQL = "";
-        String Username = "";
+        String Username = MainWindow.Username;
+        int id;
+        String studUsername = "";
         public StudentManagement()
         {
             InitializeComponent();
@@ -63,6 +65,7 @@ namespace WpfApp2
                 String lastname = dt.Rows[i]["last_name"].ToString();
                 String fullname = firstname + " " + lastname;
                 String phone = dt.Rows[i]["phone_number"].ToString();
+                studUsername = username;
 
 
                 // 2. Create the Card Container (Border)
@@ -212,6 +215,7 @@ namespace WpfApp2
                     (s, e) =>
                     {
                         DeleteStudent(StudentId);
+                        
                     });
 
                 buttonPanel.Children.Add(updateBtnBorder);
@@ -248,6 +252,9 @@ namespace WpfApp2
             if (result == MessageBoxResult.Yes)
             {
                 MessageBox.Show("Account deleted successfully!", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
+                admin.sqlManager(SQL);
+                SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                     $"VALUES ({id}, '{Username}', 'Delete Student Info', 'Delete Student {studentId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                 admin.sqlManager(SQL);
             }
             else
@@ -290,6 +297,7 @@ namespace WpfApp2
 
             SQL = "SELECT * FROM users WHERE role = 'Student'";
             displayUsers(SQL);
+            setId(Username);
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -319,6 +327,12 @@ namespace WpfApp2
             int totalmedicinereq = admin.GetMedicineStatusCount();
             lblMedicalAlerts.Content = totalmedicinereq;
 
+        }
+        public void setId(String username)
+        {
+            SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = admin.displayRecords(SQL);
+            id = int.Parse(dt.Rows[0][0].ToString());
         }
     }
 }

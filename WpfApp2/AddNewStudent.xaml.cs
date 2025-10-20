@@ -26,17 +26,25 @@ namespace WpfApp2
 
         StudentManagement student = new StudentManagement();
         Admin admin = new Admin();
-        String strconn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
+        String SQL = "";
+        String username = MainWindow.Username;
+        int id;
         public AddNewStudent()
         {
             InitializeComponent();
         }
 
 
-
+        public void setId(String username)
+        {
+            SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = admin.displayRecords(SQL);
+            id = int.Parse(dt.Rows[0][0].ToString());
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            setId(username);
 
         }
 
@@ -102,6 +110,10 @@ namespace WpfApp2
             );
 
             student.displayUsers("SELECT * FROM users WHERE role = 'Student'");
+            SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                     $"VALUES ({id}, '{username}', 'Appointment Approved', 'Add new Student + {txtUsername.Text}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+            admin.sqlManager(SQL);
+
 
         }
 

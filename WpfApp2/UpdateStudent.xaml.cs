@@ -24,12 +24,14 @@ namespace WpfApp2
         Admin admin = new Admin();
         String username = "";
         int userId = 0;
+        int id;
+        String adminUsername = MainWindow.Username;
         public UpdateStudent(String username)
         {
             this.username = username;
             InitializeComponent();
         }
-
+        
         private void btnAddStudent_Click(object sender, RoutedEventArgs e)
         {
             SQL = $@"
@@ -52,6 +54,10 @@ namespace WpfApp2
 
             admin.sqlManager(SQL);
             MessageBox.Show("Student information updated successfully!");
+
+            SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                     $"VALUES ({id}, '{adminUsername}', 'Update Student Info', 'Update Student {txtConfirmStudentID.Text}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+            admin.sqlManager(SQL);
 
         }
         private void LoadStudentInfo()
@@ -103,6 +109,8 @@ namespace WpfApp2
             LoadComboBoxes();
             LoadStudentInfo();
 
+            setId(adminUsername);
+
         }
         private void LoadComboBoxes()
         {
@@ -147,6 +155,12 @@ namespace WpfApp2
         private void txtStudentID_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+        public void setId(String username)
+        {
+            SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = admin.displayRecords(SQL);
+            id = int.Parse(dt.Rows[0][0].ToString());
         }
     }
 }

@@ -111,7 +111,7 @@
                                                 <RowDefinition Height="21*"/>
                                             </Grid.RowDefinitions>
                                             <ScrollViewer Grid.Row="1" Grid.RowSpan="2">
-                                                <StackPanel x:Name="StackPanelActivities" Width="100"/>
+                                                <StackPanel x:Name="StackPanelActivities"/>
                                             </ScrollViewer>
                                             <Border BorderBrush="#FFCBCBCB" BorderThickness="0,0,0,1">
                                                 <Grid>
