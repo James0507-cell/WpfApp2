@@ -93,7 +93,6 @@ namespace WpfApp2
 
 
 
-
                 Border cardBorder = userForm.appointmentPanel(appointmentId, date, time, status, purpose, reason);
 
                 AppointmentStackPanel.Children.Add(cardBorder);
