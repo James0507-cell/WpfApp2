@@ -8,6 +8,72 @@
         mc:Ignorable="d"
         Title="StudentManagement" Height="744" Width="858" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Window.Resources>
+        <Style x:Key="AppointmentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="Foreground" Value="#1C3E61"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,15"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E6E6E6"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#D0D0D0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SelectedAppointmentButtonStyle" TargetType="Button" BasedOn="{StaticResource AppointmentButtonStyle}">
+            <Setter Property="Background" Value="#E53935"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E53935"/>
+        </Style>
+
+        <Style x:Key="BookedAppointmentStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F0F0F0"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,15"/>
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="5">
+
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                <ContentPresenter/>
+
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style TargetType="{x:Type TabControl}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -101,121 +167,129 @@
                 <RowDefinition Height="655*"/>
             </Grid.RowDefinitions>
             <Grid>
-                <Border BorderBrush="Black" BorderThickness="1" d:IsLocked="True"/>
+                <Border BorderBrush="#FFA0A0A0" BorderThickness="0,0,0,1"/>
             </Grid>
             <Grid>
-                <Button Content="" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="72" Foreground="{x:Null}" Cursor="Hand" mah:ControlsHelper.FocusBorderBrush="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click_1">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/goback.jpg"/>
-                    </Button.Background>
+                <Button HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="59" Foreground="{x:Null}" Cursor="Hand" mah:ControlsHelper.FocusBorderBrush="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click_1" Background="{x:Null}" Height="60">
+                    <Image Height="52" Width="56" Source="/Screenshot 2025-10-15 174220.png"/>
                 </Button>
-                <Image HorizontalAlignment="Left" Height="48" Margin="87,13,0,0" VerticalAlignment="Top" Width="54" Source="/mcm logo.png"/>
-                <Label Content="Student Management" HorizontalAlignment="Left" Margin="135,13,0,0" VerticalAlignment="Top" Width="173" Foreground="#FF00104D" FontSize="14" FontWeight="SemiBold"/>
-                <Label Content="Manage student accounts and information" HorizontalAlignment="Left" Margin="135,35,0,0" VerticalAlignment="Top" Width="245" Foreground="#FFAFAFAF" Height="26"/>
+                <Label Content="Student Management" HorizontalAlignment="Left" Margin="79,10,0,0" VerticalAlignment="Top" Width="173" Foreground="#FF00104D" FontSize="14" FontWeight="SemiBold"/>
+                <Label Content="Manage student accounts and information" HorizontalAlignment="Left" Margin="79,32,0,0" VerticalAlignment="Top" Width="245" Foreground="#FFAFAFAF" Height="26"/>
             </Grid>
-            <TabControl Grid.Row="1" Margin="78,67,78,53" BorderBrush="{x:Null}" SelectionChanged="TabControl_SelectionChanged" Background="{x:Null}">
+            <TabControl Grid.Row="1" Margin="78,45,78,75" BorderBrush="{x:Null}" SelectionChanged="TabControl_SelectionChanged" Background="{x:Null}">
                 <TabItem Header="Student List" Margin="-44,-2,-8,0" BorderBrush="{x:Null}" Background="{x:Null}" >
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="11*"/>
-                            <RowDefinition Height="51*"/>
+                            <RowDefinition Height="103*"/>
+                            <RowDefinition Height="393*"/>
                         </Grid.RowDefinitions>
-                        <Image HorizontalAlignment="Left" Height="21" Margin="254,0,0,0" VerticalAlignment="Center" Width="21" Source="/Screenshot 2025-10-21 213052.png"/>
-                        <ComboBox x:Name="cmbYear" HorizontalAlignment="Left"
-          Margin="278,0,0,0"
-          VerticalAlignment="Center"
-          Width="120" Height="28" SelectionChanged="ComboBox_SelectionChanged">
-                            <ComboBox.Style>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type ComboBox}">
-                                                <Grid>
-                                                    <ToggleButton x:Name="ToggleButton"
+
+                        <Border BorderBrush="#1A00104D" BorderThickness="1" CornerRadius="10,10,10,10" Background="White" Margin="0,10,0,28" Grid.RowSpan="2" Grid.Column="0">
+                            <Grid Margin="0,0,-1,9">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="65*"/>
+                                    <RowDefinition Height="304*"/>
+                                </Grid.RowDefinitions>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,10,-1,4" Grid.Row="1">
+                                    <StackPanel x:Name="StudentListPanel" Margin="10"/>
+                                </ScrollViewer>
+                                <Image HorizontalAlignment="Left" Height="21" Margin="245,23,0,0" VerticalAlignment="Top" Width="21" Source="/Screenshot 2025-10-22 030236.png"/>
+                                <ComboBox x:Name="cmbYear" HorizontalAlignment="Left"
+          Margin="270,20,0,0"
+          VerticalAlignment="Top"
+          Width="145" Height="28" SelectionChanged="ComboBox_SelectionChanged" mah:ControlsHelper.FocusBorderBrush="{x:Null}">
+                                    <ComboBox.Style>
+                                        <Style TargetType="{x:Type ComboBox}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                        <Grid>
+                                                            <ToggleButton x:Name="ToggleButton"
                                           Grid.Column="2"
                                           Focusable="false"
                                           IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           ClickMode="Press"
                                           Background="Transparent">
-                                                        <ToggleButton.Template>
-                                                            <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                                <Border x:Name="Border"
+                                                                <ToggleButton.Template>
+                                                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                                        <Border x:Name="Border"
                                                 Background="#FFE5E5E5"
-                                                BorderBrush="Gray"
+                                                BorderBrush="#1A00104D"
                                                 BorderThickness="1"
                                                 CornerRadius="5">
-                                                                    <Grid>
-                                                                        <ContentPresenter />
-                                                                        <Path x:Name="Arrow"
+                                                                            <Grid>
+                                                                                <ContentPresenter />
+                                                                                <Path x:Name="Arrow"
                                                       HorizontalAlignment="Right"
                                                       Margin="0,0,6,0"
                                                       VerticalAlignment="Center"
                                                       Data="M 0 0 L 4 4 L 8 0 Z"
                                                       Fill="Black"/>
-                                                                    </Grid>
-                                                                </Border>
-                                                            </ControlTemplate>
-                                                        </ToggleButton.Template>
-                                                    </ToggleButton>
-                                                    <ContentPresenter Margin="6,2,25,2"
+                                                                            </Grid>
+                                                                        </Border>
+                                                                    </ControlTemplate>
+                                                                </ToggleButton.Template>
+                                                            </ToggleButton>
+                                                            <ContentPresenter Margin="6,2,25,2"
                                               VerticalAlignment="Center"
                                               HorizontalAlignment="Left"
                                               Content="{TemplateBinding SelectionBoxItem}"/>
-                                                    <Popup x:Name="Popup"
+                                                            <Popup x:Name="Popup"
                                    Placement="Bottom"
                                    IsOpen="{TemplateBinding IsDropDownOpen}"
                                    AllowsTransparency="True"
                                    Focusable="False">
-                                                        <Border Background="White"
+                                                                <Border Background="White"
                                         BorderBrush="Gray"
                                         BorderThickness="1"
                                         CornerRadius="5">
-                                                            <ScrollViewer Margin="4,6,4,6"
+                                                                    <ScrollViewer Margin="4,6,4,6"
                                                   SnapsToDevicePixels="True">
-                                                                <ItemsPresenter/>
-                                                            </ScrollViewer>
-                                                        </Border>
-                                                    </Popup>
-                                                </Grid>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ComboBox.Style>
-                        </ComboBox>
-                        <Button Content="" Margin="547,0,0,0" VerticalAlignment="Center" Width="147" Height="51" BorderBrush="{x:Null}" Click="Button_Click" HorizontalAlignment="Right">
-                            <Button.Background>
-                                <ImageBrush ImageSource="/Screenshot 2025-10-03 115810.png" Stretch="Uniform"/>
-                            </Button.Background>
-                        </Button>
-                        <Border BorderBrush="#1A00104D" BorderThickness="1" CornerRadius="10,10,10,10" Background="White" Margin="0,88,0,28" Grid.RowSpan="2">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,-1,9">
-                                <StackPanel x:Name="StudentListPanel" Margin="10"/>
-                            </ScrollViewer>
-                        </Border>
-                        <Border BorderBrush="#1A00104D"
-        BorderThickness="1"
-        Margin="20,0,0,0"
+                                                                        <ItemsPresenter/>
+                                                                    </ScrollViewer>
+                                                                </Border>
+                                                            </Popup>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ComboBox.Style>
+                                </ComboBox>
+                                <Button Content="Add Student ✚"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Right"
+        Width="160"
         Height="30"
-        VerticalAlignment="Center"
+        Margin="0,19,10,0"
+        BorderBrush="{x:Null}"
+        Click="Button_Click"
+        Style="{StaticResource SelectedAppointmentButtonStyle}"
+        FontSize="12"
+        HorizontalContentAlignment="Left"/>
+                                <Border BorderBrush="#1A00104D"
+        BorderThickness="1"
+        Margin="10,20,0,0"
+        Height="30"
+        VerticalAlignment="Top"
         CornerRadius="5"
         Background="White" HorizontalAlignment="Left" Width="211">
 
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <!-- for icon -->
-                                    <ColumnDefinition Width="*"/>
-                                    <!-- for textbox -->
-                                </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <!-- for textbox -->
+                                            <!-- for icon -->
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                <Image Source="/Screenshot 2025-10-21 210426.png"
+                                        <Image Source="/Screenshot 2025-10-21 210426.png"
                Width="20"
                Height="20"
                Margin="8,0"
                VerticalAlignment="Center"/>
 
-                                <TextBox x:Name="txtSearch"
+                                        <TextBox x:Name="txtSearch"
                  Grid.Column="1"
                  Margin="5,0,10,0"
                  VerticalAlignment="Center"
@@ -228,6 +302,8 @@
                  Text="Search student ID..."
                  BorderThickness="0"
                  Background="Transparent"/>
+                                    </Grid>
+                                </Border>
                             </Grid>
                         </Border>
 

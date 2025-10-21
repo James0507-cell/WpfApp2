@@ -33,7 +33,7 @@ namespace WpfApp2
         public void setId(String username)
         {
             SQL = $"select user_id from users where username = '{username}'";
-            DataTable dt = admin.displayRecords(SQL);   
+            DataTable dt = admin.displayRecords(SQL);
             id = int.Parse(dt.Rows[0][0].ToString());
         }
 
@@ -195,8 +195,8 @@ namespace WpfApp2
                     CornerRadius = new CornerRadius(8),
                     Margin = new Thickness(10, 6, 10, 6),
                     Padding = new Thickness(15),
-                    Width = 590,
-                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Width = double.NaN,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
                     Tag = appointmentID,
                     ContextMenu = null
                 };
@@ -458,8 +458,8 @@ namespace WpfApp2
                     CornerRadius = new CornerRadius(8),
                     Margin = new Thickness(10, 6, 10, 6),
                     Padding = new Thickness(15),
-                    Width = 580,
-                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Width = double.NaN,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
                     Tag = requestID // Set the request ID as the tag
                 };
 

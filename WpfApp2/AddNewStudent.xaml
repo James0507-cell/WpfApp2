@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="AddNewStudent" Height="689" Width="771" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1" WindowStyle="None">
+        Title="AddNewStudent" Height="744" Width="854" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1" WindowStyle="None">
     <Window.Resources>
 
 
@@ -181,8 +181,8 @@
                 <TabControl x:Name="MyTabAddStudent" Margin="53,10,34,10" BorderBrush="{x:Null}" Background="{x:Null}">
 
 
-                    <TabItem Header="Personal" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="152,0,-152,0">
-                        <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10">
+                    <TabItem Header="Personal" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="195,0,-195,0">
+                        <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10" Height="574">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -290,8 +290,8 @@
                             </Grid>
                         </Border>
                     </TabItem>
-                    <TabItem Header="Academic" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="157,-1,-157,1">
-                        <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10">
+                    <TabItem Header="Academic" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="200,-1,-200,1">
+                        <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10" Height="574">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -435,8 +435,8 @@
                             </Grid>
                         </Border>
                     </TabItem>
-                    <TabItem x:Name="tabItem" Header="Medical" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="162,0,-162,0">
-                        <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10">
+                    <TabItem x:Name="tabItem" Header="Medical" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="205,0,-205,0">
+                        <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10" Height="574">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -532,8 +532,8 @@
                 <Grid>
                     <Label Content="Add Student" HorizontalAlignment="Left" Margin="84,9,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="SemiBold"/>
                     <Label Content="Use this form to add new student account" HorizontalAlignment="Left" Margin="84,38,0,0" VerticalAlignment="Top" Width="244" Foreground="#FF8A8A8A"/>
-                    <Button HorizontalAlignment="Left" Margin="19,20,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="37" Height="37" Click="Button_Click">
-                        <Image Height="33" Width="34" Source="/Screenshot 2025-10-15 174220.png"/>
+                    <Button HorizontalAlignment="Left" Margin="19,20,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="40" Height="40" Click="Button_Click">
+                        <Image Height="36" Width="37" Source="/Screenshot 2025-10-15 174220.png"/>
                     </Button>
                 </Grid>
             </Border>

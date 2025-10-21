@@ -60,31 +60,7 @@ namespace WpfApp2
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            DataTable dtCourse = admin.displayRecords("Select *from course_programs");
-            foreach( DataRow row in dtCourse.Rows)
-            {
-
-                cboCourse.Items.Add(row["course_name"].ToString());
-            }
-
-            cboYearLevel.Items.Add("1st Year");
-            cboYearLevel.Items.Add("2nd Year");
-            cboYearLevel.Items.Add("3rd Year");
-            cboYearLevel.Items.Add("4th Year");
-
-            cboEnrolledStatus.Items.Add("Enrolled");
-            cboEnrolledStatus.Items.Add("Pending");
-            cboEnrolledStatus.Items.Add("Dropped");
-            cboEnrolledStatus.Items.Add("Graduated");
-
-            DataTable dt_blood = admin.displayRecords("Select * from blood_types");
-            foreach (DataRow row in dt_blood.Rows)
-            {
-                cboBloodType.Items.Add(row["blood_type"].ToString());
-            }
-
-            cmbRole.Items.Add("Admin");
-            cmbRole.Items.Add("Student");
+            LoadComboBoxes();
         }
 
         private void btnAddStudent_Click(object sender, RoutedEventArgs e)
@@ -92,22 +68,50 @@ namespace WpfApp2
             Admin createStudent = new Admin();
 
             
+            SQL = $@"
+                INSERT INTO users (
+                    student_id, 
+                    first_name, 
+                    last_name, 
+                    username, 
+                    password, 
+                    date_of_birth, 
+                    email, 
+                    phone_number, 
+                    address, 
+                    course_program, 
+                    year_level, 
+                    enrollment_status, 
+                    blood_type, 
+                    role, 
+                    emergency_contact_name,
+                    emergency_contact_phone,
+                    known_allergies,
+                    medical_conditions
+                ) VALUES (
+                    '{txtStudentID.Text}', 
+                    '{txtFirstName.Text}', 
+                    '{txtLastName.Text}', 
+                    '{txtUsername.Text}', 
+                    '{txtPassword.Text}', 
+                    '{dpDatePicker.SelectedDate:yyyy-MM-dd}', 
+                    '{txtEmailAddress.Text}', 
+                    '{txtPhoneNumber.Text}', 
+                    '{txtAddress.Text}', 
+                    '{cboCourse.SelectedValue}', 
+                    '{cboYearLevel.SelectedValue}', 
+                    '{cboEnrolledStatus.SelectedValue}', 
+                    '{cboBloodType.Text}', 
+                    '{cmbRole.Text}',
+                    '{txtECN1.Text}',
+                    '{txtECP.Text}',
+                    '{txtKnownAllergies.Text}',
+                    '{txtMedicalConditions.Text}'
 
-            createStudent.AddStudent(
-                txtStudentID.Text,
-                txtFirstName.Text,
-                txtLastName.Text,
-                txtUsername.Text,
-                txtPassword.Text,
-                dpDatePicker.SelectedDate,
-                txtEmailAddress.Text,
-                txtPhoneNumber.Text,
-                txtAddress.Text,
-                cboCourse.Text,
-                cboYearLevel.Text,
-                cboEnrolledStatus.Text,
-                cboBloodType.Text
-            );
+                )";
+            admin.sqlManager(SQL);
+            MessageBox.Show("New Student added successfully!");
+
 
             student.displayUsers("SELECT * FROM users WHERE role = 'Student'");
             SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
@@ -119,7 +123,6 @@ namespace WpfApp2
 
         private void txtUsername_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //hjgjhgjhgjhgjhg
 
         }
 
@@ -168,6 +171,35 @@ namespace WpfApp2
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void LoadComboBoxes()
+        {
+            DataTable dtCourse = admin.displayRecords("SELECT * FROM course_programs");
+            foreach (DataRow row in dtCourse.Rows)
+            {
+                cboCourse.Items.Add(row["course_name"].ToString());
+            }
+
+            DataTable dtYear = admin.displayRecords("SELECT * FROM year_levels");
+            foreach (DataRow row in dtYear.Rows)
+            {
+                cboYearLevel.Items.Add(row["level_name"].ToString());
+            }
+
+            DataTable dtStatus = admin.displayRecords("SELECT * FROM enrollment_statuses");
+            foreach (DataRow row in dtStatus.Rows)
+            {
+                cboEnrolledStatus.Items.Add(row["status_name"].ToString());
+            }
+
+            DataTable dt_blood = admin.displayRecords("SELECT * FROM blood_types");
+            foreach (DataRow row in dt_blood.Rows)
+            {
+                cboBloodType.Items.Add(row["blood_type"].ToString());
+            }
+
+            cmbRole.Items.Add("Admin");
+            cmbRole.Items.Add("Student");
         }
     }
 }

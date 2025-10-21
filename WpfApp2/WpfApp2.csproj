@@ -34,6 +34,7 @@
     <None Remove="icon lock.jpg" />
     <None Remove="iconcaustiosn.jpg" />
     <None Remove="lock icon.jpg" />
+    <None Remove="Logo-Final_noname_1 %281%29.png" />
     <None Remove="Logo-Final_noname_1.png" />
     <None Remove="logo.png" />
     <None Remove="mcm logo.png" />
@@ -123,6 +124,8 @@
     <None Remove="Screenshot 2025-10-21 205844.png" />
     <None Remove="Screenshot 2025-10-21 210426.png" />
     <None Remove="Screenshot 2025-10-21 213052.png" />
+    <None Remove="Screenshot 2025-10-22 030154.png" />
+    <None Remove="Screenshot 2025-10-22 030236.png" />
     <None Remove="Screenshot_20230225_074826.png" />
     <None Remove="Screenshot_2025-10-21_000656-removebg-preview.png" />
     <None Remove="sdasd.jpg" />
@@ -172,6 +175,7 @@
     <Resource Include="icon lock.jpg" />
     <Resource Include="iconcaustiosn.jpg" />
     <Resource Include="lock icon.jpg" />
+    <Resource Include="Logo-Final_noname_1 (1).png" />
     <Resource Include="Logo-Final_noname_1.png" />
     <Resource Include="logo.png" />
     <Resource Include="mcm logo.png" />
@@ -261,6 +265,8 @@
     <Resource Include="Screenshot 2025-10-21 205844.png" />
     <Resource Include="Screenshot 2025-10-21 210426.png" />
     <Resource Include="Screenshot 2025-10-21 213052.png" />
+    <Resource Include="Screenshot 2025-10-22 030154.png" />
+    <Resource Include="Screenshot 2025-10-22 030236.png" />
     <Resource Include="Screenshot_20230225_074826.png" />
     <Resource Include="Screenshot_2025-10-21_000656-removebg-preview.png" />
     <Resource Include="sdasd.jpg" />

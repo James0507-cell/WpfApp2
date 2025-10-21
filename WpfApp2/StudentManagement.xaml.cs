@@ -77,8 +77,8 @@ namespace WpfApp2
                     CornerRadius = new CornerRadius(8),
                     Margin = new Thickness(10, 6, 10, 6),
                     Padding = new Thickness(15),
-                    Width = 590,
-                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Width = double.NaN,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
                    
                 };
 

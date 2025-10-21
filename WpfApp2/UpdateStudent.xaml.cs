@@ -32,34 +32,7 @@ namespace WpfApp2
             InitializeComponent();
         }
         
-        private void btnAddStudent_Click(object sender, RoutedEventArgs e)
-        {
-            SQL = $@"
-                UPDATE users SET 
-                student_id = '{txtConfirmStudentID.Text}', 
-                first_name = '{txtFirstName.Text}', 
-                last_name = '{txtLastName.Text}', 
-                username = '{txtUsername.Text}', 
-                password = '{txtPassword.Text}', 
-                date_of_birth = '{dpDatePicker.SelectedDate:yyyy-MM-dd}', 
-                email = '{txtEmailAddress.Text}', 
-                phone_number = '{txtPhoneNumber.Text}', 
-                address = '{txtAddress.Text}', 
-                course_program = '{cboCourse.SelectedValue}', 
-                year_level = '{cboYearLevel.SelectedValue}', 
-                enrollment_status = '{cboEnrolledStatus.SelectedValue}', 
-                blood_type = '{cboBloodType.Text}', 
-                role = '{cmbRole.Text}'
-                WHERE user_id = {userId}";
-
-            admin.sqlManager(SQL);
-            MessageBox.Show("Student information updated successfully!");
-
-            SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                     $"VALUES ({id}, '{adminUsername}', 'Update Student Info', 'Update Student {txtConfirmStudentID.Text}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-            admin.sqlManager(SQL);
-
-        }
+        
         private void LoadStudentInfo()
         {
             SQL = $"SELECT * FROM users WHERE username = '{username}'";
@@ -82,6 +55,12 @@ namespace WpfApp2
             txtEmailAddress.Text = row["email"].ToString();
             txtPhoneNumber.Text = row["phone_number"].ToString();
             txtAddress.Text = row["address"].ToString();
+            txtECN1.Text = row["emergency_contact_name"].ToString();
+            txtECP.Text = row["emergency_contact_phone"].ToString();
+            txtKnownAllergies.Text = row["known_allergies"].ToString();
+            txtMedicalConditions.Text = row["medical_conditions"].ToString();
+
+
 
             if (DateTime.TryParse(row["date_of_birth"].ToString(), out DateTime dob))
             {
@@ -161,6 +140,74 @@ namespace WpfApp2
             SQL = $"select user_id from users where username = '{username}'";
             DataTable dt = admin.displayRecords(SQL);
             id = int.Parse(dt.Rows[0][0].ToString());
+        }
+        private void txtFirstName_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void cboYearLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void BackButton2_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyTabAddStudent.SelectedIndex > 0) MyTabAddStudent.SelectedIndex--;
+
+        }
+
+        private void NextButton3_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyTabAddStudent.SelectedIndex < 2) MyTabAddStudent.SelectedIndex++;
+
+        }
+        private void BackButton3_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyTabAddStudent.SelectedIndex > 0) MyTabAddStudent.SelectedIndex--;
+        }
+
+        private void NextButton1_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyTabAddStudent.SelectedIndex < 2) MyTabAddStudent.SelectedIndex++;
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnUpdateStudent_Click(object sender, RoutedEventArgs e)
+        {
+            SQL = $@"
+                UPDATE users SET 
+                student_id = '{txtConfirmStudentID.Text}', 
+                first_name = '{txtFirstName.Text}', 
+                last_name = '{txtLastName.Text}', 
+                username = '{txtUsername.Text}', 
+                password = '{txtPassword.Text}', 
+                date_of_birth = '{dpDatePicker.SelectedDate:yyyy-MM-dd}', 
+                email = '{txtEmailAddress.Text}', 
+                phone_number = '{txtPhoneNumber.Text}', 
+                address = '{txtAddress.Text}', 
+                course_program = '{cboCourse.SelectedValue}', 
+                year_level = '{cboYearLevel.SelectedValue}', 
+                enrollment_status = '{cboEnrolledStatus.SelectedValue}', 
+                blood_type = '{cboBloodType.Text}', 
+                role = '{cmbRole.Text}',
+                emergency_contact_name = '{txtECN1.Text}',
+                emergency_contact_phone = '{txtECP.Text}',
+                known_allergies = '{txtKnownAllergies.Text}',
+                medical_conditions = '{txtMedicalConditions.Text}'
+                WHERE user_id = {userId}";
+
+            admin.sqlManager(SQL);
+            MessageBox.Show("Student information updated successfully!");
+
+            SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                     $"VALUES ({id}, '{adminUsername}', 'Update Student Info', 'Update Student {txtConfirmStudentID.Text}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+            admin.sqlManager(SQL);
         }
     }
 }
