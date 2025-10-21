@@ -5,556 +5,538 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="AddNewStudent" Height="500" Width="436" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1">
-    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="15,15,15,15" Background="White">
+        Title="AddNewStudent" Height="689" Width="771" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1" WindowStyle="None">
+    <Window.Resources>
+
+
+        <Style x:Key="AppointmentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="Foreground" Value="#1C3E61"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,15"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E6E6E6"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#D0D0D0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SelectedAppointmentButtonStyle" TargetType="Button" BasedOn="{StaticResource AppointmentButtonStyle}">
+            <Setter Property="Background" Value="#E53935"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E53935"/>
+        </Style>
+
+        <Style x:Key="BookedAppointmentStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F0F0F0"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,15"/>
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="5">
+
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                <ContentPresenter/>
+
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="10"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="TextBoxBorder"
+                    CornerRadius="2"
+                    BorderBrush="#FFCCCCCC"
+                    BorderThickness="1"
+                    Background="White">
+
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                  Margin="0"  
+                                  VerticalScrollBarVisibility="Hidden"
+                                  HorizontalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="White"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#FFAAAAAA"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#FF6699FF"/>
+                    <Setter Property="BorderThickness" Value="1.5"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.6"/>
+                    <Setter Property="Background" Value="#FFF5F5F5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Padding" Value="15,5"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border x:Name="TabBorder"
+            Background="#F0F0F0"
+            BorderBrush="Transparent"
+            BorderThickness="1"
+            CornerRadius="15">
+                            <ContentPresenter x:Name="ContentSite"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          ContentSource="Header"
+                          Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Selected tab -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="MidnightBlue"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="MidnightBlue"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+
+                            <!-- Hover on inactive -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#FFEEEEEE"/>
+                            </Trigger>
+
+                            <!-- Hover on active tab -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="TabBorder" Property="Background" Value="#191970"/>
+                            </MultiTrigger>
+
+                            <!-- Inactive tab -->
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#FFCBCBCB"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="15,15,15,15" Background="#FFF9F9F9">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="49*"/>
+                <RowDefinition Height="71*"/>
+                <RowDefinition Height="616*"/>
             </Grid.RowDefinitions>
-            <Label Content="Add New Student" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14"/>
             <Grid Grid.Row="1">
-                <Border BorderBrush="Black" BorderThickness="1" Margin="26,0,29,382" CornerRadius="15,15,15,15"/>
-                <TabControl Margin="26,10,23,10" BorderBrush="{x:Null}">
-                    <TabItem Header="Personal" Margin="9,-9,-50,7" BorderBrush="{x:Null}" Background="{x:Null}">
-                        <Grid Margin="0,10,0,0">
-                            <Label Content="First Name *" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
-                            <Label Content="Last Name *" HorizontalAlignment="Left" Margin="200,10,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
-                            <TextBox HorizontalAlignment="Left" Margin="10,37,0,0" 
-         TextWrapping="Wrap" Text="TextBox" 
-         VerticalAlignment="Top" Width="165" Height="23">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="TextBox">
-                                        <Border CornerRadius="5" 
-                    BorderBrush="Gray" 
-                    BorderThickness="1" 
-                    Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Margin="10,37,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="165" Height="23">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <TextBox x:Name="txtLastName" HorizontalAlignment="Left" Margin="200,36,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="164" Height="22">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <Label Content="Student ID *" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
-                            <Label Content="Date of Birth *" Margin="190,237,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtStudentID" HorizontalAlignment="Left" Margin="10,87,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="165" Height="23" TextChanged="txtStudentID_TextChanged">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <Label Margin="10,160,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
-                            <Label Content="Email Address *" Margin="10,177,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
-                            <Label Content="Phone Number *" Margin="200,177,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtEmailAddress" HorizontalAlignment="Left" Margin="10,203,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="165" Height="23" TextChanged="txtEmailAddress_TextChanged">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <TextBox x:Name="txtPhoneNumber" HorizontalAlignment="Left" Margin="200,203,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="164" Height="23">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <Label Content="Address *" Margin="10,237,0,0" Width="101" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Margin="10,263,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="165" Height="79">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <DatePicker x:Name="dpDatePicker" HorizontalAlignment="Left" Margin="190,263,0,0" VerticalAlignment="Top" Width="164" Height="79"/>
-                            <Label Content="Password *" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
-                            <Label Content="Role *" HorizontalAlignment="Left" Margin="200,118,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="10,144,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="165" Height="23" TextChanged="txtStudentID_TextChanged">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <ComboBox x:Name="cmbRole" HorizontalAlignment="Left"
-                                Margin="199,145,0,0"
-                                VerticalAlignment="Top"
-                                Width="165" Height="22">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ComboBox}">
-                                                    <Grid>
-                                                        <ToggleButton x:Name="ToggleButton"
-                                                            Grid.Column="2"
-                                                            Focusable="false"
-                                                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                            ClickMode="Press"
-                                                            Background="Transparent">
-                                                            <ToggleButton.Template>
-                                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                                    <Border x:Name="Border"
-                                                                        Background="White"
-                                                                        BorderBrush="Gray"
-                                                                        BorderThickness="1"
-                                                                        CornerRadius="5">
-                                                                        <Grid>
-                                                                            <ContentPresenter />
-                                                                            <Path x:Name="Arrow"
-                                                                                HorizontalAlignment="Right"
-                                                                                Margin="0,0,6,0"
-                                                                                VerticalAlignment="Center"
-                                                                                Data="M 0 0 L 4 4 L 8 0 Z"
-                                                                                Fill="Black"/>
-                                                                        </Grid>
+                <TabControl x:Name="MyTabAddStudent" Margin="53,10,34,10" BorderBrush="{x:Null}" Background="{x:Null}">
+
+
+                    <TabItem Header="Personal" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="152,0,-152,0">
+                        <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid x:Name="PersonalFormGrid" Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0" Grid.Column="0" Content="First Name *" Margin="0,5,5,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtFirstName" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" TextChanged="txtFirstName_TextChanged_1" VerticalContentAlignment="Center"/>
+
+                                    <Label Grid.Row="0" Grid.Column="1" Content="Last Name *" Margin="5,5,0,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtLastName" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5"/>
+
+                                    <Label Grid.Row="2" Grid.Column="0" Content="Student ID *" Margin="0,5,5,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtStudentID" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" TextChanged="txtStudentID_TextChanged"/>
+
+                                    <Label Grid.Row="2" Grid.Column="1" Content="Username *" Margin="5,5,0,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtUsername" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5" TextChanged="txtUsername_TextChanged"/>
+
+                                    <Label Grid.Row="4" Grid.Column="0" Content="Password *" Margin="0,5,5,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtPassword" Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" TextChanged="txtStudentID_TextChanged"/>
+
+                                    <Label Grid.Row="4" Grid.Column="1" Content="Role *" Margin="5,5,0,0" Foreground="#FF666666"/>
+                                    <ComboBox x:Name="cmbRole" Grid.Row="5" Grid.Column="1" Height="23" Margin="5,0,0,5" BorderBrush="#FFABADB3">
+                                        <ComboBox.Style>
+                                            <Style TargetType="{x:Type ComboBox}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                            <Grid>
+                                                                <ToggleButton x:Name="ToggleButton" Grid.Column="2" Focusable="false" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ClickMode="Press" Background="Transparent">
+                                                                    <ToggleButton.Template>
+                                                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                                            <Border x:Name="Border" Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                                <Grid>
+                                                                                    <ContentPresenter />
+                                                                                    <Path x:Name="Arrow" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z" Fill="Black"/>
+                                                                                </Grid>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </ToggleButton.Template>
+                                                                </ToggleButton>
+                                                                <ContentPresenter Margin="6,2,25,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{TemplateBinding SelectionBoxItem}"/>
+                                                                <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False">
+                                                                    <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                        <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                                                            <ItemsPresenter/>
+                                                                        </ScrollViewer>
                                                                     </Border>
-                                                                </ControlTemplate>
-                                                            </ToggleButton.Template>
-                                                        </ToggleButton>
-                                                        <ContentPresenter Margin="6,2,25,2"
-                                                            VerticalAlignment="Center"
-                                                            HorizontalAlignment="Left"
-                                                            Content="{TemplateBinding SelectionBoxItem}"/>
-                                                        <Popup x:Name="Popup"
-                                                            Placement="Bottom"
-                                                            IsOpen="{TemplateBinding IsDropDownOpen}"
-                                                            AllowsTransparency="True"
-                                                            Focusable="False">
-                                                            <Border Background="White"
-                                                                BorderBrush="Gray"
-                                                                BorderThickness="1"
-                                                                CornerRadius="5">
-                                                                <ScrollViewer Margin="4,6,4,6"
-                                                                    SnapsToDevicePixels="True">
-                                                                    <ItemsPresenter/>
-                                                                </ScrollViewer>
-                                                            </Border>
-                                                        </Popup>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.Style>
-                            </ComboBox>
-                            <Label Content="Username *" HorizontalAlignment="Left" Margin="200,65,0,0" VerticalAlignment="Top" Width="101" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Margin="199,88,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="164" Height="22" TextChanged="txtUsername_TextChanged">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                        </Grid>
+                                                                </Popup>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ComboBox.Style>
+                                    </ComboBox>
+
+                                    <Label Grid.Row="6" Grid.Column="0" Content="Email Address *" Margin="0,5,5,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtEmailAddress" Grid.Row="7" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" TextChanged="txtEmailAddress_TextChanged"/>
+
+                                    <Label Grid.Row="6" Grid.Column="1" Content="Phone Number *" Margin="5,5,0,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtPhoneNumber" Grid.Row="7" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5"/>
+
+                                    <Label Grid.Row="8" Grid.Column="0" Content="Address *" Margin="0,5,5,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtAddress" Grid.Row="9" Grid.Column="0" TextWrapping="Wrap" Margin="0,0,5,0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="49"/>
+
+                                    <Label Grid.Row="8" Grid.Column="1" Content="Date of Birth *" Margin="5,5,0,0" Foreground="#FF666666"/>
+                                    <DatePicker x:Name="dpDatePicker" Grid.Row="9" Grid.Column="1" VerticalAlignment="Top" Height="23" Margin="5,0,0,5" Background="{x:Null}">
+                                        <DatePicker.BorderBrush>
+                                            <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                                                <GradientStop Color="#FFA3AEB9"/>
+                                                <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                                                <GradientStop Color="#FF718597" Offset="0.375"/>
+                                                <GradientStop Color="#FFABADB3" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </DatePicker.BorderBrush>
+                                    </DatePicker>
+                                </Grid>
+
+                                <Grid Grid.Row="1" Margin="0,20,0,0">
+                                    <Button x:Name="NextButton1" Content="Next →"
+                        Style="{StaticResource SelectedAppointmentButtonStyle}"
+                        Width="150" Height="40"
+                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Click="NextButton1_Click"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </TabItem>
-                    <TabItem Header="Academic" Margin="95,0,-95,7" BorderBrush="{x:Null}" Background="{x:Null}" Height="22" VerticalAlignment="Bottom">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="22*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="Course/Program *" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
-                            <Label Content="Year Level" HorizontalAlignment="Left" Margin="190,26,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
-                            <Label Content="Enrollment Status" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
-                            <ComboBox x:Name="cboCourse" HorizontalAlignment="Left"
-                                Margin="10,57,0,0"
-                                VerticalAlignment="Top"
-                                Width="165" Height="22">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ComboBox}">
-                                                    <Grid>
-                                                        <ToggleButton x:Name="ToggleButton"
-                                                            Grid.Column="2"
-                                                            Focusable="false"
-                                                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                            ClickMode="Press"
-                                                            Background="Transparent">
-                                                            <ToggleButton.Template>
-                                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                                    <Border x:Name="Border"
-                                                                        Background="White"
-                                                                        BorderBrush="Gray"
-                                                                        BorderThickness="1"
-                                                                        CornerRadius="5">
-                                                                        <Grid>
-                                                                            <ContentPresenter />
-                                                                            <Path x:Name="Arrow"
-                                                                                HorizontalAlignment="Right"
-                                                                                Margin="0,0,6,0"
-                                                                                VerticalAlignment="Center"
-                                                                                Data="M 0 0 L 4 4 L 8 0 Z"
-                                                                                Fill="Black"/>
-                                                                        </Grid>
+                    <TabItem Header="Academic" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="157,-1,-157,1">
+                        <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid x:Name="AcademicFormGrid" Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0" Grid.Column="0" Content="Course/Program *" Margin="0,5,5,0" VerticalAlignment="Top" Foreground="#FF666666"/>
+                                    <ComboBox x:Name="cboCourse" Grid.Row="1" Grid.Column="0" Margin="0,0,5,5" Height="22" VerticalAlignment="Top">
+                                        <ComboBox.Style>
+                                            <Style TargetType="{x:Type ComboBox}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                            <Grid>
+                                                                <ToggleButton x:Name="ToggleButton" Grid.Column="2" Focusable="false" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ClickMode="Press" Background="Transparent">
+                                                                    <ToggleButton.Template>
+                                                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                                            <Border x:Name="Border" Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                                <Grid>
+                                                                                    <ContentPresenter />
+                                                                                    <Path x:Name="Arrow" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z" Fill="Black"/>
+                                                                                </Grid>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </ToggleButton.Template>
+                                                                </ToggleButton>
+                                                                <ContentPresenter Margin="6,2,25,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{TemplateBinding SelectionBoxItem}"/>
+                                                                <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False">
+                                                                    <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                        <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                                                            <ItemsPresenter/>
+                                                                        </ScrollViewer>
                                                                     </Border>
-                                                                </ControlTemplate>
-                                                            </ToggleButton.Template>
-                                                        </ToggleButton>
-                                                        <ContentPresenter Margin="6,2,25,2"
-                                                            VerticalAlignment="Center"
-                                                            HorizontalAlignment="Left"
-                                                            Content="{TemplateBinding SelectionBoxItem}"/>
-                                                        <Popup x:Name="Popup"
-                                                            Placement="Bottom"
-                                                            IsOpen="{TemplateBinding IsDropDownOpen}"
-                                                            AllowsTransparency="True"
-                                                            Focusable="False">
-                                                            <Border Background="White"
-                                                                BorderBrush="Gray"
-                                                                BorderThickness="1"
-                                                                CornerRadius="5">
-                                                                <ScrollViewer Margin="4,6,4,6"
-                                                                    SnapsToDevicePixels="True">
-                                                                    <ItemsPresenter/>
-                                                                </ScrollViewer>
-                                                            </Border>
-                                                        </Popup>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.Style>
-                            </ComboBox>
-                            <ComboBox x:Name="cboYearLevel" HorizontalAlignment="Left"
-                                Margin="190,57,0,0"
-                                VerticalAlignment="Top"
-                                Width="165" Height="22">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ComboBox}">
-                                                    <Grid>
-                                                        <ToggleButton x:Name="ToggleButton"
-                                                            Grid.Column="2"
-                                                            Focusable="false"
-                                                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                            ClickMode="Press"
-                                                            Background="Transparent">
-                                                            <ToggleButton.Template>
-                                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                                    <Border x:Name="Border"
-                                                                        Background="White"
-                                                                        BorderBrush="Gray"
-                                                                        BorderThickness="1"
-                                                                        CornerRadius="5">
-                                                                        <Grid>
-                                                                            <ContentPresenter />
-                                                                            <Path x:Name="Arrow"
-                                                                                HorizontalAlignment="Right"
-                                                                                Margin="0,0,6,0"
-                                                                                VerticalAlignment="Center"
-                                                                                Data="M 0 0 L 4 4 L 8 0 Z"
-                                                                                Fill="Black"/>
-                                                                        </Grid>
+                                                                </Popup>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ComboBox.Style>
+                                    </ComboBox>
+
+                                    <Label Grid.Row="0" Grid.Column="1" Content="Year Level" Margin="5,5,0,0" VerticalAlignment="Top" Foreground="#FF666666"/>
+                                    <ComboBox x:Name="cboYearLevel" Grid.Row="1" Grid.Column="1" Margin="5,0,0,5" Height="22" VerticalAlignment="Top" SelectionChanged="cboYearLevel_SelectionChanged">
+                                        <ComboBox.Style>
+                                            <Style TargetType="{x:Type ComboBox}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                            <Grid>
+                                                                <ToggleButton x:Name="ToggleButton" Grid.Column="2" Focusable="false" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ClickMode="Press" Background="Transparent">
+                                                                    <ToggleButton.Template>
+                                                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                                            <Border x:Name="Border" Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                                <Grid>
+                                                                                    <ContentPresenter />
+                                                                                    <Path x:Name="Arrow" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z" Fill="Black"/>
+                                                                                </Grid>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </ToggleButton.Template>
+                                                                </ToggleButton>
+                                                                <ContentPresenter Margin="6,2,25,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{TemplateBinding SelectionBoxItem}"/>
+                                                                <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False">
+                                                                    <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                        <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                                                            <ItemsPresenter/>
+                                                                        </ScrollViewer>
                                                                     </Border>
-                                                                </ControlTemplate>
-                                                            </ToggleButton.Template>
-                                                        </ToggleButton>
-                                                        <ContentPresenter Margin="6,2,25,2"
-                                                            VerticalAlignment="Center"
-                                                            HorizontalAlignment="Left"
-                                                            Content="{TemplateBinding SelectionBoxItem}"/>
-                                                        <Popup x:Name="Popup"
-                                                            Placement="Bottom"
-                                                            IsOpen="{TemplateBinding IsDropDownOpen}"
-                                                            AllowsTransparency="True"
-                                                            Focusable="False">
-                                                            <Border Background="White"
-                                                                BorderBrush="Gray"
-                                                                BorderThickness="1"
-                                                                CornerRadius="5">
-                                                                <ScrollViewer Margin="4,6,4,6"
-                                                                    SnapsToDevicePixels="True">
-                                                                    <ItemsPresenter/>
-                                                                </ScrollViewer>
-                                                            </Border>
-                                                        </Popup>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.Style>
-                            </ComboBox>
-                            <ComboBox x:Name="cboEnrolledStatus" HorizontalAlignment="Left"
-                                Margin="10,128,0,0"
-                                VerticalAlignment="Top"
-                                Width="165" Height="22">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ComboBox}">
-                                                    <Grid>
-                                                        <ToggleButton x:Name="ToggleButton"
-                                                            Grid.Column="2"
-                                                            Focusable="false"
-                                                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                            ClickMode="Press"
-                                                            Background="Transparent">
-                                                            <ToggleButton.Template>
-                                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                                    <Border x:Name="Border"
-                                                                        Background="White"
-                                                                        BorderBrush="Gray"
-                                                                        BorderThickness="1"
-                                                                        CornerRadius="5">
-                                                                        <Grid>
-                                                                            <ContentPresenter />
-                                                                            <Path x:Name="Arrow"
-                                                                                HorizontalAlignment="Right"
-                                                                                Margin="0,0,6,0"
-                                                                                VerticalAlignment="Center"
-                                                                                Data="M 0 0 L 4 4 L 8 0 Z"
-                                                                                Fill="Black"/>
-                                                                        </Grid>
+                                                                </Popup>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ComboBox.Style>
+                                    </ComboBox>
+
+                                    <Label Grid.Row="2" Grid.Column="0" Content="Enrollment Status" Margin="0,5,5,0" VerticalAlignment="Top" Foreground="#FF666666"/>
+                                    <ComboBox x:Name="cboEnrolledStatus" Grid.Row="3" Grid.Column="0" Margin="0,0,5,5" Height="22" VerticalAlignment="Top">
+                                        <ComboBox.Style>
+                                            <Style TargetType="{x:Type ComboBox}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                            <Grid>
+                                                                <ToggleButton x:Name="ToggleButton" Grid.Column="2" Focusable="false" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ClickMode="Press" Background="Transparent">
+                                                                    <ToggleButton.Template>
+                                                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                                            <Border x:Name="Border" Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                                <Grid>
+                                                                                    <ContentPresenter />
+                                                                                    <Path x:Name="Arrow" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z" Fill="Black"/>
+                                                                                </Grid>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </ToggleButton.Template>
+                                                                </ToggleButton>
+                                                                <ContentPresenter Margin="6,2,25,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{TemplateBinding SelectionBoxItem}"/>
+                                                                <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False">
+                                                                    <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                        <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                                                            <ItemsPresenter/>
+                                                                        </ScrollViewer>
                                                                     </Border>
-                                                                </ControlTemplate>
-                                                            </ToggleButton.Template>
-                                                        </ToggleButton>
-                                                        <ContentPresenter Margin="6,2,25,2"
-                                                            VerticalAlignment="Center"
-                                                            HorizontalAlignment="Left"
-                                                            Content="{TemplateBinding SelectionBoxItem}"/>
-                                                        <Popup x:Name="Popup"
-                                                            Placement="Bottom"
-                                                            IsOpen="{TemplateBinding IsDropDownOpen}"
-                                                            AllowsTransparency="True"
-                                                            Focusable="False">
-                                                            <Border Background="White"
-                                                                BorderBrush="Gray"
-                                                                BorderThickness="1"
-                                                                CornerRadius="5">
-                                                                <ScrollViewer Margin="4,6,4,6"
-                                                                    SnapsToDevicePixels="True">
-                                                                    <ItemsPresenter/>
-                                                                </ScrollViewer>
-                                                            </Border>
-                                                        </Popup>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.Style>
-                            </ComboBox>
-                        </Grid>
+                                                                </Popup>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ComboBox.Style>
+                                    </ComboBox>
+                                </Grid>
+
+                                <Grid Grid.Row="1" Margin="0,20,0,0">
+                                    <Button Content="← Back"
+                        Style="{StaticResource AppointmentButtonStyle}"
+                        Width="150" Height="40"
+                        HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Click="BackButton2_Click"/>
+                                    <Button x:Name="NextButton3" Content="Next →"
+                        Style="{StaticResource SelectedAppointmentButtonStyle}"
+                        Width="150" Height="40"
+                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Click="NextButton3_Click"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </TabItem>
-                    <TabItem x:Name="tabItem" Header="Medical" Margin="133,-8,-133,7" BorderBrush="{x:Null}" Width="94.9733333333333" Background="{x:Null}">
-                        <Grid Margin="0,0,-3,0" Height="385">
-                            <Label Content="Emergency Contact Name *" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtECN1" HorizontalAlignment="Left" Margin="10,51,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="165" Height="23">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <Label Content="Emergency Contact Phone *" HorizontalAlignment="Left" Margin="191,25,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtECP" HorizontalAlignment="Left" Margin="191,51,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="165" Height="23">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <Label Content="Blood type *" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
-                            <ComboBox x:Name="cboBloodType" HorizontalAlignment="Left"
-                                Margin="10,112,0,0"
-                                VerticalAlignment="Top"
-                                Width="165" Height="22">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ComboBox}">
-                                                    <Grid>
-                                                        <ToggleButton x:Name="ToggleButton"
-                                                            Grid.Column="2"
-                                                            Focusable="false"
-                                                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                            ClickMode="Press"
-                                                            Background="Transparent">
-                                                            <ToggleButton.Template>
-                                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                                    <Border x:Name="Border"
-                                                                        Background="White"
-                                                                        BorderBrush="Gray"
-                                                                        BorderThickness="1"
-                                                                        CornerRadius="5">
-                                                                        <Grid>
-                                                                            <ContentPresenter />
-                                                                            <Path x:Name="Arrow"
-                                                                                HorizontalAlignment="Right"
-                                                                                Margin="0,0,6,0"
-                                                                                VerticalAlignment="Center"
-                                                                                Data="M 0 0 L 4 4 L 8 0 Z"
-                                                                                Fill="Black"/>
-                                                                        </Grid>
+                    <TabItem x:Name="tabItem" Header="Medical" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="162,0,-162,0">
+                        <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid x:Name="MedicalFormGrid" Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" MinWidth="150"/>
+                                        <ColumnDefinition Width="*" MinWidth="150"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0" Grid.Column="0" Content="Emergency Contact Name *" Margin="0,5,5,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtECN1" Grid.Row="1" Grid.Column="0" Margin="0,0,5,5" TextWrapping="Wrap" Height="23"/>
+
+                                    <Label Grid.Row="0" Grid.Column="1" Content="Emergency Contact Phone *" Margin="5,5,0,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtECP" Grid.Row="1" Grid.Column="1" Margin="5,0,0,5" TextWrapping="Wrap" Height="23"/>
+
+                                    <Label Grid.Row="2" Grid.Column="0" Content="Blood type *" Margin="0,5,5,0" Foreground="#FF666666"/>
+                                    <ComboBox x:Name="cboBloodType" Grid.Row="3" Grid.Column="0" Margin="0,0,5,5" Height="22">
+                                        <ComboBox.Style>
+                                            <Style TargetType="{x:Type ComboBox}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                            <Grid>
+                                                                <ToggleButton x:Name="ToggleButton" Grid.Column="2" Focusable="false" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ClickMode="Press" Background="Transparent">
+                                                                    <ToggleButton.Template>
+                                                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                                            <Border x:Name="Border" Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                                <Grid>
+                                                                                    <ContentPresenter />
+                                                                                    <Path x:Name="Arrow" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z" Fill="Black"/>
+                                                                                </Grid>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </ToggleButton.Template>
+                                                                </ToggleButton>
+                                                                <ContentPresenter Margin="6,2,25,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{TemplateBinding SelectionBoxItem}"/>
+                                                                <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False">
+                                                                    <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                                                        <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                                                            <ItemsPresenter/>
+                                                                        </ScrollViewer>
                                                                     </Border>
-                                                                </ControlTemplate>
-                                                            </ToggleButton.Template>
-                                                        </ToggleButton>
-                                                        <ContentPresenter Margin="6,2,25,2"
-                                                            VerticalAlignment="Center"
-                                                            HorizontalAlignment="Left"
-                                                            Content="{TemplateBinding SelectionBoxItem}"/>
-                                                        <Popup x:Name="Popup"
-                                                            Placement="Bottom"
-                                                            IsOpen="{TemplateBinding IsDropDownOpen}"
-                                                            AllowsTransparency="True"
-                                                            Focusable="False">
-                                                            <Border Background="White"
-                                                                BorderBrush="Gray"
-                                                                BorderThickness="1"
-                                                                CornerRadius="5">
-                                                                <ScrollViewer Margin="4,6,4,6"
-                                                                    SnapsToDevicePixels="True">
-                                                                    <ItemsPresenter/>
-                                                                </ScrollViewer>
-                                                            </Border>
-                                                        </Popup>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.Style>
-                            </ComboBox>
-                            <Label Content="Known Allergies *" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtKnownAllergies" HorizontalAlignment="Left" Margin="10,174,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="351" Height="49">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <Label Content="Medical Conditions *" HorizontalAlignment="Left" Margin="10,234,0,0" VerticalAlignment="Top" Foreground="#FF00104D"/>
-                            <TextBox x:Name="txtMedicalConditions" HorizontalAlignment="Left" Margin="10,260,0,0" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Top" Width="351" Height="49">
-                                <TextBox.Template>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border CornerRadius="5" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            Background="White">
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
-                            <Button x:Name="btnCancel" Content="" HorizontalAlignment="Left" Margin="214,329,0,0" VerticalAlignment="Top" Height="31" Width="70" BorderBrush="{x:Null}" Click="btnCancel_Click">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="/cancel.jpg"/>
-                                </Button.Background>
-                            </Button>
-                            <Button x:Name="btnAddStudent" Content="" HorizontalAlignment="Left" Margin="292,332,0,0" VerticalAlignment="Top" Height="24" Width="64" BorderBrush="{x:Null}" Click="btnAddStudent_Click">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="/add student.jpg"/>
-                                </Button.Background>
-                            </Button>
-                        </Grid>
+                                                                </Popup>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ComboBox.Style>
+                                    </ComboBox>
+
+                                    <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Known Allergies *" Margin="0,5,0,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtKnownAllergies" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,5" TextWrapping="Wrap" MinHeight="49" VerticalScrollBarVisibility="Auto"/>
+
+                                    <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="Medical Conditions *" Margin="0,5,0,0" Foreground="#FF666666"/>
+                                    <TextBox x:Name="txtMedicalConditions" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,5" TextWrapping="Wrap" MinHeight="49" VerticalScrollBarVisibility="Auto"/>
+
+                                </Grid>
+
+                                <Grid Grid.Row="1" Margin="0,20,0,0">
+                                    <Button Content="← Back"
+                        Style="{StaticResource AppointmentButtonStyle}"
+                        Width="150" Height="40"
+                        HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Click="BackButton3_Click"/>
+
+                                    <Button x:Name="btnAddStudent" Content="Add Student"
+                        Style="{StaticResource SelectedAppointmentButtonStyle}"
+                        Width="150" Height="40"
+                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Click="btnAddStudent_Click"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </TabItem>
                 </TabControl>
             </Grid>
+            <Border BorderBrush="#FFC2C2C2" BorderThickness="0,0,0,1">
+                <Grid>
+                    <Label Content="Add Student" HorizontalAlignment="Left" Margin="84,9,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="SemiBold"/>
+                    <Label Content="Use this form to add new student account" HorizontalAlignment="Left" Margin="84,38,0,0" VerticalAlignment="Top" Width="244" Foreground="#FF8A8A8A"/>
+                    <Button HorizontalAlignment="Left" Margin="19,20,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="37" Height="37" Click="Button_Click">
+                        <Image Height="33" Width="34" Source="/Screenshot 2025-10-15 174220.png"/>
+                    </Button>
+                </Grid>
+            </Border>
         </Grid>
     </Border>
 </Window>

@@ -79,14 +79,7 @@ namespace WpfApp2
                     Padding = new Thickness(15),
                     Width = 590,
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Effect = new DropShadowEffect
-                    {
-                        Color = Colors.Gray,
-                        Direction = 315,
-                        ShadowDepth = 2,
-                        BlurRadius = 5,
-                        Opacity = 0.3
-                    }
+                   
                 };
 
                 // 3. Main Grid Layout for the Card
@@ -298,6 +291,13 @@ namespace WpfApp2
             SQL = "SELECT * FROM users WHERE role = 'Student'";
             displayUsers(SQL);
             setId(Username);
+
+            DataTable dtYear = admin.displayRecords("SELECT * FROM year_levels");
+            foreach (DataRow row in dtYear.Rows)
+            {
+                cmbYear.Items.Add(row["level_name"].ToString());
+            }
+            cmbYear.Items.Insert(0, "All Year Levels");
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -333,6 +333,40 @@ namespace WpfApp2
             SQL = $"select user_id from users where username = '{username}'";
             DataTable dt = admin.displayRecords(SQL);
             id = int.Parse(dt.Rows[0][0].ToString());
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            if(txtSearch.Text == "Search student ID..." || string.IsNullOrWhiteSpace(txtSearch.Text))
+                return;
+            string SQL = "SELECT * FROM users WHERE student_id LIKE '%" + txtSearch.Text + "%'";
+            displayUsers(SQL);
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearch.Text == "Search student ID...")
+                txtSearch.Text = "";
+
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
+                txtSearch.Text = "Search student ID...";
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            String yearLevel = cmbYear.SelectedItem as String;
+            SQL = "SELECT * FROM users WHERE year_level LIKE '%" + yearLevel + "%'";
+            displayUsers(SQL);
+            if (yearLevel == "All Year Levels")
+            {
+                SQL = "SELECT * FROM users WHERE role = 'Student'";
+                displayUsers(SQL);
+            }
         }
     }
 }

@@ -178,7 +178,7 @@
                         <ImageBrush ImageSource="/Screenshot 2025-09-14 224107.png"/>
                     </TabItem.Background>
                     <Grid>
-                        <Border BorderBrush="#FFAFAFAF" BorderThickness="1" Margin="26,34,26,34" CornerRadius="10">
+                        <Border BorderBrush="#FFAFAFAF" BorderThickness="1" Margin="26,10,26,34" CornerRadius="10">
                             <Grid Margin="0,-1,0,-1">
                                 <Label Content="Select Preferred Date And Time" 
                        HorizontalAlignment="Left" Margin="64,7,0,0" VerticalAlignment="Top" 
@@ -430,7 +430,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Content section -->
-                        <Border Grid.Row="0" BorderBrush="#FFABABAB" BorderThickness="1" Margin="26,19,26,10" CornerRadius="15">
+                        <Border Grid.Row="0" BorderBrush="#FFABABAB" BorderThickness="1" Margin="26,10,26,10" CornerRadius="15">
                             <!-- Make content scrollable -->
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <StackPanel Margin="20">

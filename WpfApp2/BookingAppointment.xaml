@@ -268,7 +268,7 @@
                     <TabItem.Background>
                         <ImageBrush ImageSource="/Screenshot 2025-09-14 224135.png" Stretch="UniformToFill"/>
                     </TabItem.Background>
-                    <Grid Background="#FFF9F9F9" Height="503">
+                    <Grid Height="503">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>

@@ -127,5 +127,47 @@ namespace WpfApp2
         {
             this.Close();
         }
+
+        private void txtFirstName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void txtFirstName_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void cboYearLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void BackButton2_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyTabAddStudent.SelectedIndex > 0) MyTabAddStudent.SelectedIndex--;
+
+        }
+
+        private void NextButton3_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyTabAddStudent.SelectedIndex < 2) MyTabAddStudent.SelectedIndex++;
+
+        }
+        private void BackButton3_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyTabAddStudent.SelectedIndex > 0) MyTabAddStudent.SelectedIndex--;
+        }
+
+        private void NextButton1_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyTabAddStudent.SelectedIndex < 2) MyTabAddStudent.SelectedIndex++;
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
