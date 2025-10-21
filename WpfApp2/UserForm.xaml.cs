@@ -58,7 +58,7 @@ namespace WpfApp2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             getUserId(username);
-            SQL = $"SELECT * FROM appointments WHERE username = '{username}'";
+            SQL = $"SELECT * FROM appointments WHERE username = '{username}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()";
             displayAppointment(SQL);
             SQL = $"SELECT * FROM student_activity_log WHERE user_id = '{userId}' ORDER BY activity_date DESC LIMIT 5";
             displayActivities(SQL);
@@ -271,7 +271,7 @@ namespace WpfApp2
                     if (bmi < 18.5) 
                     {
                         pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3")); 
-                        lblBMIRange.Content = "Underweight range";
+                        lblBMIRange.Content = "Underweight";
                         brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3"));
                         brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E3F2FD"));
                     }
@@ -286,7 +286,7 @@ namespace WpfApp2
                     else if (bmi >= 25 && bmi < 29.9) 
                     {
                         pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9800")); 
-                        lblBMIRange.Content = "Overweight range";
+                        lblBMIRange.Content = "Overweight";
                         brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9800"));
                         brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF3E0"));
                     }
@@ -298,7 +298,7 @@ namespace WpfApp2
                         brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFEBEE"));
                     }
 
-                    lblBMIStatus.Content = $"BMI: {bmi:F1}";
+                    lblBMIStatus.Content = $"BMI: {bmi:F2}";
                 }
                 else
                 {
@@ -320,8 +320,9 @@ namespace WpfApp2
         {
             SQL = @"
                 SELECT 
-                    DATE_FORMAT(c.recorded_at, '%M') AS month_name,   -- Full month name (e.g., January)
-                    c.bmi
+                    DATE_FORMAT(c.recorded_at, '%M') AS month_name, 
+                    c.bmi,
+                    c.weight_kg
                 FROM checkups c
                 INNER JOIN (
                     SELECT 
@@ -338,7 +339,8 @@ namespace WpfApp2
                 AND c.recorded_at = latest.max_date
                 WHERE c.user_id = 8
                 ORDER BY latest.y, latest.m ASC;
-                ";
+            ";
+
 
             DataTable dt = userForm.displayRecords(SQL);
 
@@ -347,26 +349,27 @@ namespace WpfApp2
                 ProgressBar pb = null;
                 Label lblMonth = null;
                 Label lblBmi = null;
+                Label lblWeight = null;
 
                 switch (i)
                 {
                     case 0:
-                        pb = pbMonth1; lblMonth = lblMonth1; lblBmi = lblBmi1;
+                        pb = pbMonth1; lblMonth = lblMonth1; lblBmi = lblBmi1; lblWeight = lblWeight1;
                         break;
                     case 1:
-                        pb = pbMonth2; lblMonth = lblMonth2; lblBmi = lblBmi2;
+                        pb = pbMonth2; lblMonth = lblMonth2; lblBmi = lblBmi2; lblWeight = lblWeight2;
                         break;
                     case 2:
-                        pb = pbMonth3; lblMonth = lblMonth3; lblBmi = lblBmi3;
+                        pb = pbMonth3; lblMonth = lblMonth3; lblBmi = lblBmi3; lblWeight = lblWeight3;
                         break;
                     case 3:
-                        pb = pbMonth4; lblMonth = lblMonth4; lblBmi = lblBmi4;
+                        pb = pbMonth4; lblMonth = lblMonth4; lblBmi = lblBmi4; lblWeight = lblWeight4;
                         break;
                     case 4:
-                        pb = pbMonth5; lblMonth = lblMonth5; lblBmi = lblBmi5;
+                        pb = pbMonth5; lblMonth = lblMonth5; lblBmi = lblBmi5; lblWeight = lblWeight5;
                         break;
                     case 5:
-                        pb = pbMonth6; lblMonth = lblMonth6; lblBmi = lblBmi6;
+                        pb = pbMonth6; lblMonth = lblMonth6; lblBmi = lblBmi6; lblWeight = lblWeight6;
                         break;
                 }
 
@@ -378,28 +381,23 @@ namespace WpfApp2
                         : fullMonthName;
 
                     double bmi = Convert.ToDouble(dt.Rows[i]["bmi"].ToString());
+                    double weight = Convert.ToDouble(dt.Rows[i]["weight_kg"].ToString());
 
                     lblMonth.Content = shortMonthName;
-                    lblBmi.Content = $"{bmi:F1}";
+                    lblBmi.Content = $"{bmi:F2}";
+                    lblWeight.Content = $"{weight:F1}";
                     pb.Value = Math.Min(Math.Max(bmi, 0), 40);
 
                     if (bmi < 18.5)
-                    {
-                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3")); 
-                    }
-                    else if (bmi >= 18.5 && bmi < 24.9)
-                    {
+                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3"));
+                    else if (bmi < 24.9)
                         pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CAF50"));
-                    }
-                    else if (bmi >= 25 && bmi < 29.9)
-                    {
+                    else if (bmi < 29.9)
                         pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9800"));
-                    }
-                    else if (bmi >= 30)
-                    {
-                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F44336")); 
-                    }
+                    else
+                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F44336"));
                 }
+
                 else
                 {
                     lblMonth.Content = "—";

@@ -10,6 +10,93 @@
     Title="Update Appointment" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
     <Window.Resources>
+
+        <Style TargetType="{x:Type TabControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" HorizontalAlignment="Center">
+                                <TabPanel x:Name="HeaderPanel" 
+              IsItemsHost="True" 
+              Background="Transparent" 
+              Margin="{TemplateBinding Padding}"
+              KeyboardNavigation.TabIndex="1" 
+              ZIndex="1"/>
+                            </Grid>
+
+                            <Border x:Name="ContentPanel" 
+        Grid.Row="1" 
+        Background="{TemplateBinding Background}" 
+        BorderBrush="{TemplateBinding BorderBrush}" 
+        BorderThickness="{TemplateBinding BorderThickness}" 
+        KeyboardNavigation.TabIndex="2" 
+        KeyboardNavigation.TabNavigation="Local">
+                                <ContentPresenter x:Name="PART_SelectedContentHost" 
+                      ContentSource="SelectedContent" 
+                      Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Padding" Value="15,5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border x:Name="TabBorder"
+    Background="#F0F0F0"
+    BorderBrush="Transparent"
+    BorderThickness="1"
+    CornerRadius="50">
+                            <ContentPresenter x:Name="ContentSite"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  ContentSource="Header"
+                  Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Selected tab -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="MidnightBlue"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="MidnightBlue"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+
+                            <!-- Hover on inactive -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#E0E0E0"/>
+                            </Trigger>
+
+                            <!-- Hover on active tab -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="TabBorder" Property="Background" Value="#191970"/>
+                            </MultiTrigger>
+
+                            <!-- Inactive tab -->
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#FFCBCBCB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="AppointmentButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#F5F5F5"/>
             <Setter Property="Foreground" Value="#1C3E61"/>
@@ -84,89 +171,9 @@
                 <RowDefinition Height="637*"/>
             </Grid.RowDefinitions>
             <TabControl x:Name="MyTabBooking" Grid.Row="1" Margin="133,33,133,63" BorderBrush="{x:Null}" Background="#FFF9F9F9">
-                <TabControl.Resources>
-                    <Style TargetType="{x:Type TabItem}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type TabItem}">
-                                    <Border Background="{TemplateBinding Background}"
-                                    BorderThickness="0"
-                                    Padding="0">
-                                        <ContentPresenter ContentSource="Header"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderBrush" Value="Transparent"/>
-                    </Style>
 
-                    <Style x:Key="AppointmentButtonStyle" TargetType="Button">
-                        <Setter Property="Background" Value="#F5F5F5"/>
-                        <Setter Property="Foreground" Value="#1C3E61"/>
-                        <Setter Property="BorderBrush" Value="#E0E0E0"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="FontSize" Value="14"/>
-                        <Setter Property="FontWeight" Value="SemiBold"/>
-                        <Setter Property="Margin" Value="5"/>
-                        <Setter Property="Padding" Value="10,15"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="5">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#E6E6E6"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#D0D0D0"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
 
-                    <Style x:Key="SelectedAppointmentButtonStyle" TargetType="Button" BasedOn="{StaticResource AppointmentButtonStyle}">
-                        <Setter Property="Background" Value="#E53935"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="BorderBrush" Value="#E53935"/>
-                    </Style>
-
-                    <Style x:Key="BookedAppointmentStyle" TargetType="Button">
-                        <Setter Property="Background" Value="#F0F0F0"/>
-                        <Setter Property="Foreground" Value="#A0A0A0"/>
-                        <Setter Property="BorderBrush" Value="#E0E0E0"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="FontSize" Value="14"/>
-                        <Setter Property="FontWeight" Value="SemiBold"/>
-                        <Setter Property="Margin" Value="5"/>
-                        <Setter Property="Padding" Value="10,15"/>
-                        <Setter Property="IsEnabled" Value="False"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="5">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <ContentPresenter/>
-                                            <TextBlock Text="Booked" FontSize="11" Foreground="#A0A0A0" Margin="0,3,0,0"/>
-                                        </StackPanel>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.Resources>
-
-                <TabItem x:Name="BookingDate" Margin="194,-3,-213,-14">
+                <TabItem x:Name="BookingDate" Margin="-7,-1,7,1" Height="30" Width="30" Padding="0,0,0,0" Header="1" IsEnabled="False">
                     <TabItem.Background>
                         <ImageBrush ImageSource="/Screenshot 2025-09-14 224107.png"/>
                     </TabItem.Background>
@@ -182,7 +189,7 @@
                                 <Image HorizontalAlignment="Left" Height="40" Margin="10,15,0,0" VerticalAlignment="Top" Width="46" 
                        Source="/Screenshot 2025-09-14 231802.png"/>
 
-                                <Border BorderThickness="1" Margin="24,294,24,66" CornerRadius="7" BorderBrush="#FF7BA9FF" Background="#FFB3D6FF">
+                                <Border BorderThickness="1" Margin="0,291,0,0" CornerRadius="7" BorderBrush="#FF7BA9FF" Background="#FFB3D6FF" VerticalAlignment="Top" HorizontalAlignment="Center" Width="450">
                                     <Grid>
                                         <Label Content="Clinic Hours" HorizontalAlignment="Left" Margin="35,-2,0,0" VerticalAlignment="Top" FontWeight="DemiBold"/>
                                         <Label Content="Monday to Friday: (00 AM - 6:00 PM)&#xA;Closed on weekends and holidays" 
@@ -192,7 +199,7 @@
                                     </Grid>
                                 </Border>
 
-                                <Border BorderBrush="#FFABAAAA" BorderThickness="1" Margin="33,60,37,142" CornerRadius="10">
+                                <Border BorderThickness="1" Margin="33,60,37,142" CornerRadius="10">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="205*"/>
@@ -258,7 +265,8 @@
 
 
 
-                <TabItem x:Name="PatientDetail" Margin="241,-3,-260,-15">
+                <TabItem x:Name="PatientDetail" Margin="-1,-1,1,1" Width="30" Height="30" Padding="0,0,0,0" Header="2" IsEnabled="False">
+
                     <TabItem.Background>
                         <ImageBrush ImageSource="/Screenshot 2025-09-14 224135.png" Stretch="UniformToFill"/>
                     </TabItem.Background>
@@ -391,7 +399,23 @@
                 </TabItem>
 
 
-                <TabItem x:Name="Confirmation" Header="" Margin="284,-3,-303,-15">
+                <TabItem x:Name="Confirmation" Header="3" Margin="5,-1,-5,1" Height="30" Width="30" Padding="0,0,0,0" IsEnabled="False">
+                    <TabItem.Resources>
+                        <!-- Make all Labels black -->
+                        <Style TargetType="Label">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+
+                        <!-- Make all TextBlocks black -->
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+
+                        <!-- Make all TextBoxes black -->
+                        <Style TargetType="TextBox">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                    </TabItem.Resources>
                     <TabItem.Background>
                         <ImageBrush ImageSource="/Screenshot 2025-09-14 224118.png" Stretch="Uniform"/>
                     </TabItem.Background>
@@ -406,7 +430,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Content section -->
-                        <Border Grid.Row="0" BorderBrush="#FFABABAB" BorderThickness="1" Margin="26,34,26,10" CornerRadius="15">
+                        <Border Grid.Row="0" BorderBrush="#FFABABAB" BorderThickness="1" Margin="26,19,26,10" CornerRadius="15">
                             <!-- Make content scrollable -->
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <StackPanel Margin="20">
@@ -478,16 +502,21 @@
                             </ScrollViewer>
                         </Border>
 
-                        <!-- ✅ Confirm Button outside of the panel -->
-                        <Button x:Name="ConfirmButton"
-                Grid.Row="1"
+                        <Grid Grid.Row="1" Margin="26,0,26,20">
+                            <Button Content="← Back" 
+                Style="{StaticResource AppointmentButtonStyle}" 
+                Width="150" Height="40"
+                HorizontalAlignment="Left" VerticalAlignment="Center" 
+                Click="Button_Click_3"/>
+
+                            <Button x:Name="ConfirmButton"
                 Content="Confirm Appointment"
                 Style="{StaticResource SelectedAppointmentButtonStyle}"
                 Width="250" Height="40"
-                Margin="0,10,0,20"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
                 Click="ConfirmButton_Click"/>
+                        </Grid>
                     </Grid>
                 </TabItem>
 

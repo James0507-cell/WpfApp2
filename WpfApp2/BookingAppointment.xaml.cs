@@ -283,5 +283,10 @@ namespace WpfApp2
         private void cmbPreviousVisit_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
         private void txtEmergencyContactName_TextChanged(object sender, TextChangedEventArgs e) { }
         private void txtEmergencyContactPhone_TextChanged(object sender, TextChangedEventArgs e) { }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--;
+        }
     }
 }

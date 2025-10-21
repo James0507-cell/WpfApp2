@@ -16,6 +16,7 @@ namespace WpfApp2
         private MySqlDataAdapter da;
         private DataTable dt;
         private string username = MainWindow.Username;
+        int id = 0;
 
         string strConn = "server=localhost; user id=root; password=; database=db_medicaremmcm";
 
@@ -49,7 +50,12 @@ namespace WpfApp2
                 dbCommand.ExecuteNonQuery();
             }
         }
-
+        public void setId(String username)
+        {
+            String SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = displayRecords(SQL);
+            id = int.Parse(dt.Rows[0][0].ToString());
+        }
         private Color GetStatusBackgroundColor(string status)
         {
             string lowerStatus = status.ToLower();
@@ -109,8 +115,13 @@ namespace WpfApp2
                 string deleteQuery = $"DELETE FROM appointments WHERE appointment_id = {appointmentId}";
                 sqlManager(deleteQuery);
                 MessageBox.Show("Appointment cancelled successfully!", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
+                setId(username);
+                String SQL = $@"
+                            INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
+                            VALUES ({id}, 'Appointment', 'Cancel appointment')";
+                sqlManager(SQL);
 
-                
+
             }
         }
 
@@ -246,6 +257,11 @@ namespace WpfApp2
                 {
                     MessageBox.Show($"Request to Cancel Appointment ID: {currentAppointmentId}");
                     string SQL = $"DELETE FROM appointments WHERE appointment_id = '{currentAppointmentId}'";
+                    sqlManager(SQL);
+                    setId(username);
+                    SQL = $@"
+                            INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
+                            VALUES ({id}, 'Appointment', 'Cancel appointment ID: {appointmentId}')";
                     sqlManager(SQL);
                     TriggerAppointmentActivityPanelReload();
                 };

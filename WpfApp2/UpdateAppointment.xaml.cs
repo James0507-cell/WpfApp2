@@ -210,7 +210,7 @@ namespace WpfApp2
             // 3. Log the activity
             string SQL_log = $@"
             INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
-            VALUES ({userId}, 'Appointment', 'Update appointment for {txtConfirmPurpose.Text}')";
+            VALUES ({userId}, 'Appointment', 'Update appointment ID: {appointmentID}')";
             booking.sqlManager(SQL_log);
 
             MyTabBooking.SelectedIndex = 2;
@@ -233,6 +233,8 @@ namespace WpfApp2
             txtConfirmTime.Text = string.IsNullOrEmpty(selectedTime) ? "N/A" : selectedTime;
             txtComfirmSymptoms.Text = txtSymptoms.Text;
             
+            
+
         }
 
         public void setStudentInfo()
@@ -262,28 +264,44 @@ namespace WpfApp2
         }
         public void populatForms()
         {
-            String SQL = $"Select * from appointments where appointment_id = '{appointmentID}'";
+            string SQL = $"SELECT * FROM appointments WHERE appointment_id = '{appointmentID}'";
             DataTable dt = booking.displayRecords(SQL);
+
             if (dt.Rows.Count > 0)
             {
                 DateTime dbDate = Convert.ToDateTime(dt.Rows[0]["appointment_date"]);
                 cldDate.SelectedDate = dbDate;
                 selectedDate = dbDate;
+
                 string dbTime = dt.Rows[0]["appointment_time"].ToString();
+
                 if (DateTime.TryParse($"2000-01-01 {dbTime}", out DateTime parsedTime))
                 {
                     string formattedTime = parsedTime.ToString("h:mm tt", CultureInfo.InvariantCulture);
                     selectedTime = formattedTime;
+
+                    Button[] buttons = { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13 };
+
+                    foreach (Button btn in buttons)
+                    {
+                        if (btn.Tag.ToString().Equals(selectedTime, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            Appointment_Click(btn, null);
+                            break;
+                        }
+                    }
                 }
+
                 cmbPurpose.Text = dt.Rows[0]["purpose_of_visit"].ToString();
                 txtAllergies.Text = dt.Rows[0]["known_allergies"].ToString();
                 txtCurrentMedication.Text = dt.Rows[0]["current_medication"].ToString();
                 cmbPreviousVisit.Text = dt.Rows[0]["previous_visit"].ToString();
                 txtEmergencyContactName.Text = dt.Rows[0]["emergency_contact_name"].ToString();
                 txtEmergencyContactPhone.Text = dt.Rows[0]["emergency_contact_phone"].ToString();
-                txtSymptoms.Text = dt.Rows[0]["current_symptoms"].ToString();   
+                txtSymptoms.Text = dt.Rows[0]["current_symptoms"].ToString();
             }
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e) { MyTabBooking.SelectedIndex = 1; }
         private void Button_Click_2(object sender, RoutedEventArgs e) { PopulateConfirmationTab(); MyTabBooking.SelectedIndex = 2; }
@@ -302,5 +320,9 @@ namespace WpfApp2
         private void txtEmergencyContactName_TextChanged(object sender, TextChangedEventArgs e) { }
         private void txtEmergencyContactPhone_TextChanged(object sender, TextChangedEventArgs e) { }
 
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--;
+        }
     }
 }
