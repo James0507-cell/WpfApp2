@@ -355,7 +355,7 @@
                                             <ImageBrush ImageSource="/dsadasdasdasda.jpg" Stretch="Fill"/>
                                         </Button.Background>
                                     </Button>
-                                    <Label Content="• Add new student accounts with comprehensive information&#xA;    • Edit existing student details and medical information&#xA;         • View enrollment analytics and program statistics&#xA;             • Search and filter students by various criteria" Margin="0,189,0,83" Grid.Row="1" Width="357" Foreground="#FFAFAFAF" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                                    <Label Content="• Add new student accounts with comprehensive information&#xA;    • Edit existing student details and medical information&#xA;         • View enrollment analytics and program statistics&#xA;             • Search and filter students by various criteria" Grid.Row="1" Width="506" Foreground="#FFAFAFAF" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="167" Margin="0,184,0,0"/>
                                 </Grid>
                             </Border>
                         </Grid>

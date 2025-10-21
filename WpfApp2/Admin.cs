@@ -115,12 +115,12 @@ namespace WpfApp2
             }
         }
 
-        public int getComputerScience()
+        public int Accountancy()
         {
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
                 conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'BS Computer Science' AND role = 'Student'";
+                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Accountancy' AND role = 'Student'";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
