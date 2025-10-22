@@ -386,14 +386,14 @@
                                             <Border Background="#FFEDF3F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Management Accounting" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label x:Name="managementaccounting" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Entrepreneurship" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label x:Name="Entrepreneurship" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 

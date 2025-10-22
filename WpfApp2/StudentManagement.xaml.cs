@@ -288,6 +288,12 @@ namespace WpfApp2
             int totalComputerscience = admin.Accountancy();
             accountancy.Content = totalComputerscience + " students";
 
+            int totalManagementAccounting = admin.ManagementAccounting();
+            managementaccounting.Content = totalManagementAccounting + " students";
+            
+            int totoalEntrepreneurship = admin.Entrepreneurship();
+            Entrepreneurship.Content = totoalEntrepreneurship + " students";
+
             SQL = "SELECT * FROM users WHERE role = 'Student'";
             displayUsers(SQL);
             setId(Username);

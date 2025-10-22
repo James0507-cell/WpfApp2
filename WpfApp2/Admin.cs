@@ -126,6 +126,28 @@ namespace WpfApp2
             }
         }
 
+        public int ManagementAccounting()
+        {
+            using(MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Management Accounting' AND role = 'Student'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
+        public int Entrepreneurship()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Entrepreneurship' AND role = 'Student'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
 
 
 
