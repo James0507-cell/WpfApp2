@@ -34,6 +34,28 @@ namespace WpfApp2
             InitializeComponent();
         }
 
+        public void clear()
+        {
+            txtFirstName.Clear();
+            txtLastName.Clear();
+            txtStudentID.Clear();
+            txtUsername.Clear();
+            txtPassword.Clear();
+            cmbRole.SelectedIndex = -1; 
+            txtEmailAddress.Clear();
+            txtPhoneNumber.Clear();
+            txtAddress.Clear();
+            dpDatePicker.SelectedDate = null;
+            cboCourse.SelectedIndex = -1;
+            cboYearLevel.SelectedIndex = -1;
+            cboEnrolledStatus.SelectedIndex = -1;
+            txtECN1.Clear();
+            txtECP.Clear();
+            cboBloodType.SelectedIndex = -1;
+            txtKnownAllergies.Clear();
+            txtMedicalConditions.Clear();
+        }
+
 
         public void setId(String username)
         {
@@ -117,6 +139,7 @@ namespace WpfApp2
             SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                      $"VALUES ({id}, '{username}', 'Appointment Approved', 'Add new Student + {txtUsername.Text}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             admin.sqlManager(SQL);
+            clear();
 
 
         }

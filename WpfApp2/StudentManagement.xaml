@@ -379,7 +379,7 @@
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Accountancy" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label x:Name="accountancy" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left" Height="29" Margin="516,0,0,0" VerticalAlignment="Top"/>
+                                                    <Label x:Name="accountancy" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                                 </Grid>
                                             </Border>
 
@@ -407,7 +407,7 @@
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Arts in Communication" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label x:Name="Communication" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left" Margin="516,0,0,0"/>
+                                                    <Label x:Name="Communication" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
@@ -421,105 +421,105 @@
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Computer Science" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label x:Name="compueterscience" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Background="#FFEDF3F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Information Systems" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="informationsystem" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Entertainment &amp; Multimedia Computing" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="entertainmentmultimediacomputing" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Background="#FFEDF3F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Architecture" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="architecture" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Chemical Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label x:Name="chemicalengineering" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Background="#FFEDF3F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Civil Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="civilengineering" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Computer Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="compueterengineering" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Background="#FFEDF3F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Electrical Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label x:Name="electricalengineering" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Electronics Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="electronicsengineering" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Background="#FFEDF3F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Industrial Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="industrialengineering" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Mechanical Engineering" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="mechanicalengineering" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Background="#FFEDF3F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Biology" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="biology" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Pharmacy" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="pharmacy" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Background="#FFEDF3F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Physical Therapy" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="physicaltherapy" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Psychology" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label  x:Name="psycholoyg" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
                                         </StackPanel>

@@ -300,6 +300,57 @@ namespace WpfApp2
             int totalCommunication = admin.Communication();
             Communication.Content = totalCommunication + " students";   
 
+            int totalMultimediaArt = admin.MultiMediaArts();
+            multiMediaArts.Content = totalMultimediaArt + " students";
+
+            int totalComputerScience = admin.ComputerScience();
+            compueterscience.Content = totalComputerScience + " students";
+
+            int totalInformationsystem = admin.Informationsystem(); 
+            informationsystem.Content = totalInformationsystem + " students";
+
+            int totalemc = admin.entertaimentmultimediacomputing();
+            entertainmentmultimediacomputing.Content = totalemc + " students";
+
+            int totalarchitecture = admin.architecture();
+            architecture.Content = totalarchitecture + " students";
+
+            int totalchemicalengineering = admin.chemicalEnginerring();
+            chemicalengineering.Content = totalchemicalengineering + " students";
+
+            int totalcivilengineering = admin.civilEngineering();
+            civilengineering.Content = totalcivilengineering + " students";
+
+            int totalcomputerengineering = admin.computerEngineering();
+            compueterengineering.Content = totalcomputerengineering + " students";
+
+            int totalelectricalengineering = admin.electricalEngineering();
+            electricalengineering.Content = totalelectricalengineering + " students";
+
+            int totalelectronicengineering = admin.electronicsEngineering();
+            electronicsengineering.Content = totalelectronicengineering + " students";
+
+            int totalindustrialengineering = admin.industrialEngineering();
+            industrialengineering.Content = totalindustrialengineering + " students";
+
+            int totalmechanicalengineering = admin.mechanicalEngineering();
+            mechanicalengineering.Content = totalmechanicalengineering + " students";
+
+            int totalbiology = admin.biology();
+            biology.Content = totalbiology + " students";
+
+            int totalpharmcy = admin.pharmacy();
+            pharmacy.Content = totalpharmcy + " students";
+
+            int totalphysicaltherapy = admin.physicalteraphy();
+            physicaltherapy.Content = totalphysicaltherapy + " students";
+
+            int totalpyschology = admin.psychology();
+            psycholoyg.Content = totalpyschology + " students";
+
+
+
+
             SQL = "SELECT * FROM users WHERE role = 'Student'";
             displayUsers(SQL);
             setId(Username);
@@ -338,6 +389,69 @@ namespace WpfApp2
 
             int totalmedicinereq = admin.GetMedicineStatusCount();
             lblMedicalAlerts.Content = totalmedicinereq;
+            //programs specific
+            int totalComputerscience = admin.Accountancy();
+            accountancy.Content = totalComputerscience + " students";
+
+            int totalManagementAccounting = admin.ManagementAccounting();
+            managementaccounting.Content = totalManagementAccounting + " students";
+
+            int totoalEntrepreneurship = admin.Entrepreneurship();
+            Entrepreneurship.Content = totoalEntrepreneurship + " students";
+
+            int totaltourismManagement = admin.TourismManagement();
+            tourismManagement.Content = totaltourismManagement + " students";
+
+            int totalCommunication = admin.Communication();
+            Communication.Content = totalCommunication + " students";
+
+            int totalMultimediaArt = admin.MultiMediaArts();
+            multiMediaArts.Content = totalMultimediaArt + " students";
+
+            int totalComputerScience = admin.ComputerScience();
+            compueterscience.Content = totalComputerScience + " students";
+
+            int totalInformationsystem = admin.Informationsystem();
+            informationsystem.Content = totalInformationsystem + " students";
+
+            int totalemc = admin.entertaimentmultimediacomputing();
+            entertainmentmultimediacomputing.Content = totalemc + " students";
+
+            int totalarchitecture = admin.architecture();
+            architecture.Content = totalarchitecture + " students";
+
+            int totalchemicalengineering = admin.chemicalEnginerring();
+            chemicalengineering.Content = totalchemicalengineering + " students";
+
+            int totalcivilengineering = admin.civilEngineering();
+            civilengineering.Content = totalcivilengineering + " students";
+
+            int totalcomputerengineering = admin.computerEngineering();
+            compueterengineering.Content = totalcomputerengineering + " students";
+
+            int totalelectricalengineering = admin.electricalEngineering();
+            electricalengineering.Content = totalelectricalengineering + " students";
+
+            int totalelectronicengineering = admin.electronicsEngineering();
+            electronicsengineering.Content = totalelectronicengineering + " students";
+
+            int totalindustrialengineering = admin.industrialEngineering();
+            industrialengineering.Content = totalindustrialengineering + " students";
+
+            int totalmechanicalengineering = admin.mechanicalEngineering();
+            mechanicalengineering.Content = totalmechanicalengineering + " students";
+
+            int totalbiology = admin.biology();
+            biology.Content = totalbiology + " students";
+
+            int totalpharmcy = admin.pharmacy();
+            pharmacy.Content = totalpharmcy + " students";
+
+            int totalphysicaltherapy = admin.physicalteraphy();
+            physicaltherapy.Content = totalphysicaltherapy + " students";
+
+            int totalpyschology = admin.psychology();
+            psycholoyg.Content = totalpyschology + " students";
 
         }
         public void setId(String username)
