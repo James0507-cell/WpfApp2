@@ -49,7 +49,7 @@ namespace WpfApp2
             displayMedicineInv("select * from medicine_info");
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
-            displayActivity();
+            displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
         }
 
         private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -147,14 +147,13 @@ namespace WpfApp2
 
         public void displayAppointments(String querry)
         {
-            StackPanel targetStackPanel = this.AppointmentStackPanel;
 
             DataTable dt = new DataTable();
 
             dt = admin.displayRecords(querry);
 
             int n = dt.Rows.Count;
-            targetStackPanel.Children.Clear();
+            AppointmentStackPanel.Children.Clear();
 
             TextBlock CreateDetailBlock(string label, string value, FontWeight weight = default)
             {
@@ -342,7 +341,7 @@ namespace WpfApp2
 
 
                 cardBorder.Child = mainLayoutGrid;
-                targetStackPanel.Children.Add(cardBorder);
+                AppointmentStackPanel.Children.Add(cardBorder);
             }
         }
         public void approveAppointment(String appointmentID)
@@ -386,13 +385,21 @@ namespace WpfApp2
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
             displayMedicineInv("select * from medicine_info");
-            displayActivity();
+            displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
         }
 
         private void txtSearchIDapp_TextChanged(object sender, TextChangedEventArgs e)
         {
-            String querry = $"SELECT * FROM appointments WHERE student_id LIKE '%{txtSearchIDapp.Text}%'";
-            displayAppointments(querry);
+
+            //if (txtSearchIDapp.Text == "Search appointment ID..." || string.IsNullOrWhiteSpace(txtSearch.Text))
+            //{
+            //    displayAppointments("SELECT * FROM appointments");
+            //}
+            //else
+            //{
+            //    displayAppointments($"SELECT * FROM appointments WHERE appointment_id LIKE '%{txtSearchIDapp.Text}%'");
+
+            //}
         }
 
         private void cmbStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -996,11 +1003,11 @@ namespace WpfApp2
             }
         }
 
-        public void displayActivity()
+        public void displayActivity(String SQL)
         {
             // --- 1. Data Fetching ---
             // Assuming 'userForm' is an instance that handles database calls
-            SQL = "SELECT * FROM admin_activity_log ORDER BY activity_date DESC";
+            StackPanelActivities.Children.Clear();
             DataTable dt = admin.displayRecords(SQL);
 
             // --- 2. UI Initialization ---
@@ -1018,7 +1025,7 @@ namespace WpfApp2
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 // Extract all fields from the DataTable row
-                string adminId = dt.Rows[i]["admin_id"].ToString();
+                string activityID = dt.Rows[i]["activity_id"].ToString();
                 string username = dt.Rows[i]["username"].ToString();
                 string type = dt.Rows[i]["activity_type"].ToString();
                 string description = dt.Rows[i]["activity_desc"].ToString();
@@ -1067,7 +1074,7 @@ namespace WpfApp2
                     VerticalAlignment = VerticalAlignment.Center,
                     Child = new TextBlock
                     {
-                        Text = $"ID: {adminId}",
+                        Text = $"ID: {activityID}",
                         Foreground = Brushes.Gray,
                         FontWeight = FontWeights.Normal,
                         FontSize = 9
@@ -1133,7 +1140,7 @@ namespace WpfApp2
             int totalLowStock = admin.getMedicineCount();
             lblLowStack.Content = totalLowStock;
 
-            displayActivity();
+            displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -1192,6 +1199,139 @@ namespace WpfApp2
             {
                 displayMedicineInv("select * from medicine_info");
             }
+        }
+
+        private void txtSearchIDapp_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearchIDapp.Text == "Search appointment ID...")
+                txtSearchIDapp.Text = "";
+        }
+
+        private void txtSearchIDapp_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearchIDapp.Text))
+                txtSearchIDapp.Text = "Search appointment ID...";
+        }
+
+        private void txtSearchIDapp_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            if (AppointmentStackPanel == null)
+                return; // UI not ready yet
+
+            if (txtSearchIDapp.Text == "Search appointment ID..." || string.IsNullOrWhiteSpace(txtSearchIDapp.Text))
+            {
+                displayAppointments("SELECT * FROM appointments");
+            }
+            else
+            {
+                displayAppointments($"SELECT * FROM appointments WHERE appointment_id LIKE '%{txtSearchIDapp.Text}%'");
+            }
+        }
+
+        private void txtSearchMedID_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearchMedID.Text == "Search medicine request ID...")
+                txtSearchMedID.Text = "";
+        }
+
+        private void txtSearchMedID_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearchMedID.Text))
+                txtSearchMedID.Text = "Search medicine request ID...";
+        }
+
+        private void txtSearchMedID_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (StackPanelMedicineReuqests == null)
+                return; // UI not ready yet
+            if (txtSearchMedID.Text == "Search medicine request ID..." || string.IsNullOrWhiteSpace(txtSearchMedID.Text))
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests");
+            }
+            else
+            {
+                displayMedicineRequest($"SELECT * FROM medicinerequests WHERE request_id LIKE '%{txtSearchMedID.Text}%'");
+            }
+        }
+
+        private void cboMedFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cboMedFilter.SelectedIndex == null)
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests");
+            }
+            else if (cboMedFilter.SelectedIndex == 0)
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests");
+            }
+            else if (cboMedFilter.SelectedIndex == 1)
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests WHERE status = 'Pending'");
+            }
+            else if (cboMedFilter.SelectedIndex == 2)
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests WHERE status = 'Approved'");
+            }
+            else
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests Where status = 'Rejected'");
+            }
+        }
+
+        private void cboActivityFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cboActivityFilter.SelectedItem is ComboBoxItem selectedItem)
+            {
+                string filter = selectedItem.Content.ToString();
+                string query;
+
+                if (filter == "All")
+                {
+                    query = "SELECT * FROM admin_activity_log ORDER BY activity_date DESC";
+                }
+                else
+                {
+                    query = $@"
+                SELECT * 
+                FROM admin_activity_log 
+                WHERE TRIM(activity_type) = '{filter}' 
+                ORDER BY activity_date DESC";
+                }
+
+                displayActivity(query); 
+            }
+        }
+
+
+
+
+
+        private void txtSearchActivity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (StackPanelActivities == null)
+                return; // UI not ready yet
+            if (txtSearchActivity.Text == "Search activity ID..." || string.IsNullOrWhiteSpace(txtSearchActivity.Text))
+            {
+                displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
+            }
+            else
+            {
+                displayActivity($"SELECT * FROM admin_activity_log where activity_id like '%{txtSearchActivity.Text}%'");
+            }
+        }
+
+        private void txtSearchActivity_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearchActivity.Text))
+                txtSearchActivity.Text = "Search activity ID...";
+
+        }
+
+        private void txtSearchActivity_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            if (txtSearchActivity.Text == "Search activity ID...")
+                txtSearchActivity.Text = "";
         }
     }
 }

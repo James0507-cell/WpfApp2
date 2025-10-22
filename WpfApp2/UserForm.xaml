@@ -9,7 +9,68 @@
         Title="UserForm" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
+        <Style x:Key="ButtonLightGreyHighlight" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <!-- Apply Padding to the Border (ContentPresenter doesn't have Padding) -->
+                        <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFF2F2F2"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFE6E6E6"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFF2F2F2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="AppointmentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="Foreground" Value="#1C3E61"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,15"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E6E6E6"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#D0D0D0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CustomButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="{x:Null}"/>
@@ -17,18 +78,19 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="border"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Padding="{TemplateBinding Padding}">
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  RecognizesAccessKey="True"/>
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      RecognizesAccessKey="True"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Window.Resources>
 
     <Border BorderThickness="1" Background="#FFF9F9F9" CornerRadius="15">
@@ -45,31 +107,51 @@
                 <RowDefinition Height="256.04"/>
             </Grid.RowDefinitions>
 
-            <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Grid.Row="0" VerticalAlignment="Top" Height="51">
+            <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Grid.Row="0" Height="51">
                 <Grid>
-                    <Image HorizontalAlignment="Left" Height="51" VerticalAlignment="Center" Width="58" 
-               Source="/Logo-Final_noname_1.png" Margin="10,0,0,0"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                    <Label Content="Student Portal" HorizontalAlignment="Left" Margin="69,0,0,0" 
-               VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Foreground="#FF00104D"/>
+                    <Image Grid.Column="0" 
+               Source="/Logo-Final_noname_1.png" 
+               Height="51" 
+               Width="58" 
+               Margin="10,0,10,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"/>
 
-                    <Label x:Name="lblName" Content="Welcome back, (First Name)" HorizontalAlignment="Left" 
-               Margin="75,25,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <Label Content="Student Portal" 
+                   FontSize="20" 
+                   FontWeight="Bold" 
+                   Foreground="#FF00104D" 
+                   Padding="0,0,0,0"
+                   Margin="0,-3,0,0"/>
+                        <Label x:Name="lblName" 
+                   Content="Welcome back, (First Name)" 
+                   FontSize="8" 
+                   Foreground="#FF797979"
+                   Padding="0,0,0,0"
+                   Margin="5,0,0,0"/>
+                    </StackPanel>
 
-                    <Border x:Name="logoutborder" BorderThickness="1" 
-                HorizontalAlignment="Right" VerticalAlignment="Top"
-                Margin="0,17,21,0" CornerRadius="10" Background="DarkGray" 
-                Width="60" Height="25">
-                        <Button Content="Logout" 
-                    HorizontalAlignment="Center" VerticalAlignment="Center" 
-                    Width="60" Height="20" 
-                    BorderBrush="{x:Null}" Background="{x:Null}" 
-                    FontSize="8" Foreground="White" 
-                    FontWeight="DemiBold" Padding="1,0,1,1" 
-                    Click="Button_Click_4" IsMouseDirectlyOverChanged="Button_IsMouseDirectlyOverChanged"/>
-                    </Border>
+                    <Button Grid.Column="2" 
+        Content="Logout"
+        HorizontalAlignment="Right" 
+        VerticalAlignment="Center"
+        Width="60" 
+        Height="20"
+        Margin="0,0,20,0"
+        
+        FontSize="8" 
+        Padding="1,0,1,1"
+        Style="{StaticResource AppointmentButtonStyle}"
+        Click="Button_Click_4" 
+        IsMouseDirectlyOverChanged="Button_IsMouseDirectlyOverChanged"/>
                 </Grid>
-
             </Border>
 
             <Grid Grid.Row="2" Focusable="True" Margin="25,2,25,0">
@@ -91,10 +173,13 @@
                     <Button x:Name="btnAppoint"
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"
+                            
                     Click="btnAppoint_Click"
                     HorizontalContentAlignment="Stretch"
                     VerticalContentAlignment="Center"
-                    Padding="10,0">
+                    Padding="10,0"
+                                    Style="{StaticResource ButtonLightGreyHighlight}">
+                        
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -103,7 +188,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Grid.Column="0" Source="/Screenshot 2025-10-15 103607.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <Image Grid.Column="0" Source="/Adobe Express - file.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
 
                             <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                                 <Grid.RowDefinitions>
@@ -130,7 +215,9 @@
                     Background="{x:Null}"
                     HorizontalContentAlignment="Stretch"
                     VerticalContentAlignment="Center"
-                    Padding="10,0">
+                    Padding="10,0"
+                                    Style="{StaticResource ButtonLightGreyHighlight}">
+
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -139,7 +226,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Grid.Column="0" Source="/Screenshot 2025-10-15 102956.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <Image Grid.Column="0" Source="/Untitled.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
 
                             <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                                 <Grid.RowDefinitions>
@@ -166,7 +253,9 @@
                     Click="Button_Click"
                     HorizontalContentAlignment="Stretch"
                     VerticalContentAlignment="Center"
-                    Padding="10,0">
+                    Padding="10,0"
+                                    Style="{StaticResource ButtonLightGreyHighlight}">
+
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -175,7 +264,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Grid.Column="0" Source="/Screenshot 2025-10-15 103827.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <Image Grid.Column="0" Source="/Untitled (1).png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
 
                             <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                                 <Grid.RowDefinitions>

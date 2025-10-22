@@ -38,7 +38,6 @@ namespace WpfApp2
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            logoutborder.Background = Brushes.Red;
             var mainWindow = new MainWindow();
             this.Close();
             mainWindow.Show();
