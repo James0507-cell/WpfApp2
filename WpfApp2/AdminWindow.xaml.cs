@@ -46,6 +46,10 @@ namespace WpfApp2
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            displayMedicineInv("select * from medicine_info");
+            displayAppointments("SELECT * FROM appointments");
+            displayMedicineRequest("SELECT * FROM medicinerequests");
+            displayActivity();
         }
 
         private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -350,7 +354,7 @@ namespace WpfApp2
             admin.sqlManager(querry);
             displayAppointments("SELECT * FROM appointments");
         }
-        
+
         public void rejectAppointment(String appointmentID, String reason)
         {
             String querry = $"UPDATE appointments SET status = 'Rejected', reason = '{reason}' WHERE appointment_id = {appointmentID}";
@@ -363,25 +367,25 @@ namespace WpfApp2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            int totalStudents  = admin.GetActiveStudentCount();
+
+            int totalStudents = admin.GetActiveStudentCount();
             lblActiveStatus.Content = totalStudents;
 
             int totalmedicinereq = admin.GetMedicineStatusCount();
             lblMedicine.Content = totalmedicinereq;
 
-            int totalAppoinment =  admin.GetAppointmenCount();
+            int totalAppoinment = admin.GetAppointmenCount();
             lblPending.Content = totalAppoinment;
 
             int totalLowStock = admin.getMedicineCount();
-            lblLowStack.Content = totalLowStock; 
+            lblLowStack.Content = totalLowStock;
 
-           setId(username);
+            setId(username);
 
 
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
-            displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 20");
+            displayMedicineInv("select * from medicine_info");
             displayActivity();
         }
 
@@ -695,193 +699,303 @@ namespace WpfApp2
             admin.sqlManager(querry);
             displayMedicineRequest("SELECT * FROM medicinerequests");
         }
-        public void displayMedicineInv(String querry)
+        public void displayMedicineInv(String query)
         {
-            DataTable dt = admin.displayRecords(querry);
+            DataTable dt = new DataTable();
+            dt = admin.displayRecords(query);
 
-            StackPanelMedicineInv.Children.Clear();
+            // Clearing the children of the XAML-defined StackPanel
+            wrapPanelInventory.Children.Clear();
+            int n = dt.Rows.Count;
 
-            // ALERT-FOCUSED COLORS:
-            Brush mainTextBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4A4A4A"));
-            // Dark Gray/Near Black for contrast
+            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
+            Brush buttonBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF014BFF"));
+            Brush lowStockRedBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFA0A0"));
 
-            Brush alertQuantityBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD86E00"));
-            // Dark Orange/Amber for stock alert
-
-            Brush alertActionBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFCC3300"));
-            // Vibrant Orange-Red for the button
-
-            for (int i = 0; i < dt.Rows.Count; i++)
+            for (int i = 0; i < n; i++)
             {
-                String medName = dt.Rows[i][1].ToString();
-                String medQty = dt.Rows[i][2].ToString();
-                String medDesc = dt.Rows[i][3].ToString();
-                String medId = dt.Rows[i][0].ToString();
+                // Extract data
+                String medicineId = dt.Rows[i][0].ToString();
+                String medicineName = dt.Rows[i][1].ToString();
+                String dosage = dt.Rows[i][2].ToString();
+                String genericName = dt.Rows[i][3].ToString();
+                String description = dt.Rows[i][4].ToString();
 
+                // Fetch quantity
+                DataTable quantityDt = admin.displayRecords(
+                    "SELECT amount, inventory_id FROM medicineinventory WHERE medicine_id = '" + medicineId + "'");
+                int quant = Convert.ToInt32(quantityDt.Rows[0][0]);
+                String inventoryId = quantityDt.Rows[0][1].ToString();
+
+                // Default Border Setup
                 Border cardBorder = new Border
                 {
-                    // Border color changed to dark gray for contrast against the alert elements
-                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x4A, 0x4A, 0x4A)),
+                    Width = 280,
+                    Height = 300,
+                    Margin = new Thickness(10),
+                    BorderBrush = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
                     BorderThickness = new Thickness(1),
                     Background = Brushes.White,
-                    CornerRadius = new CornerRadius(8),
-                    Margin = new Thickness(8, 3, 8, 3),
-                    Padding = new Thickness(10, 8, 10, 8),
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    
+                    CornerRadius = new CornerRadius(10),
+                    Padding = new Thickness(15),
+                    HorizontalAlignment = HorizontalAlignment.Center,
                 };
 
-                StackPanel medicineContent = new StackPanel();
-
-                // --- Row 1: Medicine Name and Icon ---
-                Grid nameGrid = new Grid();
-                nameGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                nameGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                nameGrid.Margin = new Thickness(0, 0, 0, 4);
-
-                // Icon color set to match the alert quantity color
-                TextBlock iconText = new TextBlock
+                // Conditional Low Stock Highlight
+                if (quant < 20)
                 {
-                    Text = "💊",
-                    FontSize = 14,
-                    Foreground = alertQuantityBrush,
+                    cardBorder.BorderBrush = lowStockRedBrush;
+                    cardBorder.BorderThickness = new Thickness(3);
+                }
+
+                DockPanel medicineContent = new DockPanel();
+
+                // --- Button Wrapper (Bottom Dock) ---
+                Border buttonWrapper = new Border
+                {
+                    CornerRadius = new CornerRadius(6),
+                    Margin = new Thickness(0, 15, 0, 0),
+                    Background = buttonBlueBrush,
+                };
+                DockPanel.SetDock(buttonWrapper, Dock.Bottom);
+
+                Button updateButton = new Button
+                {
+                    Content = "Update Quantity",
+                    Background = Brushes.Transparent,
+                    Foreground = Brushes.White,
+                    BorderThickness = new Thickness(0),
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 13,
+                    Padding = new Thickness(10),
+                    Cursor = Cursors.Hand,
+                    HorizontalAlignment = HorizontalAlignment.Stretch
+                };
+                updateButton.Tag = new { MedicineId = medicineId, InventoryId = inventoryId };
+                updateButton.Click += UpdateMedicineInventory_Click;
+
+                buttonWrapper.Child = updateButton;
+                medicineContent.Children.Add(buttonWrapper);
+
+                // --- Main Content StackPanel (Top Dock) ---
+                StackPanel mainContentStack = new StackPanel();
+
+                // Header Grid setup
+                Grid headerGrid = new Grid();
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                headerGrid.Margin = new Thickness(0, 0, 0, 10);
+
+                // Icon
+                Border iconWrapper = new Border
+                {
+                    Background = new SolidColorBrush(Color.FromArgb(255, 230, 230, 255)),
+                    CornerRadius = new CornerRadius(4),
+                    Padding = new Thickness(5),
+                    Width = 36,
+                    Height = 36,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                TextBlock iconBlock = new TextBlock
+                {
+                    Text = "📦",
+                    FontSize = 18,
+                    Foreground = darkBlueBrush,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                iconWrapper.Child = iconBlock;
+                Grid.SetColumn(iconWrapper, 0);
+                headerGrid.Children.Add(iconWrapper);
+
+                // Name and Dosage
+                StackPanel nameDosagePanel = new StackPanel
+                {
+                    Margin = new Thickness(8, 0, 0, 0),
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                TextBlock txtName = new TextBlock
+                {
+                    Text = medicineName,
+                    FontWeight = FontWeights.ExtraBold,
+                    FontSize = 16,
+                    Foreground = darkBlueBrush,
+                    TextWrapping = TextWrapping.Wrap
+                };
+                TextBlock txtDosage = new TextBlock
+                {
+                    Text = $"{dosage} Tablet",
+                    FontWeight = FontWeights.Normal,
+                    FontSize = 12,
+                    Foreground = Brushes.Gray
+                };
+                nameDosagePanel.Children.Add(txtName);
+                nameDosagePanel.Children.Add(txtDosage);
+                Grid.SetColumn(nameDosagePanel, 1);
+                headerGrid.Children.Add(nameDosagePanel);
+
+                // Inventory ID
+                TextBlock txtInvId = new TextBlock
+                {
+                    Text = $"ID: {inventoryId}",
+                    FontWeight = FontWeights.Normal,
+                    FontSize = 10,
+                    Foreground = Brushes.Gray,
+                    HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Center,
                     Margin = new Thickness(0, 0, 5, 0)
                 };
-                Grid.SetColumn(iconText, 0);
-                nameGrid.Children.Add(iconText);
 
-                // Medicine Name color set to the dark main text color
-                TextBlock txtMedName = new TextBlock
+                // Availability Tag
+                Border availabilityTag = CreateAvailabilityTag(quant);
+
+                // Stack them vertically in column 2
+                StackPanel rightPanel = new StackPanel
                 {
-                    Text = medName,
-                    FontWeight = FontWeights.Bold,
-                    FontSize = 14,
-                    Foreground = mainTextBrush,
+                    Orientation = Orientation.Vertical,
                     VerticalAlignment = VerticalAlignment.Center,
-                    TextTrimming = TextTrimming.CharacterEllipsis
+                    HorizontalAlignment = HorizontalAlignment.Right
                 };
-                Grid.SetColumn(txtMedName, 1);
-                nameGrid.Children.Add(txtMedName);
+                rightPanel.Children.Add(txtInvId);
+                rightPanel.Children.Add(availabilityTag);
+                Grid.SetColumn(rightPanel, 2);
+                headerGrid.Children.Add(rightPanel);
 
-                medicineContent.Children.Add(nameGrid);
+                mainContentStack.Children.Add(headerGrid);
 
-                // --- Row 2: Quantity (Highlighted Alert Color) ---
-                TextBlock txtMedQty = new TextBlock
+                // Separator Line
+                Rectangle separator = new Rectangle
                 {
-                    Text = $"Stock: {medQty} units",
-                    FontSize = 11,
-                    FontWeight = FontWeights.SemiBold,
-                    Foreground = alertQuantityBrush, // Uses the dark orange/amber for alertness
-                    Margin = new Thickness(0, 0, 0, 4)
+                    Fill = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
+                    Height = 1,
+                    Margin = new Thickness(0, 0, 0, 10)
                 };
-                medicineContent.Children.Add(txtMedQty);
+                mainContentStack.Children.Add(separator);
 
-                // --- Row 3: Description, ID Tag, and Button ---
-                Grid bottomGrid = new Grid();
-                bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                // Generic Name and Description Detail Blocks
+                mainContentStack.Children.Add(CreateDetailBlock("Generic Name", genericName, darkBlueBrush));
+                StackPanel descriptionBlock = CreateDetailBlock("Description", description, darkBlueBrush);
+                descriptionBlock.Margin = new Thickness(0, 8, 0, 0);
+                mainContentStack.Children.Add(descriptionBlock);
 
-                StackPanel descriptionPanel = new StackPanel();
-
-                // Description text color set to the dark main text color
-                TextBlock txtMedDesc = new TextBlock
-                {
-                    Text = medDesc,
-                    FontSize = 10,
-                    Foreground = mainTextBrush,
-                    TextWrapping = TextWrapping.Wrap,
-                    MaxHeight = 30,
-                    TextTrimming = TextTrimming.WordEllipsis,
-                    Margin = new Thickness(0, 0, 0, 0)
-                };
-                descriptionPanel.Children.Add(txtMedDesc);
-
-                TextBlock txtMedId = new TextBlock
-                {
-                    Text = $"ID: {medId}",
-                    Foreground = new SolidColorBrush(Colors.Gray), // ID remains gray
-                    FontSize = 9,
-                    Margin = new Thickness(0, 4, 0, 0)
-                };
-                descriptionPanel.Children.Add(txtMedId);
-
-                Grid.SetColumn(descriptionPanel, 0);
-                bottomGrid.Children.Add(descriptionPanel);
-
-                // Update Button (Vibrant Orange-Red for Action Alert)
-                Button updateButton = new Button
-                {
-                    Content = "Update 🔄",
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    Padding = new Thickness(8, 3, 8, 3),
-                    FontSize = 10,
-                    FontWeight = FontWeights.SemiBold,
-                    Foreground = Brushes.White, // White text contrasts strongly with the red background
-                    Background = Brushes.Transparent,
-                    BorderBrush = Brushes.Transparent,
-                    Tag = medId
-                };
-
-                
-                updateButton.Click += UpdateMedicineInventory_Click;
-
-                Border buttonBorderWrapper = new Border
-                {
-                    Background = alertActionBrush, // Uses the vibrant orange-red color
-                    CornerRadius = new CornerRadius(5),
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Bottom,
-                    Margin = new Thickness(8, 0, 0, 0),
-                    Child = updateButton // Use the button we just created
-                };
-
-                Grid.SetColumn(buttonBorderWrapper, 1);
-                bottomGrid.Children.Add(buttonBorderWrapper);
-
-                medicineContent.Children.Add(bottomGrid);
-
+                // Final assembly
+                medicineContent.Children.Add(mainContentStack);
                 cardBorder.Child = medicineContent;
 
-                StackPanelMedicineInv.Children.Add(cardBorder);
+                // ADDING THE CARD TO THE XAML-DEFINED STACKPANEL
+                wrapPanelInventory.Children.Add(cardBorder);
             }
+
+        }
+
+        // --- Helper Methods Required for the Above Code ---
+
+        private Border CreateAvailabilityTag(int quant)
+        {
+            string text;
+            Color backgroundColor;
+            Color foregroundColor = Colors.White;
+
+            if (quant > 10)
+            {
+                text = $"QTY: {quant}";
+                backgroundColor = (Color)ColorConverter.ConvertFromString("#FF00994D"); // Greenish
+            }
+            else if (quant > 0)
+            {
+                text = $"QTY: {quant}";
+                backgroundColor = (Color)ColorConverter.ConvertFromString("#FFFFD700"); // Yellow/Gold
+                foregroundColor = Colors.Black;
+            }
+            else
+            {
+                text = "Out of Stock";
+                backgroundColor = (Color)ColorConverter.ConvertFromString("#FFB0B0B0"); // Gray
+            }
+
+            return new Border
+            {
+                Background = new SolidColorBrush(backgroundColor),
+                CornerRadius = new CornerRadius(3),
+                Padding = new Thickness(6, 3, 6, 3),
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Center,
+                Child = new TextBlock
+                {
+                    Text = text,
+                    FontSize = 10,
+                    Foreground = new SolidColorBrush(foregroundColor),
+                    FontWeight = FontWeights.Bold
+                }
+            };
+        }
+
+        private StackPanel CreateDetailBlock(string label, string value, Brush foregroundBrush)
+        {
+            StackPanel panel = new StackPanel();
+
+            TextBlock labelBlock = new TextBlock
+            {
+                Text = label,
+                FontWeight = FontWeights.SemiBold,
+                FontSize = 11,
+                Foreground = Brushes.Gray,
+                Margin = new Thickness(0, 0, 0, 2)
+            };
+
+            TextBlock valueBlock = new TextBlock
+            {
+                Text = value,
+                FontWeight = FontWeights.Medium,
+                FontSize = 14,
+                Foreground = foregroundBrush,
+                TextWrapping = TextWrapping.Wrap
+            };
+
+            panel.Children.Add(labelBlock);
+            panel.Children.Add(valueBlock);
+
+            return panel;
         }
         private void UpdateMedicineInventory_Click(object sender, RoutedEventArgs e)
         {
-            Button clickedButton = sender as Button;
-
-            if (clickedButton != null && clickedButton.Tag is string medId)
+            if (sender is Button clickedButton && clickedButton.Tag is not null)
             {
-
+                dynamic tagData = clickedButton.Tag;
+                string medId = tagData.MedicineId;
+                string inventoryId = tagData.InventoryId;
 
                 string input = Microsoft.VisualBasic.Interaction.InputBox(
-                    $"Enter the quantity to ADD to medicine ID: {medId}",
+                    $"Enter the quantity to ADD to medicine '{medId}'",
                     "Add Inventory Stock",
                     "0");
 
                 if (int.TryParse(input, out int amountToAdd) && amountToAdd > 0)
                 {
-                    SQL = $"UPDATE medicineinventory SET amount = amount + {amountToAdd} WHERE inventory_id = {medId}";
+                    string SQL = $"UPDATE medicineinventory SET amount = amount + {amountToAdd} WHERE inventory_id = {inventoryId}";
                     admin.sqlManager(SQL);
-                    MessageBox.Show($"Successfully added {amountToAdd} units to inventory for ID {medId}.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    
-                    displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 20");
+                    MessageBox.Show($"Successfully added {amountToAdd} units to inventory for ID {medId}.", "Success",
+                                    MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // Log the update
                     SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                          $"VALUES ({id}, '{username}', 'Medicine Inventory Updated', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     admin.sqlManager(SQL);
-                }
-                else if (amountToAdd == 0)
-                {
 
+                    // Refresh the display
+                    displayMedicineInv("SELECT * FROM medicine_info");
                 }
                 else
                 {
-                    MessageBox.Show("Invalid input. Please enter a positive number for the quantity.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Invalid input. Please enter a positive number for the quantity.", "Input Error",
+                                    MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
-            displayMedicineInv("SELECT * FROM medicineinventory WHERE amount < 20");
         }
+
         public void displayActivity()
         {
             // --- 1. Data Fetching ---
@@ -1003,7 +1117,7 @@ namespace WpfApp2
             }
 
         }
-        
+
 
         private void TabControl_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
         {
@@ -1021,6 +1135,64 @@ namespace WpfApp2
 
             displayActivity();
         }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // If search box is empty or has placeholder text, show all records
+            if (txtSearch.Text == "Search Inventory ID..." || string.IsNullOrWhiteSpace(txtSearch.Text))
+            {
+                displayMedicineInv("SELECT * FROM medicine_info");
+            }
+            else
+            {
+                // Otherwise, perform search
+                string SQL = "SELECT mi.* FROM medicine_info mi " +
+                             "JOIN medicineinventory miv ON mi.medicine_id = miv.medicine_id " +
+                             "WHERE miv.inventory_id LIKE '%" + txtSearch.Text + "%'";
+                displayMedicineInv(SQL);
+            }
+        }
+
+
+        private void txtSearch_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearch.Text == "Search Inventory ID...")
+                txtSearch.Text = "";
+
+        }
+
+        private void txtSearch_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
+                txtSearch.Text = "Search Inventory ID...";
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (cmbFilterInv.SelectedIndex == null)
+            {
+                displayMedicineInv("select * from medicine_info");
+                
+            }
+            else if (cmbFilterInv.SelectedIndex == 0)
+            {
+                displayMedicineInv("SELECT mi.* FROM medicine_info mi " +
+                                   "JOIN medicineinventory miv ON mi.medicine_id = miv.medicine_id " +
+                                   "WHERE miv.amount < 20");
+            }
+            else if (cmbFilterInv.SelectedIndex == 1)
+            {
+                displayMedicineInv("SELECT mi.* FROM medicine_info mi " +
+                                   "JOIN medicineinventory miv ON mi.medicine_id = miv.medicine_id " +
+                                   "WHERE miv.amount >= 20");
+            }
+            else
+            {
+                displayMedicineInv("select * from medicine_info");
+            }
+        }
     }
-    }
+}
 

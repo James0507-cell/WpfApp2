@@ -59,8 +59,7 @@ namespace WpfApp2
             StackPanelMedicines.Children.Clear();
             int n = dt.Rows.Count;
 
-            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-            Brush buttonRedBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD0021B"));
+            
 
             for (int i = 0; i < n; i++)
             {
