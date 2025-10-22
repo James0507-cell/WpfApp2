@@ -297,6 +297,8 @@ namespace WpfApp2
             int totaltourismManagement = admin.TourismManagement();
             tourismManagement.Content = totaltourismManagement + " students";
 
+            int totalCommunication = admin.Communication();
+            Communication.Content = totalCommunication + " students";   
 
             SQL = "SELECT * FROM users WHERE role = 'Student'";
             displayUsers(SQL);

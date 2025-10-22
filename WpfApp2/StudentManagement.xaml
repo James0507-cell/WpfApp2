@@ -379,7 +379,7 @@
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Accountancy" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label x:Name="accountancy" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label x:Name="accountancy" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left" Height="29" Margin="516,0,0,0" VerticalAlignment="Top"/>
                                                 </Grid>
                                             </Border>
 
@@ -407,7 +407,7 @@
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Arts in Communication" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left" Height="29" Margin="516,0,0,0" VerticalAlignment="Top"/>
+                                                    <Label x:Name="Communication" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left" Margin="516,0,0,0"/>
                                                 </Grid>
                                             </Border>
 
