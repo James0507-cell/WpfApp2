@@ -375,6 +375,7 @@
                                             <ComboBoxItem Content="Approved"/>
                                             <ComboBoxItem Content="Rejected"/>
                                         </ComboBox>
+                                        <Border BorderBrush="Black" BorderThickness="1" Margin="343,17,262,638" Height="30"/>
                                     </Grid>
 
                                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">

@@ -205,9 +205,8 @@ namespace WpfApp2
             string UpdateQuerry = $"Update appointments set student_id = '{studentId}', user_id = {userId}, appointment_date = '{selectedDate:yyyy-MM-dd}', appointment_time = '{dbTimeFormat}', purpose_of_visit = '{cmbPurpose.Text}', known_allergies = '{txtAllergies.Text}', current_medication = '{txtCurrentMedication.Text}', previous_visit = '{cmbPreviousVisit.Text}', emergency_contact_name = '{txtEmergencyContactName.Text}', current_symptoms = '{txtSymptoms.Text}', emergency_contact_phone = '{txtEmergencyContactPhone.Text}', status = 'Pending' where appointment_id = {appointmentID}";
 
             booking.sqlManager(UpdateQuerry);
-            MessageBox.Show("Appointment successfully booked! Your appointment is Pending and awaiting approval.");
+            MessageBox.Show("Appointment successfully Updated! Your appointment is Pending and awaiting approval.");
 
-            // 3. Log the activity
             string SQL_log = $@"
             INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
             VALUES ({userId}, 'Appointment', 'Update appointment ID: {appointmentID}')";
