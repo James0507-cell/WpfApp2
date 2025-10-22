@@ -8,6 +8,72 @@
         mc:Ignorable="d"
         Title="AdminWindow" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Window.Resources>
+        <Style x:Key="AppointmentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="Foreground" Value="#1C3E61"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,15"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E6E6E6"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#D0D0D0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SelectedAppointmentButtonStyle" TargetType="Button" BasedOn="{StaticResource AppointmentButtonStyle}">
+            <Setter Property="Background" Value="#E53935"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E53935"/>
+        </Style>
+
+        <Style x:Key="BookedAppointmentStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F0F0F0"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,15"/>
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+        BorderBrush="{TemplateBinding BorderBrush}"
+        BorderThickness="{TemplateBinding BorderThickness}"
+        CornerRadius="5">
+
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                <ContentPresenter/>
+
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style TargetType="{x:Type TabControl}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -112,7 +178,7 @@
             </Button>
             <Grid Grid.Row="1" Margin="0,0,0,10">
                 <TabControl Margin="40,36,40,71" BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="TabControl_SelectionChanged_2">
-                    <TabItem Header="🏠 Overview" Background="{x:Null}" Margin="-100,-1,61,-1" BorderThickness="5,0,0,0" BorderBrush="{x:Null}">
+                    <TabItem Header="🏠 Overview" Background="{x:Null}" Margin="-86,-1,47,-1" BorderThickness="5,0,0,0" BorderBrush="{x:Null}">
                         <Grid Height="510" Margin="0,0,-1,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="121*"/>
@@ -223,7 +289,7 @@
                         </Grid>
                     </TabItem>
 
-                    <TabItem Header="💊 Medicine" Margin="103,-1,-137,-1" BorderBrush="{x:Null}" Background="{x:Null}">
+                    <TabItem Header="💊 Medicine" Margin="117,-1,-151,-1" BorderBrush="{x:Null}" Background="{x:Null}">
                         <Grid>
                             <Grid>
                                 <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="30,73,34,30" CornerRadius="15,15,15,15" Background="White">
@@ -245,7 +311,7 @@
 
                     <TabItem Header="📅 Appointment" RenderTransformOrigin="0.5,0.5" Height="30" VerticalAlignment="Top"
          mah:HeaderedControlHelper.HeaderForeground="{x:Null}" BorderThickness="5,0,0,0" 
-         Background="{x:Null}" BorderBrush="{x:Null}" Margin="-140,-1,140,0">
+         Background="{x:Null}" BorderBrush="{x:Null}" Margin="-126,-1,126,0">
                         <TabItem.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -268,7 +334,7 @@
                 BorderBrush="#1A00104D" 
                 BorderThickness="1" 
                 CornerRadius="15"
-                Margin="20,0,20,20" Background="White">
+                Margin="32,0,32,20" Background="White">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
@@ -278,7 +344,7 @@
                                     <Grid Grid.Row="0">
                                         <Label Content="Appointments" 
                            HorizontalAlignment="Left" 
-                           Margin="20,15,0,0" 
+                           Margin="20,10,0,0" 
                            VerticalAlignment="Top" 
                            Width="344" 
                            Height="32" 
@@ -320,7 +386,7 @@
                     </TabItem>
 
 
-                    <TabItem Margin="37,-2,-82,0" Header="👩‍🎓 Students" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <TabItem Margin="51,-2,-96,0" Header="👩‍🎓 Students" Background="{x:Null}" BorderBrush="{x:Null}">
                         <Grid>
                             <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="28,72,31,35" CornerRadius="15,15,15,15" Background="White">
                                 <Grid>
@@ -329,33 +395,23 @@
                                         <RowDefinition Height="177*"/>
                                     </Grid.RowDefinitions>
                                     <Label Content="Student Management" HorizontalAlignment="Left" Margin="18,10,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF00104D" FontSize="14"/>
-                                    <Label Content="Manage student accounts and records" HorizontalAlignment="Left" Margin="18,26,0,0" VerticalAlignment="Top" Width="217" Foreground="#FFAFAFAF"/>
-                                    <Image HorizontalAlignment="Center" Height="62" Margin="0,56,0,0" Grid.Row="1" VerticalAlignment="Top" Width="85" Source="/123123123.jpg"/>
+                                    <Label Content="Manage student accounts and records" HorizontalAlignment="Left" Margin="18,31,0,0" VerticalAlignment="Top" Width="217" Foreground="#FFAFAFAF"/>
+                                    <Image HorizontalAlignment="Center" Height="62" Margin="0,56,0,0" Grid.Row="1" VerticalAlignment="Top" Width="85" Source="/Screenshot 2025-10-22 124632.png"/>
                                     <Label Content="Comprehensive student account management system" HorizontalAlignment="Center" Margin="0,117,0,0" Grid.Row="1" VerticalAlignment="Top" Width="297"/>
-                                    <Button Content=""
+                                    <Button Content="Manage Student"
         HorizontalAlignment="Center"
-        Margin="0,148,0,0"
+        Margin="0,151,0,0"
         Grid.Row="1"
         VerticalAlignment="Top"
         Width="162"
-        Height="36" Cursor="Hand" Click="Button_Click_1">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="{x:Type Button}">
-                                                <Border CornerRadius="4"
-                    BorderThickness="1"
-                    BorderBrush="Black"
-                    Background="{TemplateBinding Background}" Margin="0,0,0,12">
-                                                    <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Button.Template>
+        Height="36" Cursor="Hand" Click="Button_Click_1"
+                                                    Style="{StaticResource SelectedAppointmentButtonStyle}"
+>
 
-                                        <Button.Background>
-                                            <ImageBrush ImageSource="/dsadasdasdasda.jpg" Stretch="Fill"/>
-                                        </Button.Background>
+
+
                                     </Button>
-                                    <Label Content="• Add new student accounts with comprehensive information&#xA;    • Edit existing student details and medical information&#xA;         • View enrollment analytics and program statistics&#xA;             • Search and filter students by various criteria" Grid.Row="1" Width="506" Foreground="#FFAFAFAF" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="167" Margin="0,184,0,0"/>
+                                    <Label Content="• Add new student accounts with comprehensive information&#xA;    • Edit existing student details and medical information&#xA;         • View enrollment analytics and program statistics&#xA;             • Search and filter students by various criteria" Grid.Row="1" Width="506" Foreground="#FFAFAFAF" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="82" Margin="0,195,0,0"/>
                                 </Grid>
                             </Border>
                         </Grid>
