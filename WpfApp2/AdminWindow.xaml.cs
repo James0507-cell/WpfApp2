@@ -1280,26 +1280,7 @@ namespace WpfApp2
 
         private void cboActivityFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cboActivityFilter.SelectedItem is ComboBoxItem selectedItem)
-            {
-                string filter = selectedItem.Content.ToString();
-                string query;
-
-                if (filter == "All")
-                {
-                    query = "SELECT * FROM admin_activity_log ORDER BY activity_date DESC";
-                }
-                else
-                {
-                    query = $@"
-                SELECT * 
-                FROM admin_activity_log 
-                WHERE TRIM(activity_type) = '{filter}' 
-                ORDER BY activity_date DESC";
-                }
-
-                displayActivity(query); 
-            }
+            
         }
 
 
