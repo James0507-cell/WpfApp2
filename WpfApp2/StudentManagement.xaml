@@ -262,7 +262,7 @@
         Width="160"
         Height="30"
         Margin="0,19,10,0"
-        BorderBrush="{x:Null}"
+        BorderBrush="#FFE53935"
         Click="Button_Click"
         Style="{StaticResource SelectedAppointmentButtonStyle}"
         FontSize="12"

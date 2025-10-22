@@ -181,7 +181,7 @@
                 <TabControl x:Name="MyTabAddStudent" Margin="53,10,34,10" BorderBrush="{x:Null}" Background="{x:Null}">
 
 
-                    <TabItem Header="Personal" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="152,0,-152,0">
+                    <TabItem Header="Personal" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="183,0,-183,0">
                         <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10" Height="571">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -290,7 +290,7 @@
                             </Grid>
                         </Border>
                     </TabItem>
-                    <TabItem Header="Academic" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="157,-1,-157,1">
+                    <TabItem Header="Academic" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="188,-1,-188,1">
                         <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10" Height="572">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -435,7 +435,7 @@
                             </Grid>
                         </Border>
                     </TabItem>
-                    <TabItem x:Name="tabItem" Header="Medical" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="162,0,-162,0">
+                    <TabItem x:Name="tabItem" Header="Medical" BorderBrush="{x:Null}" Background="{x:Null}" Width="120" Margin="193,0,-193,0">
                         <Border BorderBrush="#FFABABAB" BorderThickness="1" CornerRadius="10" Padding="10" Height="574">
                             <Grid>
                                 <Grid.RowDefinitions>
