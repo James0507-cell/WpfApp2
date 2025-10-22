@@ -368,7 +368,7 @@
                         </Grid>
                     </TabItem>
 
-                    <TabItem Header="💊 Medicine" Margin="96,-1,-120,-1" BorderBrush="{x:Null}" Background="{x:Null}">
+                    <TabItem Header="💊 Medicine" Margin="89,-1,-114,-1" BorderBrush="{x:Null}" Background="{x:Null}">
                         <Grid>
                             <Grid>
                                 <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="30,73,34,30" CornerRadius="15,15,15,15" Background="White">
@@ -390,7 +390,7 @@
 
                     <TabItem Header="📅 Appointment" RenderTransformOrigin="0.5,0.5" Height="30" VerticalAlignment="Top"
 mah:HeaderedControlHelper.HeaderForeground="{x:Null}" BorderThickness="5,0,0,0" 
-Background="{x:Null}" BorderBrush="{x:Null}" Margin="-126,-1,126,0">
+Background="{x:Null}" BorderBrush="{x:Null}" Margin="-155,-2,155,0">
                         <TabItem.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -465,7 +465,7 @@ Background="{x:Null}" BorderBrush="{x:Null}" Margin="-126,-1,126,0">
                     </TabItem>
 
 
-                    <TabItem Margin="23,-1,-53,-1" Header="👩‍🎓 Students" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <TabItem Margin="19,-1,-49,-1" Header="👩‍🎓 Students" Background="{x:Null}" BorderBrush="{x:Null}">
                         <Grid>
                             <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="28,72,31,35" CornerRadius="15,15,15,15" Background="White">
                                 <Grid>
@@ -496,7 +496,7 @@ Background="{x:Null}" BorderBrush="{x:Null}" Margin="-126,-1,126,0">
                             <Border BorderBrush="Black" BorderThickness="1"/>
                         </Grid>
                     </TabItem>
-                    <TabItem Margin="68,-2,-104,2" Header="Inventory">
+                    <TabItem Margin="65,-1,-100,0" Header="Inventory">
                         <Grid Margin="0,0,5,61">
                             <Border BorderThickness="1"
         CornerRadius="10"
