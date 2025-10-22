@@ -400,14 +400,14 @@
                                             <Border Background="#FFEDF3F7" Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Tourism Management" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label x:Name="tourismManagement" Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
                                                 </Grid>
                                             </Border>
 
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Arts in Communication" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>
-                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Right"/>
+                                                    <Label Content="0 students" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left" Height="29" Margin="516,0,0,0" VerticalAlignment="Top"/>
                                                 </Grid>
                                             </Border>
 

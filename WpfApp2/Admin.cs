@@ -149,7 +149,27 @@ namespace WpfApp2
         }
 
 
+        public int TourismManagement()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Tourism Management' AND role = 'Student'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
 
+        public int Communication()
+        {
+            using (MySqlConnection conn = new MySqlConnection(strConn))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Arts in Communication' AND role = 'Student'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
 
     }
 }

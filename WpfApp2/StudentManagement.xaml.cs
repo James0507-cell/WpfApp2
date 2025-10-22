@@ -294,6 +294,10 @@ namespace WpfApp2
             int totoalEntrepreneurship = admin.Entrepreneurship();
             Entrepreneurship.Content = totoalEntrepreneurship + " students";
 
+            int totaltourismManagement = admin.TourismManagement();
+            tourismManagement.Content = totaltourismManagement + " students";
+
+
             SQL = "SELECT * FROM users WHERE role = 'Student'";
             displayUsers(SQL);
             setId(Username);
