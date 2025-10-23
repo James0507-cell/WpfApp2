@@ -438,6 +438,12 @@ namespace WpfApp2
                 Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")) // Dark blue
             };
         }
+        public class MedicineRequestData
+        {
+            public string RequestID { get; set; }
+            public int InventoryID { get; set; }
+            public int Quantity { get; set; }
+        }
 
         public void displayMedicineRequest(String strquerry)
         {
@@ -460,6 +466,11 @@ namespace WpfApp2
                 String requestDate = dt.Rows[i][6].ToString();
                 String approvedDate = dt.Rows[i][7].ToString();
 
+                
+               DataTable inventoryid = admin.displayRecords(
+                    "SELECT inventory_id FROM medicineinventory WHERE medicine_name = '" + medicineName + "'");
+                int inventoryID = Convert.ToInt32(inventoryid.Rows[0][0]);
+
                 // 1. Card Container (Border)
                 Border cardBorder = new Border
                 {
@@ -471,7 +482,7 @@ namespace WpfApp2
                     Padding = new Thickness(15),
                     Width = double.NaN,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
-                    Tag = requestID // Set the request ID as the tag
+                    Tag = requestID
                 };
 
                 // Add the right-click handler
@@ -664,10 +675,60 @@ namespace WpfApp2
         {
             if (sender is MenuItem menuItem && menuItem.Tag is string requestID)
             {
-                approveMedicineRequest(requestID);
-                SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                     $"VALUES ({id}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-                admin.sqlManager(SQL);
+                // 1. Fetch details (medicine name and quantity) from the request
+                DataTable requestDetails = admin.displayRecords(
+                    $"SELECT medicine_name, quantity FROM medicinerequests WHERE request_id = '{requestID}'");
+
+                if (requestDetails.Rows.Count > 0)
+                {
+                    string medicineName = requestDetails.Rows[0]["medicine_name"].ToString();
+                    // Convert quantity to an integer for safe SQL execution later
+                    if (int.TryParse(requestDetails.Rows[0]["quantity"].ToString(), out int quantityRequested))
+                    {
+                        // 2. Fetch inventory ID for the medicine
+                        DataTable inventoryidDt = admin.displayRecords(
+                            $"SELECT inventory_id FROM medicineinventory WHERE medicine_name = '{medicineName}'");
+
+                        if (inventoryidDt.Rows.Count > 0)
+                        {
+                            int inventoryID = Convert.ToInt32(inventoryidDt.Rows[0]["inventory_id"]);
+
+                            // 3. Update the request status
+                            approveMedicineRequest(requestID);
+
+                            // 4. Log the approval activity
+                            string logSQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                                            $"VALUES ({id}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                            admin.sqlManager(logSQL);
+
+                            // 5. CORRECTED SQL: Update the inventory amount
+                            // The correct SQL syntax is SET column_name = value
+                            // Also, 'ammount' is likely a typo for 'amount' or 'quantity' in your database. I'm assuming 'amount'.
+                            // Use the fetched quantityRequested variable and the fetched inventoryID.
+                            string updateInventorySQL = $"UPDATE medicineinventory SET amount = amount - {quantityRequested} WHERE inventory_id = {inventoryID}";
+
+                            // Note: If your column is actually named 'ammount', change 'amount' to 'ammount'
+                            // string updateInventorySQL = $"UPDATE medicineinventory SET ammount = ammount - {quantityRequested} WHERE inventory_id = {inventoryID}";
+
+                            admin.sqlManager(updateInventorySQL);
+                        }
+                        else
+                        {
+                            // Handle case where medicine is not found in inventory
+                            System.Windows.MessageBox.Show($"Error: Medicine '{medicineName}' not found in inventory.");
+                        }
+                    }
+                    else
+                    {
+                        // Handle case where quantity is not a valid number
+                        System.Windows.MessageBox.Show($"Error: Invalid quantity for request ID {requestID}.");
+                    }
+                }
+                else
+                {
+                    // Handle case where request ID is not found
+                    System.Windows.MessageBox.Show($"Error: Medicine request ID {requestID} not found.");
+                }
             }
         }
 
@@ -887,17 +948,14 @@ namespace WpfApp2
                 descriptionBlock.Margin = new Thickness(0, 8, 0, 0);
                 mainContentStack.Children.Add(descriptionBlock);
 
-                // Final assembly
                 medicineContent.Children.Add(mainContentStack);
                 cardBorder.Child = medicineContent;
 
-                // ADDING THE CARD TO THE XAML-DEFINED STACKPANEL
                 wrapPanelInventory.Children.Add(cardBorder);
             }
 
         }
 
-        // --- Helper Methods Required for the Above Code ---
 
         private Border CreateAvailabilityTag(int quant)
         {
@@ -989,7 +1047,7 @@ namespace WpfApp2
 
                     // Log the update
                     SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                         $"VALUES ({id}, '{username}', 'Medicine Inventory Updated', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                         $"VALUES ({id}, '{username}', 'Update Medcine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     admin.sqlManager(SQL);
 
                     // Refresh the display
@@ -1010,28 +1068,23 @@ namespace WpfApp2
             StackPanelActivities.Children.Clear();
             DataTable dt = admin.displayRecords(SQL);
 
-            // --- 2. UI Initialization ---
-            // Clear the StackPanel where activities are displayed
+            
             StackPanelActivities.Children.Clear();
 
-            // Color definitions for consistent styling
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
             Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
             Brush lightBackground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA));
             Brush idTagBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F0F0"));
 
 
-            // --- 3. Iterate and Build UI Cards ---
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                // Extract all fields from the DataTable row
                 string activityID = dt.Rows[i]["activity_id"].ToString();
                 string username = dt.Rows[i]["username"].ToString();
                 string type = dt.Rows[i]["activity_type"].ToString();
                 string description = dt.Rows[i]["activity_desc"].ToString();
                 string dateTime = dt.Rows[i]["activity_date"].ToString();
 
-                // --- Activity Card Container (Border) ---
                 Border cardBorder = new Border
                 {
                     BorderBrush = Brushes.Transparent,
@@ -1140,11 +1193,12 @@ namespace WpfApp2
             int totalLowStock = admin.getMedicineCount();
             lblLowStack.Content = totalLowStock;
 
-            displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (wrapPanelInventory == null)
+                return; // UI not ready yet
             // If search box is empty or has placeholder text, show all records
             if (txtSearch.Text == "Search Inventory ID..." || string.IsNullOrWhiteSpace(txtSearch.Text))
             {
@@ -1181,7 +1235,7 @@ namespace WpfApp2
             if (cmbFilterInv.SelectedIndex == null)
             {
                 displayMedicineInv("select * from medicine_info");
-                
+
             }
             else if (cmbFilterInv.SelectedIndex == 0)
             {
@@ -1278,10 +1332,7 @@ namespace WpfApp2
             }
         }
 
-        private void cboActivityFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
+
 
 
 
@@ -1313,6 +1364,21 @@ namespace WpfApp2
 
             if (txtSearchActivity.Text == "Search activity ID...")
                 txtSearchActivity.Text = "";
+        }
+
+        private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            string selectedType = (cboFilterActivity.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+            if (selectedType == "All")
+            {
+                displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
+            }
+            else
+            {
+                displayActivity($"SELECT * FROM admin_activity_log WHERE activity_type = '{selectedType}' ORDER BY activity_date DESC");
+            }
+
         }
     }
 }

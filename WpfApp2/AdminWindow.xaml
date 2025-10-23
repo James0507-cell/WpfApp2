@@ -277,7 +277,7 @@
             <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="67,28,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
             <Image HorizontalAlignment="Left" Height="56" VerticalAlignment="Center" Width="55" Source="/Logo-Final_noname_1.png" RenderTransformOrigin="1.025,-0.28" Margin="12,0,0,0"/>
             <Button Content="Logout" HorizontalAlignment="Right" Margin="0,10,10,10" VerticalAlignment="Center" Height="20" Width="62" Style="{StaticResource AppointmentButtonStyle}" Click="Button_Click" FontSize="8">
-                
+
             </Button>
             <Grid Grid.Row="1" Margin="0,0,0,10">
                 <TabControl Margin="40,36,40,71" BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="TabControl_SelectionChanged_2">
@@ -427,26 +427,17 @@
                          Text="Search activity ID..."/>
                                                         </Grid>
                                                     </Border>
-
-                                                    <ComboBox x:Name="cboActivityFilter"
-          Grid.Column="2"
-          HorizontalAlignment="Left"
-          VerticalAlignment="Top"
-          Width="170"
-          Height="30"
-          Foreground="Black"
-          Margin="10,26,0,0"
-          Style="{StaticResource CustomComboBoxStyle}"
-          SelectionChanged="cboActivityFilter_SelectionChanged">
+                                                    <ComboBox x:Name="cboFilterActivity" Grid.Column="2" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="170" Style="{StaticResource CustomComboBoxStyle}" SelectionChanged="ComboBox_SelectionChanged_1" Foreground="Black" Height="30">
                                                         <ComboBoxItem Content="All"/>
                                                         <ComboBoxItem Content="Appointment Approved"/>
                                                         <ComboBoxItem Content="Appointment Rejected"/>
                                                         <ComboBoxItem Content="Medicine Request Approved"/>
                                                         <ComboBoxItem Content="Medicine Request Rejected"/>
-                                                        <ComboBoxItem Content="Delete Student Info"/>
                                                         <ComboBoxItem Content="Add New Student"/>
                                                         <ComboBoxItem Content="Update Student Info"/>
-                                                        <ComboBoxItem Content="Medicine Inventory Updated"/>
+                                                        <ComboBoxItem Content="Delete Student Info"/>
+                                                        <ComboBoxItem Content="Update Medicine Inventory"/>
+                                                        <ComboBoxItem Content="Add New Medicine"/>
                                                     </ComboBox>
 
                                                 </Grid>
@@ -708,11 +699,12 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
 
+                                    <!-- Header -->
                                     <Border Grid.Row="0"
-        BorderBrush="#FF959595"
-        BorderThickness="0,0,0,1"
-        Margin="0,4,0,0"
-        VerticalAlignment="Bottom">
+                BorderBrush="#FF959595"
+                BorderThickness="0,0,0,1"
+                Margin="0,4,0,0"
+                VerticalAlignment="Bottom">
                                         <Grid Height="65" VerticalAlignment="Bottom">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="270"/>
@@ -727,33 +719,75 @@
 
                                             <!-- Title -->
                                             <Label Content="Manage Inventory"
-               Foreground="#FF00104D"
-               FontSize="14"
-               FontWeight="DemiBold"
-               Padding="5,0,0,0"
-               Margin="10,12,0,25"/>
+                       Foreground="#FF00104D"
+                       FontSize="14"
+                       FontWeight="DemiBold"
+                       Padding="5,0,0,0"
+                       Margin="10,12,0,25"/>
 
                                             <!-- Subtitle -->
                                             <Label Content="Manage and update medicine inventory"
-               Grid.Column="0"
-               Margin="10,30,0,0"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top"
-               Foreground="#FFAFAFAF"
-               Height="26"
-               Width="236"/>
+                       Grid.Column="0"
+                       Margin="10,30,0,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Foreground="#FFAFAFAF"
+                       Height="26"
+                       Width="236"/>
+
+                                            <!-- Search Bar -->
+                                            <Border Grid.Column="1"
+                        BorderBrush="#1A00104D"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        Height="32"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Center"
+                        Margin="0,24,0,0"
+                        Width="221"
+                        Background="White">
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Search Icon -->
+                                                    <Image 
+                            Source="/Screenshot 2025-10-21 210426.png"
+                            Width="20" Height="20"
+                            VerticalAlignment="Center"
+                            Margin="10,0"/>
+
+                                                    <!-- Search TextBox -->
+                                                    <TextBox 
+                            x:Name="txtSearch"
+                            Grid.Column="1"
+                            Margin="5,0,10,0"
+                            VerticalAlignment="Center"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            Foreground="#FF8F8F8F"
+                            FontSize="13"
+                            Text="Search Inventory ID..."
+                            TextChanged="txtSearch_TextChanged"
+                            GotFocus="txtSearch_GotFocus"
+                            LostFocus="txtSearch_LostFocus"/>
+                                                </Grid>
+                                            </Border>
 
                                             <!-- ComboBox Filter -->
                                             <ComboBox x:Name="cmbFilterInv"
-                  Grid.Column="2"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Top"
-                  Width="171"
-                  Height="30"
-                  Margin="10,26,0,0"
-                  Foreground="Black"
-                  Style="{StaticResource CustomComboBoxStyle}"
-                  SelectionChanged="ComboBox_SelectionChanged">
+                          Grid.Column="2"
+                          VerticalAlignment="Top"
+                          Width="171"
+                          Height="30"
+                          Margin="10,26,0,0"
+                          Foreground="Black"
+                          Style="{StaticResource CustomComboBoxStyle}"
+                          SelectionChanged="ComboBox_SelectionChanged"
+                          HorizontalAlignment="Left">
                                                 <ComboBoxItem Content="Low Stacks"/>
                                                 <ComboBoxItem Content="High Stacks"/>
                                                 <ComboBoxItem Content="All Item"/>
@@ -761,59 +795,20 @@
                                         </Grid>
                                     </Border>
 
-
+                                    <!-- ScrollViewer content -->
                                     <ScrollViewer Grid.Row="1"
-                                          Margin="20"
-                                          VerticalScrollBarVisibility="Auto"
-                                          HorizontalScrollBarVisibility="Disabled">
+                      Margin="20"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
                                         <Grid HorizontalAlignment="Center">
                                             <WrapPanel x:Name="wrapPanelInventory"
-                                               Orientation="Horizontal"
-                                               Margin="10"/>
+                           Orientation="Horizontal"
+                           Margin="10"/>
                                         </Grid>
                                     </ScrollViewer>
                                 </Grid>
                             </Border>
-                            <Border 
-                                    BorderBrush="#1A00104D" 
-                                    BorderThickness="1" 
-                                    CornerRadius="5" 
-                                    Height="32"
-                                    VerticalAlignment="Top"
-                                    HorizontalAlignment="Center"
-                                    Margin="0,53,0,0"
-                                    Width="221"
-                                    Background="White">
 
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <!-- Search Icon -->
-                                    <Image 
-                                    Source="/Screenshot 2025-10-21 210426.png"
-                                    Width="20" Height="20"
-                                    VerticalAlignment="Center"
-                                    Margin="10,0"/>
-
-                                    <!-- Search TextBox -->
-                                    <TextBox 
-                                    x:Name="txtSearch"
-                                    Grid.Column="1"
-                                    Margin="5,0,10,0"
-                                    VerticalAlignment="Center"
-                                    BorderThickness="0"
-                                    Background="Transparent"
-                                    Foreground="#FF8F8F8F"
-                                    FontSize="13"
-                                    Text="Search Inventory ID..."
-                                    TextChanged="txtSearch_TextChanged"
-                                    GotFocus="txtSearch_GotFocus"
-                                    LostFocus="txtSearch_LostFocus"/>
-                                </Grid>
-                            </Border>
 
 
 
