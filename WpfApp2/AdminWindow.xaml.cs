@@ -49,7 +49,7 @@ namespace WpfApp2
             displayMedicineInv("select * from medicine_info");
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
-            displayActivity();
+            displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
         }
 
         private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -147,14 +147,13 @@ namespace WpfApp2
 
         public void displayAppointments(String querry)
         {
-            StackPanel targetStackPanel = this.AppointmentStackPanel;
 
             DataTable dt = new DataTable();
 
             dt = admin.displayRecords(querry);
 
             int n = dt.Rows.Count;
-            targetStackPanel.Children.Clear();
+            AppointmentStackPanel.Children.Clear();
 
             TextBlock CreateDetailBlock(string label, string value, FontWeight weight = default)
             {
@@ -188,6 +187,8 @@ namespace WpfApp2
                 String ecp = dt.Rows[i][13].ToString();
                 String status = dt.Rows[i][14].ToString();
                 String symptoms = dt.Rows[i][16].ToString();
+                String handledTime = dt.Rows[i]["handled_time"].ToString();
+
 
 
 
@@ -250,6 +251,16 @@ namespace WpfApp2
                     Margin = new Thickness(0, 0, 0, 8)
                 };
                 primaryDetails.Children.Add(txtDateTime);
+
+                TextBlock txtHandledTime = new TextBlock
+                {
+                    Text = handledTime != "" ? $"Handled Time: {handledTime}" : "Handled Time: N/A",
+                    FontSize = 12,
+                    FontWeight = FontWeights.Normal,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4D7399")),
+                    Margin = new Thickness(0, 0, 0, 0)
+                };
+                primaryDetails.Children.Add(txtHandledTime);
 
                 Grid.SetColumn(primaryDetails, 0);
                 headerGrid.Children.Add(primaryDetails);
@@ -342,27 +353,31 @@ namespace WpfApp2
 
 
                 cardBorder.Child = mainLayoutGrid;
-                targetStackPanel.Children.Add(cardBorder);
+                AppointmentStackPanel.Children.Add(cardBorder);
             }
         }
         public void approveAppointment(String appointmentID)
         {
-            String querry = $"UPDATE appointments SET status = 'Approved' WHERE appointment_id = {appointmentID}";
+            String querry = $"UPDATE appointments SET status = 'Approved', handled_time = NOW() WHERE appointment_id = {appointmentID}";
             admin.sqlManager(querry);
+
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                      $"VALUES ({id}, '{username}', 'Appointment Approved', 'Approved appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             admin.sqlManager(querry);
+
             displayAppointments("SELECT * FROM appointments");
         }
 
+
         public void rejectAppointment(String appointmentID, String reason)
         {
-            String querry = $"UPDATE appointments SET status = 'Rejected', reason = '{reason}' WHERE appointment_id = {appointmentID}";
+            String querry = $"UPDATE appointments SET status = 'Rejected', reason = '{reason}', handled_time = NOW() WHERE appointment_id = {appointmentID}";
             admin.sqlManager(querry);
             displayAppointments("SELECT * FROM appointments");
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                      $"VALUES ({id}, '{username}', 'Appointment Rejected', 'Rejected appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             admin.sqlManager(querry);
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -386,13 +401,21 @@ namespace WpfApp2
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
             displayMedicineInv("select * from medicine_info");
-            displayActivity();
+            displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
         }
 
         private void txtSearchIDapp_TextChanged(object sender, TextChangedEventArgs e)
         {
-            String querry = $"SELECT * FROM appointments WHERE student_id LIKE '%{txtSearchIDapp.Text}%'";
-            displayAppointments(querry);
+
+            //if (txtSearchIDapp.Text == "Search appointment ID..." || string.IsNullOrWhiteSpace(txtSearch.Text))
+            //{
+            //    displayAppointments("SELECT * FROM appointments");
+            //}
+            //else
+            //{
+            //    displayAppointments($"SELECT * FROM appointments WHERE appointment_id LIKE '%{txtSearchIDapp.Text}%'");
+
+            //}
         }
 
         private void cmbStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -431,6 +454,12 @@ namespace WpfApp2
                 Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")) // Dark blue
             };
         }
+        public class MedicineRequestData
+        {
+            public string RequestID { get; set; }
+            public int InventoryID { get; set; }
+            public int Quantity { get; set; }
+        }
 
         public void displayMedicineRequest(String strquerry)
         {
@@ -453,6 +482,11 @@ namespace WpfApp2
                 String requestDate = dt.Rows[i][6].ToString();
                 String approvedDate = dt.Rows[i][7].ToString();
 
+                
+               DataTable inventoryid = admin.displayRecords(
+                    "SELECT inventory_id FROM medicineinventory WHERE medicine_name = '" + medicineName + "'");
+                int inventoryID = Convert.ToInt32(inventoryid.Rows[0][0]);
+
                 // 1. Card Container (Border)
                 Border cardBorder = new Border
                 {
@@ -464,7 +498,7 @@ namespace WpfApp2
                     Padding = new Thickness(15),
                     Width = double.NaN,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
-                    Tag = requestID // Set the request ID as the tag
+                    Tag = requestID
                 };
 
                 // Add the right-click handler
@@ -657,10 +691,60 @@ namespace WpfApp2
         {
             if (sender is MenuItem menuItem && menuItem.Tag is string requestID)
             {
-                approveMedicineRequest(requestID);
-                SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                     $"VALUES ({id}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-                admin.sqlManager(SQL);
+                // 1. Fetch details (medicine name and quantity) from the request
+                DataTable requestDetails = admin.displayRecords(
+                    $"SELECT medicine_name, quantity FROM medicinerequests WHERE request_id = '{requestID}'");
+
+                if (requestDetails.Rows.Count > 0)
+                {
+                    string medicineName = requestDetails.Rows[0]["medicine_name"].ToString();
+                    // Convert quantity to an integer for safe SQL execution later
+                    if (int.TryParse(requestDetails.Rows[0]["quantity"].ToString(), out int quantityRequested))
+                    {
+                        // 2. Fetch inventory ID for the medicine
+                        DataTable inventoryidDt = admin.displayRecords(
+                            $"SELECT inventory_id FROM medicineinventory WHERE medicine_name = '{medicineName}'");
+
+                        if (inventoryidDt.Rows.Count > 0)
+                        {
+                            int inventoryID = Convert.ToInt32(inventoryidDt.Rows[0]["inventory_id"]);
+
+                            // 3. Update the request status
+                            approveMedicineRequest(requestID);
+
+                            // 4. Log the approval activity
+                            string logSQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
+                                            $"VALUES ({id}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                            admin.sqlManager(logSQL);
+
+                            // 5. CORRECTED SQL: Update the inventory amount
+                            // The correct SQL syntax is SET column_name = value
+                            // Also, 'ammount' is likely a typo for 'amount' or 'quantity' in your database. I'm assuming 'amount'.
+                            // Use the fetched quantityRequested variable and the fetched inventoryID.
+                            string updateInventorySQL = $"UPDATE medicineinventory SET amount = amount - {quantityRequested} WHERE inventory_id = {inventoryID}";
+
+                            // Note: If your column is actually named 'ammount', change 'amount' to 'ammount'
+                            // string updateInventorySQL = $"UPDATE medicineinventory SET ammount = ammount - {quantityRequested} WHERE inventory_id = {inventoryID}";
+
+                            admin.sqlManager(updateInventorySQL);
+                        }
+                        else
+                        {
+                            // Handle case where medicine is not found in inventory
+                            System.Windows.MessageBox.Show($"Error: Medicine '{medicineName}' not found in inventory.");
+                        }
+                    }
+                    else
+                    {
+                        // Handle case where quantity is not a valid number
+                        System.Windows.MessageBox.Show($"Error: Invalid quantity for request ID {requestID}.");
+                    }
+                }
+                else
+                {
+                    // Handle case where request ID is not found
+                    System.Windows.MessageBox.Show($"Error: Medicine request ID {requestID} not found.");
+                }
             }
         }
 
@@ -880,17 +964,14 @@ namespace WpfApp2
                 descriptionBlock.Margin = new Thickness(0, 8, 0, 0);
                 mainContentStack.Children.Add(descriptionBlock);
 
-                // Final assembly
                 medicineContent.Children.Add(mainContentStack);
                 cardBorder.Child = medicineContent;
 
-                // ADDING THE CARD TO THE XAML-DEFINED STACKPANEL
                 wrapPanelInventory.Children.Add(cardBorder);
             }
 
         }
 
-        // --- Helper Methods Required for the Above Code ---
 
         private Border CreateAvailabilityTag(int quant)
         {
@@ -982,7 +1063,7 @@ namespace WpfApp2
 
                     // Log the update
                     SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                         $"VALUES ({id}, '{username}', 'Medicine Inventory Updated', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                         $"VALUES ({id}, '{username}', 'Update Medcine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     admin.sqlManager(SQL);
 
                     // Refresh the display
@@ -996,35 +1077,30 @@ namespace WpfApp2
             }
         }
 
-        public void displayActivity()
+        public void displayActivity(String SQL)
         {
             // --- 1. Data Fetching ---
             // Assuming 'userForm' is an instance that handles database calls
-            SQL = "SELECT * FROM admin_activity_log ORDER BY activity_date DESC";
+            StackPanelActivities.Children.Clear();
             DataTable dt = admin.displayRecords(SQL);
 
-            // --- 2. UI Initialization ---
-            // Clear the StackPanel where activities are displayed
+            
             StackPanelActivities.Children.Clear();
 
-            // Color definitions for consistent styling
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
             Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
             Brush lightBackground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA));
             Brush idTagBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F0F0"));
 
 
-            // --- 3. Iterate and Build UI Cards ---
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                // Extract all fields from the DataTable row
-                string adminId = dt.Rows[i]["admin_id"].ToString();
+                string activityID = dt.Rows[i]["activity_id"].ToString();
                 string username = dt.Rows[i]["username"].ToString();
                 string type = dt.Rows[i]["activity_type"].ToString();
                 string description = dt.Rows[i]["activity_desc"].ToString();
                 string dateTime = dt.Rows[i]["activity_date"].ToString();
 
-                // --- Activity Card Container (Border) ---
                 Border cardBorder = new Border
                 {
                     BorderBrush = Brushes.Transparent,
@@ -1067,7 +1143,7 @@ namespace WpfApp2
                     VerticalAlignment = VerticalAlignment.Center,
                     Child = new TextBlock
                     {
-                        Text = $"ID: {adminId}",
+                        Text = $"ID: {activityID}",
                         Foreground = Brushes.Gray,
                         FontWeight = FontWeights.Normal,
                         FontSize = 9
@@ -1133,11 +1209,12 @@ namespace WpfApp2
             int totalLowStock = admin.getMedicineCount();
             lblLowStack.Content = totalLowStock;
 
-            displayActivity();
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (wrapPanelInventory == null)
+                return; // UI not ready yet
             // If search box is empty or has placeholder text, show all records
             if (txtSearch.Text == "Search Inventory ID..." || string.IsNullOrWhiteSpace(txtSearch.Text))
             {
@@ -1174,7 +1251,7 @@ namespace WpfApp2
             if (cmbFilterInv.SelectedIndex == null)
             {
                 displayMedicineInv("select * from medicine_info");
-                
+
             }
             else if (cmbFilterInv.SelectedIndex == 0)
             {
@@ -1192,6 +1269,132 @@ namespace WpfApp2
             {
                 displayMedicineInv("select * from medicine_info");
             }
+        }
+
+        private void txtSearchIDapp_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearchIDapp.Text == "Search appointment ID...")
+                txtSearchIDapp.Text = "";
+        }
+
+        private void txtSearchIDapp_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearchIDapp.Text))
+                txtSearchIDapp.Text = "Search appointment ID...";
+        }
+
+        private void txtSearchIDapp_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            if (AppointmentStackPanel == null)
+                return; // UI not ready yet
+
+            if (txtSearchIDapp.Text == "Search appointment ID..." || string.IsNullOrWhiteSpace(txtSearchIDapp.Text))
+            {
+                displayAppointments("SELECT * FROM appointments");
+            }
+            else
+            {
+                displayAppointments($"SELECT * FROM appointments WHERE appointment_id LIKE '%{txtSearchIDapp.Text}%'");
+            }
+        }
+
+        private void txtSearchMedID_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearchMedID.Text == "Search medicine request ID...")
+                txtSearchMedID.Text = "";
+        }
+
+        private void txtSearchMedID_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearchMedID.Text))
+                txtSearchMedID.Text = "Search medicine request ID...";
+        }
+
+        private void txtSearchMedID_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (StackPanelMedicineReuqests == null)
+                return; // UI not ready yet
+            if (txtSearchMedID.Text == "Search medicine request ID..." || string.IsNullOrWhiteSpace(txtSearchMedID.Text))
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests");
+            }
+            else
+            {
+                displayMedicineRequest($"SELECT * FROM medicinerequests WHERE request_id LIKE '%{txtSearchMedID.Text}%'");
+            }
+        }
+
+        private void cboMedFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cboMedFilter.SelectedIndex == null)
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests");
+            }
+            else if (cboMedFilter.SelectedIndex == 0)
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests");
+            }
+            else if (cboMedFilter.SelectedIndex == 1)
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests WHERE status = 'Pending'");
+            }
+            else if (cboMedFilter.SelectedIndex == 2)
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests WHERE status = 'Approved'");
+            }
+            else
+            {
+                displayMedicineRequest("SELECT * FROM medicinerequests Where status = 'Rejected'");
+            }
+        }
+
+
+
+
+
+
+
+        private void txtSearchActivity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (StackPanelActivities == null)
+                return; // UI not ready yet
+            if (txtSearchActivity.Text == "Search activity ID..." || string.IsNullOrWhiteSpace(txtSearchActivity.Text))
+            {
+                displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
+            }
+            else
+            {
+                displayActivity($"SELECT * FROM admin_activity_log where activity_id like '%{txtSearchActivity.Text}%'");
+            }
+        }
+
+        private void txtSearchActivity_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearchActivity.Text))
+                txtSearchActivity.Text = "Search activity ID...";
+
+        }
+
+        private void txtSearchActivity_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            if (txtSearchActivity.Text == "Search activity ID...")
+                txtSearchActivity.Text = "";
+        }
+
+        private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            string selectedType = (cboFilterActivity.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+            if (selectedType == "All")
+            {
+                displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
+            }
+            else
+            {
+                displayActivity($"SELECT * FROM admin_activity_log WHERE activity_type = '{selectedType}' ORDER BY activity_date DESC");
+            }
+
         }
     }
 }

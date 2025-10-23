@@ -137,7 +137,7 @@ namespace WpfApp2
 
             student.displayUsers("SELECT * FROM users WHERE role = 'Student'");
             SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                     $"VALUES ({id}, '{username}', 'Appointment Approved', 'Add new Student + {txtUsername.Text}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                     $"VALUES ({id}, '{username}', 'Add New Student', 'Add new Student + {txtUsername.Text}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             admin.sqlManager(SQL);
             clear();
 

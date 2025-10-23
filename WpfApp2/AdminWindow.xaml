@@ -276,10 +276,8 @@
             <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Height="50"/>
             <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="67,28,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
             <Image HorizontalAlignment="Left" Height="56" VerticalAlignment="Center" Width="55" Source="/Logo-Final_noname_1.png" RenderTransformOrigin="1.025,-0.28" Margin="12,0,0,0"/>
-            <Button Content="Log out" HorizontalAlignment="Right" Margin="0,10,10,10" VerticalAlignment="Center" Height="20" Width="62" Click="Button_Click">
-                <Button.Background>
-                    <ImageBrush/>
-                </Button.Background>
+            <Button Content="Logout" HorizontalAlignment="Right" Margin="0,10,20,10" VerticalAlignment="Center" Height="20" Width="62" Style="{StaticResource AppointmentButtonStyle}" Click="Button_Click" FontSize="8">
+
             </Button>
             <Grid Grid.Row="1" Margin="0,0,0,10">
                 <TabControl Margin="40,36,40,71" BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="TabControl_SelectionChanged_2">
@@ -339,28 +337,112 @@
                                     </StackPanel>
                                 </Border>
                             </Grid>
-                            <Grid Grid.Row="1" Margin="0,0,0,24">
+                            <Grid Grid.Row="1" Margin="0,0,0,32">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Grid>
-                                    <Border BorderThickness="1,1,1,1" BorderBrush="#FFD1D1D1" CornerRadius="15,15,15,15" Margin="0,0,24,0" Background="White" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality">
+                                <Grid Margin="0,0,0,-32">
+                                    <Border BorderThickness="1,1,1,1" BorderBrush="#FFD1D1D1" CornerRadius="10,10,10,10" Background="White" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,10">
 
-                                        <Grid Margin="0,0,-2,-1">
+                                        <Grid Margin="0,0,-2,-10">
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="47*"/>
+                                                <RowDefinition Height="70"/>
                                                 <RowDefinition Height="312*"/>
                                                 <RowDefinition Height="29*"/>
                                             </Grid.RowDefinitions>
                                             <ScrollViewer Grid.Row="1">
                                                 <StackPanel x:Name="StackPanelActivities"/>
                                             </ScrollViewer>
-                                            <Border BorderBrush="#FFCBCBCB" BorderThickness="0,0,0,1">
-                                                <Grid>
-                                                    <Image Height="42" Margin="7,0,290,0"/>
-                                                    <Label Content="Recent Activities" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF001C5B" Margin="43,0,0,0"/>
+                                            <Border Grid.Row="0"
+        BorderBrush="#FFA0A0A0"
+        BorderThickness="0,0,0,1"
+        Margin="0,4,0,0"
+        VerticalAlignment="Bottom">
+                                                <Grid Height="65" VerticalAlignment="Bottom">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="270"/>
+                                                        <ColumnDefinition Width="240" MinWidth="221"/>
+                                                        <ColumnDefinition Width="1" MinWidth="180"/>
+                                                        <ColumnDefinition Width="1"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="55.8" MinHeight="55.58"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Title -->
+                                                    <Label Content="Recent Activities"
+               Foreground="#FF00104D"
+               FontSize="14"
+               FontWeight="DemiBold"
+               Padding="5,0,0,0"
+               Margin="10,12,0,25"/>
+
+                                                    <!-- Subtitle -->
+                                                    <Label Content="Get an overview of the recent activities"
+               Grid.Column="0"
+               Margin="10,30,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Foreground="#FFAFAFAF"
+               Height="26"
+               Width="236"/>
+
+                                                    <!-- Search Box -->
+                                                    <Border Grid.Column="1"
+                BorderBrush="#1A00104D"
+                BorderThickness="1"
+                CornerRadius="5"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                Width="220"
+                Height="32"
+                Margin="0,24,0,0">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <Image Grid.Column="0"
+                       HorizontalAlignment="Center"
+                       Height="20"
+                       VerticalAlignment="Center"
+                       Width="17"
+                       Margin="5,0,5,0"
+                       Source="/Screenshot 2025-10-21 210426.png"/>
+
+                                                            <TextBox x:Name="txtSearchActivity"
+                         Grid.Column="1"
+                         HorizontalAlignment="Stretch"
+                         TextWrapping="Wrap"
+                         VerticalAlignment="Center"
+                         BorderBrush="{x:Null}"
+                         Height="28"
+                         VerticalContentAlignment="Center"
+                         Foreground="#FF8F8F8F"
+                         GotFocus="txtSearchActivity_GotFocus"
+                         LostFocus="txtSearchActivity_LostFocus"
+                         TextChanged="txtSearchActivity_TextChanged"
+                         Text="Search activity ID..."/>
+                                                        </Grid>
+                                                    </Border>
+                                                    <ComboBox x:Name="cboFilterActivity" Grid.Column="2" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="170" Style="{StaticResource CustomComboBoxStyle}" SelectionChanged="ComboBox_SelectionChanged_1" Foreground="Black" Height="30">
+                                                        <ComboBoxItem Content="All"/>
+                                                        <ComboBoxItem Content="Appointment Approved"/>
+                                                        <ComboBoxItem Content="Appointment Rejected"/>
+                                                        <ComboBoxItem Content="Medicine Request Approved"/>
+                                                        <ComboBoxItem Content="Medicine Request Rejected"/>
+                                                        <ComboBoxItem Content="Add New Student"/>
+                                                        <ComboBoxItem Content="Update Student Info"/>
+                                                        <ComboBoxItem Content="Delete Student Info"/>
+                                                        <ComboBoxItem Content="Update Medicine Inventory"/>
+                                                        <ComboBoxItem Content="Add New Medicine"/>
+                                                    </ComboBox>
+
                                                 </Grid>
                                             </Border>
+
                                         </Grid>
                                     </Border>
                                 </Grid>
@@ -368,20 +450,109 @@
                         </Grid>
                     </TabItem>
 
-                    <TabItem Header="💊 Medicine" Margin="89,-1,-114,-1" BorderBrush="{x:Null}" Background="{x:Null}">
+                    <TabItem Header="💊 Medicine" Margin="89,-2,-114,0" BorderBrush="{x:Null}" Background="{x:Null}">
                         <Grid>
                             <Grid>
-                                <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="30,73,34,30" CornerRadius="15,15,15,15" Background="White">
-                                    <Grid Margin="-9,-1,9,1">
+                                <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="0,20,0,0" CornerRadius="10,10,10,10" Background="White">
+                                    <Grid Margin="-1,-1,-1,1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="81*"/>
-                                            <RowDefinition Height="322*"/>
+                                            <RowDefinition Height="70"/>
+                                            <RowDefinition Height="211*"/>
                                         </Grid.RowDefinitions>
-                                        <Label Content="Medicine Requests" HorizontalAlignment="Left" Margin="26,10,0,0" VerticalAlignment="Top" Width="203" Foreground="#FF00104D" FontSize="14"/>
-                                        <Label Content="Review and approve medicine requests" HorizontalAlignment="Left" Margin="26,31,0,0" VerticalAlignment="Top" Width="244" Foreground="#FFAFAFAF"/>
-                                        <ScrollViewer Grid.Row="1" Margin="10,0,0,0">
+                                        <ScrollViewer Grid.Row="1" Margin="10,9,0,0">
                                             <StackPanel x:Name="StackPanelMedicineReuqests" HorizontalAlignment="Stretch"/>
                                         </ScrollViewer>
+                                        <Border Grid.Row="0" BorderBrush="#FFA0A0A0" BorderThickness="0,0,0,1" Margin="0,4,0,0">
+                                            <Grid Height="65" VerticalAlignment="Bottom">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="270"/>
+                                                    <ColumnDefinition Width="240" MinWidth="221"/>
+                                                    <ColumnDefinition Width="1" MinWidth="180"/>
+                                                    <ColumnDefinition Width="1"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="55.8" MinHeight="55.58"/>
+                                                </Grid.RowDefinitions>
+
+                                                <!-- Title -->
+                                                <Label Content="Medicine Request"
+               Foreground="#FF00104D"
+               FontSize="14"
+               FontWeight="DemiBold"
+               Padding="5,0,0,0"
+               Margin="10,12,0,25"/>
+
+                                                <!-- Subtitle -->
+                                                <Label Content="Manage and review medicine request"
+               Grid.Column="0"
+               Margin="10,30,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Foreground="#FFAFAFAF"
+               Height="26"
+               Width="236"/>
+
+                                                <!-- Search Box -->
+                                                <Border Grid.Column="1"
+                BorderBrush="#1A00104D"
+                BorderThickness="1"
+                CornerRadius="5"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                Width="220"
+                Height="32"
+                Margin="0,24,0,0">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Image Grid.Column="0"
+                       HorizontalAlignment="Center"
+                       Height="20"
+                       VerticalAlignment="Center"
+                       Width="17"
+                       Margin="5,0,5,0"
+                       Source="/Screenshot 2025-10-21 210426.png"/>
+
+                                                        <TextBox x:Name="txtSearchMedID"
+                         Grid.Column="1"
+                         HorizontalAlignment="Stretch"
+                         TextWrapping="Wrap"
+                         VerticalAlignment="Center"
+                         BorderBrush="{x:Null}"
+                         Height="28"
+                         VerticalContentAlignment="Center"
+                         Foreground="#FF8F8F8F"
+                         GotFocus="txtSearchMedID_GotFocus"
+                         LostFocus="txtSearchMedID_LostFocus"
+                         TextChanged="txtSearchMedID_TextChanged"
+                         Text="Search medicine request ID..."/>
+                                                    </Grid>
+                                                </Border>
+
+                                                <!-- ComboBox Filter -->
+                                                <ComboBox x:Name="cboMedFilter"
+                  Grid.Column="2"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Width="170"
+                  Style="{StaticResource CustomComboBoxStyle}"
+                  SelectionChanged="cboMedFilter_SelectionChanged"
+                  Height="30"
+                  Foreground="Black"
+                  Margin="10,26,0,0">
+                                                    <ComboBoxItem Content="All"/>
+                                                    <ComboBoxItem Content="Pending"/>
+                                                    <ComboBoxItem Content="Approved"/>
+                                                    <ComboBoxItem Content="Rejected"/>
+                                                </ComboBox>
+                                            </Grid>
+                                        </Border>
+
+
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -389,76 +560,100 @@
                     </TabItem>
 
                     <TabItem Header="📅 Appointment" RenderTransformOrigin="0.5,0.5" Height="30" VerticalAlignment="Top"
-mah:HeaderedControlHelper.HeaderForeground="{x:Null}" BorderThickness="5,0,0,0" 
-Background="{x:Null}" BorderBrush="{x:Null}" Margin="-155,-2,155,0">
-                        <TabItem.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform AngleY="0.794"/>
-                                <RotateTransform Angle="-0.719"/>
-                                <TranslateTransform Y="1.053"/>
-                            </TransformGroup>
-                        </TabItem.RenderTransform>
-
+         mah:HeaderedControlHelper.HeaderForeground="{x:Null}" BorderThickness="5,0,0,0"
+         Background="{x:Null}" BorderBrush="{x:Null}" Margin="-155,-2,155,0">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="70"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0" Height="70" VerticalAlignment="Top"/>
+                            <Border Grid.Row="0"
+                BorderBrush="#1A00104D"
+                BorderThickness="1"
+                CornerRadius="10,10,10,10"
+                Margin="0,20,0,0" 
+                Background="White">
 
-                            <!-- Responsive Border -->
-                            <Border Grid.Row="1" 
-       BorderBrush="#1A00104D" 
-       BorderThickness="1" 
-       CornerRadius="15"
-       Margin="32,0,32,20" Background="White">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="70"/>
+                                        <RowDefinition/>
                                     </Grid.RowDefinitions>
 
-                                    <Grid Grid.Row="0">
-                                        <Label Content="Appointments" 
-                  HorizontalAlignment="Left" 
-                  Margin="20,10,0,0" 
-                  VerticalAlignment="Top" 
-                  Width="344" 
-                  Height="32" 
-                  Foreground="#FF00104D" 
-                  FontSize="14"/>
-                                        <Label Content="Review and manage appointment requests" 
-                  HorizontalAlignment="Left" 
-                  Margin="20,33,0,0" 
-                  VerticalAlignment="Top" 
-                  Width="259" 
-                  Height="31" 
-                  Foreground="#FFAFAFAF"/>
-                                        <TextBox x:Name="txtSearchIDapp" 
-                    HorizontalAlignment="Left" 
-                    Margin="367,29,0,0" 
-                    TextWrapping="Wrap" 
-                    VerticalAlignment="Top" 
-                    Width="120" 
-                    TextChanged="txtSearchIDapp_TextChanged"/>
-                                        <ComboBox x:Name="cmbStatus" 
-                     HorizontalAlignment="Left" 
-                     Margin="500,25,0,0" 
-                     VerticalAlignment="Top" 
-                     Width="120" 
-                     SelectionChanged="cmbStatus_SelectionChanged">
-                                            <ComboBoxItem Content="All"/>
-                                            <ComboBoxItem Content="Pending"/>
-                                            <ComboBoxItem Content="Approved"/>
-                                            <ComboBoxItem Content="Rejected"/>
-                                        </ComboBox>
-                                    </Grid>
+                                    <Border Grid.Row="0" BorderBrush="#FFA0A0A0" BorderThickness="0,0,0,1" Margin="0,4,0,0">
+                                        <Grid Height="65" VerticalAlignment="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="270"/>
+                                                <ColumnDefinition Width="240" MinWidth="221"/>
+                                                <ColumnDefinition Width="1" MinWidth="180"/>
+                                                <ColumnDefinition Width="1"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="55.8" MinHeight="55.58"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Label Content="Review and manage appointment requests"
+                               Grid.Column="0"
+                               Margin="10,30,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Foreground="#FFAFAFAF" Height="26" Width="236"/>
+
+                                            <Border Grid.Column="1"
+                                BorderBrush="#1A00104D"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center"
+                                Width="220"
+                                Height="32" Margin="0,24,0,0">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Grid.Column="0"
+                                       HorizontalAlignment="Center"
+                                       Height="20"
+                                       VerticalAlignment="Center"
+                                       Width="17"
+                                       Margin="5,0,5,0"
+                                       Source="/Screenshot 2025-10-21 210426.png"/>
+                                                    <TextBox x:Name="txtSearchIDapp"
+                                         Grid.Column="1"
+                                         HorizontalAlignment="Stretch"
+                                         TextWrapping="Wrap"
+                                         VerticalAlignment="Center"
+                                         TextChanged="txtSearchIDapp_TextChanged_1"
+                                         BorderBrush="{x:Null}"
+                                         Height="28" VerticalContentAlignment="Center" Foreground="#FF8F8F8F" GotFocus="txtSearchIDapp_GotFocus" LostFocus="txtSearchIDapp_LostFocus" Text="Search appointment ID..."/>
+                                                </Grid>
+                                            </Border>
+
+                                            <ComboBox x:Name="cmbStatus"
+                                  Grid.Column="2"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top"
+                                  Width="170"
+                                  Style="{StaticResource CustomComboBoxStyle}"
+                                  SelectionChanged="cmbStatus_SelectionChanged"
+                                  Height="30" Foreground="Black" Margin="10,26,0,0">
+                                                <ComboBoxItem Content="All"/>
+                                                <ComboBoxItem Content="Pending"/>
+                                                <ComboBoxItem Content="Approved"/>
+                                                <ComboBoxItem Content="Rejected"/>
+                                            </ComboBox>
+                                            <Label Content="Appointments"
+                               Foreground="#FF00104D"
+                               FontSize="14" Padding="5,0,0,0" Margin="10,12,162,25" FontWeight="DemiBold"/>
+                                        </Grid>
+                                    </Border>
 
                                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                         <StackPanel x:Name="AppointmentStackPanel" Orientation="Vertical" Margin="0"/>
                                     </ScrollViewer>
+
                                 </Grid>
                             </Border>
                         </Grid>
@@ -467,7 +662,7 @@ Background="{x:Null}" BorderBrush="{x:Null}" Margin="-155,-2,155,0">
 
                     <TabItem Margin="19,-1,-49,-1" Header="👩‍🎓 Students" Background="{x:Null}" BorderBrush="{x:Null}">
                         <Grid>
-                            <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="28,72,31,35" CornerRadius="15,15,15,15" Background="White">
+                            <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="0,26,0,0" CornerRadius="15,15,15,15" Background="White">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="31*"/>
@@ -485,56 +680,114 @@ Background="{x:Null}" BorderBrush="{x:Null}" Margin="-155,-2,155,0">
         Width="162"
         Height="36" Cursor="Hand" Click="Button_Click_1"
                                                     Style="{StaticResource SelectedAppointmentButtonStyle}"
->
-
-
-
-                                    </Button>
+/>
                                     <Label Content="• Add new student accounts with comprehensive information&#xA;    • Edit existing student details and medical information&#xA;         • View enrollment analytics and program statistics&#xA;             • Search and filter students by various criteria" Grid.Row="1" Width="506" Foreground="#FFAFAFAF" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="82" Margin="0,195,0,0"/>
                                 </Grid>
                             </Border>
-                            <Border BorderBrush="Black" BorderThickness="1"/>
                         </Grid>
                     </TabItem>
-                    <TabItem Margin="65,-1,-100,0" Header="Inventory">
+                    <TabItem Margin="65,-1,-96,0" Header="📦 Inventory">
                         <Grid Margin="0,0,5,61">
                             <Border BorderThickness="1"
         CornerRadius="10"
         Background="White"
         BorderBrush="#1A00104D"
-        Margin="0,57,0,0">
-                                <Grid>
+        Margin="0,22,0,-64">
+                                <Grid Margin="0,0,0,-1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" MinHeight="70"/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
 
+                                    <!-- Header -->
                                     <Border Grid.Row="0"
                 BorderBrush="#FF959595"
                 BorderThickness="0,0,0,1"
-                VerticalAlignment="Stretch">
-                                        <Grid>
+                Margin="0,4,0,0"
+                VerticalAlignment="Bottom">
+                                        <Grid Height="65" VerticalAlignment="Bottom">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="270"/>
+                                                <ColumnDefinition Width="240" MinWidth="221"/>
+                                                <ColumnDefinition Width="181" MinWidth="180"/>
+                                                <ColumnDefinition Width="0"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0">
-                                                <Label Content="Manage Inventory"
-                           Foreground="#FF00104D"
-                           FontSize="14"/>
-                                                <Label Content="Manage and update medicine inventory"
-                           Foreground="#FFAFAFAF"
-                           Margin="0,-5,0,0"/>
-                                            </StackPanel>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="55.8" MinHeight="55.58"/>
+                                            </Grid.RowDefinitions>
 
-                                            <ComboBox x:Name="cmbFilterInv" Grid.Column="1"
-                          Width="180"
+                                            <!-- Title -->
+                                            <Label Content="Manage Inventory"
+                       Foreground="#FF00104D"
+                       FontSize="14"
+                       FontWeight="DemiBold"
+                       Padding="5,0,0,0"
+                       Margin="10,12,0,25"/>
+
+                                            <!-- Subtitle -->
+                                            <Label Content="Manage and update medicine inventory"
+                       Grid.Column="0"
+                       Margin="10,30,0,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Foreground="#FFAFAFAF"
+                       Height="26"
+                       Width="236"/>
+
+                                            <!-- Search Bar -->
+                                            <Border Grid.Column="1"
+                        BorderBrush="#1A00104D"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        Height="32"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Center"
+                        Margin="0,24,0,0"
+                        Width="221"
+                        Background="White">
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Search Icon -->
+                                                    <Image 
+                            Source="/Screenshot 2025-10-21 210426.png"
+                            Width="20" Height="20"
+                            VerticalAlignment="Center"
+                            Margin="10,0"/>
+
+                                                    <!-- Search TextBox -->
+                                                    <TextBox 
+                            x:Name="txtSearch"
+                            Grid.Column="1"
+                            Margin="5,0,10,0"
+                            VerticalAlignment="Center"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            Foreground="#FF8F8F8F"
+                            FontSize="13"
+                            Text="Search Inventory ID..."
+                            TextChanged="txtSearch_TextChanged"
+                            GotFocus="txtSearch_GotFocus"
+                            LostFocus="txtSearch_LostFocus"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <!-- ComboBox Filter -->
+                                            <ComboBox x:Name="cmbFilterInv"
+                          Grid.Column="2"
+                          VerticalAlignment="Top"
+                          Width="171"
                           Height="30"
+                          Margin="10,26,0,0"
+                          Foreground="Black"
                           Style="{StaticResource CustomComboBoxStyle}"
-                          VerticalAlignment="Bottom"
-                          HorizontalAlignment="Right"
-                          Margin="0,0,10,8" SelectionChanged="ComboBox_SelectionChanged" Foreground="Black">
+                          SelectionChanged="ComboBox_SelectionChanged"
+                          HorizontalAlignment="Left">
                                                 <ComboBoxItem Content="Low Stacks"/>
                                                 <ComboBoxItem Content="High Stacks"/>
                                                 <ComboBoxItem Content="All Item"/>
@@ -542,58 +795,20 @@ Background="{x:Null}" BorderBrush="{x:Null}" Margin="-155,-2,155,0">
                                         </Grid>
                                     </Border>
 
+                                    <!-- ScrollViewer content -->
                                     <ScrollViewer Grid.Row="1"
-                                          Margin="20"
-                                          VerticalScrollBarVisibility="Auto"
-                                          HorizontalScrollBarVisibility="Disabled">
+                      Margin="20"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
                                         <Grid HorizontalAlignment="Center">
                                             <WrapPanel x:Name="wrapPanelInventory"
-                                               Orientation="Horizontal"
-                                               Margin="10"/>
+                           Orientation="Horizontal"
+                           Margin="10"/>
                                         </Grid>
                                     </ScrollViewer>
                                 </Grid>
                             </Border>
-                            <Border 
-                                    BorderBrush="#1A00104D" 
-                                    BorderThickness="1" 
-                                    CornerRadius="5" 
-                                    Height="32"
-                                    VerticalAlignment="Top"
-                                    HorizontalAlignment="Center"
-                                    Margin="0,87,0,0"
-                                    Width="221"
-                                    Background="White">
 
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <!-- Search Icon -->
-                                    <Image 
-                                    Source="/Screenshot 2025-10-21 210426.png"
-                                    Width="20" Height="20"
-                                    VerticalAlignment="Center"
-                                    Margin="10,0"/>
-
-                                    <!-- Search TextBox -->
-                                    <TextBox 
-                                    x:Name="txtSearch"
-                                    Grid.Column="1"
-                                    Margin="5,0,10,0"
-                                    VerticalAlignment="Center"
-                                    BorderThickness="0"
-                                    Background="Transparent"
-                                    Foreground="#FF8F8F8F"
-                                    FontSize="13"
-                                    Text="Search Inventory ID..."
-                                    TextChanged="txtSearch_TextChanged"
-                                    GotFocus="txtSearch_GotFocus"
-                                    LostFocus="txtSearch_LostFocus"/>
-                                </Grid>
-                            </Border>
 
 
 
