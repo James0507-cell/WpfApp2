@@ -187,6 +187,8 @@ namespace WpfApp2
                 String ecp = dt.Rows[i][13].ToString();
                 String status = dt.Rows[i][14].ToString();
                 String symptoms = dt.Rows[i][16].ToString();
+                String handledTime = dt.Rows[i]["handled_time"].ToString();
+
 
 
 
@@ -249,6 +251,16 @@ namespace WpfApp2
                     Margin = new Thickness(0, 0, 0, 8)
                 };
                 primaryDetails.Children.Add(txtDateTime);
+
+                TextBlock txtHandledTime = new TextBlock
+                {
+                    Text = handledTime != "" ? $"Handled Time: {handledTime}" : "Handled Time: N/A",
+                    FontSize = 12,
+                    FontWeight = FontWeights.Normal,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4D7399")),
+                    Margin = new Thickness(0, 0, 0, 0)
+                };
+                primaryDetails.Children.Add(txtHandledTime);
 
                 Grid.SetColumn(primaryDetails, 0);
                 headerGrid.Children.Add(primaryDetails);
@@ -346,22 +358,26 @@ namespace WpfApp2
         }
         public void approveAppointment(String appointmentID)
         {
-            String querry = $"UPDATE appointments SET status = 'Approved' WHERE appointment_id = {appointmentID}";
+            String querry = $"UPDATE appointments SET status = 'Approved', handled_time = NOW() WHERE appointment_id = {appointmentID}";
             admin.sqlManager(querry);
+
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                      $"VALUES ({id}, '{username}', 'Appointment Approved', 'Approved appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             admin.sqlManager(querry);
+
             displayAppointments("SELECT * FROM appointments");
         }
 
+
         public void rejectAppointment(String appointmentID, String reason)
         {
-            String querry = $"UPDATE appointments SET status = 'Rejected', reason = '{reason}' WHERE appointment_id = {appointmentID}";
+            String querry = $"UPDATE appointments SET status = 'Approved', handled_time = NOW() WHERE appointment_id = {appointmentID}";
             admin.sqlManager(querry);
             displayAppointments("SELECT * FROM appointments");
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                      $"VALUES ({id}, '{username}', 'Appointment Rejected', 'Rejected appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             admin.sqlManager(querry);
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
