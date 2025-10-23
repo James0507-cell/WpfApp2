@@ -83,7 +83,6 @@ namespace WpfApp2
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            admin.dbConnection();
 
             LoadComboBoxes();
             LoadStudentInfo();

@@ -276,7 +276,7 @@
             <Border BorderBrush="#FFB1B1B1" BorderThickness="0,0,0,1" Height="50"/>
             <Label Content="Welcome Back!, Admin" HorizontalAlignment="Left" Margin="67,28,0,0" VerticalAlignment="Top" FontSize="8" Foreground="#FF797979" Height="22" Width="91"/>
             <Image HorizontalAlignment="Left" Height="56" VerticalAlignment="Center" Width="55" Source="/Logo-Final_noname_1.png" RenderTransformOrigin="1.025,-0.28" Margin="12,0,0,0"/>
-            <Button Content="Logout" HorizontalAlignment="Right" Margin="0,10,10,10" VerticalAlignment="Center" Height="20" Width="62" Style="{StaticResource AppointmentButtonStyle}" Click="Button_Click" FontSize="8">
+            <Button Content="Logout" HorizontalAlignment="Right" Margin="0,10,20,10" VerticalAlignment="Center" Height="20" Width="62" Style="{StaticResource AppointmentButtonStyle}" Click="Button_Click" FontSize="8">
 
             </Button>
             <Grid Grid.Row="1" Margin="0,0,0,10">
