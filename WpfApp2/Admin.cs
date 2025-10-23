@@ -70,275 +70,216 @@ namespace WpfApp2
 
         public int GetMedicineStatusCount()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM medicinerequests WHERE status = 'Pending'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+          
+               
+            string sql = "SELECT *FROM medicinerequests WHERE status = 'Pending'";
+            DataTable dt = displayRecords(sql);
+            return dt.Rows.Count;
+
+
         }
 
         public int GetAppointmenCount()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM appointments WHERE status = 'Pending'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                
+                string sql = "SELECT *FROM appointments WHERE status = 'Pending'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
+
         }
 
         public int getMedicineCount()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM medicineinventory WHERE amount < 20";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM medicineinventory WHERE amount < 20";
+                DataTable dt = displayRecords(sql);
+               return dt.Rows.Count;
+
         }
 
         public int getTotalProgram()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+          
+                
+                string sql = "SELECT *FROM users WHERE role = 'Student'";
+            DataTable dt = displayRecords(sql);
+            return dt.Rows.Count;
+
         }
 
         public int Accountancy()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Accountancy' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+          
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Accountancy' AND role = 'Student'";
+            DataTable dt = displayRecords(sql);
+            return dt.Rows.Count;
+
         }
 
         public int ManagementAccounting()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Management Accounting' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+         
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Management Accounting' AND role = 'Student'";
+            DataTable dt = displayRecords(sql);
+            return dt.Rows.Count;
+
         }
 
         public int Entrepreneurship()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Entrepreneurship' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+         
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Entrepreneurship' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
 
         public int TourismManagement()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Tourism Management' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+          
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Tourism Management' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
+
         }
 
         public int Communication()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Arts in Communication' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Arts in Communication' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
         public int MultiMediaArts()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Multimedia Arts' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Multimedia Arts' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
+
         }
 
         public int ComputerScience()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Computer Science' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Computer Science' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
+
         }
 
         public int Informationsystem()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Information Systems' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Information Systems' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
+
         }
         public int entertaimentmultimediacomputing()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Entertainment & Multimedia Computing' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+          
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Entertainment & Multimedia Computing' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
+
         }
 
         public int architecture()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Architecture' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+          
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Architecture' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
+
         }
 
         public int chemicalEnginerring()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Chemical Engineering' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Chemical Engineering' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
         public int civilEngineering()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Civil Engineering' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Civil Engineering' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
         public int computerEngineering()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Computer Engineering' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Computer Engineering' AND role = 'Student'";
+               DataTable dt = displayRecords(sql);
+                return dt.Rows.Count; 
         }
         public int electricalEngineering()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Electrical Engineering' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+            
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Electrical Engineering' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
         public int electronicsEngineering()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Electronics Engineering' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Electronics Engineering' AND role = 'Student'";
+               DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
         public int industrialEngineering()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Industrial Engineering' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Industrial Engineering' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
         public int mechanicalEngineering()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Mechanical Engineering' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+            
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Mechanical Engineering' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
         public int biology()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Biology' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+         
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Biology' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
         public int pharmacy()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Pharmacy' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Pharmacy' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
         public int physicalteraphy()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Physical Therapy' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Physical Therapy' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
 
         public int psychology()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE course_program = 'Bachelor of Science in Psychology' AND role = 'Student'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+           
+                string sql = "SELECT *FROM users WHERE course_program = 'Bachelor of Science in Psychology' AND role = 'Student'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
         }
     }
 }
