@@ -371,7 +371,7 @@ namespace WpfApp2
 
         public void rejectAppointment(String appointmentID, String reason)
         {
-            String querry = $"UPDATE appointments SET status = 'Approved', handled_time = NOW() WHERE appointment_id = {appointmentID}";
+            String querry = $"UPDATE appointments SET status = 'Rejected', reason = '{reason}', handled_time = NOW() WHERE appointment_id = {appointmentID}";
             admin.sqlManager(querry);
             displayAppointments("SELECT * FROM appointments");
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
