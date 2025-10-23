@@ -50,25 +50,22 @@ namespace WpfApp2
 
         public int GetActiveStudentCount()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE role = 'Student' and enrollment_status = 'Enrolled'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+  
+            string sql = "SELECT *FROM users WHERE role = 'Student' and enrollment_status = 'Enrolled'";
+            DataTable dt = displayRecords(sql);
+            return dt.Rows.Count;
+
+
 
         }
 
         public int GetTotalStudentCount()
         {
-            using (MySqlConnection conn = new MySqlConnection(strConn))
-            {
-                conn.Open();
-                string sql = "SELECT COUNT(*) FROM users WHERE role != 'Admin'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
+          
+                string sql = "SELECT *FROM users WHERE role != 'Admin'";
+                DataTable dt = displayRecords(sql);
+                return dt.Rows.Count;
+
         }
 
         public int GetMedicineStatusCount()
