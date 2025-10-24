@@ -64,7 +64,6 @@ namespace WpfApp2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            setId(username);
 
         }
 
@@ -80,6 +79,8 @@ namespace WpfApp2
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
+            setId(username);
+
             LoadComboBoxes();
         }
 

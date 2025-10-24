@@ -25,7 +25,10 @@ namespace WpfApp2
 
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
-
+        public AdminStudent(int id)
+        {
+             this.id = id;
+        }
         public void dbConnection()
         {
             dbConn = new MySqlConnection(strConn);

@@ -42,7 +42,7 @@ namespace WpfApp2
         
         public void displayUsers(String strQuerry)
         {
-            AdminStudent adminStudent = new AdminStudent();
+            AdminStudent adminStudent = new AdminStudent(id);
             StackPanel targetStackPanel = this.StudentListPanel;
 
             targetStackPanel.Children.Clear();
@@ -162,10 +162,9 @@ namespace WpfApp2
 
 
 
-
+            setId(Username);
             SQL = "SELECT * FROM users WHERE role = 'Student'";
             displayUsers(SQL);
-            setId(Username);
 
             DataTable dtYear = admin.displayRecords("SELECT * FROM year_levels");
             foreach (DataRow row in dtYear.Rows)

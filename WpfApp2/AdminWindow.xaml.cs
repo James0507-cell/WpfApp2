@@ -113,7 +113,7 @@ namespace WpfApp2
             lblLowStack.Content = totalLowStock;
 
            
-
+            setId(username);
 
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
@@ -160,7 +160,7 @@ namespace WpfApp2
 
         public void displayMedicineRequest(String strquerry)
         {
-            AdminMedicine adminMedicine = new AdminMedicine();
+            AdminMedicine adminMedicine = new AdminMedicine(id);
             StackPanel targetStackPanel = this.StackPanelMedicineReuqests;
             DataTable dt = new DataTable();
             dt = admin.displayRecords(strquerry);
@@ -192,7 +192,7 @@ namespace WpfApp2
         
         public void displayMedicineInv(String query)
         {
-            AdminInventory adminInventory = new AdminInventory();
+            AdminInventory adminInventory = new AdminInventory(id);
             DataTable dt = new DataTable();
             dt = admin.displayRecords(query);
 
@@ -228,7 +228,7 @@ namespace WpfApp2
 
         public void displayActivity(String SQL)
         {
-            AdminActivity adminActivity = new AdminActivity();
+            AdminActivity adminActivity = new AdminActivity(id);
             StackPanelActivities.Children.Clear();
             DataTable dt = admin.displayRecords(SQL);
 
@@ -248,8 +248,9 @@ namespace WpfApp2
                 string type = dt.Rows[i]["activity_type"].ToString();
                 string description = dt.Rows[i]["activity_desc"].ToString();
                 string dateTime = dt.Rows[i]["activity_date"].ToString();
+                String id = dt.Rows[i]["admin_id"].ToString();
 
-                Border cardBorder = adminActivity.activityPanel(activityID,username, type, description, dateTime);
+                Border cardBorder = adminActivity.activityPanel(activityID,username, type, description, dateTime, id);
                 StackPanelActivities.Children.Add(cardBorder);
             }
 
@@ -447,6 +448,12 @@ namespace WpfApp2
                 displayActivity($"SELECT * FROM admin_activity_log WHERE activity_type = '{selectedType}' ORDER BY activity_date DESC");
             }
 
+        }
+        public void setId(String username)
+        {
+            SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = admin.displayRecords(SQL);
+            id = int.Parse(dt.Rows[0][0].ToString());
         }
     }
 }

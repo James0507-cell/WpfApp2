@@ -22,7 +22,10 @@ namespace WpfApp2
 
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
-
+        public AdminActivity(int id)
+        {
+            this.id = id;
+        }
         public void dbConnection()
         {
             dbConn = new MySqlConnection(strConn);
@@ -51,7 +54,7 @@ namespace WpfApp2
             dbConn.Close();
         }
 
-        public Border activityPanel(String activityID, String username, String type, String description, String dateTime)
+        public Border activityPanel(String activityID, String username, String type, String description, String dateTime, String id)
         {
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
             Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
@@ -81,7 +84,7 @@ namespace WpfApp2
             // 1. Username (Bold and Primary)
             TextBlock txtUsername = new TextBlock
             {
-                Text = username,
+                Text = username + " ID:" + id,
                 FontWeight = FontWeights.Bold,
                 FontSize = 10,
                 Foreground = darkBlueBrush,

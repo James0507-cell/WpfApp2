@@ -30,7 +30,10 @@ namespace WpfApp2
 
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
-
+        public AdminInventory(int adminId)
+        {
+            id = adminId;
+        }
         public void dbConnection()
         {
             dbConn = new MySqlConnection(strConn);
@@ -81,7 +84,7 @@ namespace WpfApp2
 
                     // Log the update
                     SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                         $"VALUES ({id}, '{username}', 'Update Medcine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                         $"VALUES ({id}, '{username}', 'Update Medicine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     sqlManager(SQL);
 
                     TriggerAppointmentActivityPanelReload();
