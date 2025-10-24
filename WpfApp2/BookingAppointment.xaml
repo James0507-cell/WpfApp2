@@ -366,13 +366,13 @@
                                             <StackPanel Grid.Column="0" Margin="0,0,10,0">
                                                 <Label Content="Emergency Contact Name *" FontWeight="Normal" Foreground="#FF666666"/>
                                                 <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                    <TextBox x:Name="txtEmergencyContactName" Padding="5" Margin="0" BorderThickness="0" Text="{Binding EmergencyContactName}" TextChanged="txtEmergencyContactName_TextChanged"/>
+                                                    <TextBox x:Name="txtEmergencyContactName" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtEmergencyContactName_TextChanged" Text="."/>
                                                 </Border>
                                             </StackPanel>
                                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                                 <Label Content="Emergency Contact Phone *" FontWeight="Normal" Foreground="#FF666666"/>
                                                 <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                    <TextBox x:Name="txtEmergencyContactPhone" Padding="5" Margin="0" BorderThickness="0" Text="{Binding EmergencyContactPhone}" TextChanged="txtEmergencyContactPhone_TextChanged"/>
+                                                    <TextBox x:Name="txtEmergencyContactPhone" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtEmergencyContactPhone_TextChanged" Text="."/>
                                                 </Border>
                                             </StackPanel>
                                         </Grid>

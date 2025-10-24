@@ -251,6 +251,8 @@ namespace WpfApp2
                 txtStudentID.Text = dt.Rows[0]["student_id"].ToString();
                 txtEmail.Text = dt.Rows[0]["email"].ToString();
                 txtPhoneNumber.Text = dt.Rows[0]["phone_number"].ToString();
+                txtEmergencyContactName.Text = dt.Rows[0]["emergency_contact_name"].ToString();
+                txtEmergencyContactPhone.Text = dt.Rows[0]["emergency_contact_phone"].ToString();
 
                 txtFirstName.IsEnabled = false;
                 txtLastName.IsEnabled = false;
