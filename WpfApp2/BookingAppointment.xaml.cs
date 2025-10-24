@@ -4,24 +4,32 @@ using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
-using System.Globalization; 
+using System.Globalization;
 
 namespace WpfApp2
 {
     public partial class BookingAppointment : Window
     {
+        // --- Private Fields ---
         private DateTime selectedDate = DateTime.MinValue;
         private string selectedTime;
         private Booking booking = new Booking();
+        private Users users = new Users();
+        private String SQL = "";
+
+        // --- Public Properties/Fields ---
         public string username = MainWindow.Username;
         int userId = 0;
-        Users users = new Users();
-        String SQL = "";
 
+        // --- Constructor ---
         public BookingAppointment()
         {
             InitializeComponent();
         }
+
+        // -----------------------------
+        // --- Event Handlers (Window/Load) ---
+        // -----------------------------
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -38,96 +46,6 @@ namespace WpfApp2
             CheckAndDisableBookedSlots();
         }
 
-
-        private List<string> GetBookedTimesForDate(DateTime date)
-        {
-            var bookedTimes = new List<string>();
-            string dateString = date.ToString("yyyy-MM-dd");
-
-            string SQL = $"SELECT appointment_time FROM appointments WHERE appointment_date = '{dateString}' AND (status = 'Pending' OR status = 'Approved')";
-
-            try
-            {
-                DataTable dt = booking.displayRecords(SQL);
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    string dbTime = row["appointment_time"].ToString();
-
-                    if (!string.IsNullOrEmpty(dbTime) &&
-                        DateTime.TryParse($"2000-01-01 {dbTime}", out DateTime parsedTime))
-                    {
-                        string formattedTime = parsedTime.ToString("h:mm tt", CultureInfo.InvariantCulture);
-
-                        bookedTimes.Add(formattedTime);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error fetching booked times: {ex.Message}");
-            }
-
-            return bookedTimes;
-        }
-
-    
-        private void CheckAndDisableBookedSlots()
-        {
-            selectedTime = null; // Reset selection
-
-            Style bookedStyle = (Style)FindResource("BookedAppointmentStyle");
-            Style defaultStyle = (Style)FindResource("AppointmentButtonStyle");
-
-            // 1. Handle Weekend Closure
-            if (selectedDate.DayOfWeek == DayOfWeek.Saturday || selectedDate.DayOfWeek == DayOfWeek.Sunday)
-            {
-                if (TimeSelectionGrid == null) return;
-                foreach (var child in TimeSelectionGrid.Children)
-                {
-                    if (child is Button btn)
-                    {
-                        btn.IsEnabled = false;
-                        btn.Style = bookedStyle;
-                    }
-                }
-                return; 
-            }
-
-            List<string> bookedTimes = GetBookedTimesForDate(selectedDate);
-
-            if (TimeSelectionGrid == null) return;
-            foreach (var child in TimeSelectionGrid.Children)
-            {
-                if (child is Button btn)
-                {
-                    string timeTag = btn.Tag?.ToString();
-
-                    btn.IsEnabled = true;
-                    btn.Style = defaultStyle;
-
-                    if (string.IsNullOrEmpty(timeTag)) continue;
-
-                    if (bookedTimes.Contains(timeTag))
-                    {
-                        btn.Style = bookedStyle;
-                        btn.IsEnabled = false;
-                    }
-                    else if (selectedDate.Date == DateTime.Today.Date)
-                    {
-                        if (DateTime.TryParse($"{selectedDate.ToShortDateString()} {timeTag}", out DateTime appointmentDateTime))
-                        {
-                            if (appointmentDateTime <= DateTime.Now)
-                            {
-                                btn.Style = bookedStyle;
-                                btn.IsEnabled = false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         private void ClsDate_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!cldDate.SelectedDate.HasValue) return;
@@ -140,6 +58,7 @@ namespace WpfApp2
         {
             if (sender is Button clickedButton)
             {
+                // Un-select previous, check availability, and apply new selection style
                 CheckAndDisableBookedSlots();
 
                 selectedTime = clickedButton.Tag.ToString();
@@ -147,7 +66,6 @@ namespace WpfApp2
                 clickedButton.Style = (Style)FindResource("SelectedAppointmentButtonStyle");
             }
         }
-
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
@@ -223,6 +141,116 @@ namespace WpfApp2
             CheckAndDisableBookedSlots();
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            UserForm userForm = new UserForm(username);
+            userForm.Show();
+            this.Close();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--;
+        }
+
+        // Tab Navigation Button Clicks (Consolidated)
+        private void Button_Click(object sender, RoutedEventArgs e) { MyTabBooking.SelectedIndex = 1; }
+        private void Button_Click_2(object sender, RoutedEventArgs e) { PopulateConfirmationTab(); MyTabBooking.SelectedIndex = 2; }
+        private void BackButton_Click(object sender, RoutedEventArgs e) { if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--; }
+
+
+        // -----------------------------
+        // --- Private Helper Methods ---
+        // -----------------------------
+
+        private List<string> GetBookedTimesForDate(DateTime date)
+        {
+            var bookedTimes = new List<string>();
+            string dateString = date.ToString("yyyy-MM-dd");
+
+            string SQL = $"SELECT appointment_time FROM appointments WHERE appointment_date = '{dateString}' AND (status = 'Pending' OR status = 'Approved')";
+
+            try
+            {
+                DataTable dt = booking.displayRecords(SQL);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string dbTime = row["appointment_time"].ToString();
+
+                    if (!string.IsNullOrEmpty(dbTime) &&
+                        DateTime.TryParse($"2000-01-01 {dbTime}", out DateTime parsedTime))
+                    {
+                        string formattedTime = parsedTime.ToString("h:mm tt", CultureInfo.InvariantCulture);
+
+                        bookedTimes.Add(formattedTime);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error fetching booked times: {ex.Message}");
+            }
+
+            return bookedTimes;
+        }
+
+        private void CheckAndDisableBookedSlots()
+        {
+            selectedTime = null; // Reset selection
+
+            Style bookedStyle = (Style)FindResource("BookedAppointmentStyle");
+            Style defaultStyle = (Style)FindResource("AppointmentButtonStyle");
+
+            // 1. Handle Weekend Closure
+            if (selectedDate.DayOfWeek == DayOfWeek.Saturday || selectedDate.DayOfWeek == DayOfWeek.Sunday)
+            {
+                if (TimeSelectionGrid == null) return;
+                foreach (var child in TimeSelectionGrid.Children)
+                {
+                    if (child is Button btn)
+                    {
+                        btn.IsEnabled = false;
+                        btn.Style = bookedStyle;
+                    }
+                }
+                return;
+            }
+
+            List<string> bookedTimes = GetBookedTimesForDate(selectedDate);
+
+            if (TimeSelectionGrid == null) return;
+            foreach (var child in TimeSelectionGrid.Children)
+            {
+                if (child is Button btn)
+                {
+                    string timeTag = btn.Tag?.ToString();
+
+                    btn.IsEnabled = true;
+                    btn.Style = defaultStyle;
+
+                    if (string.IsNullOrEmpty(timeTag)) continue;
+
+                    if (bookedTimes.Contains(timeTag))
+                    {
+                        btn.Style = bookedStyle;
+                        btn.IsEnabled = false;
+                    }
+                    else if (selectedDate.Date == DateTime.Today.Date)
+                    {
+                        if (DateTime.TryParse($"{selectedDate.ToShortDateString()} {timeTag}", out DateTime appointmentDateTime))
+                        {
+                            if (appointmentDateTime <= DateTime.Now)
+                            {
+                                btn.Style = bookedStyle;
+                                btn.IsEnabled = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void PopulateConfirmationTab()
         {
             txtConfirmPatientName.Text = $"{txtFirstName.Text} {txtLastName.Text}";
@@ -259,19 +287,12 @@ namespace WpfApp2
                 txtStudentID.IsEnabled = false;
 
 
-            } 
+            }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            UserForm userForm = new UserForm(username);
-            userForm.Show();
-            this.Close();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) { MyTabBooking.SelectedIndex = 1; }
-        private void Button_Click_2(object sender, RoutedEventArgs e) { PopulateConfirmationTab(); MyTabBooking.SelectedIndex = 2; }
-        private void BackButton_Click(object sender, RoutedEventArgs e) { if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--; }
+        // ----------------------------------------
+        // --- Unused/Empty/Auto-Generated Handlers ---
+        // ----------------------------------------
 
         private void txtFirstName_TextChanged(object sender, TextChangedEventArgs e) { }
         private void txtLastName_TextChanged(object sender, TextChangedEventArgs e) { }
@@ -286,9 +307,5 @@ namespace WpfApp2
         private void txtEmergencyContactName_TextChanged(object sender, TextChangedEventArgs e) { }
         private void txtEmergencyContactPhone_TextChanged(object sender, TextChangedEventArgs e) { }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--;
-        }
     }
 }

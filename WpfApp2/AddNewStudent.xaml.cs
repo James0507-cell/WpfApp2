@@ -17,9 +17,7 @@ using System.Windows.Shapes;
 
 namespace WpfApp2
 {
-    /// <summary>
-    /// Interaction logic for AddNewStudent.xaml
-    /// </summary>
+
     public partial class AddNewStudent : Window
     {
 

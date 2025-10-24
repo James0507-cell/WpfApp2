@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace WpfApp2
 {
-    /// <summary>
-    /// Interaction logic for UpdateStudent.xaml
-    /// </summary>
+
     public partial class UpdateStudent : Window
     {
         String SQL = "";
