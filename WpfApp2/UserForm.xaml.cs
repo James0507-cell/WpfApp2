@@ -14,8 +14,8 @@ namespace WpfApp2
         private string username;
         Users userForm = new Users();
         ShortCheck shortcheck = new ShortCheck();
-        string SQL = "";
-        int userId;
+        private string SQL = "";
+        private int userId;
 
         public UserForm(string username)
         {
@@ -24,7 +24,7 @@ namespace WpfApp2
 
             
         }
-        // In UserForm.cs
+        
         public string GetUsername()
         {
             return this.username;
@@ -384,7 +384,7 @@ namespace WpfApp2
 
                     lblMonth.Content = shortMonthName;
                     lblBmi.Content = $"{bmi:F2}";
-                    lblWeight.Content = $"{weight:F1}";
+                    lblWeight.Content = $"{weight:F1}"; 
                     pb.Value = Math.Min(Math.Max(bmi, 0), 40);
 
                     if (bmi < 18.5)
@@ -420,7 +420,7 @@ namespace WpfApp2
         public void reloadAppointments()
         {
             AppointmentStackPanel.Children.Clear();
-            displayAppointment($"SELECT * FROM appointments WHERE username = '{username}'");
+            displayAppointment($"SELECT * FROM appointments WHERE username = '{username}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()");
         }
         public void reloadActivities()
         {

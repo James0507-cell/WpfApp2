@@ -14,7 +14,6 @@ namespace WpfApp2
     public partial class ShortCheck : Window
     {
         String username = MainWindow.Username;
-        String strconn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
         String SQL = "";
         private int userId;
         Users user  = new Users();
@@ -41,17 +40,13 @@ namespace WpfApp2
                 return;
             }
 
-            // 2. BMI Calculation
-            // Convert height from centimeters (cm) to meters (m)
             double heightM = heightCm / 100.0;
 
-            // BMI Formula: weight (kg) / height (m)^2
+
             double bmi = weightKg / (heightM * heightM);
 
-            // Round the BMI for display
             string roundedBmi = Math.Round(bmi, 1).ToString();
 
-            // 3. Determine Category and Set UI
             string category;
             Brush categoryColor;
 
@@ -85,9 +80,6 @@ namespace WpfApp2
             SQL = $"Insert into student_activity_log(user_id, activity_type, activity_desc) values ('{userId}', 'Vitals Check', 'BMI Check Up')";
             user.sqlManager(SQL);
 
-
-
-
         }
 
 
@@ -101,20 +93,16 @@ namespace WpfApp2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           //UserForm userForm = new UserForm(username);
-           //userForm.Show();
-           //this.Close();
+           
 
            
 
         }
         private void HeightTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Add your logic here if needed
         }
         private void WeightTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Optional: any code when text changes
         }
 
         public void getID (String username)
@@ -123,9 +111,6 @@ namespace WpfApp2
             DataTable dt = new DataTable();
             dt = user.displayRecords(SQL);
             userId = Convert.ToInt32(dt.Rows[0][0].ToString());
-
-
-
             
         }
 
@@ -137,7 +122,6 @@ namespace WpfApp2
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             UserForm userform = new UserForm(username);
-
             this.Close();
             userform.Show();
         }

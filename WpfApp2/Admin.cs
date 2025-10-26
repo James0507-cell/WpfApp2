@@ -281,5 +281,6 @@ namespace WpfApp2
                 DataTable dt = displayRecords(sql);
                 return dt.Rows.Count;
         }
+       
     }
 }

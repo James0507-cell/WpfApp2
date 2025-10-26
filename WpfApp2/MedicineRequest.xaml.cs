@@ -75,17 +75,6 @@ namespace WpfApp2
                 StackPanelMedicines.Children.Add(cardBorder);
             }
         }
-        
-
-        private void RequestMedicine_Click(string medicineId, string medicineName, string dose, string genericName)
-        {
-            MedicineRequestConfirmation requestConfirm = new MedicineRequestConfirmation(dose, medicineName, genericName);
-            requestConfirm.Show();
-        }
-
-        public void RequestMedicine()
-        {
-        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -127,8 +116,6 @@ namespace WpfApp2
             }
 
         }
-
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             UserForm userForm = new UserForm(username); 

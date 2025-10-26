@@ -58,7 +58,6 @@ namespace WpfApp2
         {
             if (sender is Button clickedButton)
             {
-                // Un-select previous, check availability, and apply new selection style
                 CheckAndDisableBookedSlots();
 
                 selectedTime = clickedButton.Tag.ToString();
@@ -86,7 +85,6 @@ namespace WpfApp2
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string username = MainWindow.Username;
 
             if (selectedDate == DateTime.MinValue || string.IsNullOrEmpty(selectedTime))
             {
@@ -159,16 +157,13 @@ namespace WpfApp2
         private void BackButton_Click(object sender, RoutedEventArgs e) { if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--; }
 
 
-        // -----------------------------
-        // --- Private Helper Methods ---
-        // -----------------------------
 
         private List<string> GetBookedTimesForDate(DateTime date)
         {
             var bookedTimes = new List<string>();
             string dateString = date.ToString("yyyy-MM-dd");
 
-            string SQL = $"SELECT appointment_time FROM appointments WHERE appointment_date = '{dateString}' AND (status = 'Pending' OR status = 'Approved')";
+            SQL = $"SELECT appointment_time FROM appointments WHERE appointment_date = '{dateString}' AND (status = 'Pending' OR status = 'Approved')";
 
             try
             {
@@ -290,9 +285,7 @@ namespace WpfApp2
             }
         }
 
-        // ----------------------------------------
-        // --- Unused/Empty/Auto-Generated Handlers ---
-        // ----------------------------------------
+
 
         private void txtFirstName_TextChanged(object sender, TextChangedEventArgs e) { }
         private void txtLastName_TextChanged(object sender, TextChangedEventArgs e) { }

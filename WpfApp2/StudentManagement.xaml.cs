@@ -24,22 +24,6 @@ namespace WpfApp2
             InitializeComponent();
         }
 
-       
-        private TextBlock CreateDetailBlock(string label, string value, FontWeight weight = default)
-        {
-            if (weight == default) weight = FontWeights.Normal;
-            return new TextBlock
-            {
-                Text = $"{label}: {value}",
-                FontSize = 12,
-                Margin = new Thickness(0, 2, 0, 2),
-                FontWeight = weight,
-                TextWrapping = TextWrapping.Wrap,
-                Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")) // Dark blue
-            };
-        }
-
-        
         public void displayUsers(String strQuerry)
         {
             AdminStudent adminStudent = new AdminStudent(id);
@@ -86,79 +70,7 @@ namespace WpfApp2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            int totalActiveStudents = admin.GetActiveStudentCount();
-            lblActiveStudent.Content = totalActiveStudents.ToString();
-
-            int totalStudents = admin.GetTotalStudentCount();
-            lblTotalstudent.Content = totalStudents.ToString();
-
-            int totaalCoursePrograms = admin.getTotalProgram();
-            lblPrograms.Content = totaalCoursePrograms.ToString();
-
-            int totalmedicinereq = admin.GetMedicineStatusCount();
-            lblMedicalAlerts.Content = totalmedicinereq;
-            int totalComputerscience = admin.Accountancy();
-            accountancy.Content = totalComputerscience + " students";
-
-            int totalManagementAccounting = admin.ManagementAccounting();
-            managementaccounting.Content = totalManagementAccounting + " students";
-            
-            int totoalEntrepreneurship = admin.Entrepreneurship();
-            Entrepreneurship.Content = totoalEntrepreneurship + " students";
-
-            int totaltourismManagement = admin.TourismManagement();
-            tourismManagement.Content = totaltourismManagement + " students";
-
-            int totalCommunication = admin.Communication();
-            Communication.Content = totalCommunication + " students";   
-
-            int totalMultimediaArt = admin.MultiMediaArts();
-            multiMediaArts.Content = totalMultimediaArt + " students";
-
-            int totalComputerScience = admin.ComputerScience();
-            compueterscience.Content = totalComputerScience + " students";
-
-            int totalInformationsystem = admin.Informationsystem(); 
-            informationsystem.Content = totalInformationsystem + " students";
-
-            int totalemc = admin.entertaimentmultimediacomputing();
-            entertainmentmultimediacomputing.Content = totalemc + " students";
-
-            int totalarchitecture = admin.architecture();
-            architecture.Content = totalarchitecture + " students";
-
-            int totalchemicalengineering = admin.chemicalEnginerring();
-            chemicalengineering.Content = totalchemicalengineering + " students";
-
-            int totalcivilengineering = admin.civilEngineering();
-            civilengineering.Content = totalcivilengineering + " students";
-
-            int totalcomputerengineering = admin.computerEngineering();
-            compueterengineering.Content = totalcomputerengineering + " students";
-
-            int totalelectricalengineering = admin.electricalEngineering();
-            electricalengineering.Content = totalelectricalengineering + " students";
-
-            int totalelectronicengineering = admin.electronicsEngineering();
-            electronicsengineering.Content = totalelectronicengineering + " students";
-
-            int totalindustrialengineering = admin.industrialEngineering();
-            industrialengineering.Content = totalindustrialengineering + " students";
-
-            int totalmechanicalengineering = admin.mechanicalEngineering();
-            mechanicalengineering.Content = totalmechanicalengineering + " students";
-
-            int totalbiology = admin.biology();
-            biology.Content = totalbiology + " students";
-
-            int totalpharmcy = admin.pharmacy();
-            pharmacy.Content = totalpharmcy + " students";
-
-            int totalphysicaltherapy = admin.physicalteraphy();
-            physicaltherapy.Content = totalphysicaltherapy + " students";
-
-            int totalpyschology = admin.psychology();
-            psycholoyg.Content = totalpyschology + " students";
+            loadAnalytics();
 
 
 
@@ -189,6 +101,51 @@ namespace WpfApp2
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            loadAnalytics();
+
+        }
+        public void setId(String username)
+        {
+            SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = admin.displayRecords(SQL);
+            id = int.Parse(dt.Rows[0][0].ToString());
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            if(txtSearch.Text == "Search student ID..." || string.IsNullOrWhiteSpace(txtSearch.Text))
+                return;
+            string SQL = "SELECT * FROM users WHERE student_id LIKE '%" + txtSearch.Text + "%'";
+            displayUsers(SQL);
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearch.Text == "Search student ID...")
+                txtSearch.Text = "";
+
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
+                txtSearch.Text = "Search student ID...";
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            String yearLevel = cmbYear.SelectedItem as String;
+            SQL = "SELECT * FROM users WHERE year_level LIKE '%" + yearLevel + "%'";
+            displayUsers(SQL);
+            if (yearLevel == "All Year Levels")
+            {
+                SQL = "SELECT * FROM users WHERE role = 'Student'";
+                displayUsers(SQL);
+            }
+        }
+        public void loadAnalytics()
+        {
             int totalActiveStudents = admin.GetActiveStudentCount();
             lblActiveStudent.Content = totalActiveStudents.ToString();
 
@@ -200,7 +157,6 @@ namespace WpfApp2
 
             int totalmedicinereq = admin.GetMedicineStatusCount();
             lblMedicalAlerts.Content = totalmedicinereq;
-            //programs specific
             int totalComputerscience = admin.Accountancy();
             accountancy.Content = totalComputerscience + " students";
 
@@ -263,47 +219,6 @@ namespace WpfApp2
 
             int totalpyschology = admin.psychology();
             psycholoyg.Content = totalpyschology + " students";
-
-        }
-        public void setId(String username)
-        {
-            SQL = $"select user_id from users where username = '{username}'";
-            DataTable dt = admin.displayRecords(SQL);
-            id = int.Parse(dt.Rows[0][0].ToString());
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-            if(txtSearch.Text == "Search student ID..." || string.IsNullOrWhiteSpace(txtSearch.Text))
-                return;
-            string SQL = "SELECT * FROM users WHERE student_id LIKE '%" + txtSearch.Text + "%'";
-            displayUsers(SQL);
-        }
-
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (txtSearch.Text == "Search student ID...")
-                txtSearch.Text = "";
-
-        }
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtSearch.Text))
-                txtSearch.Text = "Search student ID...";
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            String yearLevel = cmbYear.SelectedItem as String;
-            SQL = "SELECT * FROM users WHERE year_level LIKE '%" + yearLevel + "%'";
-            displayUsers(SQL);
-            if (yearLevel == "All Year Levels")
-            {
-                SQL = "SELECT * FROM users WHERE role = 'Student'";
-                displayUsers(SQL);
-            }
         }
     }
 }
