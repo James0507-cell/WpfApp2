@@ -216,6 +216,14 @@ namespace WpfApp2
         }
         private void UpdateStudent(String usernmae)
         {
+            var activeWindow = Application.Current.Windows
+                            .OfType<Window>()
+                            .SingleOrDefault(x => x.IsActive);
+
+            if (activeWindow != null)
+            {
+                activeWindow.Hide();
+            }
             UpdateStudent updateStudent = new UpdateStudent(Username);
             updateStudent.Show();
         }
@@ -259,6 +267,99 @@ namespace WpfApp2
                 MessageBox.Show("Could not find the User Dashboard to refresh.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        public void AddStudent(
+            string studentId, string firstName, string lastName,
+            string username, string password, DateTime dateOfBirth,
+            string email, string phone, string address, string course,
+            string yearLevel, string enrollmentStatus, string bloodType,
+            string role, string emergencyName, string emergencyPhone,
+            string allergies, string medicalConditions)
+        {
+            string SQL = $@"
+                INSERT INTO users (
+                    student_id, first_name, last_name, username, password, 
+                    date_of_birth, email, phone_number, address, 
+                    course_program, year_level, enrollment_status, 
+                    blood_type, role, emergency_contact_name, emergency_contact_phone, 
+                    known_allergies, medical_conditions
+                ) VALUES (
+                    '{studentId}', '{firstName}', '{lastName}', '{username}', '{password}',
+                    '{dateOfBirth:yyyy-MM-dd}', '{email}', '{phone}', '{address}',
+                    '{course}', '{yearLevel}', '{enrollmentStatus}',
+                    '{bloodType}', '{role}', '{emergencyName}', '{emergencyPhone}',
+                    '{allergies}', '{medicalConditions}'
+                )";
 
+            sqlManager(SQL);
+        }
+
+        public void LogAddStudentAdminAction(int adminId, string adminUsername, string newStudentUsername)
+        {
+            string SQL = $@"
+                INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date)
+                VALUES (
+                    {adminId},
+                    '{adminUsername}',
+                    'Add New Student',
+                    'Added new student: {newStudentUsername}',
+                    '{DateTime.Now:yyyy-MM-dd HH:mm:ss}'
+                )";
+
+            sqlManager(SQL);
+        }
+        public void UpdateStudent(
+            int userId,
+            string studentId,
+            string firstName,
+            string lastName,
+            string username,
+            string password,
+            DateTime? dateOfBirth,
+            string email,
+            string phone,
+            string address,
+            string course,
+            string yearLevel,
+            string status,
+            string bloodType,
+            string role,
+            string emergencyContactName,
+            string emergencyContactPhone,
+            string allergies,
+            string conditions)
+        {
+            string query = $@"
+                UPDATE users SET 
+                    student_id = '{studentId}', 
+                    first_name = '{firstName}', 
+                    last_name = '{lastName}', 
+                    username = '{username}', 
+                    password = '{password}', 
+                    date_of_birth = '{dateOfBirth:yyyy-MM-dd}', 
+                    email = '{email}', 
+                    phone_number = '{phone}', 
+                    address = '{address}', 
+                    course_program = '{course}', 
+                    year_level = '{yearLevel}', 
+                    enrollment_status = '{status}', 
+                    blood_type = '{bloodType}', 
+                    role = '{role}',
+                    emergency_contact_name = '{emergencyContactName}',
+                    emergency_contact_phone = '{emergencyContactPhone}',
+                    known_allergies = '{allergies}',
+                    medical_conditions = '{conditions}'
+                WHERE user_id = {userId}";
+
+            sqlManager(query);
+        }
+
+        public void LogUpdateStudentAction(int adminId, string username, string activityType, string description)
+        {
+            string query = $@"
+                INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) 
+                VALUES ({adminId}, '{username}', '{activityType}', '{description}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+
+            sqlManager(query);
+        }
     }
 }

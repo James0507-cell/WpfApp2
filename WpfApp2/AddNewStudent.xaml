@@ -208,19 +208,19 @@
                                     </Grid.RowDefinitions>
 
                                     <Label Grid.Row="0" Grid.Column="0" Content="First Name *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtFirstName" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" TextChanged="txtFirstName_TextChanged_1" VerticalContentAlignment="Center"/>
+                                    <TextBox x:Name="txtFirstName" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5"  VerticalContentAlignment="Center"/>
 
                                     <Label Grid.Row="0" Grid.Column="1" Content="Last Name *" Margin="5,5,0,0" Foreground="#FF666666"/>
                                     <TextBox x:Name="txtLastName" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5"/>
 
                                     <Label Grid.Row="2" Grid.Column="0" Content="Student ID *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtStudentID" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" TextChanged="txtStudentID_TextChanged"/>
+                                    <TextBox x:Name="txtStudentID" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" />
 
                                     <Label Grid.Row="2" Grid.Column="1" Content="Username *" Margin="5,5,0,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtUsername" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5" TextChanged="txtUsername_TextChanged"/>
+                                    <TextBox x:Name="txtUsername" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5" />
 
                                     <Label Grid.Row="4" Grid.Column="0" Content="Password *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtPassword" Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" TextChanged="txtStudentID_TextChanged"/>
+                                    <TextBox x:Name="txtPassword" Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" />
 
                                     <Label Grid.Row="4" Grid.Column="1" Content="Role *" Margin="5,5,0,0" Foreground="#FF666666"/>
                                     <ComboBox x:Name="cmbRole" Grid.Row="5" Grid.Column="1" Height="23" Margin="5,0,0,5" BorderBrush="#FFABADB3">
@@ -259,7 +259,7 @@
                                     </ComboBox>
 
                                     <Label Grid.Row="6" Grid.Column="0" Content="Email Address *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtEmailAddress" Grid.Row="7" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" TextChanged="txtEmailAddress_TextChanged"/>
+                                    <TextBox x:Name="txtEmailAddress" Grid.Row="7" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" />
 
                                     <Label Grid.Row="6" Grid.Column="1" Content="Phone Number *" Margin="5,5,0,0" Foreground="#FF666666"/>
                                     <TextBox x:Name="txtPhoneNumber" Grid.Row="7" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5"/>
@@ -348,7 +348,7 @@
                                     </ComboBox>
 
                                     <Label Grid.Row="0" Grid.Column="1" Content="Year Level" Margin="5,5,0,0" VerticalAlignment="Top" Foreground="#FF666666"/>
-                                    <ComboBox x:Name="cboYearLevel" Grid.Row="1" Grid.Column="1" Margin="5,0,0,5" Height="22" VerticalAlignment="Top" SelectionChanged="cboYearLevel_SelectionChanged">
+                                    <ComboBox x:Name="cboYearLevel" Grid.Row="1" Grid.Column="1" Margin="5,0,0,5" Height="22" VerticalAlignment="Top" >
                                         <ComboBox.Style>
                                             <Style TargetType="{x:Type ComboBox}">
                                                 <Setter Property="Template">
