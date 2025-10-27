@@ -35,7 +35,6 @@ namespace WpfApp2
             int num = dt.Rows.Count;
             for (int i = 0; i < num; i++)
             {
-                // 1. Extract Data from DataTable row
                 String username = dt.Rows[i]["username"].ToString();
                 String email = dt.Rows[i]["email"].ToString();
                 String adress = dt.Rows[i]["address"].ToString();

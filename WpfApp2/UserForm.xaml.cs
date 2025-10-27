@@ -50,14 +50,14 @@ namespace WpfApp2
         }
         private void btnAppoint_Click(object sender, RoutedEventArgs e)
         {
-            BookingAppointment bookingAppointment = new BookingAppointment(username);
+            BookingAppointment bookingAppointment = new BookingAppointment();
 
             bookingAppointment.Show();
             this.Close();
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            BookingAppointment bookingAppointment = new BookingAppointment(username);
+            BookingAppointment bookingAppointment = new BookingAppointment();
 
             bookingAppointment.Show();
             this.Close();

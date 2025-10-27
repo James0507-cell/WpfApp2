@@ -15,13 +15,13 @@ namespace WpfApp2
         private Booking booking = new Booking();
         private Users users = new Users();
         private String SQL = "";
-        private string username = "";
+        private string username = MainWindow.Username;
         private int userId = 0;
 
-        public BookingAppointment(String username)
+        public BookingAppointment()
         {
             InitializeComponent();
-            this.username = username;
+            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
