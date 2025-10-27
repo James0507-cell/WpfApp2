@@ -10,7 +10,9 @@ namespace WpfApp2
 {
     internal class UserShortCheck
     {
+
         dbManager dbManager = new dbManager();
+
         public (string resultText, Brush color, double bmiValue) CalculateBmi(double heightCm, double weightKg)
         {
             if (heightCm <= 0 || weightKg <= 0)

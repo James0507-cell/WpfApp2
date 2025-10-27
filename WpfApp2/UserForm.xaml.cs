@@ -13,10 +13,12 @@ namespace WpfApp2
     public partial class UserForm : Window
     {
         dbManager dbManager = new dbManager();
+        UserHomePage userHomePage = new UserHomePage();
         private string username;
         Users user = new Users();
         private string SQL = "";
         private int userId;
+        
 
         public UserForm(string username)
         {
@@ -59,7 +61,7 @@ namespace WpfApp2
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            userId = user.getUserId(username);
+            userId = user.getID();
             SQL = $"SELECT * FROM appointments WHERE username = '{username}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()";
             displayAppointment(SQL);
             SQL = $"SELECT * FROM student_activity_log WHERE user_id = '{userId}' ORDER BY activity_date DESC LIMIT 5";
@@ -89,7 +91,7 @@ namespace WpfApp2
                 string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
                 string reason = dt.Rows[i]["reason"].ToString();
 
-                Border cardBorder = user.appointmentPanel(appointmentId, date, time, status, purpose, reason);
+                Border cardBorder = userHomePage.appointmentPanel(appointmentId, date, time, status, purpose, reason);
                 AppointmentStackPanel.Children.Add(cardBorder);
             }
         }
@@ -107,14 +109,14 @@ namespace WpfApp2
                 string description = dt.Rows[i]["activity_desc"].ToString();
                 string dateTime = dt.Rows[i]["activity_date"].ToString(); 
 
-                Border cardBorder = user.activityPanel(activityId, type, description, dateTime);
+                Border cardBorder = userHomePage.activityPanel(activityId, type, description, dateTime);
                 StackPanelActivities.Children.Add(cardBorder);
             }
         }
         
         private void getName()
         {
-            String name = user.name();
+            String name = user.getName();
             lblName.Content = name;
         }
 
@@ -122,27 +124,27 @@ namespace WpfApp2
         
         public void displayBMI()
         {
-            String BMI = user.bmi();
+            String BMI = user.getBMI();
             lblbmi.Content = BMI;
         }
         public void displayCheckupDate()
         {
-            String checkupDate = user.CheckUpDate();
+            String checkupDate = userHomePage.CheckUpDate();
             lblCheck.Content = checkupDate;
         }
         public void displayUpcommingAppointment()
         {
-            String AppoitnemntDate = user.upcommingAppointments();
+            String AppoitnemntDate = userHomePage.upcommingAppointments();
             lblIncomingAppointment.Content = AppoitnemntDate;
         }
         public void displayHeight()
         {
-           String heigt = user.height();
+           String heigt = user.getHeight();
             lblHeight.Content = heigt;
         }
         public void displayWeight()
         {
-            String weigt = user.weight();
+            String weigt = user.getWeight();
             lblWeight.Content = weigt;
         }
         public void displayProgressBar()
@@ -153,7 +155,7 @@ namespace WpfApp2
                 pbBMI.Minimum = 0;
                 pbBMI.Maximum = 40;
 
-                double? bmi = Convert.ToDouble(user.bmi());
+                double? bmi = Convert.ToDouble(user.getBMI());
 
                 if (bmi.HasValue)
                 {
@@ -210,7 +212,7 @@ namespace WpfApp2
 
         public void displaySixMonthsProgress()
         {
-            List<MonthlyProgress> progressList = user.GetSixMonthsProgress(userId);
+            List<UserHomePage.MonthlyProgress> progressList = userHomePage.GetSixMonthsProgress(userId);
 
             for (int i = 0; i < 6; i++)
             {
