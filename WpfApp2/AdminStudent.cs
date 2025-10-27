@@ -18,9 +18,8 @@ namespace WpfApp2
         private MySqlCommand dbCommand;
         private MySqlDataAdapter da;
         private DataTable dt;
-        String Username = MainWindow.Username;
-        int id;
-        String studUsername = "";
+        private String Username = MainWindow.Username;
+        private int id;
 
 
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
@@ -66,7 +65,7 @@ namespace WpfApp2
                 Margin = new Thickness(0, 2, 0, 2),
                 FontWeight = weight,
                 TextWrapping = TextWrapping.Wrap,
-                Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")) // Dark blue
+                Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D")) 
             };
         }
 
@@ -76,7 +75,7 @@ namespace WpfApp2
             {
                 BorderBrush = new SolidColorBrush(Colors.LightGray),
                 BorderThickness = new Thickness(1),
-                Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA)), // Very light blue/gray background
+                Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA)), 
                 CornerRadius = new CornerRadius(8),
                 Margin = new Thickness(10, 6, 10, 6),
                 Padding = new Thickness(15),
@@ -85,13 +84,11 @@ namespace WpfApp2
 
             };
 
-            // 3. Main Grid Layout for the Card
             Grid mainLayoutGrid = new Grid();
-            mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Header
-            mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Divider
-            mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Details/Buttons
+            mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); 
+            mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); 
+            mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); 
 
-            // 4. Header Section (Row 0)
             StackPanel headerPanel = new StackPanel { Orientation = Orientation.Vertical, Margin = new Thickness(0, 0, 0, 4) };
 
             TextBlock txtName = new TextBlock
@@ -116,7 +113,6 @@ namespace WpfApp2
             Grid.SetRow(headerPanel, 0);
             mainLayoutGrid.Children.Add(headerPanel);
 
-            // 5. Divider (Row 1)
             Separator separator = new Separator
             {
                 Margin = new Thickness(0, 8, 0, 8),
@@ -125,23 +121,20 @@ namespace WpfApp2
             Grid.SetRow(separator, 1);
             mainLayoutGrid.Children.Add(separator);
 
-            // 6. Details and Button Section (Row 2)
             Grid detailsAndButtonsGrid = new Grid();
-            detailsAndButtonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) }); // Details
-            detailsAndButtonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Buttons
+            detailsAndButtonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) }); 
+            detailsAndButtonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); 
 
-            // Details Panel - Two-column layout within the first grid column
             Grid detailsGrid = new Grid
             {
                 ColumnDefinitions =
                     {
-                        new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }, // Left Column (Course/Year)
-                        new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }  // Right Column (Contact/Address)
+                        new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }, 
+                        new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }  
                     },
                 Margin = new Thickness(0, 0, 10, 0)
             };
 
-            // Left Column: Academic
             StackPanel leftPanel = new StackPanel { Margin = new Thickness(0, 0, 10, 0) };
             leftPanel.Children.Add(CreateDetailBlock("Course", course, FontWeights.DemiBold));
             leftPanel.Children.Add(CreateDetailBlock("Year Level", year));
@@ -149,7 +142,6 @@ namespace WpfApp2
             Grid.SetColumn(leftPanel, 0);
             detailsGrid.Children.Add(leftPanel);
 
-            // Right Column: Contact
             StackPanel rightPanel = new StackPanel { Margin = new Thickness(10, 0, 0, 0) };
             rightPanel.Children.Add(CreateDetailBlock("Email", email));
             rightPanel.Children.Add(CreateDetailBlock("Phone", phone));
@@ -162,7 +154,6 @@ namespace WpfApp2
             detailsAndButtonsGrid.Children.Add(detailsGrid);
 
 
-            // Button Panel 
             StackPanel buttonPanel = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
@@ -170,7 +161,6 @@ namespace WpfApp2
                 VerticalAlignment = VerticalAlignment.Center
             };
 
-            // Helper for styled buttons
             Func<string, Brush, RoutedEventHandler, Border> createStyledButton = (string content, Brush bg, RoutedEventHandler handler) =>
             {
                 Button button = new Button
@@ -196,18 +186,16 @@ namespace WpfApp2
                 return btnBorder;
             };
 
-            // Update Button (Blue)
             var updateBtnBorder = createStyledButton("Update",
-                new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2196F3")), // Blue 
+                new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2196F3")),
                 (s, e) =>
                 {
                     Username = username;
                     UpdateStudent(Username);
                 });
 
-            // Delete Button (Red)
             var deleteBtnBorder = createStyledButton("Delete",
-                new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF44336")), // Red
+                new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF44336")), 
                 (s, e) =>
                 {
                     DeleteStudent(studentId);
@@ -223,7 +211,6 @@ namespace WpfApp2
             Grid.SetRow(detailsAndButtonsGrid, 2);
             mainLayoutGrid.Children.Add(detailsAndButtonsGrid);
 
-            // 7. Add the Card to the Main StackPanel
             cardBorder.Child = mainLayoutGrid;
             return cardBorder;
         }

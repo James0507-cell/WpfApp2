@@ -10,39 +10,25 @@ namespace WpfApp2
 {
     public partial class BookingAppointment : Window
     {
-        // --- Private Fields ---
         private DateTime selectedDate = DateTime.MinValue;
         private string selectedTime;
         private Booking booking = new Booking();
         private Users users = new Users();
         private String SQL = "";
+        private string username = "";
+        private int userId = 0;
 
-        // --- Public Properties/Fields ---
-        public string username = MainWindow.Username;
-        int userId = 0;
-
-        // --- Constructor ---
-        public BookingAppointment()
+        public BookingAppointment(String username)
         {
             InitializeComponent();
+            this.username = username;
         }
-
-        // -----------------------------
-        // --- Event Handlers (Window/Load) ---
-        // -----------------------------
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            booking.dbConnection();
-            users.dbConnection();
+            
             setStudentInfo();
-
-            if (!cldDate.SelectedDate.HasValue)
-            {
-                cldDate.SelectedDate = DateTime.Today;
-            }
-            selectedDate = cldDate.SelectedDate.Value;
-
+            setDate();
             CheckAndDisableBookedSlots();
         }
 
@@ -85,56 +71,39 @@ namespace WpfApp2
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-
             if (selectedDate == DateTime.MinValue || string.IsNullOrEmpty(selectedTime))
             {
                 MessageBox.Show("Please select a date and time for the appointment.");
                 return;
             }
 
-            DataTable dt = booking.displayRecords($"Select user_id from users where username = '{username}'");
-            if (dt.Rows.Count > 0)
-            {
-                userId = Convert.ToInt32(dt.Rows[0]["user_id"]);
-            }
-            else
+            int userId = booking.GetUserId(username);
+            if (userId == -1)
             {
                 MessageBox.Show("User not found.");
                 return;
             }
 
+            booking.InsertAppointment(
+                userId,
+                username,
+                selectedDate,
+                selectedTime,
+                txtStudentID.Text,
+                txtConfirmEmail.Text,
+                txtConfirmPhone.Text,
+                txtConfirmPurpose.Text,
+                txtConfirmAllergies.Text,
+                txtConfirmMedication.Text,
+                txtConfirmPreviousVisit.Text,
+                txtConfirmEmergencyName.Text,
+                txtConfirmEmergencyPhone.Text,
+                txtSymptoms.Text
+            );
 
-            DateTime timeToConvert;
-            if (!DateTime.TryParse(selectedTime, out timeToConvert))
-            {
-                MessageBox.Show("Error parsing selected time for database insert.");
-                return;
-            }
-            string dbTimeFormat = timeToConvert.ToString("HH:mm:ss");
+            booking.LogBookingActivity(userId, txtConfirmPurpose.Text);
 
-            string studentId = txtStudentID.Text;
-
-            string insertQuery = $@"
-                INSERT INTO appointments
-                (user_id, username, student_id, appointment_date, appointment_time, email, phone_number,
-                 purpose_of_visit, known_allergies, current_medication, previous_visit,
-                 emergency_contact_name, emergency_contact_phone, status, created_at, current_symptoms)
-                VALUES
-                ({userId}, '{username}', '{studentId}', '{selectedDate:yyyy-MM-dd}', '{dbTimeFormat}', 
-                '{txtConfirmEmail.Text}', '{txtConfirmPhone.Text}', '{txtConfirmPurpose.Text}',
-                '{txtConfirmAllergies.Text}', '{txtConfirmMedication.Text}', '{txtConfirmPreviousVisit.Text}',
-                '{txtConfirmEmergencyName.Text}', '{txtConfirmEmergencyPhone.Text}', 'Pending',
-                '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{txtSymptoms.Text}')";
-
-            booking.sqlManager(insertQuery);
-            MessageBox.Show("Appointment successfully booked! Your appointment is Pending and awaiting approval.");
-
-            // 3. Log the activity
-            string SQL_log = $@"
-            INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
-            VALUES ({userId}, 'Appointment', 'Booking appointment for {txtConfirmPurpose.Text}')";
-            booking.sqlManager(SQL_log);
-
+            MessageBox.Show("Appointment successfully booked! Your appointment is pending and awaiting approval.");
             MyTabBooking.SelectedIndex = 2;
             CheckAndDisableBookedSlots();
         }
@@ -151,56 +120,19 @@ namespace WpfApp2
             if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--;
         }
 
-        // Tab Navigation Button Clicks (Consolidated)
         private void Button_Click(object sender, RoutedEventArgs e) { MyTabBooking.SelectedIndex = 1; }
         private void Button_Click_2(object sender, RoutedEventArgs e) { PopulateConfirmationTab(); MyTabBooking.SelectedIndex = 2; }
         private void BackButton_Click(object sender, RoutedEventArgs e) { if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--; }
 
-
-
-        private List<string> GetBookedTimesForDate(DateTime date)
-        {
-            var bookedTimes = new List<string>();
-            string dateString = date.ToString("yyyy-MM-dd");
-
-            SQL = $"SELECT appointment_time FROM appointments WHERE appointment_date = '{dateString}' AND (status = 'Pending' OR status = 'Approved')";
-
-            try
-            {
-                DataTable dt = booking.displayRecords(SQL);
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    string dbTime = row["appointment_time"].ToString();
-
-                    if (!string.IsNullOrEmpty(dbTime) &&
-                        DateTime.TryParse($"2000-01-01 {dbTime}", out DateTime parsedTime))
-                    {
-                        string formattedTime = parsedTime.ToString("h:mm tt", CultureInfo.InvariantCulture);
-
-                        bookedTimes.Add(formattedTime);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error fetching booked times: {ex.Message}");
-            }
-
-            return bookedTimes;
-        }
-
         private void CheckAndDisableBookedSlots()
         {
-            selectedTime = null; // Reset selection
+            selectedTime = null;
 
             Style bookedStyle = (Style)FindResource("BookedAppointmentStyle");
             Style defaultStyle = (Style)FindResource("AppointmentButtonStyle");
 
-            // 1. Handle Weekend Closure
             if (selectedDate.DayOfWeek == DayOfWeek.Saturday || selectedDate.DayOfWeek == DayOfWeek.Sunday)
             {
-                if (TimeSelectionGrid == null) return;
                 foreach (var child in TimeSelectionGrid.Children)
                 {
                     if (child is Button btn)
@@ -212,35 +144,20 @@ namespace WpfApp2
                 return;
             }
 
-            List<string> bookedTimes = GetBookedTimesForDate(selectedDate);
+            List<string> bookedTimes = booking.GetBookedTimes(selectedDate);
 
-            if (TimeSelectionGrid == null) return;
             foreach (var child in TimeSelectionGrid.Children)
             {
-                if (child is Button btn)
+                if (child is Button btn && btn.Tag != null)
                 {
-                    string timeTag = btn.Tag?.ToString();
-
+                    string timeTag = btn.Tag.ToString();
                     btn.IsEnabled = true;
                     btn.Style = defaultStyle;
-
-                    if (string.IsNullOrEmpty(timeTag)) continue;
 
                     if (bookedTimes.Contains(timeTag))
                     {
                         btn.Style = bookedStyle;
                         btn.IsEnabled = false;
-                    }
-                    else if (selectedDate.Date == DateTime.Today.Date)
-                    {
-                        if (DateTime.TryParse($"{selectedDate.ToShortDateString()} {timeTag}", out DateTime appointmentDateTime))
-                        {
-                            if (appointmentDateTime <= DateTime.Now)
-                            {
-                                btn.Style = bookedStyle;
-                                btn.IsEnabled = false;
-                            }
-                        }
                     }
                 }
             }
@@ -284,21 +201,15 @@ namespace WpfApp2
 
             }
         }
+       public void setDate ()
+        {
+            if (!cldDate.SelectedDate.HasValue)
+            {
+                cldDate.SelectedDate = DateTime.Today;
+            }
+            selectedDate = cldDate.SelectedDate.Value;
 
-
-
-        private void txtFirstName_TextChanged(object sender, TextChangedEventArgs e) { }
-        private void txtLastName_TextChanged(object sender, TextChangedEventArgs e) { }
-        private void txtStudentID_TextChanged(object sender, TextChangedEventArgs e) { }
-        private void txtEmail_TextChanged(object sender, TextChangedEventArgs e) { }
-        private void txtPhoneNumber_TextChanged(object sender, TextChangedEventArgs e) { }
-        private void cmbPurpose_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
-        private void txtSymptoms_TextChanged(object sender, TextChangedEventArgs e) { }
-        private void txtAllergies_TextChanged(object sender, TextChangedEventArgs e) { }
-        private void txtCurrentMedication_TextChanged(object sender, TextChangedEventArgs e) { }
-        private void cmbPreviousVisit_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
-        private void txtEmergencyContactName_TextChanged(object sender, TextChangedEventArgs e) { }
-        private void txtEmergencyContactPhone_TextChanged(object sender, TextChangedEventArgs e) { }
+        }
 
     }
 }

@@ -17,6 +17,7 @@ namespace WpfApp2
         private DataTable dt;
         private string username = MainWindow.Username;
         int id = 0;
+        String SQL = "";
 
         string strConn = "server=localhost; user id=root; password=; database=db_medicaremmcm";
 
@@ -317,8 +318,8 @@ namespace WpfApp2
 
             if (activeUserForm != null)
             {
-                activeUserForm.reloadAppointments();
-                activeUserForm.reloadActivities();
+                activeUserForm.displayAppointment($"SELECT * FROM appointments WHERE username = '{username}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()");
+                activeUserForm.displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{id}' ORDER BY activity_date DESC LIMIT 5");
             }
             else
             {
@@ -404,6 +405,154 @@ namespace WpfApp2
             cardBorder.Child = activityContent;
 
             return cardBorder;
+        }
+
+        public String upcommingAppointments()
+        {
+            setId(username);
+            SQL = $"SELECT * FROM appointments " +
+                  $"WHERE user_id = '{id}' " +
+                  $"AND status = 'Approved' " +
+                  $"AND TIMESTAMP(appointment_date, appointment_time) >= NOW() " +
+                  $"ORDER BY TIMESTAMP(appointment_date, appointment_time) ASC " +
+                  $"LIMIT 1";
+            DataTable dt = displayRecords(SQL);
+            if (dt.Rows.Count > 0)
+            {
+                DateTime date = Convert.ToDateTime(dt.Rows[0]["appointment_date"]);
+                TimeSpan time = (TimeSpan)dt.Rows[0]["appointment_time"];
+
+                DateTime fullDateTime = date.Add(time);
+
+                return fullDateTime.ToString("MMMM dd, yyyy") + "\n" +
+                                         fullDateTime.ToString("hh:mm tt");
+            }
+            else
+            {
+                return "No upcoming appointment";
+            }
+        }
+        public String CheckUpDate()
+        {
+            setId (username);
+            SQL = $"SELECT * FROM checkups WHERE user_id = '{id}' ORDER BY checkup_id DESC LIMIT 1";
+            DataTable dt = displayRecords(SQL);
+
+            if (dt.Rows.Count > 0)
+            {
+                DateTime recordedDate = Convert.ToDateTime(dt.Rows[0]["recorded_at"]);
+                return recordedDate.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                return "No Checkup record found.";
+            }
+        }
+        public String height()
+        {
+            setId(username);
+            SQL = $"Select * from checkups where user_id = '{id}' order by checkup_id desc limit 1";
+            DataTable dt = displayRecords(SQL);
+            if (dt.Rows.Count > 0)
+            {
+                String height = dt.Rows[0]["height_cm"].ToString();
+                return height + " cm";
+            }
+            else
+            {
+                return "No Height record found.";
+            }
+        }
+        public String weight()
+        {
+            setId(username);
+            SQL = $"Select * from checkups where user_id = '{id}' order by checkup_id desc limit 1";
+            DataTable dt = displayRecords(SQL);
+            if (dt.Rows.Count > 0)
+            {
+                String weight = dt.Rows[0]["weight_kg"].ToString();
+                return weight + " kg";
+            }
+            else
+            {
+                return "No Weight record found.";
+            }
+        }
+        public String bmi()
+        {
+            setId(username);
+            SQL = $"Select * from checkups where user_id = '{id}' order by checkup_id desc limit 1";
+            DataTable dt = displayRecords(SQL);
+            if (dt.Rows.Count > 0)
+            {
+                String bmi = dt.Rows[0]["bmi"].ToString();
+                return bmi;
+            }
+            else
+            {
+                return "No BMI record found.";
+            }
+        }
+        public class MonthlyProgress
+        {
+            public string MonthName { get; set; }
+            public double BMI { get; set; }
+            public double Weight { get; set; }
+        }
+        public String name ()
+        {
+            SQL = $"select * from users where username = '{username}'";
+            DataTable dt = displayRecords(SQL);
+            String name = dt.Rows[0]["first_name"].ToString() + " " + dt.Rows[0]["last_name"].ToString();
+            return "Welcome back " + name;
+        }
+        public List<MonthlyProgress> GetSixMonthsProgress(int userId)
+        {
+            try
+            {
+                string SQL = $@"
+            SELECT 
+                DATE_FORMAT(c.recorded_at, '%M') AS month_name, 
+                c.bmi,
+                c.weight_kg
+            FROM checkups c
+            INNER JOIN (
+                SELECT 
+                    YEAR(recorded_at) AS y,
+                    MONTH(recorded_at) AS m,
+                    MAX(recorded_at) AS max_date
+                FROM checkups
+                WHERE user_id = {userId}
+                  AND recorded_at >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+                GROUP BY YEAR(recorded_at), MONTH(recorded_at)
+            ) latest
+            ON YEAR(c.recorded_at) = latest.y
+            AND MONTH(c.recorded_at) = latest.m
+            AND c.recorded_at = latest.max_date
+            WHERE c.user_id = {userId}
+            ORDER BY latest.y, latest.m ASC;
+        ";
+
+                DataTable dt = displayRecords(SQL);
+                List<MonthlyProgress> list = new List<MonthlyProgress>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    list.Add(new MonthlyProgress
+                    {
+                        MonthName = row["month_name"].ToString(),
+                        BMI = Convert.ToDouble(row["bmi"]),
+                        Weight = Convert.ToDouble(row["weight_kg"])
+                    });
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error fetching six-month progress: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return new List<MonthlyProgress>();
+            }
         }
 
 

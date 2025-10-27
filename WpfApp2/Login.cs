@@ -18,7 +18,7 @@ namespace WpfApp2
         private MySqlDataAdapter da;
         private DataTable dt;
 
-        String strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
+        private String strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
         public void dbConnection ()
         {
@@ -36,32 +36,25 @@ namespace WpfApp2
             return dt;
 
         }
-        public string loginUser(string username, string password)
+
+        public String loginUser(String username, String password)
         {
-            string role = null;
-
-            using (MySqlConnection dbConn = new MySqlConnection(strConn))
+            String sql = $"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'";
+            DataTable dt = displayRecords(sql);
+            if (dt.Rows.Count > 0)
             {
-                dbConn.Open();
-
-                string strQuery = "SELECT role FROM users WHERE username = @username AND password = @password";
-                using (MySqlCommand dbCommand = new MySqlCommand(strQuery, dbConn))
-                {
-                    dbCommand.Parameters.AddWithValue("@username", username);
-                    dbCommand.Parameters.AddWithValue("@password", password);
-
-                    using (MySqlDataReader reader = dbCommand.ExecuteReader())  
-                    {
-                        if (reader.Read())
-                        {
-                            role = reader["role"].ToString();
-                        }
-                    }
-                }
+                if (dt.Rows[0]["role"].ToString() == "Student")
+                    return "Student";
+                else
+                    return "Admin";
+            }
+            else
+            {
+                return "Invalid";
             }
 
-            return role; 
         }
+        
     }
 }
 

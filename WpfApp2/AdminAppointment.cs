@@ -20,8 +20,8 @@ namespace WpfApp2
         private MySqlCommand dbCommand;
         private MySqlDataAdapter da;
         private DataTable dt;
-        String username = MainWindow.Username;
-        int id;
+        private String username = MainWindow.Username;
+        private int id;
 
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
@@ -117,22 +117,17 @@ namespace WpfApp2
         {
             if (sender is MenuItem menuItem && menuItem.Tag is string appointmentID)
             {
-                // 1. Instantiate the custom dialog
                 RejectionReasonDialog dialog = new RejectionReasonDialog();
 
-                // 2. Show the dialog and check if the user clicked "Reject"
                 bool? dialogResult = dialog.ShowDialog();
 
-                // 3. If DialogResult is true (meaning the user entered a reason and clicked "Reject")
                 if (dialogResult == true)
                 {
                     string rejectionReason = dialog.RejectionReason;
 
-                    // 4. Pass the appointment ID AND the rejection reason to the rejection logic
                     rejectAppointment(appointmentID, rejectionReason);
                 }
-                // If dialogResult is false or null, the user clicked "Cancel" or closed the dialog, 
-                // and no action is taken.
+
             }
         }
         public void approveAppointment(String appointmentID)

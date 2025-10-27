@@ -150,7 +150,7 @@
         Padding="1,0,1,1"
         Style="{StaticResource AppointmentButtonStyle}"
         Click="Button_Click_4" 
-        IsMouseDirectlyOverChanged="Button_IsMouseDirectlyOverChanged"/>
+        />
                 </Grid>
             </Border>
 
@@ -169,7 +169,7 @@
                 Margin="0,0,1,0"
                 CornerRadius="8"
                 Background="#FFFDFDFD"
-                IsMouseDirectlyOverChanged="___No_Name__IsMouseDirectlyOverChanged" BorderBrush="#1A00104D">
+                BorderBrush="#1A00104D">
                     <Button x:Name="btnAppoint"
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"

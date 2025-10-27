@@ -303,27 +303,27 @@
                                                 <StackPanel Grid.Column="0" Margin="0,0,5,0">
                                                     <Label Content="First Name *" FontWeight="Normal" Foreground="#FF666666"/>
                                                     <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                        <TextBox x:Name="txtFirstName" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtFirstName_TextChanged"/>
+                                                        <TextBox x:Name="txtFirstName" Padding="5" Margin="0" BorderThickness="0" />
                                                     </Border>
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="1" Margin="5,0,0,0">
                                                     <Label Content="Last Name *" FontWeight="Normal" Foreground="#FF666666"/>
                                                     <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                        <TextBox x:Name="txtLastName" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtLastName_TextChanged"/>
+                                                        <TextBox x:Name="txtLastName" Padding="5" Margin="0" BorderThickness="0" />
                                                     </Border>
                                                 </StackPanel>
                                             </Grid>
                                             <Label Content="Student ID *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox x:Name="txtStudentID" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtStudentID_TextChanged"/>
+                                                <TextBox x:Name="txtStudentID" Padding="5" Margin="0" BorderThickness="0" />
                                             </Border>
                                             <Label Content="Email Address *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox x:Name="txtEmail" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtEmail_TextChanged"/>
+                                                <TextBox x:Name="txtEmail" Padding="5" Margin="0" BorderThickness="0"/>
                                             </Border>
                                             <Label Content="Phone Number *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                <TextBox x:Name="txtPhoneNumber" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtPhoneNumber_TextChanged"/>
+                                                <TextBox x:Name="txtPhoneNumber" Padding="5" Margin="0" BorderThickness="0" />
                                             </Border>
                                         </StackPanel>
 
@@ -331,26 +331,26 @@
                                             <TextBlock Text="Medical Information" FontWeight="SemiBold" FontSize="16" Foreground="#FF00104D" Margin="0,0,0,5"/>
                                             <Label Content="Purpose of Visit *" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <ComboBox x:Name="cmbPurpose" Padding="5" Margin="0" BorderThickness="0" SelectionChanged="cmbPurpose_SelectionChanged" Text=".">
+                                                <ComboBox x:Name="cmbPurpose" Padding="5" Margin="0" BorderThickness="0" Text=".">
                                                     <ComboBoxItem Content="Injury"/>
                                                     <ComboBoxItem Content="Check-up"/>
                                                 </ComboBox>
                                             </Border>
                                             <Label Content="Current Symptoms/Concerns" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox x:Name="txtSymptoms" Padding="5" Margin="0" BorderThickness="0" Text="." TextChanged="txtSymptoms_TextChanged"/>
+                                                <TextBox x:Name="txtSymptoms" Padding="5" Margin="0" BorderThickness="0" Text="." />
                                             </Border>
                                             <Label Content="Known Allergies" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox x:Name="txtAllergies" Padding="5" Margin="0" BorderThickness="0" Text="." TextChanged="txtAllergies_TextChanged"/>
+                                                <TextBox x:Name="txtAllergies" Padding="5" Margin="0" BorderThickness="0" Text="." />
                                             </Border>
                                             <Label Content="Current Medications" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
-                                                <TextBox x:Name="txtCurrentMedication" Padding="5" Margin="0" BorderThickness="0" Text="." TextChanged="txtCurrentMedication_TextChanged"/>
+                                                <TextBox x:Name="txtCurrentMedication" Padding="5" Margin="0" BorderThickness="0" Text="." />
                                             </Border>
                                             <Label Content="Previous visits to MMCM clinic?" FontWeight="Normal" Foreground="#FF666666"/>
                                             <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                <ComboBox x:Name="cmbPreviousVisit" Padding="5" Margin="0" BorderThickness="0" SelectionChanged="cmbPreviousVisit_SelectionChanged" Text=".">
+                                                <ComboBox x:Name="cmbPreviousVisit" Padding="5" Margin="0" BorderThickness="0" Text=".">
                                                     <ComboBoxItem Content="Yes"/>
                                                     <ComboBoxItem Content="No"/>
                                                 </ComboBox>
@@ -368,13 +368,13 @@
                                             <StackPanel Grid.Column="0" Margin="0,0,10,0">
                                                 <Label Content="Emergency Contact Name *" FontWeight="Normal" Foreground="#FF666666"/>
                                                 <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                    <TextBox x:Name="txtEmergencyContactName" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtEmergencyContactName_TextChanged" Text="."/>
+                                                    <TextBox x:Name="txtEmergencyContactName" Padding="5" Margin="0" BorderThickness="0" Text="."/>
                                                 </Border>
                                             </StackPanel>
                                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                                 <Label Content="Emergency Contact Phone *" FontWeight="Normal" Foreground="#FF666666"/>
                                                 <Border BorderBrush="#FFCCCCCC" BorderThickness="1" CornerRadius="5">
-                                                    <TextBox x:Name="txtEmergencyContactPhone" Padding="5" Margin="0" BorderThickness="0" TextChanged="txtEmergencyContactPhone_TextChanged" Text="."/>
+                                                    <TextBox x:Name="txtEmergencyContactPhone" Padding="5" Margin="0" BorderThickness="0" Text="."/>
                                                 </Border>
                                             </StackPanel>
                                         </Grid>

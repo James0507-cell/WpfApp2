@@ -82,7 +82,6 @@ namespace WpfApp2
                     MessageBox.Show($"Successfully added {amountToAdd} units to inventory for ID {medId}.", "Success",
                                     MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Log the update
                     SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                          $"VALUES ({id}, '{username}', 'Update Medicine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     sqlManager(SQL);
@@ -188,7 +187,6 @@ namespace WpfApp2
                 HorizontalAlignment = HorizontalAlignment.Center,
             };
 
-            // Conditional Low Stock Highlight
             if (quant < 20)
             {
                 cardBorder.BorderBrush = lowStockRedBrush;
@@ -197,7 +195,6 @@ namespace WpfApp2
 
             DockPanel medicineContent = new DockPanel();
 
-            // --- Button Wrapper (Bottom Dock) ---
             Border buttonWrapper = new Border
             {
                 CornerRadius = new CornerRadius(6),
@@ -224,17 +221,14 @@ namespace WpfApp2
             buttonWrapper.Child = updateButton;
             medicineContent.Children.Add(buttonWrapper);
 
-            // --- Main Content StackPanel (Top Dock) ---
             StackPanel mainContentStack = new StackPanel();
 
-            // Header Grid setup
             Grid headerGrid = new Grid();
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             headerGrid.Margin = new Thickness(0, 0, 0, 10);
 
-            // Icon
             Border iconWrapper = new Border
             {
                 Background = new SolidColorBrush(Color.FromArgb(255, 230, 230, 255)),
@@ -257,7 +251,6 @@ namespace WpfApp2
             Grid.SetColumn(iconWrapper, 0);
             headerGrid.Children.Add(iconWrapper);
 
-            // Name and Dosage
             StackPanel nameDosagePanel = new StackPanel
             {
                 Margin = new Thickness(8, 0, 0, 0),
@@ -283,7 +276,6 @@ namespace WpfApp2
             Grid.SetColumn(nameDosagePanel, 1);
             headerGrid.Children.Add(nameDosagePanel);
 
-            // Inventory ID
             TextBlock txtInvId = new TextBlock
             {
                 Text = $"ID: {inventoryID}",
@@ -295,10 +287,8 @@ namespace WpfApp2
                 Margin = new Thickness(0, 0, 5, 0)
             };
 
-            // Availability Tag
             Border availabilityTag = CreateAvailabilityTag(quant);
 
-            // Stack them vertically in column 2
             StackPanel rightPanel = new StackPanel
             {
                 Orientation = Orientation.Vertical,
@@ -312,7 +302,6 @@ namespace WpfApp2
 
             mainContentStack.Children.Add(headerGrid);
 
-            // Separator Line
             Rectangle separator = new Rectangle
             {
                 Fill = new SolidColorBrush(Color.FromArgb(0x1A, 0x00, 0x10, 0x4D)),
@@ -321,7 +310,6 @@ namespace WpfApp2
             };
             mainContentStack.Children.Add(separator);
 
-            // Generic Name and Description Detail Blocks
             mainContentStack.Children.Add(CreateDetailBlock("Generic Name", genericName, darkBlueBrush));
             StackPanel descriptionBlock = CreateDetailBlock("Description", description, darkBlueBrush);
             descriptionBlock.Margin = new Thickness(0, 8, 0, 0);

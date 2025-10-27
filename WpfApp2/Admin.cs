@@ -13,7 +13,7 @@ namespace WpfApp2
         private MySqlCommand dbCommand;
         private MySqlDataAdapter da;
         private DataTable dt;
-
+        private String SQL = "";
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
 
@@ -47,7 +47,12 @@ namespace WpfApp2
 
 
 
-
+        public int getID(String username)
+        {
+            SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = displayRecords(SQL);
+            return int.Parse(dt.Rows[0][0].ToString());
+        }
         public int GetActiveStudentCount()
         {
   

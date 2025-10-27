@@ -20,18 +20,17 @@ namespace WpfApp2
 {
     public partial class AdminWindow : Window
     {
-        String SQL = "";
+        private String SQL = "";
         Admin admin = new Admin();
-        String username = MainWindow.Username;
+        private String username = MainWindow.Username;
         StudentManagement studentManagement = new StudentManagement();
-        int id;
+        private int id;
 
         public AdminWindow()
         {
             InitializeComponent();
         }
         
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow login = new MainWindow();
@@ -55,6 +54,54 @@ namespace WpfApp2
         {
             studentManagement.Show();
             this.Hide();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            int totalStudents = admin.GetActiveStudentCount();
+            lblActiveStatus.Content = totalStudents;
+
+            int totalmedicinereq = admin.GetMedicineStatusCount();
+            lblMedicine.Content = totalmedicinereq;
+
+            int totalAppoinment = admin.GetAppointmenCount();
+            lblPending.Content = totalAppoinment;
+
+            int totalLowStock = admin.getMedicineCount();
+            lblLowStack.Content = totalLowStock;
+
+           
+            admin.getID(username);
+
+            displayAppointments("SELECT * FROM appointments");
+            displayMedicineRequest("SELECT * FROM medicinerequests");
+            displayMedicineInv("select * from medicine_info");
+            displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
+        }
+
+        private void cmbStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbStatus.SelectedIndex == 0)
+            {
+                displayAppointments("SELECT * FROM appointments");
+
+            }
+            else if (cmbStatus.SelectedIndex == 1)
+            {
+                displayAppointments("select * from appointments where status = 'Pending'");
+
+            }
+            else if (cmbStatus.SelectedIndex == 2)
+            {
+                displayAppointments("select * from appointments where status = 'Approved'");
+
+            }
+            else if (cmbStatus.SelectedIndex == 3)
+            {
+                displayAppointments("select * from appointments where status = 'Rejected'");
+
+            }
         }
 
         public void displayAppointments(String querry)
@@ -89,73 +136,10 @@ namespace WpfApp2
                 String symptoms = dt.Rows[i][16].ToString();
                 String handledTime = dt.Rows[i]["handled_time"].ToString();
 
-
-
                 Border cardBorder = adminAppointment.AppointmentPanel(appointmentID, patientID, username, studentId, date, time, email, phone, purpose, allergies, medication, previousVisit, ecn, ecp, status, symptoms, handledTime);
 
                 AppointmentStackPanel.Children.Add(cardBorder);
             }
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            int totalStudents = admin.GetActiveStudentCount();
-            lblActiveStatus.Content = totalStudents;
-
-            int totalmedicinereq = admin.GetMedicineStatusCount();
-            lblMedicine.Content = totalmedicinereq;
-
-            int totalAppoinment = admin.GetAppointmenCount();
-            lblPending.Content = totalAppoinment;
-
-            int totalLowStock = admin.getMedicineCount();
-            lblLowStack.Content = totalLowStock;
-
-           
-            setId(username);
-
-            displayAppointments("SELECT * FROM appointments");
-            displayMedicineRequest("SELECT * FROM medicinerequests");
-            displayMedicineInv("select * from medicine_info");
-            displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
-        }
-
-        private void txtSearchIDapp_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-            
-        }
-
-        private void cmbStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cmbStatus.SelectedIndex == 0)
-            {
-                displayAppointments("SELECT * FROM appointments");
-
-            }
-            else if (cmbStatus.SelectedIndex == 1)
-            {
-                displayAppointments("select * from appointments where status = 'Pending'");
-
-            }
-            else if (cmbStatus.SelectedIndex == 2)
-            {
-                displayAppointments("select * from appointments where status = 'Approved'");
-
-            }
-            else if (cmbStatus.SelectedIndex == 3)
-            {
-                displayAppointments("select * from appointments where status = 'Rejected'");
-
-            }
-        }
-        
-        public class MedicineRequestData
-        {
-            public string RequestID { get; set; }
-            public int InventoryID { get; set; }
-            public int Quantity { get; set; }
         }
 
         public void displayMedicineRequest(String strquerry)
@@ -199,31 +183,22 @@ namespace WpfApp2
             wrapPanelInventory.Children.Clear();
             int n = dt.Rows.Count;
 
-            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-            Brush buttonBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF014BFF"));
-            Brush lowStockRedBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFA0A0"));
-
             for (int i = 0; i < n; i++)
             {
-                // Extract data
                 String medicineId = dt.Rows[i][0].ToString();
                 String medicineName = dt.Rows[i][1].ToString();
                 String dosage = dt.Rows[i][2].ToString();
                 String genericName = dt.Rows[i][3].ToString();
                 String description = dt.Rows[i][4].ToString();
 
-                // Fetch quantity
                 DataTable quantityDt = admin.displayRecords(
                     "SELECT amount, inventory_id FROM medicineinventory WHERE medicine_id = '" + medicineId + "'");
                 int quant = Convert.ToInt32(quantityDt.Rows[0][0]);
                 String inventoryId = quantityDt.Rows[0][1].ToString();
-
-                // Default Border Setup
                 
                 Border cardBorder = adminInventory.inventoryPanel(medicineId, medicineName, dosage, genericName, description, quant, inventoryId);
                 wrapPanelInventory.Children.Add(cardBorder);
             }
-
         }
 
         public void displayActivity(String SQL)
@@ -232,14 +207,12 @@ namespace WpfApp2
             StackPanelActivities.Children.Clear();
             DataTable dt = admin.displayRecords(SQL);
 
-            
             StackPanelActivities.Children.Clear();
 
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
             Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
             Brush lightBackground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xF7, 0xFA));
             Brush idTagBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F0F0"));
-
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -253,7 +226,6 @@ namespace WpfApp2
                 Border cardBorder = adminActivity.activityPanel(activityID,username, type, description, dateTime, id);
                 StackPanelActivities.Children.Add(cardBorder);
             }
-
         }
 
         private void TabControl_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
@@ -282,7 +254,6 @@ namespace WpfApp2
             }
             else
             {
-                // Otherwise, perform search
                 string SQL = "SELECT mi.* FROM medicine_info mi " +
                              "JOIN medicineinventory miv ON mi.medicine_id = miv.medicine_id " +
                              "WHERE miv.inventory_id LIKE '%" + txtSearch.Text + "%'";
@@ -294,14 +265,12 @@ namespace WpfApp2
         {
             if (txtSearch.Text == "Search Inventory ID...")
                 txtSearch.Text = "";
-
         }
 
         private void txtSearch_LostFocus(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
                 txtSearch.Text = "Search Inventory ID...";
-
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -372,7 +341,7 @@ namespace WpfApp2
         private void txtSearchMedID_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (StackPanelMedicineReuqests == null)
-                return; // UI not ready yet
+                return; 
             if (txtSearchMedID.Text == "Search medicine request ID..." || string.IsNullOrWhiteSpace(txtSearchMedID.Text))
             {
                 displayMedicineRequest("SELECT * FROM medicinerequests");
@@ -410,7 +379,7 @@ namespace WpfApp2
         private void txtSearchActivity_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (StackPanelActivities == null)
-                return; // UI not ready yet
+                return; 
             if (txtSearchActivity.Text == "Search activity ID..." || string.IsNullOrWhiteSpace(txtSearchActivity.Text))
             {
                 displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
@@ -447,13 +416,6 @@ namespace WpfApp2
             {
                 displayActivity($"SELECT * FROM admin_activity_log WHERE activity_type = '{selectedType}' ORDER BY activity_date DESC");
             }
-
-        }
-        public void setId(String username)
-        {
-            SQL = $"select user_id from users where username = '{username}'";
-            DataTable dt = admin.displayRecords(SQL);
-            id = int.Parse(dt.Rows[0][0].ToString());
         }
     }
 }

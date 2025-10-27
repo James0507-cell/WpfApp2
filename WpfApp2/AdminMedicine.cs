@@ -20,12 +20,12 @@ namespace WpfApp2
         private MySqlCommand dbCommand;
         private MySqlDataAdapter da;
         private DataTable dt;
-        String username = MainWindow.Username;
-        int id;
+        private String username = MainWindow.Username;
+        private int id;
 
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
-       public AdminMedicine(int id)
+        public AdminMedicine(int id)
         {
             this.id = id;
         }
@@ -111,17 +111,14 @@ namespace WpfApp2
         {
             if (sender is MenuItem menuItem && menuItem.Tag is string requestID)
             {
-                // 1. Fetch details (medicine name and quantity) from the request
                 DataTable requestDetails = displayRecords(
                     $"SELECT medicine_name, quantity FROM medicinerequests WHERE request_id = '{requestID}'");
 
                 if (requestDetails.Rows.Count > 0)
                 {
                     string medicineName = requestDetails.Rows[0]["medicine_name"].ToString();
-                    // Convert quantity to an integer for safe SQL execution later
                     if (int.TryParse(requestDetails.Rows[0]["quantity"].ToString(), out int quantityRequested))
                     {
-                        // 2. Fetch inventory ID for the medicine
                         DataTable inventoryidDt = displayRecords(
                             $"SELECT inventory_id FROM medicineinventory WHERE medicine_name = '{medicineName}'");
 
@@ -129,40 +126,28 @@ namespace WpfApp2
                         {
                             int inventoryID = Convert.ToInt32(inventoryidDt.Rows[0]["inventory_id"]);
 
-                            // 3. Update the request status
                             approveMedicineRequest(requestID);
 
-                            // 4. Log the approval activity
                             string logSQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                                             $"VALUES ({id}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                            sqlManager(logSQL);
 
-                            // 5. CORRECTED SQL: Update the inventory amount
-                            // The correct SQL syntax is SET column_name = value
-                            // Also, 'ammount' is likely a typo for 'amount' or 'quantity' in your database. I'm assuming 'amount'.
-                            // Use the fetched quantityRequested variable and the fetched inventoryID.
                             string updateInventorySQL = $"UPDATE medicineinventory SET amount = amount - {quantityRequested} WHERE inventory_id = {inventoryID}";
-
-                            // Note: If your column is actually named 'ammount', change 'amount' to 'ammount'
-                            // string updateInventorySQL = $"UPDATE medicineinventory SET ammount = ammount - {quantityRequested} WHERE inventory_id = {inventoryID}";
 
                             sqlManager(updateInventorySQL);
                         }
                         else
                         {
-                            // Handle case where medicine is not found in inventory
                             System.Windows.MessageBox.Show($"Error: Medicine '{medicineName}' not found in inventory.");
                         }
                     }
                     else
                     {
-                        // Handle case where quantity is not a valid number
                         System.Windows.MessageBox.Show($"Error: Invalid quantity for request ID {requestID}.");
                     }
                 }
                 else
                 {
-                    // Handle case where request ID is not found
                     System.Windows.MessageBox.Show($"Error: Medicine request ID {requestID} not found.");
                 }
             }
@@ -231,24 +216,20 @@ namespace WpfApp2
                 Tag = requestID
             };
 
-            // Add the right-click handler
             cardBorder.MouseRightButtonUp += CardRequest_MouseRightButtonUp;
 
 
-            // 2. Main Layout Grid (Header | Separator | Details)
             Grid mainLayoutGrid = new Grid();
             mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             mainLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-            // --- Row 0: Header Grid (Medicine Name, Quantity | Status Tag) ---
             Grid headerGrid = new Grid();
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
             StackPanel primaryDetails = new StackPanel { Orientation = Orientation.Vertical };
 
-            // Medicine Name
             TextBlock txtMedicineName = new TextBlock
             {
                 Text = medicineName,
@@ -259,7 +240,6 @@ namespace WpfApp2
             };
             primaryDetails.Children.Add(txtMedicineName);
 
-            // Quantity
             TextBlock txtQuantity = new TextBlock
             {
                 Text = $"Quantity: {quantity} pcs",
@@ -273,7 +253,6 @@ namespace WpfApp2
             Grid.SetColumn(primaryDetails, 0);
             headerGrid.Children.Add(primaryDetails);
 
-            // Status Tag (Replicated from displayAppointments)
             Border statusBorder = new Border
             {
                 Padding = new Thickness(8, 4, 8, 4),
@@ -317,7 +296,6 @@ namespace WpfApp2
             Grid.SetRow(headerGrid, 0);
             mainLayoutGrid.Children.Add(headerGrid);
 
-            // --- Row 1: Separator ---
             Separator separator = new Separator
             {
                 Margin = new Thickness(0, 8, 0, 8),
@@ -326,7 +304,6 @@ namespace WpfApp2
             Grid.SetRow(separator, 1);
             mainLayoutGrid.Children.Add(separator);
 
-            // --- Row 2: Details Grid (Two Columns) ---
             Grid detailsGrid = new Grid
             {
                 ColumnDefinitions =
@@ -382,12 +359,7 @@ namespace WpfApp2
                 MessageBox.Show("Could not find the User Dashboard to refresh.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        public class MedicineRequestData
-        {
-            public string RequestID { get; set; }
-            public int InventoryID { get; set; }
-            public int Quantity { get; set; }
-        }
+        
 
     }
 }

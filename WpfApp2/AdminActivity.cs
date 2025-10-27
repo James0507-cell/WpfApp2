@@ -17,8 +17,8 @@ namespace WpfApp2
         private MySqlCommand dbCommand;
         private MySqlDataAdapter da;
         private DataTable dt;
-        String username = MainWindow.Username;
-        int id;
+        private String username = MainWindow.Username;
+        private int id;
 
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
@@ -75,13 +75,11 @@ namespace WpfApp2
             StackPanel activityContent = new StackPanel();
 
 
-            // --- Header Grid (Username and Admin ID) ---
             Grid headerGrid = new Grid();
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // For Username
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // For ID Tag
             headerGrid.Margin = new Thickness(0, 0, 0, 4);
 
-            // 1. Username (Bold and Primary)
             TextBlock txtUsername = new TextBlock
             {
                 Text = username + " ID:" + id,
@@ -93,7 +91,6 @@ namespace WpfApp2
             Grid.SetColumn(txtUsername, 0);
             headerGrid.Children.Add(txtUsername);
 
-            // 2. Admin ID Tag
             Border idTag = new Border
             {
                 Background = idTagBackground,
@@ -114,7 +111,6 @@ namespace WpfApp2
 
             activityContent.Children.Add(headerGrid);
 
-            // --- Activity Type (Secondary detail) ---
             TextBlock txtActivityType = new TextBlock
             {
                 Text = $"Action: {type}",
@@ -125,7 +121,6 @@ namespace WpfApp2
             };
             activityContent.Children.Add(txtActivityType);
 
-            // --- Date Time ---
             TextBlock txtDateTime = new TextBlock
             {
                 Text = $"⌚ {dateTime}",
@@ -135,7 +130,6 @@ namespace WpfApp2
             };
             activityContent.Children.Add(txtDateTime);
 
-            // --- Description ---
             TextBlock txtDescription = new TextBlock
             {
                 Text = description,
@@ -145,7 +139,6 @@ namespace WpfApp2
             };
             activityContent.Children.Add(txtDescription);
 
-            // Assign the content to the card border
             cardBorder.Child = activityContent;
 
             return cardBorder;

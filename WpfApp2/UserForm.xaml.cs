@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Data;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
-using System.Windows.Input;
-using System.Security.Cryptography.X509Certificates;
+using static WpfApp2.Users;
 
 namespace WpfApp2
 {
@@ -13,7 +14,6 @@ namespace WpfApp2
     {
         private string username;
         Users userForm = new Users();
-        ShortCheck shortcheck = new ShortCheck();
         private string SQL = "";
         private int userId;
 
@@ -21,8 +21,6 @@ namespace WpfApp2
         {
             InitializeComponent();
             this.username = username;
-
-            
         }
         
         public string GetUsername()
@@ -32,28 +30,38 @@ namespace WpfApp2
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            shortcheck.Show();
+            ShortCheck shortCheck = new ShortCheck();
+            shortCheck.Show();
             this.Close();
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            var mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow();
             this.Close();
             mainWindow.Show();
 
         }
-
-        private void Button_Click_5(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            BookingAppointment bookingAppointment = new BookingAppointment
-            {
-                username = this.username
-            };
+            MedicineRequest medicineRequest = new MedicineRequest();
+            medicineRequest.Show();
+            this.Close();
+        }
+        private void btnAppoint_Click(object sender, RoutedEventArgs e)
+        {
+            BookingAppointment bookingAppointment = new BookingAppointment(username);
+
             bookingAppointment.Show();
             this.Close();
         }
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            BookingAppointment bookingAppointment = new BookingAppointment(username);
 
+            bookingAppointment.Show();
+            this.Close();
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             getUserId(username);
@@ -71,15 +79,11 @@ namespace WpfApp2
             displaySixMonthsProgress(); 
         }
 
-      
         public void displayAppointment(string query)
         {
-
+            AppointmentStackPanel.Children.Clear();
             DataTable dt = userForm.displayRecords(query);
             AppointmentStackPanel.Children.Clear();
-
-            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-            Brush lightGrayBrush = new SolidColorBrush(Colors.Gray); // For better readability
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -90,70 +94,36 @@ namespace WpfApp2
                 string purpose = dt.Rows[i]["purpose_of_visit"].ToString();
                 string reason = dt.Rows[i]["reason"].ToString();
 
-
-
                 Border cardBorder = userForm.appointmentPanel(appointmentId, date, time, status, purpose, reason);
-
                 AppointmentStackPanel.Children.Add(cardBorder);
             }
         }
-
        
         public void displayActivities(String query)
         {
-            
-            DataTable dt = userForm.displayRecords(query);
-
-            
             StackPanelActivities.Children.Clear();
-
-            Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-            Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
+            DataTable dt = userForm.displayRecords(query);
+            StackPanelActivities.Children.Clear();
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                
                 string activityId = dt.Rows[i]["activity_id"].ToString();
                 string type = dt.Rows[i]["activity_type"].ToString();
                 string description = dt.Rows[i]["activity_desc"].ToString();
                 string dateTime = dt.Rows[i]["activity_date"].ToString(); 
 
                 Border cardBorder = userForm.activityPanel(activityId, type, description, dateTime);
-
                 StackPanelActivities.Children.Add(cardBorder);
             }
         }
-
         
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MedicineRequest medicineRequest = new MedicineRequest();
-            medicineRequest.Show();
-            this.Close();
-        }
-
-        private void ___No_Name__IsMouseDirectlyOverChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
-        }
         private void getName()
         {
-            SQL = $"select * from users where username = '{username}'";
-            DataTable dt = userForm.displayRecords(SQL);
-            String name = dt.Rows[0]["first_name"].ToString() + " " + dt.Rows[0]["last_name"].ToString();
-            lblName.Content = "Welcome back " + name;
+            String name = userForm.name();
+            lblName.Content = name;
         }
 
-        private void btnAppoint_Click(object sender, RoutedEventArgs e)
-        {
-            BookingAppointment bookingAppointment = new BookingAppointment
-            {
-                username = this.username
-            };
-            bookingAppointment.Show();
-            this.Close();
-        }
+       
         public void getUserId(String username)
         {
             SQL = $"Select user_id from users where username = '{username}'";
@@ -163,86 +133,32 @@ namespace WpfApp2
         }
         public void displayBMI()
         {
-            SQL = $"Select * from checkups where user_id = '{userId}' order by checkup_id desc limit 1";
-            DataTable dt = userForm.displayRecords(SQL);
-            if (dt.Rows.Count > 0)
-            {
-                String bmi = dt.Rows[0]["bmi"].ToString();
-                lblbmi.Content = bmi;
-            }
-            else
-            {
-                lblbmi.Content = "No BMI record found.";
-            }
+            String BMI = userForm.bmi();
+            lblbmi.Content = BMI;
 
         }
         public void displayCheckupDate()
         {
-            SQL = $"SELECT * FROM checkups WHERE user_id = '{userId}' ORDER BY checkup_id DESC LIMIT 1";
-            DataTable dt = userForm.displayRecords(SQL);
-
-            if (dt.Rows.Count > 0)
-            {
-                DateTime recordedDate = Convert.ToDateTime(dt.Rows[0]["recorded_at"]);
-                lblCheck.Content = recordedDate.ToString("yyyy-MM-dd");
-            }
-            else
-            {
-                lblCheck.Content = "No Checkup record found.";
-            }
+            String checkupDate = userForm.CheckUpDate();
+            lblCheck.Content = checkupDate;
         }
         public void displayUpcommingAppointment()
         {
-            SQL = $"SELECT * FROM appointments " +
-                  $"WHERE user_id = '{userId}' " +
-                  $"AND status = 'Approved' " +
-                  $"AND TIMESTAMP(appointment_date, appointment_time) >= NOW() " +
-                  $"ORDER BY TIMESTAMP(appointment_date, appointment_time) ASC " +
-                  $"LIMIT 1";
-            DataTable dt = userForm.displayRecords(SQL);
-            if (dt.Rows.Count > 0)
-            {
-                DateTime date = Convert.ToDateTime(dt.Rows[0]["appointment_date"]);
-                TimeSpan time = (TimeSpan)dt.Rows[0]["appointment_time"];
 
-                DateTime fullDateTime = date.Add(time);
-
-                lblIncomingAppointment.Content = fullDateTime.ToString("MMMM dd, yyyy") + "\n" +
-                                         fullDateTime.ToString("hh:mm tt");
-            }
-            else
-            {
-                lblIncomingAppointment.Content = "No upcoming appointment";
-            }
+            String AppoitnemntDate = userForm.upcommingAppointments();
+            lblIncomingAppointment.Content = AppoitnemntDate;
 
         }
         public void displayHeight()
         {
-            SQL = $"Select * from checkups where user_id = '{userId}' order by checkup_id desc limit 1";
-            DataTable dt = userForm.displayRecords(SQL);
-            if (dt.Rows.Count > 0)
-            {
-                String height = dt.Rows[0]["height_cm"].ToString();
-                lblHeight.Content = height + " cm";
-            }
-            else
-            {
-                lblHeight.Content = "No Height record found.";
-            }
+
+           String heigt = userForm.height();
+            lblHeight.Content = heigt;
         }
         public void displayWeight()
         {
-            SQL = $"Select * from checkups where user_id = '{userId}' order by checkup_id desc limit 1";
-            DataTable dt = userForm.displayRecords(SQL);
-            if (dt.Rows.Count > 0)
-            {
-                String weight = dt.Rows[0]["weight_kg"].ToString();
-                lblWeight.Content = weight + " kg";
-            }
-            else
-            {
-                lblWeight.Content = "No Weight record found.";
-            }
+            String weigt = userForm.weight();
+            lblWeight.Content = weigt;
 
         }
         public void displayProgressBar()
@@ -250,61 +166,23 @@ namespace WpfApp2
             try
             {
                 lblTargetRange.Content = "Range: 0 - 40";
-                SQL = $"SELECT bmi FROM checkups WHERE user_id = '{userId}' ORDER BY checkup_id DESC LIMIT 1";
-                DataTable dt = userForm.displayRecords(SQL);
-
                 pbBMI.Minimum = 0;
                 pbBMI.Maximum = 40;
 
-                if (dt.Rows.Count > 0 && dt.Rows[0][0] != DBNull.Value)
+                double? bmi = Convert.ToDouble(userForm.bmi());
+
+                if (bmi.HasValue)
                 {
-                    double bmi = Convert.ToDouble(dt.Rows[0][0]);
-
-                    if (bmi > pbBMI.Maximum)
-                        bmi = pbBMI.Maximum;
-                    if (bmi < pbBMI.Minimum)
-                        bmi = pbBMI.Minimum;
-
-                    pbBMI.Value = bmi;
-
-                    if (bmi < 18.5) 
-                    {
-                        pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3")); 
-                        lblBMIRange.Content = "Underweight";
-                        brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3"));
-                        brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E3F2FD"));
-                    }
-                    else if (bmi >= 18.5 && bmi < 24.9) 
-                    {
-                        pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CAF50")); 
-                        lblBMIRange.Content = "Normal range";
-                        brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CAF50"));
-                        brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E8F5E9"));
-
-                    }
-                    else if (bmi >= 25 && bmi < 29.9) 
-                    {
-                        pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9800")); 
-                        lblBMIRange.Content = "Overweight";
-                        brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9800"));
-                        brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF3E0"));
-                    }
-                    else if (bmi >= 30)
-                    {
-                        pbBMI.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F44336")); 
-                        lblBMIRange.Content = "Obese range";
-                        brdStatus.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F44336"));
-                        brdStatus.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFEBEE"));
-                    }
-
-                    lblBMIStatus.Content = $"BMI: {bmi:F2}";
+                    pbBMI.Value = bmi.Value;
+                    lblBMIStatus.Content = $"BMI: {bmi.Value:F2}";
+                    UpdateBMIUI(bmi.Value);
                 }
                 else
                 {
-                   
                     pbBMI.Value = 0;
                     pbBMI.Foreground = new SolidColorBrush(Colors.Gray);
                     lblBMIStatus.Content = "BMI: N/A";
+                    lblBMIRange.Content = "";
                 }
             }
             catch (Exception ex)
@@ -315,33 +193,40 @@ namespace WpfApp2
                 lblBMIStatus.Content = "BMI: N/A";
             }
         }
+        private void UpdateBMIUI(double bmi)
+        {
+            string colorHex, bgHex, label;
+
+            if (bmi < 18.5)
+            {
+                colorHex = "#2196F3"; bgHex = "#E3F2FD"; label = "Underweight";
+            }
+            else if (bmi < 24.9)
+            {
+                colorHex = "#4CAF50"; bgHex = "#E8F5E9"; label = "Normal range";
+            }
+            else if (bmi < 29.9)
+            {
+                colorHex = "#FF9800"; bgHex = "#FFF3E0"; label = "Overweight";
+            }
+            else
+            {
+                colorHex = "#F44336"; bgHex = "#FFEBEE"; label = "Obese range";
+            }
+
+            var color = (Color)ColorConverter.ConvertFromString(colorHex);
+            var bgColor = (Color)ColorConverter.ConvertFromString(bgHex);
+
+            pbBMI.Foreground = new SolidColorBrush(color);
+            lblBMIRange.Content = label;
+            brdStatus.BorderBrush = new SolidColorBrush(color);
+            brdStatus.Background = new SolidColorBrush(bgColor);
+        }
+
+
         public void displaySixMonthsProgress()
         {
-            SQL = @"
-                SELECT 
-                    DATE_FORMAT(c.recorded_at, '%M') AS month_name, 
-                    c.bmi,
-                    c.weight_kg
-                FROM checkups c
-                INNER JOIN (
-                    SELECT 
-                        YEAR(recorded_at) AS y,
-                        MONTH(recorded_at) AS m,
-                        MAX(recorded_at) AS max_date
-                    FROM checkups
-                    WHERE user_id = 8
-                      AND recorded_at >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-                    GROUP BY YEAR(recorded_at), MONTH(recorded_at)
-                ) latest
-                ON YEAR(c.recorded_at) = latest.y
-                AND MONTH(c.recorded_at) = latest.m
-                AND c.recorded_at = latest.max_date
-                WHERE c.user_id = 8
-                ORDER BY latest.y, latest.m ASC;
-            ";
-
-
-            DataTable dt = userForm.displayRecords(SQL);
+            List<MonthlyProgress> progressList = userForm.GetSixMonthsProgress(userId);
 
             for (int i = 0; i < 6; i++)
             {
@@ -352,85 +237,42 @@ namespace WpfApp2
 
                 switch (i)
                 {
-                    case 0:
-                        pb = pbMonth1; lblMonth = lblMonth1; lblBmi = lblBmi1; lblWeight = lblWeight1;
-                        break;
-                    case 1:
-                        pb = pbMonth2; lblMonth = lblMonth2; lblBmi = lblBmi2; lblWeight = lblWeight2;
-                        break;
-                    case 2:
-                        pb = pbMonth3; lblMonth = lblMonth3; lblBmi = lblBmi3; lblWeight = lblWeight3;
-                        break;
-                    case 3:
-                        pb = pbMonth4; lblMonth = lblMonth4; lblBmi = lblBmi4; lblWeight = lblWeight4;
-                        break;
-                    case 4:
-                        pb = pbMonth5; lblMonth = lblMonth5; lblBmi = lblBmi5; lblWeight = lblWeight5;
-                        break;
-                    case 5:
-                        pb = pbMonth6; lblMonth = lblMonth6; lblBmi = lblBmi6; lblWeight = lblWeight6;
-                        break;
+                    case 0: pb = pbMonth1; lblMonth = lblMonth1; lblBmi = lblBmi1; lblWeight = lblWeight1; break;
+                    case 1: pb = pbMonth2; lblMonth = lblMonth2; lblBmi = lblBmi2; lblWeight = lblWeight2; break;
+                    case 2: pb = pbMonth3; lblMonth = lblMonth3; lblBmi = lblBmi3; lblWeight = lblWeight3; break;
+                    case 3: pb = pbMonth4; lblMonth = lblMonth4; lblBmi = lblBmi4; lblWeight = lblWeight4; break;
+                    case 4: pb = pbMonth5; lblMonth = lblMonth5; lblBmi = lblBmi5; lblWeight = lblWeight5; break;
+                    case 5: pb = pbMonth6; lblMonth = lblMonth6; lblBmi = lblBmi6; lblWeight = lblWeight6; break;
                 }
 
-                if (i < dt.Rows.Count)
+                if (i < progressList.Count)
                 {
-                    string fullMonthName = dt.Rows[i]["month_name"].ToString();
-                    string shortMonthName = fullMonthName.Length > 3
-                        ? fullMonthName.Substring(0, 3)
-                        : fullMonthName;
+                    var progress = progressList[i];
 
-                    double bmi = Convert.ToDouble(dt.Rows[i]["bmi"].ToString());
-                    double weight = Convert.ToDouble(dt.Rows[i]["weight_kg"].ToString());
+                    string shortMonthName = progress.MonthName.Length > 3
+                        ? progress.MonthName.Substring(0, 3)
+                        : progress.MonthName;
 
                     lblMonth.Content = shortMonthName;
-                    lblBmi.Content = $"{bmi:F2}";
-                    lblWeight.Content = $"{weight:F1}"; 
-                    pb.Value = Math.Min(Math.Max(bmi, 0), 40);
+                    lblBmi.Content = $"{progress.BMI:F2}";
+                    lblWeight.Content = $"{progress.Weight:F1}";
+                    pb.Value = Math.Min(Math.Max(progress.BMI, 0), 40);
 
-                    if (bmi < 18.5)
-                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3"));
-                    else if (bmi < 24.9)
-                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CAF50"));
-                    else if (bmi < 29.9)
-                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF9800"));
-                    else
-                        pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F44336"));
+                    string colorHex = progress.BMI < 18.5 ? "#2196F3" :
+                                      progress.BMI < 24.9 ? "#4CAF50" :
+                                      progress.BMI < 29.9 ? "#FF9800" : "#F44336";
+
+                    pb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(colorHex));
                 }
-
                 else
                 {
                     lblMonth.Content = "—";
                     lblBmi.Content = "BMI: N/A";
+                    lblWeight.Content = "";
                     pb.Value = 0;
                     pb.Foreground = new SolidColorBrush(Colors.Gray);
                 }
             }
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            BookingAppointment bookingAppointment = new BookingAppointment
-            {
-                username = this.username
-            };
-            bookingAppointment.Show();
-            this.Close();
-        }
-
-        public void reloadAppointments()
-        {
-            AppointmentStackPanel.Children.Clear();
-            displayAppointment($"SELECT * FROM appointments WHERE username = '{username}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()");
-        }
-        public void reloadActivities()
-        {
-            StackPanelActivities.Children.Clear();
-            displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{userId}' ORDER BY activity_date DESC LIMIT 5");
-        }
-
-        private void Button_IsMouseDirectlyOverChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
         }
     }
 }

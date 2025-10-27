@@ -15,17 +15,15 @@ using System.Windows.Shapes;
 
 namespace WpfApp2
 {
-    /// <summary>
-    /// Interaction logic for MedicineRequestConfirmation.xaml
-    /// </summary>
+
     public partial class MedicineRequestConfirmation : Window
     {
-        String dose = "";
-        String medicineName = "";
-        String genericName = "";
-        String SQL = "";
-        String username = MainWindow.Username;
-        int userId =0;
+        private String dose = "";
+        private String medicineName = "";
+        private String genericName = "";
+        private String SQL = "";
+        private String username = MainWindow.Username;
+        private int userId =0;
         Users user = new Users();
         public MedicineRequestConfirmation(string dose, string medicineName, string genericName)
         {
@@ -51,8 +49,6 @@ namespace WpfApp2
             INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
             VALUES ({userId}, 'Appointment', 'Request Medicine for {txtPurpose.Text}')";
             user.sqlManager(SQL);
-            
-
 
         }
 
@@ -63,15 +59,19 @@ namespace WpfApp2
             lblGenericName.Text = genericName;
             lblMedicineName.Text = medicineName;
 
-            DataTable dt = user.displayRecords($"SELECT * FROM users WHERE username = '{username}'");
-            userId = Convert.ToInt32(dt.Rows[0]["user_id"].ToString());
-
+            setid(username);
 
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        public void setid(String username)
+        {
+            DataTable dt = user.displayRecords($"SELECT * FROM users WHERE username = '{username}'");
+            userId = Convert.ToInt32(dt.Rows[0]["user_id"].ToString());
         }
     }
 }

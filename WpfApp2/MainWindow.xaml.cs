@@ -24,30 +24,25 @@ namespace WpfApp2
 
         private void TxtUserName_GotFocus(object sender, RoutedEventArgs e)
         {
-            //if (TxtUserName.Text == "Enter Username")
-            //    TxtUserName.Text = "";
+
         }
 
         private void TxtUserName_LostFocus(object sender, RoutedEventArgs e)
         {
-            //if (string.IsNullOrWhiteSpace(TxtUserName.Text))
-            //    TxtUserName.Text = "Enter Username";
+  
         }
 
         private void TxtPassword_GotFocus(object sender, RoutedEventArgs e)
         {
-            //if (TxtPassword.Text == "Enter Password")
-            //    TxtPassword.Text = "";
+
         }
 
         private void TxtPassword_LostFocus(object sender, RoutedEventArgs e)
         {
-            //if (string.IsNullOrWhiteSpace(TxtPassword.Text))
-            //    TxtPassword.Text = "Enter Password";
+
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // You can leave it empty or handle text changes here if needed
         }
 
         private void BtnSignIn_Click_1(object sender, RoutedEventArgs e)
@@ -66,7 +61,6 @@ namespace WpfApp2
             }
             else if (role == "Student")
             {
-                // ✅ Pass username to UserForm
                 UserForm studentForm = new UserForm(Username);
                 studentForm.Show();
                 this.Close();
