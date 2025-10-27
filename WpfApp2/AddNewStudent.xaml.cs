@@ -25,6 +25,7 @@ namespace WpfApp2
         private String username = MainWindow.Username;
         private int id;
         private String SQL = "";
+        AdminStudent adminStudent;
         public AddNewStudent()
         {
             InitializeComponent();
@@ -32,7 +33,8 @@ namespace WpfApp2
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            setId(username);
+            id = adminStudent.setId(username);
+            adminStudent = new AdminStudent(id);
             LoadComboBoxes();
         }
 

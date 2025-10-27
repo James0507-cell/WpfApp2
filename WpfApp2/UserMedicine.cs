@@ -439,6 +439,23 @@ namespace WpfApp2
             cardBorder.Child = medicineContent;
             return cardBorder;
         }
+        public void InsertMedicineRequest(string userId, string medicineName, string purpose, string quantity)
+        {
+            string insertRequest = $@"
+                INSERT INTO medicinerequests (user_id, medicine_name, reason, quantity, status)
+                VALUES ('{userId}', '{medicineName}', '{purpose}', '{quantity}', 'Pending')";
 
+            string insertLog = $@"
+                INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
+                VALUES ('{userId}', 'Appointment', 'Request Medicine for {purpose}')";
+
+            dbManager.sqlManager(insertRequest);
+            dbManager.sqlManager(insertLog);
+        }
+        public int setid(String username)
+        {
+            DataTable dt = dbManager.displayRecords($"SELECT * FROM users WHERE username = '{username}'");
+            return Convert.ToInt32(dt.Rows[0]["user_id"].ToString());
+        }
     }
 }

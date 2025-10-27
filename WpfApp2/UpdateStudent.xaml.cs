@@ -22,10 +22,11 @@ namespace WpfApp2
         private String SQL = "";
         Admin admin = new Admin();
         private String username = "";
-        private int userId = 0;
+        private int userId;
         private int id;
         String adminUsername = MainWindow.Username;
         StudentManagement studentManagement = new StudentManagement();
+        AdminStudent adminStudent;
 
         public UpdateStudent(String username)
         {
@@ -37,7 +38,9 @@ namespace WpfApp2
         {
             LoadComboBoxes();
             LoadStudentInfo();
-            setId(adminUsername);
+            id = adminStudent.setId(username);
+            adminStudent = new AdminStudent(id);
+
         }
 
         private void BackButton2_Click(object sender, RoutedEventArgs e)
@@ -102,12 +105,7 @@ namespace WpfApp2
             studentManagement.displayUsers("SELECT * FROM users WHERE role = 'Student'");
 
         }
-        public void setId(String username)
-        {
-            SQL = $"select user_id from users where username = '{username}'";
-            DataTable dt = dbManager.displayRecords(SQL);
-            id = int.Parse(dt.Rows[0][0].ToString());
-        }
+        
         private void LoadComboBoxes()
         {
             DataTable dtCourse = dbManager.displayRecords("SELECT * FROM course_programs");

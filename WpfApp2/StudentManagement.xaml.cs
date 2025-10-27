@@ -22,7 +22,6 @@ namespace WpfApp2
         AdminStudent adminStudent;
         public StudentManagement()
         {
-            
             InitializeComponent();
             adminStudent = new AdminStudent(id);
         }
@@ -54,7 +53,6 @@ namespace WpfApp2
                 targetStackPanel.Children.Add(cardBorder);
             }
         }
-
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

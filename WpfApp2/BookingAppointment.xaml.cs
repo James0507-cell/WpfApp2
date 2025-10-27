@@ -13,7 +13,7 @@ namespace WpfApp2
         dbManager dbManager = new dbManager();
         private DateTime selectedDate = DateTime.MinValue;
         private string selectedTime;
-        private Booking booking = new Booking();
+        private UserBooking booking = new UserBooking();
         private String SQL = "";
         private string username = MainWindow.Username;
         private int userId = 0;

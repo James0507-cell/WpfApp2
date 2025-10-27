@@ -19,6 +19,7 @@ namespace WpfApp2
     public partial class MedicineRequestConfirmation : Window
     {
         dbManager dbManager = new dbManager();
+        UserMedicine userMedicine = new UserMedicine();
         private String dose = "";
         private String medicineName = "";
         private String genericName = "";
@@ -35,21 +36,13 @@ namespace WpfApp2
 
         private void btnConfirmRequest_Click(object sender, RoutedEventArgs e)
         {
-            SQL = $"INSERT INTO `medicinerequests` (`user_id`, `medicine_name`, `reason`, `quantity`, `status`) " +
-                  $"VALUES ('{userId}', '{medicineName}', '{txtPurpose.Text}', '{txtQuantity.Text}', 'Pending')";
-            dbManager.sqlManager(SQL);
-            MessageBox.Show("Request is send!");
+            userMedicine.InsertMedicineRequest(userId.ToString(), medicineName, txtPurpose.Text, txtQuantity.Text);
 
             MedicineRequest activeMedicineRequest = Application.Current.Windows.OfType<MedicineRequest>().SingleOrDefault(x => x.IsActive || x.IsVisible);
             if (activeMedicineRequest != null)
             {
                 activeMedicineRequest.displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + userId);
             }
-            SQL = $@"
-            INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
-            VALUES ({userId}, 'Appointment', 'Request Medicine for {txtPurpose.Text}')";
-            dbManager.sqlManager(SQL);
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -58,8 +51,7 @@ namespace WpfApp2
             lblGenericName.Text = genericName;
             lblMedicineName.Text = medicineName;
 
-            setid(username);
-
+            userId = userMedicine.setid(username);
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -67,10 +59,6 @@ namespace WpfApp2
             this.Close();
         }
 
-        public void setid(String username)
-        {
-            DataTable dt = dbManager.displayRecords($"SELECT * FROM users WHERE username = '{username}'");
-            userId = Convert.ToInt32(dt.Rows[0]["user_id"].ToString());
-        }
+        
     }
 }

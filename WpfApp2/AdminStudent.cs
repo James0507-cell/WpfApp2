@@ -365,5 +365,11 @@ namespace WpfApp2
 
             dbManager.sqlManager(query);
         }
+        public int setId(String username)
+        {
+            String SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = dbManager.displayRecords(SQL);
+            return int.Parse(dt.Rows[0][0].ToString());
+        }
     }
 }

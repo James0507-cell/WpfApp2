@@ -39,18 +39,6 @@ namespace WpfApp2
             this.Close();
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            displayMedicineInv("select * from medicine_info");
-            displayAppointments("SELECT * FROM appointments");
-            displayMedicineRequest("SELECT * FROM medicinerequests");
-            displayActivity("SELECT * FROM admin_activity_log ORDER BY activity_date DESC");
-        }
-
-        private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             studentManagement.Show();

@@ -144,11 +144,11 @@
                         <TextBlock Text="Enter your current height and weight to track your health metrics." Margin="0,5,0,20" FontSize="14" Foreground="#797979"/>
 
                         <TextBlock Text="Height (cm)" Height="20" FontSize="14" FontWeight="SemiBold"/>
-                        <TextBox d:Text="e.g., 175" TextChanged="HeightTextBox_TextChanged" 
+                        <TextBox d:Text="e.g., 175"  
                                  PreviewTextInput="NumberValidationTextBox" x:Name="HeightTextBox" Height="54"/>
 
                         <TextBlock Text="Weight (kg)" Margin="0,0,0,5" FontSize="14" FontWeight="SemiBold"/>
-                        <TextBox d:Text="e.g., 70" TextChanged="WeightTextBox_TextChanged" 
+                        <TextBox d:Text="e.g., 70" 
                                  PreviewTextInput="NumberValidationTextBox" x:Name="WeightTextBox" Height="53"/>
 
                         <Button x:Name="CalculateButton" Content="Calculate BMI" Click="CalculateButton_Click" Background="#FFFF1400" Height="40" Width="Auto"/>
