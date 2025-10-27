@@ -16,47 +16,15 @@ namespace WpfApp2
 {
     internal class AdminAppointment
     {
-        private MySqlConnection dbConn;
-        private MySqlCommand dbCommand;
-        private MySqlDataAdapter da;
-        private DataTable dt;
+        dbManager dbManager = new dbManager();
         private String username = MainWindow.Username;
         private int id;
-
-        private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
         public AdminAppointment(int adminId)
         {
             id = adminId;
         }
-        public void dbConnection()
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            MessageBox.Show("Connection Successful");
-            dbConn.Close();
-        }
 
-        public DataTable displayRecords(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            da = new MySqlDataAdapter(query, dbConn);
-            dt = new DataTable();
-            da.Fill(dt);
-            dbConn.Close();
-            return dt;
-        }
-
-        public void sqlManager(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            dbCommand = new MySqlCommand(query, dbConn);
-            dbCommand.ExecuteNonQuery();
-            dbConn.Close();
-        }
-        
         private void Card_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (sender is Border cardBorder && cardBorder.Tag is string appointmentID)
@@ -133,20 +101,20 @@ namespace WpfApp2
         public void approveAppointment(String appointmentID)
         {
             String querry = $"UPDATE appointments SET status = 'Approved', handled_time = NOW() WHERE appointment_id = {appointmentID}";
-            sqlManager(querry);
+            dbManager.sqlManager(querry);
 
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                      $"VALUES ({id}, '{username}', 'Appointment Approved', 'Approved appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-            sqlManager(querry);
+            dbManager.sqlManager(querry);
             TriggerAppointmentActivityPanelReload();
         }
         public void rejectAppointment(String appointmentID, String reason)
         {
             String querry = $"UPDATE appointments SET status = 'Rejected', reason = '{reason}', handled_time = NOW() WHERE appointment_id = {appointmentID}";
-            sqlManager(querry);
+            dbManager.sqlManager(querry);
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                      $"VALUES ({id}, '{username}', 'Appointment Rejected', 'Rejected appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-            sqlManager(querry);
+            dbManager.sqlManager(querry);
             TriggerAppointmentActivityPanelReload();
         }
 

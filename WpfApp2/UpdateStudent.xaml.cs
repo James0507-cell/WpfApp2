@@ -18,6 +18,7 @@ namespace WpfApp2
 
     public partial class UpdateStudent : Window
     {
+        dbManager dbManager;
         private String SQL = "";
         Admin admin = new Admin();
         private String username = "";
@@ -25,6 +26,7 @@ namespace WpfApp2
         private int id;
         String adminUsername = MainWindow.Username;
         StudentManagement studentManagement = new StudentManagement();
+
         public UpdateStudent(String username)
         {
             this.username = username;
@@ -103,30 +105,30 @@ namespace WpfApp2
         public void setId(String username)
         {
             SQL = $"select user_id from users where username = '{username}'";
-            DataTable dt = admin.displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
             id = int.Parse(dt.Rows[0][0].ToString());
         }
         private void LoadComboBoxes()
         {
-            DataTable dtCourse = admin.displayRecords("SELECT * FROM course_programs");
+            DataTable dtCourse = dbManager.displayRecords("SELECT * FROM course_programs");
             foreach (DataRow row in dtCourse.Rows)
             {
                 cboCourse.Items.Add(row["course_name"].ToString());
             }
 
-            DataTable dtYear = admin.displayRecords("SELECT * FROM year_levels");
+            DataTable dtYear = dbManager.displayRecords("SELECT * FROM year_levels");
             foreach (DataRow row in dtYear.Rows)
             {
                 cboYearLevel.Items.Add(row["level_name"].ToString());
             }
 
-            DataTable dtStatus = admin.displayRecords("SELECT * FROM enrollment_statuses");
+            DataTable dtStatus = dbManager.displayRecords("SELECT * FROM enrollment_statuses");
             foreach (DataRow row in dtStatus.Rows)
             {
                 cboEnrolledStatus.Items.Add(row["status_name"].ToString());
             }
 
-            DataTable dt_blood = admin.displayRecords("SELECT * FROM blood_types");
+            DataTable dt_blood = dbManager.displayRecords("SELECT * FROM blood_types");
             foreach (DataRow row in dt_blood.Rows)
             {
                 cboBloodType.Items.Add(row["blood_type"].ToString());
@@ -138,7 +140,7 @@ namespace WpfApp2
         private void LoadStudentInfo()
         {
             SQL = $"SELECT * FROM users WHERE username = '{username}'";
-            DataTable dt = admin.displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
 
             if (dt.Rows.Count == 0)
             {

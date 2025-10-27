@@ -14,6 +14,7 @@ namespace WpfApp2
 {
     internal class UserMedicine
     {
+        dbManager dbManager = new dbManager();
 
         private Border CreateRequestStatusTag(string status)
         {

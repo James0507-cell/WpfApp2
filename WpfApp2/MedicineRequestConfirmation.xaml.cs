@@ -18,13 +18,13 @@ namespace WpfApp2
 
     public partial class MedicineRequestConfirmation : Window
     {
+        dbManager dbManager = new dbManager();
         private String dose = "";
         private String medicineName = "";
         private String genericName = "";
         private String SQL = "";
         private String username = MainWindow.Username;
         private int userId =0;
-        Users user = new Users();
         public MedicineRequestConfirmation(string dose, string medicineName, string genericName)
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace WpfApp2
         {
             SQL = $"INSERT INTO `medicinerequests` (`user_id`, `medicine_name`, `reason`, `quantity`, `status`) " +
                   $"VALUES ('{userId}', '{medicineName}', '{txtPurpose.Text}', '{txtQuantity.Text}', 'Pending')";
-            user.sqlManager(SQL);
+            dbManager.sqlManager(SQL);
             MessageBox.Show("Request is send!");
 
             MedicineRequest activeMedicineRequest = Application.Current.Windows.OfType<MedicineRequest>().SingleOrDefault(x => x.IsActive || x.IsVisible);
@@ -48,13 +48,12 @@ namespace WpfApp2
             SQL = $@"
             INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
             VALUES ({userId}, 'Appointment', 'Request Medicine for {txtPurpose.Text}')";
-            user.sqlManager(SQL);
+            dbManager.sqlManager(SQL);
 
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            user.dbConnection();
             lblDose.Text = dose;
             lblGenericName.Text = genericName;
             lblMedicineName.Text = medicineName;
@@ -70,7 +69,7 @@ namespace WpfApp2
 
         public void setid(String username)
         {
-            DataTable dt = user.displayRecords($"SELECT * FROM users WHERE username = '{username}'");
+            DataTable dt = dbManager.displayRecords($"SELECT * FROM users WHERE username = '{username}'");
             userId = Convert.ToInt32(dt.Rows[0]["user_id"].ToString());
         }
     }

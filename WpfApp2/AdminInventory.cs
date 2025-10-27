@@ -21,46 +21,15 @@ namespace WpfApp2
 {
     internal class AdminInventory
     {
-        private MySqlConnection dbConn;
-        private MySqlCommand dbCommand;
-        private MySqlDataAdapter da;
-        private DataTable dt;
+        dbManager dbManager = new dbManager();
         String username = MainWindow.Username;
         int id;
-
-        private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
         public AdminInventory(int adminId)
         {
             id = adminId;
         }
-        public void dbConnection()
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            MessageBox.Show("Connection Successful");
-            dbConn.Close();
-        }
 
-        public DataTable displayRecords(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            da = new MySqlDataAdapter(query, dbConn);
-            dt = new DataTable();
-            da.Fill(dt);
-            dbConn.Close();
-            return dt;
-        }
-
-        public void sqlManager(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            dbCommand = new MySqlCommand(query, dbConn);
-            dbCommand.ExecuteNonQuery();
-            dbConn.Close();
-        }
         private void UpdateMedicineInventory_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button clickedButton && clickedButton.Tag is not null)
@@ -77,14 +46,14 @@ namespace WpfApp2
                 if (int.TryParse(input, out int amountToAdd) && amountToAdd > 0)
                 {
                     string SQL = $"UPDATE medicineinventory SET amount = amount + {amountToAdd} WHERE inventory_id = {inventoryId}";
-                    sqlManager(SQL);
+                    dbManager.sqlManager(SQL);
 
                     MessageBox.Show($"Successfully added {amountToAdd} units to inventory for ID {medId}.", "Success",
                                     MessageBoxButton.OK, MessageBoxImage.Information);
 
                     SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                          $"VALUES ({id}, '{username}', 'Update Medicine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-                    sqlManager(SQL);
+                    dbManager.sqlManager(SQL);
 
                     TriggerAppointmentActivityPanelReload();
                 }

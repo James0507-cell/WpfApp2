@@ -13,6 +13,7 @@ namespace WpfApp2
 {
    internal class Login
     {
+        dbManager dbManager = new dbManager();
         private MySqlConnection dbConn;
         private MySqlCommand dbCommand;
         private MySqlDataAdapter da;
@@ -40,7 +41,7 @@ namespace WpfApp2
         public String loginUser(String username, String password)
         {
             String sql = $"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'";
-            DataTable dt = displayRecords(sql);
+            DataTable dt = dbManager.displayRecords(sql);
             if (dt.Rows.Count > 0)
             {
                 if (dt.Rows[0]["role"].ToString() == "Student")

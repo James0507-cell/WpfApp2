@@ -10,10 +10,10 @@ namespace WpfApp2
 {
     public partial class BookingAppointment : Window
     {
+        dbManager dbManager = new dbManager();
         private DateTime selectedDate = DateTime.MinValue;
         private string selectedTime;
         private Booking booking = new Booking();
-        private Users users = new Users();
         private String SQL = "";
         private string username = MainWindow.Username;
         private int userId = 0;
@@ -183,7 +183,7 @@ namespace WpfApp2
         public void setStudentInfo()
         {
             SQL = "Select * from users where username = '" + username + "'";
-            DataTable dt = users.displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
             if (dt.Rows.Count > 0)
             {
                 txtFirstName.Text = dt.Rows[0]["first_name"].ToString();

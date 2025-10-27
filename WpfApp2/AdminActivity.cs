@@ -13,46 +13,16 @@ namespace WpfApp2
 {
     internal class AdminActivity
     {
-        private MySqlConnection dbConn;
-        private MySqlCommand dbCommand;
-        private MySqlDataAdapter da;
-        private DataTable dt;
+        dbManager dbManager = new dbManager();
         private String username = MainWindow.Username;
         private int id;
 
-        private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
         public AdminActivity(int id)
         {
             this.id = id;
         }
-        public void dbConnection()
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            MessageBox.Show("Connection Successful");
-            dbConn.Close();
-        }
-
-        public DataTable displayRecords(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            da = new MySqlDataAdapter(query, dbConn);
-            dt = new DataTable();
-            da.Fill(dt);
-            dbConn.Close();
-            return dt;
-        }
-
-        public void sqlManager(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            dbCommand = new MySqlCommand(query, dbConn);
-            dbCommand.ExecuteNonQuery();
-            dbConn.Close();
-        }
+       
 
         public Border activityPanel(String activityID, String username, String type, String description, String dateTime, String id)
         {

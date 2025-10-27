@@ -20,6 +20,7 @@ namespace WpfApp2
 {
     public partial class AdminWindow : Window
     {
+        dbManager dbManager = new dbManager();  
         private String SQL = "";
         Admin admin = new Admin();
         private String username = MainWindow.Username;
@@ -109,7 +110,7 @@ namespace WpfApp2
 
             DataTable dt = new DataTable();
 
-            dt = admin.displayRecords(querry);
+            dt = dbManager.displayRecords(querry);
 
             int n = dt.Rows.Count;
             AppointmentStackPanel.Children.Clear();
@@ -147,7 +148,7 @@ namespace WpfApp2
             AdminMedicine adminMedicine = new AdminMedicine(id);
             StackPanel targetStackPanel = this.StackPanelMedicineReuqests;
             DataTable dt = new DataTable();
-            dt = admin.displayRecords(strquerry);
+            dt = dbManager.displayRecords(strquerry);
             int n = dt.Rows.Count;
             targetStackPanel.Children.Clear();
 
@@ -164,7 +165,7 @@ namespace WpfApp2
                 String approvedDate = dt.Rows[i][7].ToString();
 
                 
-               DataTable inventoryid = admin.displayRecords(
+               DataTable inventoryid = dbManager.displayRecords(
                     "SELECT inventory_id FROM medicineinventory WHERE medicine_name = '" + medicineName + "'");
                 int inventoryID = Convert.ToInt32(inventoryid.Rows[0][0]);
 
@@ -178,7 +179,7 @@ namespace WpfApp2
         {
             AdminInventory adminInventory = new AdminInventory(id);
             DataTable dt = new DataTable();
-            dt = admin.displayRecords(query);
+            dt = dbManager.displayRecords(query);
 
             wrapPanelInventory.Children.Clear();
             int n = dt.Rows.Count;
@@ -191,7 +192,7 @@ namespace WpfApp2
                 String genericName = dt.Rows[i][3].ToString();
                 String description = dt.Rows[i][4].ToString();
 
-                DataTable quantityDt = admin.displayRecords(
+                DataTable quantityDt = dbManager.displayRecords(
                     "SELECT amount, inventory_id FROM medicineinventory WHERE medicine_id = '" + medicineId + "'");
                 int quant = Convert.ToInt32(quantityDt.Rows[0][0]);
                 String inventoryId = quantityDt.Rows[0][1].ToString();
@@ -205,7 +206,7 @@ namespace WpfApp2
         {
             AdminActivity adminActivity = new AdminActivity(id);
             StackPanelActivities.Children.Clear();
-            DataTable dt = admin.displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
 
             StackPanelActivities.Children.Clear();
 

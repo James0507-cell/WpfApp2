@@ -12,6 +12,7 @@ namespace WpfApp2
 {
     public partial class UserForm : Window
     {
+        dbManager dbManager = new dbManager();
         private string username;
         Users user = new Users();
         private string SQL = "";
@@ -76,7 +77,7 @@ namespace WpfApp2
         public void displayAppointment(string query)
         {
             AppointmentStackPanel.Children.Clear();
-            DataTable dt = user.displayRecords(query);
+            DataTable dt = dbManager.displayRecords(query);
             AppointmentStackPanel.Children.Clear();
 
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -96,7 +97,7 @@ namespace WpfApp2
         public void displayActivities(String query)
         {
             StackPanelActivities.Children.Clear();
-            DataTable dt = user.displayRecords(query);
+            DataTable dt = dbManager.displayRecords(query);
             StackPanelActivities.Children.Clear();
 
             for (int i = 0; i < dt.Rows.Count; i++)

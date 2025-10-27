@@ -19,8 +19,8 @@ namespace WpfApp2
     
     public partial class MedicineRequest : Window
     {
+        dbManager dbManager = new dbManager();
         public string username = MainWindow.Username;
-        Users user = new Users();
         String SQL = "";
         private int userId = 0;
         public MedicineRequest()
@@ -31,11 +31,10 @@ namespace WpfApp2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            user.dbConnection();
             displayMedicine("Select * from medicine_info");
 
             DataTable dt = new DataTable();
-            dt = user.displayRecords($"select user_id from users where username = '{username}'");
+            dt = dbManager.displayRecords($"select user_id from users where username = '{username}'");
             userId = Convert.ToInt32(dt.Rows[0][0].ToString());
             displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + userId);
         }
@@ -44,7 +43,7 @@ namespace WpfApp2
         {
             UserMedicine medicine = new UserMedicine();
             DataTable dt = new DataTable();
-            dt = user.displayRecords(querry);
+            dt = dbManager.displayRecords(querry);
 
             StackPanelMedicineRequests.Children.Clear();
 
@@ -73,7 +72,7 @@ namespace WpfApp2
         {
             UserMedicine medicine = new UserMedicine();
             DataTable dt = new DataTable();
-            dt = user.displayRecords(querry);
+            dt = dbManager.displayRecords(querry);
             StackPanelMedicines.Children.Clear();
             int n = dt.Rows.Count;
 
@@ -84,7 +83,7 @@ namespace WpfApp2
                 String dosage = dt.Rows[i][2].ToString();
                 String genericName = dt.Rows[i][3].ToString();
                 String description = dt.Rows[i][4].ToString();
-                DataTable quantity = user.displayRecords("select amount from medicineinventory where medicine_id = '" + medicineId + "'");
+                DataTable quantity = dbManager.displayRecords("select amount from medicineinventory where medicine_id = '" + medicineId + "'");
                 int quant = Convert.ToInt32(quantity.Rows[0][0]);
 
                 Border cardBorder = medicine.medicineOrderPanels(medicineId, medicineName, dosage, genericName, description, quant);

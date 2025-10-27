@@ -14,47 +14,15 @@ namespace WpfApp2
 {
     internal class AdminStudent
     {
-        private MySqlConnection dbConn;
-        private MySqlCommand dbCommand;
-        private MySqlDataAdapter da;
-        private DataTable dt;
+        dbManager dbManager = new dbManager();
         private String Username = MainWindow.Username;
         private int id;
-
-
-        private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
         public AdminStudent(int id)
         {
              this.id = id;
         }
-        public void dbConnection()
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            MessageBox.Show("Connection Successful");
-            dbConn.Close();
-        }
-
-        public DataTable displayRecords(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            da = new MySqlDataAdapter(query, dbConn);
-            dt = new DataTable();
-            da.Fill(dt);
-            dbConn.Close();
-            return dt;
-        }
-
-        public void sqlManager(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            dbCommand = new MySqlCommand(query, dbConn);
-            dbCommand.ExecuteNonQuery();
-            dbConn.Close();
-        }
+      
         private TextBlock CreateDetailBlock(string label, string value, FontWeight weight = default)
         {
             if (weight == default) weight = FontWeights.Normal;
@@ -241,10 +209,10 @@ namespace WpfApp2
             if (result == MessageBoxResult.Yes)
             {
                 MessageBox.Show("Account deleted successfully!", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
-                sqlManager(SQL);
+                dbManager.sqlManager(SQL);
                 SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                      $"VALUES ({id}, '{Username}', 'Delete Student Info', 'Delete Student {studentId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-                sqlManager(SQL);
+                dbManager.sqlManager(SQL);
             }
             else
             {
@@ -326,7 +294,7 @@ namespace WpfApp2
                     '{allergies}', '{medicalConditions}'
                 )";
 
-            sqlManager(SQL);
+            dbManager.sqlManager(SQL);
         }
 
         public void LogAddStudentAdminAction(int adminId, string adminUsername, string newStudentUsername)
@@ -341,7 +309,7 @@ namespace WpfApp2
                     '{DateTime.Now:yyyy-MM-dd HH:mm:ss}'
                 )";
 
-            sqlManager(SQL);
+            dbManager.sqlManager(SQL);
         }
         public void UpdateStudent(
             int userId,
@@ -386,7 +354,7 @@ namespace WpfApp2
                     medical_conditions = '{conditions}'
                 WHERE user_id = {userId}";
 
-            sqlManager(query);
+            dbManager.sqlManager(query);
         }
 
         public void LogUpdateStudentAction(int adminId, string username, string activityType, string description)
@@ -395,7 +363,7 @@ namespace WpfApp2
                 INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) 
                 VALUES ({adminId}, '{username}', '{activityType}', '{description}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
 
-            sqlManager(query);
+            dbManager.sqlManager(query);
         }
     }
 }

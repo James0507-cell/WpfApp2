@@ -10,12 +10,12 @@ namespace WpfApp2
 {
     public partial class UpdateAppointment : Window
     {
+        dbManager dbManager = new dbManager();
         private DateTime selectedDate = DateTime.MinValue;
         private string selectedTime;
         private Booking booking = new Booking();
         public string username = MainWindow.Username;
         int userId = 0;
-        Users users = new Users();
         String SQL = "";
         String appointmentID;
 
@@ -100,7 +100,7 @@ namespace WpfApp2
                 return;
             }
 
-            DataTable dt = booking.displayRecords($"SELECT user_id FROM users WHERE username = '{username}'");
+            DataTable dt = dbManager.displayRecords($"SELECT user_id FROM users WHERE username = '{username}'");
             if (dt.Rows.Count == 0)
             {
                 MessageBox.Show("User not found.");
@@ -181,7 +181,7 @@ namespace WpfApp2
         public void setStudentInfo()
         {
             SQL = "Select * from users where username = '" + username + "'";
-            DataTable dt = users.displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
             if (dt.Rows.Count > 0)
             {
                 txtFirstName.Text = dt.Rows[0]["first_name"].ToString();
@@ -198,7 +198,7 @@ namespace WpfApp2
        public void populatForms()
         {
             string SQL = $"SELECT * FROM appointments WHERE appointment_id = '{appointmentID}'";
-            DataTable dt = booking.displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
 
             if (dt.Rows.Count > 0)
             {

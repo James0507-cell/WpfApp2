@@ -11,40 +11,10 @@ namespace WpfApp2
 {
    internal class Booking
     {
-        private MySqlConnection dbCon;
-        private MySqlCommand dbCommand;
-        private MySqlDataAdapter da;
-        private DataTable dt;
-
-
+        dbManager dbManager = new dbManager();
         private int userId;
         private int studentId;
 
-        String strConn = "server = localhost; user id = root; password =; database = db_medicaremmcm";
-
-        public void dbConnection()
-        {
-            dbCon = new MySqlConnection(strConn);
-            dbCon.Open();
-            dbCon.Close();
-        }
-        public DataTable displayRecords(String strQuery)
-        {
-            dbCon = new MySqlConnection(strConn);
-            dbCon.Open();
-            da = new MySqlDataAdapter(strQuery, dbCon);
-            dt = new DataTable();
-            da.Fill(dt);
-            dbCon.Close();
-            return dt;
-        }
-        public void sqlManager(String strQuery)
-        {
-            dbCon.Open();
-            dbCommand = new MySqlCommand(strQuery, dbCon);
-            dbCommand.ExecuteNonQuery();
-            dbCon.Close();
-        }
         public List<string> GetBookedTimes(DateTime date)
         {
             var bookedTimes = new List<string>();
@@ -58,7 +28,7 @@ namespace WpfApp2
 
             try
             {
-                DataTable dt = displayRecords(query);
+                DataTable dt = dbManager.displayRecords(query);
 
                 foreach (DataRow row in dt.Rows)
                 {
@@ -96,7 +66,7 @@ namespace WpfApp2
                 '{emergencyName}', '{emergencyPhone}', 'Pending',
                 '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{symptoms}')";
 
-            sqlManager(insertQuery);
+            dbManager.sqlManager(insertQuery);
         }
 
         public void LogBookingActivity(int userId, string purpose)
@@ -104,13 +74,13 @@ namespace WpfApp2
             string logQuery = $@"
                 INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
                 VALUES ({userId}, 'Appointment', 'Booking appointment for {purpose}')";
-            sqlManager(logQuery);
+            dbManager.sqlManager(logQuery);
         }
 
         public int GetUserId(string username)
         {
             string query = $"SELECT user_id FROM users WHERE username = '{username}'";
-            DataTable dt = displayRecords(query);
+            DataTable dt = dbManager.displayRecords(query);
             return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["user_id"]) : -1;
         }
         public void UpdateAppointmentRecord(string appointmentID, int userId, string studentId,
@@ -142,14 +112,14 @@ namespace WpfApp2
                     status = 'Pending'
                 WHERE appointment_id = {appointmentID}";
 
-            sqlManager(UpdateQuery);
+            dbManager.sqlManager(UpdateQuery);
         }
         public void LogUpdateActivity(int userId, string appointmentID)
         {
             string logQuery = $@"
                 INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
                 VALUES ({userId}, 'Appointment', 'Update appointment ID:{appointmentID}')";
-            sqlManager(logQuery);
+            dbManager.sqlManager(logQuery);
         }
     }
 }

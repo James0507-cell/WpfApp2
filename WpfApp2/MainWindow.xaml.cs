@@ -19,7 +19,6 @@ namespace WpfApp2
 
         private void LoginForm_Loaded(object sender, RoutedEventArgs e)
         {
-            login.dbConnection();
         }
 
         private void TxtUserName_GotFocus(object sender, RoutedEventArgs e)

@@ -13,7 +13,7 @@ namespace WpfApp2
 {
     public partial class StudentManagement : Window
     {
-
+        dbManager dbManager = new dbManager();
         Admin admin = new Admin();
         String SQL = "";
         String Username = MainWindow.Username;
@@ -32,7 +32,7 @@ namespace WpfApp2
             StackPanel targetStackPanel = this.StudentListPanel;
 
             targetStackPanel.Children.Clear();
-            DataTable dt = admin.displayRecords(strQuerry);
+            DataTable dt = dbManager.displayRecords(strQuerry);
 
             int num = dt.Rows.Count;
             for (int i = 0; i < num; i++)
@@ -75,14 +75,8 @@ namespace WpfApp2
             displayEnrolledCourse("Select * from course_programs");
             setId(Username);
             displayUsers("SELECT * FROM users WHERE role = 'Student'");
-
-            DataTable dtYear = admin.displayRecords("SELECT * FROM year_levels");
-            foreach (DataRow row in dtYear.Rows)
-            {
-                cmbYear.Items.Add(row["level_name"].ToString());
-            }
-            cmbYear.Items.Insert(0, "All Year Levels");
-
+            displayAnalytics();
+            setComboBox();
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -105,7 +99,7 @@ namespace WpfApp2
         public void setId(String username)
         {
             SQL = $"select user_id from users where username = '{username}'";
-            DataTable dt = admin.displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
             id = int.Parse(dt.Rows[0][0].ToString());
         }
 
@@ -147,7 +141,7 @@ namespace WpfApp2
         {
             StackPanelCourses.Children.Clear();
 
-            DataTable dt = admin.displayRecords(sqlQuery);
+            DataTable dt = dbManager.displayRecords(sqlQuery);
 
             if (dt != null && dt.Rows.Count > 0)
             {
@@ -155,7 +149,7 @@ namespace WpfApp2
                 {
                     string course = dt.Rows[i]["course_name"].ToString();
 
-                    DataTable dtStudentCount = admin.displayRecords(
+                    DataTable dtStudentCount = dbManager.displayRecords(
                         $"SELECT * FROM users WHERE course_program = '{course}'"
                     );
                     int studentCount = dtStudentCount.Rows.Count;
@@ -165,7 +159,22 @@ namespace WpfApp2
                     StackPanelCourses.Children.Add(border);
                 }
             }
-            
+        }
+        public void displayAnalytics()
+        {
+            lblTotalstudent.Content = admin.GetTotalStudentCount();
+            lblPrograms.Content = admin.getTotalProgram();
+            lblActiveStudent.Content = admin.GetActiveStudentCount();
+            lblMedicalAlerts.Content = admin.GetMedicineStatusCount();
+        }
+        public void setComboBox()
+        {
+            DataTable dtYear = dbManager.displayRecords("SELECT * FROM year_levels");
+            foreach (DataRow row in dtYear.Rows)
+            {
+                cmbYear.Items.Add(row["level_name"].ToString());
+            }
+            cmbYear.Items.Insert(0, "All Year Levels");
         }
 
     }

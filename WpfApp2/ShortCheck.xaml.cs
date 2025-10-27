@@ -13,10 +13,10 @@ namespace WpfApp2
 {
     public partial class ShortCheck : Window
     {
+        dbManager dbManager = new dbManager();
         String username = MainWindow.Username;
         String SQL = "";
         private int userId;
-        Users user  = new Users();
         public ShortCheck()
         {
             InitializeComponent();
@@ -76,9 +76,9 @@ namespace WpfApp2
             BmiResultTextBlock.Foreground = categoryColor;
 
             SQL = $"INSERT INTO checkups (user_id, height_cm, weight_kg, bmi) VALUES ('{userId}', '{heightCm}', '{weightKg}', '{bmi}')";
-            user.sqlManager(SQL);
+            dbManager.sqlManager(SQL);
             SQL = $"Insert into student_activity_log(user_id, activity_type, activity_desc) values ('{userId}', 'Vitals Check', 'BMI Check Up')";
-            user.sqlManager(SQL);
+            dbManager.sqlManager(SQL);
 
         }
 
@@ -109,7 +109,7 @@ namespace WpfApp2
         {
             SQL = $"Select user_id from users where username = '{username}'";
             DataTable dt = new DataTable();
-            dt = user.displayRecords(SQL);
+            dt = dbManager.displayRecords(SQL);
             userId = Convert.ToInt32(dt.Rows[0][0].ToString());
             
         }

@@ -10,51 +10,15 @@ namespace WpfApp2
 {
     internal class Users
     {
-
-        private MySqlConnection dbConn;
-        private MySqlCommand dbCommand;
-        private MySqlDataAdapter da;
-        private DataTable dt;
+        dbManager dbManager = new dbManager();
         private string username = MainWindow.Username;
         private int id = 0;
         private String SQL = "";
 
-        string strConn = "server=localhost; user id=root; password=; database=db_medicaremmcm";
-
-        public void dbConnection()
-        {
-            using (dbConn = new MySqlConnection(strConn))
-            {
-                dbConn.Open();
-                dbConn.Close();
-            }
-        }
-
-        public DataTable displayRecords(string query)
-        {
-            using (dbConn = new MySqlConnection(strConn))
-            {
-                dbConn.Open();
-                da = new MySqlDataAdapter(query, dbConn);
-                dt = new DataTable();
-                da.Fill(dt);
-            }
-            return dt;
-        }
-
-        public void sqlManager(string query)
-        {
-            using (dbConn = new MySqlConnection(strConn))
-            {
-                dbConn.Open();
-                dbCommand = new MySqlCommand(query, dbConn);
-                dbCommand.ExecuteNonQuery();
-            }
-        }
         public void setId(String username)
         {
             String SQL = $"select user_id from users where username = '{username}'";
-            DataTable dt = displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
             id = int.Parse(dt.Rows[0][0].ToString());
         }
         private Color GetStatusBackgroundColor(string status)
@@ -229,12 +193,12 @@ namespace WpfApp2
                     MessageBox.Show($"Request to Cancel Appointment ID: {currentAppointmentId}");
                     
                     string SQL = $"DELETE FROM appointments WHERE appointment_id = '{currentAppointmentId}'";
-                    sqlManager(SQL);
+                    dbManager.sqlManager(SQL);
                     setId(username);
                     SQL = $@"
                             INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
                             VALUES ({id}, 'Appointment', 'Cancel appointment ID: {appointmentId}')";
-                    sqlManager(SQL);
+                    dbManager.sqlManager(SQL);
                     TriggerAppointmentActivityPanelReload();
                 };
 
@@ -386,8 +350,8 @@ namespace WpfApp2
                   $"AND status = 'Approved' " +
                   $"AND TIMESTAMP(appointment_date, appointment_time) >= NOW() " +
                   $"ORDER BY TIMESTAMP(appointment_date, appointment_time) ASC " +
-                  $"LIMIT 1";
-            DataTable dt = displayRecords(SQL);
+                  $"LIMIT 1";   
+            DataTable dt = dbManager.displayRecords(SQL);
             if (dt.Rows.Count > 0)
             {
                 DateTime date = Convert.ToDateTime(dt.Rows[0]["appointment_date"]);
@@ -407,7 +371,7 @@ namespace WpfApp2
         {
             setId (username);
             SQL = $"SELECT * FROM checkups WHERE user_id = '{id}' ORDER BY checkup_id DESC LIMIT 1";
-            DataTable dt = displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
 
             if (dt.Rows.Count > 0)
             {
@@ -423,7 +387,7 @@ namespace WpfApp2
         {
             setId(username);
             SQL = $"Select * from checkups where user_id = '{id}' order by checkup_id desc limit 1";
-            DataTable dt = displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
             if (dt.Rows.Count > 0)
             {
                 String height = dt.Rows[0]["height_cm"].ToString();
@@ -438,7 +402,7 @@ namespace WpfApp2
         {
             setId(username);
             SQL = $"Select * from checkups where user_id = '{id}' order by checkup_id desc limit 1";
-            DataTable dt = displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
             if (dt.Rows.Count > 0)
             {
                 String weight = dt.Rows[0]["weight_kg"].ToString();
@@ -453,7 +417,7 @@ namespace WpfApp2
         {
             setId(username);
             SQL = $"Select * from checkups where user_id = '{id}' order by checkup_id desc limit 1";
-            DataTable dt = displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
             if (dt.Rows.Count > 0)
             {
                 String bmi = dt.Rows[0]["bmi"].ToString();
@@ -473,7 +437,7 @@ namespace WpfApp2
         public String name ()
         {
             SQL = $"select * from users where username = '{username}'";
-            DataTable dt = displayRecords(SQL);
+            DataTable dt = dbManager.displayRecords(SQL);
             String name = dt.Rows[0]["first_name"].ToString() + " " + dt.Rows[0]["last_name"].ToString();
             return "Welcome back " + name;
         }
@@ -504,7 +468,7 @@ namespace WpfApp2
             ORDER BY latest.y, latest.m ASC;
         ";
 
-                DataTable dt = displayRecords(SQL);
+                DataTable dt = dbManager.displayRecords(SQL);
                 List<MonthlyProgress> list = new List<MonthlyProgress>();
 
                 foreach (DataRow row in dt.Rows)
@@ -530,7 +494,7 @@ namespace WpfApp2
         {
             SQL = $"Select user_id from users where username = '{username}'";
             DataTable dt = new DataTable();
-            dt = displayRecords(SQL);
+            dt = dbManager.displayRecords(SQL);
             return Convert.ToInt32(dt.Rows[0][0].ToString());
         }
     }

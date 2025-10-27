@@ -16,46 +16,16 @@ namespace WpfApp2
 {
     internal class AdminMedicine
     {
-        private MySqlConnection dbConn;
-        private MySqlCommand dbCommand;
-        private MySqlDataAdapter da;
-        private DataTable dt;
+        dbManager dbManager = new dbManager();
         private String username = MainWindow.Username;
         private int id;
 
-        private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
         public AdminMedicine(int id)
         {
             this.id = id;
         }
-        public void dbConnection()
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            MessageBox.Show("Connection Successful");
-            dbConn.Close();
-        }
 
-        public DataTable displayRecords(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            da = new MySqlDataAdapter(query, dbConn);
-            dt = new DataTable();
-            da.Fill(dt);
-            dbConn.Close();
-            return dt;
-        }
-
-        public void sqlManager(string query)
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            dbCommand = new MySqlCommand(query, dbConn);
-            dbCommand.ExecuteNonQuery();
-            dbConn.Close();
-        }
         private void CardRequest_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (sender is Border cardBorder && cardBorder.Tag is string requestID)
@@ -111,7 +81,7 @@ namespace WpfApp2
         {
             if (sender is MenuItem menuItem && menuItem.Tag is string requestID)
             {
-                DataTable requestDetails = displayRecords(
+                DataTable requestDetails = dbManager.displayRecords(
                     $"SELECT medicine_name, quantity FROM medicinerequests WHERE request_id = '{requestID}'");
 
                 if (requestDetails.Rows.Count > 0)
@@ -119,7 +89,7 @@ namespace WpfApp2
                     string medicineName = requestDetails.Rows[0]["medicine_name"].ToString();
                     if (int.TryParse(requestDetails.Rows[0]["quantity"].ToString(), out int quantityRequested))
                     {
-                        DataTable inventoryidDt = displayRecords(
+                        DataTable inventoryidDt = dbManager.displayRecords(
                             $"SELECT inventory_id FROM medicineinventory WHERE medicine_name = '{medicineName}'");
 
                         if (inventoryidDt.Rows.Count > 0)
@@ -130,11 +100,11 @@ namespace WpfApp2
 
                             string logSQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                                             $"VALUES ({id}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-                           sqlManager(logSQL);
+                           dbManager.sqlManager(logSQL);
 
                             string updateInventorySQL = $"UPDATE medicineinventory SET amount = amount - {quantityRequested} WHERE inventory_id = {inventoryID}";
 
-                            sqlManager(updateInventorySQL);
+                            dbManager.sqlManager(updateInventorySQL);
                         }
                         else
                         {
@@ -169,21 +139,21 @@ namespace WpfApp2
 
                     String SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
                           $"VALUES ({id}, '{username}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}. Reason: {rejectionReason}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-                    sqlManager(SQL);
+                    dbManager.sqlManager(SQL);
                 }
             }
         }
         public void approveMedicineRequest(String requestID)
         {
             String querry = $"UPDATE medicinerequests SET status = 'Approved', approved_date = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}' WHERE request_id = {requestID}";
-            sqlManager(querry);
+            dbManager.sqlManager(querry);
             TriggerAppointmentActivityPanelReload();
         }
 
         public void rejectMedicineRequest(String requestID, String reason)
         {
             String querry = $"UPDATE medicinerequests SET status = 'Rejected', reject_reason = '{reason}', approved_date = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}' WHERE request_id = {requestID}";
-            sqlManager(querry);
+            dbManager.sqlManager(querry);
             TriggerAppointmentActivityPanelReload();
         }
 
