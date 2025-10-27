@@ -16,8 +16,8 @@ namespace WpfApp2
         private MySqlDataAdapter da;
         private DataTable dt;
         private string username = MainWindow.Username;
-        int id = 0;
-        String SQL = "";
+        private int id = 0;
+        private String SQL = "";
 
         string strConn = "server=localhost; user id=root; password=; database=db_medicaremmcm";
 
@@ -102,35 +102,11 @@ namespace WpfApp2
             };
         }
 
-        public void cancelAppointment(string appointmentId)
-        {
-            MessageBoxResult result = MessageBox.Show(
-                "Are you sure you want to cancel this appointment? This action cannot be undone.",
-                "Confirm Cancellation",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning
-            );
-
-            if (result == MessageBoxResult.Yes)
-            {
-                string deleteQuery = $"DELETE FROM appointments WHERE appointment_id = {appointmentId}";
-                sqlManager(deleteQuery);
-                MessageBox.Show("Appointment cancelled successfully!", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
-                setId(username);
-                String SQL = $@"
-                            INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
-                            VALUES ({id}, 'Appointment', 'Cancel appointment')";
-                sqlManager(SQL);
-
-
-            }
-        }
-
         public Border appointmentPanel(string appointmentId, string date, string time, string status, string purpose, string reason)
         {
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
             Brush lightGrayBrush = new SolidColorBrush(Colors.Gray);
-            Brush redBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD70000")); // Define a red color for the reason
+            Brush redBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD70000")); 
 
             Border cardBorder = new Border
             {
@@ -215,15 +191,11 @@ namespace WpfApp2
 
             appointmentContent.Children.Add(detailsPanel);
 
-            // =============================================================
-            // NEW: ADD REASON TEXT BLOCK CONDITIONALLY
-            // =============================================================
+
             if (status.Equals("Rejected", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(reason))
             {
-                // Add a separator space
                 appointmentContent.Children.Add(new Separator { Margin = new Thickness(0, 5, 0, 0) });
 
-                // TextBlock for the reason label
                 appointmentContent.Children.Add(new TextBlock
                 {
                     Text = "Rejection Reason:",
@@ -233,16 +205,14 @@ namespace WpfApp2
                     Margin = new Thickness(0, 0, 0, 2)
                 });
 
-                // TextBlock for the actual reason content
                 appointmentContent.Children.Add(new TextBlock
                 {
                     Text = reason,
                     FontSize = 9,
                     Foreground = redBrush,
-                    TextWrapping = TextWrapping.Wrap // Allows long reasons to wrap
+                    TextWrapping = TextWrapping.Wrap 
                 });
             }
-            // =============================================================
 
             cardBorder.Child = appointmentContent;
 
@@ -257,6 +227,7 @@ namespace WpfApp2
                 cancelItem.Click += (s3, e3) =>
                 {
                     MessageBox.Show($"Request to Cancel Appointment ID: {currentAppointmentId}");
+                    
                     string SQL = $"DELETE FROM appointments WHERE appointment_id = '{currentAppointmentId}'";
                     sqlManager(SQL);
                     setId(username);
@@ -555,6 +526,12 @@ namespace WpfApp2
             }
         }
 
-
+        public int getUserId(String username)
+        {
+            SQL = $"Select user_id from users where username = '{username}'";
+            DataTable dt = new DataTable();
+            dt = displayRecords(SQL);
+            return Convert.ToInt32(dt.Rows[0][0].ToString());
+        }
     }
 }

@@ -144,11 +144,11 @@ namespace WpfApp2
 
             sqlManager(UpdateQuery);
         }
-        public void LogUpdateActivity(int userId, string purpose)
+        public void LogUpdateActivity(int userId, string appointmentID)
         {
             string logQuery = $@"
                 INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
-                VALUES ({userId}, 'Appointment', 'Update appointment ID:{purpose}')";
+                VALUES ({userId}, 'Appointment', 'Update appointment ID:{appointmentID}')";
             sqlManager(logQuery);
         }
     }

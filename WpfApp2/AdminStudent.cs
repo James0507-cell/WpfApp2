@@ -252,6 +252,42 @@ namespace WpfApp2
             }
             TriggerAppointmentActivityPanelReload();
         }
+        public Border coursePanel(String course, int studentCount)
+        {
+            Border border = new Border
+            {
+                BorderBrush = Brushes.LightGray,
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(5),
+                Margin = new Thickness(5),
+                Padding = new Thickness(10),
+                Background = Brushes.White,
+
+            };
+
+            StackPanel coursePanel = new StackPanel();
+
+            TextBlock txtCourseName = new TextBlock
+            {
+                Text = course,
+                FontSize = 12,
+                FontWeight = FontWeights.Bold,
+                Foreground = Brushes.Black
+            };
+
+            TextBlock txtStudentCount = new TextBlock
+            {
+                Text = $"Enrolled Students: {studentCount}",
+                FontSize = 11,
+                Foreground = Brushes.Gray
+            };
+
+            coursePanel.Children.Add(txtCourseName);
+            coursePanel.Children.Add(txtStudentCount);
+
+            border.Child = coursePanel;
+            return border;
+        }
         public void TriggerAppointmentActivityPanelReload()
         {
             StudentManagement activeAdminWindow = Application.Current.Windows

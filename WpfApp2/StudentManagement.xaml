@@ -375,7 +375,7 @@
                                     <Label Content="Enrollment by Program" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="176" FontWeight="SemiBold" Foreground="#FF00104D"/>
 
                                     <ScrollViewer Grid.Row="1">
-                                        <StackPanel>
+                                        <StackPanel x:Name="StackPanelCourses">
                                             <Border Padding="15,10" Margin="10,0,10,0">
                                                 <Grid>
                                                     <Label Content="Bachelor of Science in Accountancy" Foreground="#FF00104D" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Left"/>

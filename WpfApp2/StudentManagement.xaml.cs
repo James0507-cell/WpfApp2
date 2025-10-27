@@ -19,14 +19,16 @@ namespace WpfApp2
         String Username = MainWindow.Username;
         int id;
         String studUsername = "";
+        AdminStudent adminStudent;
         public StudentManagement()
         {
+            
             InitializeComponent();
+            adminStudent = new AdminStudent(id);
         }
 
         public void displayUsers(String strQuerry)
         {
-            AdminStudent adminStudent = new AdminStudent(id);
             StackPanel targetStackPanel = this.StudentListPanel;
 
             targetStackPanel.Children.Clear();
@@ -70,13 +72,9 @@ namespace WpfApp2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            loadAnalytics();
-
-
-
+            displayEnrolledCourse("Select * from course_programs");
             setId(Username);
-            SQL = "SELECT * FROM users WHERE role = 'Student'";
-            displayUsers(SQL);
+            displayUsers("SELECT * FROM users WHERE role = 'Student'");
 
             DataTable dtYear = admin.displayRecords("SELECT * FROM year_levels");
             foreach (DataRow row in dtYear.Rows)
@@ -84,6 +82,7 @@ namespace WpfApp2
                 cmbYear.Items.Add(row["level_name"].ToString());
             }
             cmbYear.Items.Insert(0, "All Year Levels");
+
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -101,8 +100,7 @@ namespace WpfApp2
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            loadAnalytics();
-
+            displayEnrolledCourse("Select * from course_programs");
         }
         public void setId(String username)
         {
@@ -144,81 +142,31 @@ namespace WpfApp2
                 displayUsers(SQL);
             }
         }
-        public void loadAnalytics()
+        
+        public void displayEnrolledCourse(string sqlQuery)
         {
-            int totalActiveStudents = admin.GetActiveStudentCount();
-            lblActiveStudent.Content = totalActiveStudents.ToString();
+            StackPanelCourses.Children.Clear();
 
-            int totalStudents = admin.GetTotalStudentCount();
-            lblTotalstudent.Content = totalStudents.ToString();
+            DataTable dt = admin.displayRecords(sqlQuery);
 
-            int totaalCoursePrograms = admin.getTotalProgram();
-            lblPrograms.Content = totaalCoursePrograms.ToString();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string course = dt.Rows[i]["course_name"].ToString();
 
-            int totalmedicinereq = admin.GetMedicineStatusCount();
-            lblMedicalAlerts.Content = totalmedicinereq;
-            int totalComputerscience = admin.Accountancy();
-            accountancy.Content = totalComputerscience + " students";
+                    DataTable dtStudentCount = admin.displayRecords(
+                        $"SELECT * FROM users WHERE course_program = '{course}'"
+                    );
+                    int studentCount = dtStudentCount.Rows.Count;
 
-            int totalManagementAccounting = admin.ManagementAccounting();
-            managementaccounting.Content = totalManagementAccounting + " students";
+                    Border border = adminStudent.coursePanel(course, studentCount);
 
-            int totoalEntrepreneurship = admin.Entrepreneurship();
-            Entrepreneurship.Content = totoalEntrepreneurship + " students";
-
-            int totaltourismManagement = admin.TourismManagement();
-            tourismManagement.Content = totaltourismManagement + " students";
-
-            int totalCommunication = admin.Communication();
-            Communication.Content = totalCommunication + " students";
-
-            int totalMultimediaArt = admin.MultiMediaArts();
-            multiMediaArts.Content = totalMultimediaArt + " students";
-
-            int totalComputerScience = admin.ComputerScience();
-            compueterscience.Content = totalComputerScience + " students";
-
-            int totalInformationsystem = admin.Informationsystem();
-            informationsystem.Content = totalInformationsystem + " students";
-
-            int totalemc = admin.entertaimentmultimediacomputing();
-            entertainmentmultimediacomputing.Content = totalemc + " students";
-
-            int totalarchitecture = admin.architecture();
-            architecture.Content = totalarchitecture + " students";
-
-            int totalchemicalengineering = admin.chemicalEnginerring();
-            chemicalengineering.Content = totalchemicalengineering + " students";
-
-            int totalcivilengineering = admin.civilEngineering();
-            civilengineering.Content = totalcivilengineering + " students";
-
-            int totalcomputerengineering = admin.computerEngineering();
-            compueterengineering.Content = totalcomputerengineering + " students";
-
-            int totalelectricalengineering = admin.electricalEngineering();
-            electricalengineering.Content = totalelectricalengineering + " students";
-
-            int totalelectronicengineering = admin.electronicsEngineering();
-            electronicsengineering.Content = totalelectronicengineering + " students";
-
-            int totalindustrialengineering = admin.industrialEngineering();
-            industrialengineering.Content = totalindustrialengineering + " students";
-
-            int totalmechanicalengineering = admin.mechanicalEngineering();
-            mechanicalengineering.Content = totalmechanicalengineering + " students";
-
-            int totalbiology = admin.biology();
-            biology.Content = totalbiology + " students";
-
-            int totalpharmcy = admin.pharmacy();
-            pharmacy.Content = totalpharmcy + " students";
-
-            int totalphysicaltherapy = admin.physicalteraphy();
-            physicaltherapy.Content = totalphysicaltherapy + " students";
-
-            int totalpyschology = admin.psychology();
-            psycholoyg.Content = totalpyschology + " students";
+                    StackPanelCourses.Children.Add(border);
+                }
+            }
+            
         }
+
     }
 }
