@@ -11,6 +11,20 @@ namespace WpfApp2
     {
         dbManager dbManager = new dbManager();
         private String SQL = "";
+        private int id = 0;
+        private String username = MainWindow.Username;
+
+        public void setId()
+        {
+            String SQL = $"select user_id from users where username = '{username}'";
+            DataTable dt = dbManager.displayRecords(SQL);
+            id = int.Parse(dt.Rows[0][0].ToString());
+        }
+        public int getID()
+        {
+            setId();
+            return id;
+        }
 
         public int getID(String username)
         {
