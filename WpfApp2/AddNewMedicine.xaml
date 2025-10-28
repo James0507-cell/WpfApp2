@@ -7,6 +7,44 @@
         mc:Ignorable="d"
         Title="Add New Medicine" Height="450" Width="400"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="AppointmentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="Foreground" Value="#1C3E61"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,15"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+        BorderBrush="{TemplateBinding BorderBrush}"
+        BorderThickness="{TemplateBinding BorderThickness}"
+        CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E6E6E6"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#D0D0D0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SelectedAppointmentButtonStyle" TargetType="Button" BasedOn="{StaticResource AppointmentButtonStyle}">
+            <Setter Property="Background" Value="#E53935"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E53935"/>
+        </Style>
+    </Window.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,34 +53,33 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="29.24"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Medicine Name:" Grid.Row="0" Grid.Column="0" Margin="0,5,10,0" VerticalAlignment="Center"/>
+        <Label Content="Medicine Name:" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" Height="26"/>
         <TextBox x:Name="TxtMedicineName" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" Padding="5"/>
 
-        <Label Content="Generic Name:" Grid.Row="1" Grid.Column="0" Margin="0,5,10,0" VerticalAlignment="Center"/>
+        <Label Content="Generic Name:" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" Height="26"/>
         <TextBox x:Name="TxtGenericName" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" Padding="5"/>
 
-        <Label Content="Milligrams (mg):" Grid.Row="2" Grid.Column="0" Margin="0,5,10,0" VerticalAlignment="Center"/>
+        <Label Content="Milligrams (mg):" Grid.Row="2" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" Height="26"/>
         <TextBox x:Name="TxtMilligrams" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" Padding="5"/>
 
-        <Label Content="Description:" Grid.Row="3" Grid.Column="0" Margin="0,5,10,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtDescription" Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" 
-                 Height="80" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Padding="5"/>
+        <Label Content="Description:" Grid.Row="3" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" Height="26"/>
+        <TextBox x:Name="TxtDescription" Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Padding="5"/>
 
-        <Label Content="Inventory Amount:" Grid.Row="4" Grid.Column="0" Margin="0,5,10,0" VerticalAlignment="Center"/>
+        <Label Content="Inventory Amount:" Grid.Row="4" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" Height="26"/>
         <TextBox x:Name="TxtInventoryAmount" Grid.Row="4" Grid.Column="1" Margin="0,5,0,5" Padding="5"/>
 
-        <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Height="1" Fill="LightGray" Margin="0,15,0,15"/>
+        <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Fill="LightGray" Margin="0,15,0,15"/>
 
-        <Button Content="Add Medicine" Grid.Row="7" Grid.ColumnSpan="2" 
-                HorizontalAlignment="Right" Padding="15,5" FontSize="14" FontWeight="Bold"
-                x:Name="BtnAddMedicine" Click="BtnAddMedicine_Click_1"/>
+        <Button Content="Add Medicine" Grid.Row="7" 
+                HorizontalAlignment="Right" Padding="15,5" FontSize="10" FontWeight="Bold"
+                x:Name="BtnAddMedicine" Click="BtnAddMedicine_Click_1" Style="{StaticResource SelectedAppointmentButtonStyle}" Grid.Column="1" Margin="0,0,5,5" Width="81"/>
     </Grid>
 </Window>

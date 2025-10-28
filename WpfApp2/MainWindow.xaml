@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="836" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="LoginForm_Loaded">
+        Title="MainWindow" Height="450" Width="836" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterScreen" >
 
     <Border CornerRadius="13" Background="Black" Margin="0">
         <Grid>

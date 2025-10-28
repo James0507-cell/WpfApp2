@@ -15,35 +15,6 @@ namespace WpfApp2
             InitializeComponent();
         }
 
-       
-
-        private void LoginForm_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void TxtUserName_GotFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TxtUserName_LostFocus(object sender, RoutedEventArgs e)
-        {
-  
-        }
-
-        private void TxtPassword_GotFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TxtPassword_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
         private void BtnSignIn_Click_1(object sender, RoutedEventArgs e)
         {
 

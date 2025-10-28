@@ -809,7 +809,7 @@
                                     </ScrollViewer>
                                 </Grid>
                             </Border>
-                            <Button Content="Add New Medicine" HorizontalAlignment="Left" Margin="593,28,0,0" VerticalAlignment="Top" Style="{StaticResource SelectedAppointmentButtonStyle}" Width="139" Height="28" FontSize="10" Click="Button_Click_2"/>
+                            <Button Content="Add New Medicine" HorizontalAlignment="Right" Margin="593,28,0,0" VerticalAlignment="Top" Style="{StaticResource SelectedAppointmentButtonStyle}" Width="139" Height="28" FontSize="10" Click="Button_Click_2"/>
 
 
 
