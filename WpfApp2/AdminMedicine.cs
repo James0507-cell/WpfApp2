@@ -16,14 +16,14 @@ namespace WpfApp2
 {
     internal class AdminMedicine
     {
+        Admin admin = new Admin();
         dbManager dbManager = new dbManager();
         private String username = MainWindow.Username;
-        private int id;
+        
 
 
-        public AdminMedicine(int id)
+        public AdminMedicine()
         {
-            this.id = id;
         }
 
         private void CardRequest_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -99,7 +99,7 @@ namespace WpfApp2
                             approveMedicineRequest(requestID);
 
                             string logSQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                                            $"VALUES ({id}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                                            $"VALUES ({admin.getID()}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                            dbManager.sqlManager(logSQL);
 
                             string updateInventorySQL = $"UPDATE medicineinventory SET amount = amount - {quantityRequested} WHERE inventory_id = {inventoryID}";
@@ -138,7 +138,7 @@ namespace WpfApp2
 
 
                     String SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                          $"VALUES ({id}, '{username}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}. Reason: {rejectionReason}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                          $"VALUES ({admin.getID()}, '{username}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}. Reason: {rejectionReason}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     dbManager.sqlManager(SQL);
                 }
             }

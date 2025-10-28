@@ -131,16 +131,14 @@ namespace WpfApp2
             Style bookedStyle = (Style)FindResource("BookedAppointmentStyle");
             Style defaultStyle = (Style)FindResource("AppointmentButtonStyle");
 
-            if (selectedDate.DayOfWeek == DayOfWeek.Saturday || selectedDate.DayOfWeek == DayOfWeek.Sunday)
+            if (selectedDate.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday)
             {
                 foreach (var child in TimeSelectionGrid.Children)
-                {
                     if (child is Button btn)
                     {
                         btn.IsEnabled = false;
                         btn.Style = bookedStyle;
                     }
-                }
                 return;
             }
 
@@ -148,13 +146,23 @@ namespace WpfApp2
 
             foreach (var child in TimeSelectionGrid.Children)
             {
-                if (child is Button btn && btn.Tag != null)
+                if (child is Button btn)
                 {
-                    string timeTag = btn.Tag.ToString();
+                    string timeTag = btn.Tag?.ToString();
+
                     btn.IsEnabled = true;
                     btn.Style = defaultStyle;
 
+                    if (string.IsNullOrEmpty(timeTag)) continue;
+
                     if (bookedTimes.Contains(timeTag))
+                    {
+                        btn.Style = bookedStyle;
+                        btn.IsEnabled = false;
+                    }
+                    else if (selectedDate.Date == DateTime.Today.Date &&
+                             DateTime.TryParse($"{selectedDate.ToShortDateString()} {timeTag}", out DateTime appointmentDateTime) &&
+                             appointmentDateTime <= DateTime.Now)
                     {
                         btn.Style = bookedStyle;
                         btn.IsEnabled = false;

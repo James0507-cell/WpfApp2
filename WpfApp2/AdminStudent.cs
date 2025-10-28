@@ -14,13 +14,12 @@ namespace WpfApp2
 {
     internal class AdminStudent
     {
+        Admin admin = new Admin();
         dbManager dbManager = new dbManager();
         private String Username = MainWindow.Username;
-        private int id;
 
-        public AdminStudent(int id)
+        public AdminStudent()
         {
-             this.id = id;
         }
       
         private TextBlock CreateDetailBlock(string label, string value, FontWeight weight = default)
@@ -211,7 +210,7 @@ namespace WpfApp2
                 MessageBox.Show("Account deleted successfully!", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
                 dbManager.sqlManager(SQL);
                 SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                     $"VALUES ({id}, '{Username}', 'Delete Student Info', 'Delete Student {studentId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                     $"VALUES ({admin.getID()}, '{Username}', 'Delete Student Info', 'Delete Student {studentId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                 dbManager.sqlManager(SQL);
             }
             else
@@ -297,12 +296,12 @@ namespace WpfApp2
             dbManager.sqlManager(SQL);
         }
 
-        public void LogAddStudentAdminAction(int adminId, string adminUsername, string newStudentUsername)
+        public void LogAddStudentAdminAction(string adminUsername, string newStudentUsername)
         {
             string SQL = $@"
                 INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date)
                 VALUES (
-                    {adminId},
+                    {admin.getID()},
                     '{adminUsername}',
                     'Add New Student',
                     'Added new student: {newStudentUsername}',
@@ -357,19 +356,45 @@ namespace WpfApp2
             dbManager.sqlManager(query);
         }
 
-        public void LogUpdateStudentAction(int adminId, string username, string activityType, string description)
+        public void LogUpdateStudentAction(string username, string activityType, string description)
         {
             string query = $@"
                 INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) 
-                VALUES ({adminId}, '{username}', '{activityType}', '{description}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                VALUES ({admin.getID()}, '{username}', '{activityType}', '{description}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
 
             dbManager.sqlManager(query);
         }
-        public int setId(String username)
+        
+        public int GetActiveStudentCount()
         {
-            String SQL = $"select user_id from users where username = '{username}'";
-            DataTable dt = dbManager.displayRecords(SQL);
-            return int.Parse(dt.Rows[0][0].ToString());
+            string sql = "SELECT *FROM users WHERE role = 'Student' and enrollment_status = 'Enrolled'";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
+        }
+
+        public int GetTotalStudentCount()
+        {
+            string sql = "SELECT *FROM users WHERE role != 'Admin'";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
+        }
+
+        public int GetMedicineStatusCount()
+        {
+            string sql = "SELECT *FROM medicinerequests WHERE status = 'Pending'";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
+        }
+
+        
+
+        
+
+        public int getTotalProgram()
+        {
+            string sql = "SELECT * FROM course_programs ";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
         }
     }
 }

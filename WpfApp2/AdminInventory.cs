@@ -21,13 +21,12 @@ namespace WpfApp2
 {
     internal class AdminInventory
     {
+        Admin admin = new Admin();
         dbManager dbManager = new dbManager();
         String username = MainWindow.Username;
-        int id;
 
-        public AdminInventory(int adminId)
+        public AdminInventory()
         {
-            id = adminId;
         }
 
         private void UpdateMedicineInventory_Click(object sender, RoutedEventArgs e)
@@ -52,7 +51,7 @@ namespace WpfApp2
                                     MessageBoxButton.OK, MessageBoxImage.Information);
 
                     SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                         $"VALUES ({id}, '{username}', 'Update Medicine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                         $"VALUES ({admin.getID()}, '{username}', 'Update Medicine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     dbManager.sqlManager(SQL);
 
                     TriggerAppointmentActivityPanelReload();
@@ -303,6 +302,46 @@ namespace WpfApp2
             else
             {
                 MessageBox.Show("Could not find the User Dashboard to refresh.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        public void AddMedicine(
+            string medicineName,
+            string genericName,
+            string milligrams,
+            string description,
+            int inventoryAmount,
+            
+            string adminUsername)
+        {
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string activityType = "Medicine Added";
+            string activityDesc = $"Added new medicine: {medicineName} ({milligrams}) with initial inventory of {inventoryAmount}";
+
+            // SQL statements
+            string insertMedicineInfo =
+                $"INSERT INTO `medicine_info` (`medicine_name`, `milligrams`, `generic_name`, `description`) " +
+                $"VALUES ('{medicineName}', '{milligrams}', '{genericName}', '{description}')";
+
+            string insertInventory =
+                $"INSERT INTO `medicineinventory` (`medicine_id`, `medicine_name`, `amount`, `added_by`) " +
+                $"VALUES (LAST_INSERT_ID(), '{medicineName}', {inventoryAmount}, {admin.getID()})";
+
+            string insertActivityLog =
+                $"INSERT INTO `admin_activity_log` (`activity_id`, `admin_id`, `username`, `activity_type`, `activity_desc`, `activity_date`) " +
+                $"VALUES (NULL, {admin.getID()}, '{adminUsername}', '{activityType}', '{activityDesc.Replace("'", "''")}', '{currentDateTime}')";
+
+            string SQL = insertMedicineInfo + ";" + insertInventory + ";" + insertActivityLog;
+
+            try
+            {
+                dbManager.sqlManager(SQL);
+                MessageBox.Show($"Successfully added {medicineName}, its inventory record, and logged the activity.",
+                    "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Database operation failed: {ex.Message}",
+                    "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

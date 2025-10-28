@@ -11,16 +11,15 @@ using System.Windows.Media;
 
 namespace WpfApp2
 {
-    internal class AdminActivity
+    internal class AdminOverview
     {
+        Admin admin = new Admin();
         dbManager dbManager = new dbManager();
         private String username = MainWindow.Username;
-        private int id;
 
 
-        public AdminActivity(int id)
+        public AdminOverview()
         {
-            this.id = id;
         }
        
 
@@ -112,6 +111,47 @@ namespace WpfApp2
             cardBorder.Child = activityContent;
 
             return cardBorder;
+        }
+        public int GetActiveStudentCount()
+        {
+            string sql = "SELECT *FROM users WHERE role = 'Student' and enrollment_status = 'Enrolled'";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
+        }
+
+        public int GetTotalStudentCount()
+        {
+            string sql = "SELECT *FROM users WHERE role != 'Admin'";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
+        }
+
+        public int GetMedicineStatusCount()
+        {
+            string sql = "SELECT *FROM medicinerequests WHERE status = 'Pending'";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
+        }
+
+        public int GetAppointmenCount()
+        {
+            string sql = "SELECT *FROM appointments WHERE status = 'Pending'";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
+        }
+
+        public int getMedicineCount()
+        {
+            string sql = "SELECT *FROM medicineinventory WHERE amount < 20";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
+        }
+
+        public int getTotalProgram()
+        {
+            string sql = "SELECT *FROM users WHERE role = 'Student'";
+            DataTable dt = dbManager.displayRecords(sql);
+            return dt.Rows.Count;
         }
     }
 }

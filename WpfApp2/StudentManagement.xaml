@@ -321,7 +321,6 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="14,14,14,13" CornerRadius="5,5,5,5" Background="White">
                                 <Border.Effect>
@@ -351,16 +350,6 @@
                                     <Label Content="Programs" HorizontalAlignment="Left" Margin="52,0,0,0" VerticalAlignment="Top" Width="98" Foreground="#FF00104D" FontWeight="SemiBold"/>
                                     <Image HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="53" Source="/asdasdasd.jpg"/>
                                     <Label x:Name="lblPrograms" Content="0" HorizontalAlignment="Left" Margin="72,29,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="SemiBold"/>
-                                </Grid>
-                            </Border>
-                            <Border BorderBrush="#1A00104D" BorderThickness="1" Margin="10,14,18,13" Grid.Column="3" CornerRadius="5,5,5,5" Background="White">
-                                <Border.Effect>
-                                    <DropShadowEffect ShadowDepth="2" Opacity="0.5" Direction="270" Color="#CCCCCC"/>
-                                </Border.Effect>
-                                <Grid>
-                                    <Label Content="Medical alerts" HorizontalAlignment="Left" Margin="46,5,0,0" VerticalAlignment="Top" Width="98" Foreground="#FF00104D" FontWeight="SemiBold"/>
-                                    <Image HorizontalAlignment="Left" Height="37" VerticalAlignment="Center" Width="49" Source="/hearthbeatsad.jpg"/>
-                                    <Label x:Name="lblMedicalAlerts" Content="0" HorizontalAlignment="Left" Margin="81,29,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="SemiBold"/>
                                 </Grid>
                             </Border>
                         </Grid>

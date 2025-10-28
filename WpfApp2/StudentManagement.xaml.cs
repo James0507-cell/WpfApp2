@@ -19,11 +19,11 @@ namespace WpfApp2
         String Username = MainWindow.Username;
         int id;
         String studUsername = "";
-        AdminStudent adminStudent;
+        AdminStudent adminStudent = new AdminStudent();
+
         public StudentManagement()
         {
             InitializeComponent();
-            adminStudent = new AdminStudent(id);
         }
 
         public void displayUsers(String strQuerry)
@@ -160,10 +160,9 @@ namespace WpfApp2
         }
         public void displayAnalytics()
         {
-            lblTotalstudent.Content = admin.GetTotalStudentCount();
-            lblPrograms.Content = admin.getTotalProgram();
-            lblActiveStudent.Content = admin.GetActiveStudentCount();
-            lblMedicalAlerts.Content = admin.GetMedicineStatusCount();
+            lblTotalstudent.Content = adminStudent.GetTotalStudentCount();
+            lblPrograms.Content = adminStudent.getTotalProgram();
+            lblActiveStudent.Content = adminStudent.GetActiveStudentCount();
         }
         public void setComboBox()
         {

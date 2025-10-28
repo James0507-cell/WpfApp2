@@ -18,16 +18,15 @@ namespace WpfApp2
 
     public partial class UpdateStudent : Window
     {
-        dbManager dbManager;
+
+        dbManager dbManager = new dbManager();
         private String SQL = "";
         Admin admin = new Admin();
         private String username = "";
         private int userId;
-        private int id;
         String adminUsername = MainWindow.Username;
         StudentManagement studentManagement = new StudentManagement();
         AdminStudent adminStudent;
-
         public UpdateStudent(String username)
         {
             this.username = username;
@@ -38,8 +37,7 @@ namespace WpfApp2
         {
             LoadComboBoxes();
             LoadStudentInfo();
-            id = adminStudent.setId(username);
-            adminStudent = new AdminStudent(id);
+            adminStudent = new AdminStudent();
 
         }
 
@@ -70,7 +68,7 @@ namespace WpfApp2
 
         private void btnUpdateStudent_Click(object sender, RoutedEventArgs e)
         {
-            AdminStudent adminStudent = new AdminStudent(id);
+            AdminStudent adminStudent = new AdminStudent();
 
             adminStudent.UpdateStudent(
             userId,
@@ -97,7 +95,7 @@ namespace WpfApp2
             MessageBox.Show("Student information updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             adminStudent.LogUpdateStudentAction(
-                id,
+                
                 adminUsername,
                 "Update Student Info",
                 $"Update Student {txtConfirmStudentID.Text}"

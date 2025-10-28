@@ -21,9 +21,9 @@ namespace WpfApp2
     public partial class AddNewStudent : Window
     {
         dbManager dbManager = new dbManager();
+        Admin admin = new Admin();
         StudentManagement studentManagement = new StudentManagement();
         private String username = MainWindow.Username;
-        private int id;
         private String SQL = "";
         AdminStudent adminStudent;
         public AddNewStudent()
@@ -33,14 +33,13 @@ namespace WpfApp2
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            id = adminStudent.setId(username);
-            adminStudent = new AdminStudent(id);
+            adminStudent = new AdminStudent();
             LoadComboBoxes();
         }
 
         private void btnAddStudent_Click(object sender, RoutedEventArgs e)
         {
-            AdminStudent adminStudent = new AdminStudent(id);
+            AdminStudent adminStudent = new AdminStudent();
 
             adminStudent.AddStudent(
                     txtStudentID.Text,
@@ -63,7 +62,7 @@ namespace WpfApp2
                     txtMedicalConditions.Text
                 );
 
-            adminStudent.LogAddStudentAdminAction(id, username, txtUsername.Text);
+            adminStudent.LogAddStudentAdminAction(username, txtUsername.Text);
             MessageBox.Show("New student added successfully!");
             clear();
         }
@@ -143,12 +142,7 @@ namespace WpfApp2
             txtMedicalConditions.Clear();
         }
 
-        public void setId(String username)
-        {
-            SQL = $"select user_id from users where username = '{username}'";
-            DataTable dt = dbManager.displayRecords(SQL);
-            id = int.Parse(dt.Rows[0][0].ToString());
-        }
+        
 
     }
 }

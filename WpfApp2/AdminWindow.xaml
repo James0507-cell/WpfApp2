@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="AdminWindow" Height="744" Width="852" Background="{x:Null}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Window.Resources>
+
         <Style x:Key="CustomComboBoxStyle" TargetType="{x:Type ComboBox}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -692,7 +693,7 @@
         CornerRadius="10"
         Background="White"
         BorderBrush="#1A00104D"
-        Margin="0,22,0,-64">
+        Margin="0,69,0,-64">
                                 <Grid Margin="0,0,0,-1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" MinHeight="70"/>
@@ -808,6 +809,7 @@
                                     </ScrollViewer>
                                 </Grid>
                             </Border>
+                            <Button Content="Add New Medicine" HorizontalAlignment="Left" Margin="593,28,0,0" VerticalAlignment="Top" Style="{StaticResource SelectedAppointmentButtonStyle}" Width="139" Height="28" FontSize="10" Click="Button_Click_2"/>
 
 
 

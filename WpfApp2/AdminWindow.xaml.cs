@@ -25,7 +25,11 @@ namespace WpfApp2
         Admin admin = new Admin();
         private String username = MainWindow.Username;
         StudentManagement studentManagement = new StudentManagement();
-        private int id;
+        AdminOverview adminOverview = new AdminOverview();
+        AdminAppointment adminAppointment = new AdminAppointment();
+        AdminMedicine adminMedicine = new AdminMedicine();
+        AdminInventory adminInventory = new AdminInventory();
+
 
         public AdminWindow()
         {
@@ -48,20 +52,20 @@ namespace WpfApp2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            int totalStudents = admin.GetActiveStudentCount();
+
+            int totalStudents = adminOverview.GetActiveStudentCount();
             lblActiveStatus.Content = totalStudents;
 
-            int totalmedicinereq = admin.GetMedicineStatusCount();
+            int totalmedicinereq = adminOverview.GetMedicineStatusCount();
             lblMedicine.Content = totalmedicinereq;
 
-            int totalAppoinment = admin.GetAppointmenCount();
+            int totalAppoinment = adminOverview.GetAppointmenCount();
             lblPending.Content = totalAppoinment;
 
-            int totalLowStock = admin.getMedicineCount();
+            int totalLowStock = adminOverview.getMedicineCount();
             lblLowStack.Content = totalLowStock;
 
            
-            admin.getID(username);
 
             displayAppointments("SELECT * FROM appointments");
             displayMedicineRequest("SELECT * FROM medicinerequests");
@@ -103,7 +107,6 @@ namespace WpfApp2
             int n = dt.Rows.Count;
             AppointmentStackPanel.Children.Clear();
 
-            AdminAppointment adminAppointment = new AdminAppointment(id);
 
             for (int i = 0; i < n; i++)
             {
@@ -133,7 +136,6 @@ namespace WpfApp2
 
         public void displayMedicineRequest(String strquerry)
         {
-            AdminMedicine adminMedicine = new AdminMedicine(id);
             StackPanel targetStackPanel = this.StackPanelMedicineReuqests;
             DataTable dt = new DataTable();
             dt = dbManager.displayRecords(strquerry);
@@ -165,7 +167,6 @@ namespace WpfApp2
         
         public void displayMedicineInv(String query)
         {
-            AdminInventory adminInventory = new AdminInventory(id);
             DataTable dt = new DataTable();
             dt = dbManager.displayRecords(query);
 
@@ -192,7 +193,6 @@ namespace WpfApp2
 
         public void displayActivity(String SQL)
         {
-            AdminActivity adminActivity = new AdminActivity(id);
             StackPanelActivities.Children.Clear();
             DataTable dt = dbManager.displayRecords(SQL);
 
@@ -212,23 +212,23 @@ namespace WpfApp2
                 string dateTime = dt.Rows[i]["activity_date"].ToString();
                 String id = dt.Rows[i]["admin_id"].ToString();
 
-                Border cardBorder = adminActivity.activityPanel(activityID,username, type, description, dateTime, id);
+                Border cardBorder = adminOverview.activityPanel(activityID,username, type, description, dateTime, id);
                 StackPanelActivities.Children.Add(cardBorder);
             }
         }
 
         private void TabControl_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
         {
-            int totalStudents = admin.GetActiveStudentCount();
+            int totalStudents = adminOverview.GetActiveStudentCount();
             lblActiveStatus.Content = totalStudents;
 
-            int totalmedicinereq = admin.GetMedicineStatusCount();
+            int totalmedicinereq = adminOverview.GetMedicineStatusCount();
             lblMedicine.Content = totalmedicinereq;
 
-            int totalAppoinment = admin.GetAppointmenCount();
+            int totalAppoinment = adminOverview.GetAppointmenCount();
             lblPending.Content = totalAppoinment;
 
-            int totalLowStock = admin.getMedicineCount();
+            int totalLowStock = adminOverview.getMedicineCount();
             lblLowStack.Content = totalLowStock;
 
         }
@@ -405,6 +405,13 @@ namespace WpfApp2
             {
                 displayActivity($"SELECT * FROM admin_activity_log WHERE activity_type = '{selectedType}' ORDER BY activity_date DESC");
             }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            AddNewMedicine newMedicine = new AddNewMedicine();
+            newMedicine.Show();
+            
         }
     }
 }
