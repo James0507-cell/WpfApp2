@@ -16,14 +16,6 @@ namespace WpfApp2
         private DataTable dt;
         private string strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
 
-
-        public void dbConnection()
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            dbConn.Close();
-        }
-
         public DataTable displayRecords(string query)
         {
             dbConn = new MySqlConnection(strConn);

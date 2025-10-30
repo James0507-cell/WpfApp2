@@ -314,7 +314,7 @@ namespace WpfApp2
             string adminUsername)
         {
             string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            string activityType = "Medicine Added";
+            string activityType = "Add New Medicine";
             string activityDesc = $"Added new medicine: {medicineName} ({milligrams}) with initial inventory of {inventoryAmount}";
 
             // SQL statements
@@ -328,7 +328,7 @@ namespace WpfApp2
 
             string insertActivityLog =
                 $"INSERT INTO `admin_activity_log` (`activity_id`, `admin_id`, `username`, `activity_type`, `activity_desc`, `activity_date`) " +
-                $"VALUES (NULL, {admin.getID()}, '{adminUsername}', '{activityType}', '{activityDesc.Replace("'", "''")}', '{currentDateTime}')";
+                $"VALUES (NULL, {admin.getID()}, '{adminUsername}', '{activityType}', '{activityDesc}', '{currentDateTime}')";
 
             string SQL = insertMedicineInfo + ";" + insertInventory + ";" + insertActivityLog;
 
@@ -344,5 +344,6 @@ namespace WpfApp2
                     "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        
     }
 }
