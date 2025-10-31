@@ -208,22 +208,22 @@
                                     </Grid.RowDefinitions>
 
                                     <Label Grid.Row="0" Grid.Column="0" Content="First Name *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtFirstName" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" VerticalContentAlignment="Center"/>
+                                    <TextBox x:Name="txtFirstName" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" VerticalContentAlignment="Center" Text="."/>
 
                                     <Label Grid.Row="0" Grid.Column="1" Content="Last Name *" Margin="5,5,0,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtLastName" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5"/>
+                                    <TextBox x:Name="txtLastName" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5" Text="."/>
 
                                     <Label Grid.Row="2" Grid.Column="0" Content="Student ID *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtConfirmStudentID" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" />
+                                    <TextBox x:Name="txtConfirmStudentID" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" Text="." />
 
                                     <Label Grid.Row="2" Grid.Column="1" Content="Username *" Margin="5,5,0,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtUsername" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5" />
+                                    <TextBox x:Name="txtUsername" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5" Text="." />
 
                                     <Label Grid.Row="4" Grid.Column="0" Content="Password *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtPassword" Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" />
+                                    <TextBox x:Name="txtPassword" Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" Text="." />
 
                                     <Label Grid.Row="4" Grid.Column="1" Content="Role *" Margin="5,5,0,0" Foreground="#FF666666"/>
-                                    <ComboBox x:Name="cmbRole" Grid.Row="5" Grid.Column="1" Height="23" Margin="5,0,0,5" BorderBrush="#FFABADB3">
+                                    <ComboBox x:Name="cmbRole" Grid.Row="5" Grid.Column="1" Height="23" Margin="5,0,0,5" BorderBrush="#FFABADB3" Text=".">
                                         <ComboBox.Style>
                                             <Style TargetType="{x:Type ComboBox}">
                                                 <Setter Property="Template">
@@ -259,16 +259,16 @@
                                     </ComboBox>
 
                                     <Label Grid.Row="6" Grid.Column="0" Content="Email Address *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtEmailAddress" Grid.Row="7" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" />
+                                    <TextBox x:Name="txtEmailAddress" Grid.Row="7" Grid.Column="0" TextWrapping="Wrap" Height="23" Margin="0,0,5,5" Text="." />
 
                                     <Label Grid.Row="6" Grid.Column="1" Content="Phone Number *" Margin="5,5,0,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtPhoneNumber" Grid.Row="7" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5"/>
+                                    <TextBox x:Name="txtPhoneNumber" Grid.Row="7" Grid.Column="1" TextWrapping="Wrap" Height="23" Margin="5,0,0,5" Text="."/>
 
                                     <Label Grid.Row="8" Grid.Column="0" Content="Address *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtAddress" Grid.Row="9" Grid.Column="0" TextWrapping="Wrap" Margin="0,0,5,0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="49"/>
+                                    <TextBox x:Name="txtAddress" Grid.Row="9" Grid.Column="0" TextWrapping="Wrap" Margin="0,0,5,0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="49" Text="."/>
 
                                     <Label Grid.Row="8" Grid.Column="1" Content="Date of Birth *" Margin="5,5,0,0" Foreground="#FF666666"/>
-                                    <DatePicker x:Name="dpDatePicker" Grid.Row="9" Grid.Column="1" VerticalAlignment="Top" Height="23" Margin="5,0,0,5" Background="{x:Null}">
+                                    <DatePicker x:Name="dpDatePicker" Grid.Row="9" Grid.Column="1" VerticalAlignment="Top" Height="23" Margin="5,0,0,5" Background="{x:Null}" Text=".">
                                         <DatePicker.BorderBrush>
                                             <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
                                                 <GradientStop Color="#FFA3AEB9"/>
@@ -312,7 +312,7 @@
                                     </Grid.RowDefinitions>
 
                                     <Label Grid.Row="0" Grid.Column="0" Content="Course/Program *" Margin="0,5,5,0" VerticalAlignment="Top" Foreground="#FF666666"/>
-                                    <ComboBox x:Name="cboCourse" Grid.Row="1" Grid.Column="0" Margin="0,0,5,5" Height="22" VerticalAlignment="Top">
+                                    <ComboBox x:Name="cboCourse" Grid.Row="1" Grid.Column="0" Margin="0,0,5,5" Height="22" VerticalAlignment="Top" Text=".">
                                         <ComboBox.Style>
                                             <Style TargetType="{x:Type ComboBox}">
                                                 <Setter Property="Template">
@@ -348,7 +348,7 @@
                                     </ComboBox>
 
                                     <Label Grid.Row="0" Grid.Column="1" Content="Year Level" Margin="5,5,0,0" VerticalAlignment="Top" Foreground="#FF666666"/>
-                                    <ComboBox x:Name="cboYearLevel" Grid.Row="1" Grid.Column="1" Margin="5,0,0,5" Height="22" VerticalAlignment="Top" >
+                                    <ComboBox x:Name="cboYearLevel" Grid.Row="1" Grid.Column="1" Margin="5,0,0,5" Height="22" VerticalAlignment="Top" Text="." >
                                         <ComboBox.Style>
                                             <Style TargetType="{x:Type ComboBox}">
                                                 <Setter Property="Template">
@@ -384,7 +384,7 @@
                                     </ComboBox>
 
                                     <Label Grid.Row="2" Grid.Column="0" Content="Enrollment Status" Margin="0,5,5,0" VerticalAlignment="Top" Foreground="#FF666666"/>
-                                    <ComboBox x:Name="cboEnrolledStatus" Grid.Row="3" Grid.Column="0" Margin="0,0,5,5" Height="22" VerticalAlignment="Top">
+                                    <ComboBox x:Name="cboEnrolledStatus" Grid.Row="3" Grid.Column="0" Margin="0,0,5,5" Height="22" VerticalAlignment="Top" Text=".">
                                         <ComboBox.Style>
                                             <Style TargetType="{x:Type ComboBox}">
                                                 <Setter Property="Template">
@@ -461,13 +461,13 @@
                                     </Grid.RowDefinitions>
 
                                     <Label Grid.Row="0" Grid.Column="0" Content="Emergency Contact Name *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtECN1" Grid.Row="1" Grid.Column="0" Margin="0,0,5,5" TextWrapping="Wrap" Height="23"/>
+                                    <TextBox x:Name="txtECN1" Grid.Row="1" Grid.Column="0" Margin="0,0,5,5" TextWrapping="Wrap" Height="23" Text="."/>
 
                                     <Label Grid.Row="0" Grid.Column="1" Content="Emergency Contact Phone *" Margin="5,5,0,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtECP" Grid.Row="1" Grid.Column="1" Margin="5,0,0,5" TextWrapping="Wrap" Height="23"/>
+                                    <TextBox x:Name="txtECP" Grid.Row="1" Grid.Column="1" Margin="5,0,0,5" TextWrapping="Wrap" Height="23" Text="."/>
 
                                     <Label Grid.Row="2" Grid.Column="0" Content="Blood type *" Margin="0,5,5,0" Foreground="#FF666666"/>
-                                    <ComboBox x:Name="cboBloodType" Grid.Row="3" Grid.Column="0" Margin="0,0,5,5" Height="22">
+                                    <ComboBox x:Name="cboBloodType" Grid.Row="3" Grid.Column="0" Margin="0,0,5,5" Height="22" Text=".">
                                         <ComboBox.Style>
                                             <Style TargetType="{x:Type ComboBox}">
                                                 <Setter Property="Template">
@@ -503,10 +503,10 @@
                                     </ComboBox>
 
                                     <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Known Allergies *" Margin="0,5,0,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtKnownAllergies" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,5" TextWrapping="Wrap" MinHeight="49" VerticalScrollBarVisibility="Auto"/>
+                                    <TextBox x:Name="txtKnownAllergies" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,5" TextWrapping="Wrap" MinHeight="49" VerticalScrollBarVisibility="Auto" Text="."/>
 
                                     <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="Medical Conditions *" Margin="0,5,0,0" Foreground="#FF666666"/>
-                                    <TextBox x:Name="txtMedicalConditions" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,5" TextWrapping="Wrap" MinHeight="49" VerticalScrollBarVisibility="Auto"/>
+                                    <TextBox x:Name="txtMedicalConditions" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,5" TextWrapping="Wrap" MinHeight="49" VerticalScrollBarVisibility="Auto" Text="."/>
 
                                 </Grid>
 

@@ -23,8 +23,6 @@ namespace WpfApp2
         dbManager dbManager = new dbManager();
         Admin admin = new Admin();
         StudentManagement studentManagement = new StudentManagement();
-        private String username = MainWindow.Username;
-        private String SQL = "";
         AdminStudent adminStudent;
         public AddNewStudent()
         {
@@ -62,7 +60,7 @@ namespace WpfApp2
                     txtMedicalConditions.Text
                 );
 
-            adminStudent.LogAddStudentAdminAction(username, txtUsername.Text);
+            adminStudent.LogAddStudentAdminAction(txtUsername.Text);
             MessageBox.Show("New student added successfully!");
             clear();
         }

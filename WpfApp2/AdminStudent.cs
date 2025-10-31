@@ -157,8 +157,7 @@ namespace WpfApp2
                 new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2196F3")),
                 (s, e) =>
                 {
-                    Username = username;
-                    UpdateStudent(Username);
+                    UpdateStudent(username);
                 });
 
             var deleteBtnBorder = createStyledButton("Delete",
@@ -181,7 +180,7 @@ namespace WpfApp2
             cardBorder.Child = mainLayoutGrid;
             return cardBorder;
         }
-        private void UpdateStudent(String usernmae)
+        private void UpdateStudent(String username)
         {
             var activeWindow = Application.Current.Windows
                             .OfType<Window>()
@@ -191,7 +190,7 @@ namespace WpfApp2
             {
                 activeWindow.Hide();
             }
-            UpdateStudent updateStudent = new UpdateStudent(Username);
+            UpdateStudent updateStudent = new UpdateStudent(username);
             updateStudent.Show();
         }
 
@@ -210,7 +209,7 @@ namespace WpfApp2
                 MessageBox.Show("Account deleted successfully!", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
                 dbManager.sqlManager(SQL);
                 SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                     $"VALUES ({admin.getID()}, '{Username}', 'Delete Student Info', 'Delete Student {studentId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                     $"VALUES ({admin.getID()}, '{admin.getUsername()}', 'Delete Student Info', 'Delete Student {studentId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                 dbManager.sqlManager(SQL);
             }
             else
@@ -296,13 +295,13 @@ namespace WpfApp2
             dbManager.sqlManager(SQL);
         }
 
-        public void LogAddStudentAdminAction(string adminUsername, string newStudentUsername)
+        public void LogAddStudentAdminAction(string newStudentUsername)
         {
             string SQL = $@"
                 INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date)
                 VALUES (
                     {admin.getID()},
-                    '{adminUsername}',
+                    '{admin.getUsername()}',
                     'Add New Student',
                     'Added new student: {newStudentUsername}',
                     '{DateTime.Now:yyyy-MM-dd HH:mm:ss}'
@@ -356,11 +355,11 @@ namespace WpfApp2
             dbManager.sqlManager(query);
         }
 
-        public void LogUpdateStudentAction(string username, string activityType, string description)
+        public void LogUpdateStudentAction(string activityType, string description)
         {
             string query = $@"
                 INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) 
-                VALUES ({admin.getID()}, '{username}', '{activityType}', '{description}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                VALUES ({admin.getID()}, '{admin.getUsername()}', '{activityType}', '{description}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
 
             dbManager.sqlManager(query);
         }

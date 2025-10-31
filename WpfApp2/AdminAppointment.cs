@@ -18,7 +18,6 @@ namespace WpfApp2
     {
         Admin admin = new Admin();
         dbManager dbManager = new dbManager();
-        private String username = MainWindow.Username;
 
         public AdminAppointment()
         {
@@ -103,7 +102,7 @@ namespace WpfApp2
             dbManager.sqlManager(querry);
 
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                     $"VALUES ({admin.getID()}, '{username}', 'Appointment Approved', 'Approved appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                     $"VALUES ({admin.getID()}, '{admin.getUsername()}', 'Appointment Approved', 'Approved appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             dbManager.sqlManager(querry);
             TriggerAppointmentActivityPanelReload();
         }
@@ -112,7 +111,7 @@ namespace WpfApp2
             String querry = $"UPDATE appointments SET status = 'Rejected', reason = '{reason}', handled_time = NOW() WHERE appointment_id = {appointmentID}";
             dbManager.sqlManager(querry);
             querry = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                     $"VALUES ({admin.getID()}, '{username}', 'Appointment Rejected', 'Rejected appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                     $"VALUES ({admin.getID()}, '{admin.getUsername()}', 'Appointment Rejected', 'Rejected appointment ID {appointmentID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             dbManager.sqlManager(querry);
             TriggerAppointmentActivityPanelReload();
         }

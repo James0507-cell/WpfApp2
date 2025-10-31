@@ -21,15 +21,13 @@ namespace WpfApp2
 
         dbManager dbManager = new dbManager();
         private String SQL = "";
-        Admin admin = new Admin();
-        private String username = "";
+        private String Studusername = "";
         private int userId;
-        String adminUsername = MainWindow.Username;
         StudentManagement studentManagement = new StudentManagement();
         AdminStudent adminStudent;
         public UpdateStudent(String username)
         {
-            this.username = username;
+            this.Studusername = username;
             InitializeComponent();
         }
         
@@ -96,7 +94,6 @@ namespace WpfApp2
 
             adminStudent.LogUpdateStudentAction(
                 
-                adminUsername,
                 "Update Student Info",
                 $"Update Student {txtConfirmStudentID.Text}"
             );
@@ -135,7 +132,7 @@ namespace WpfApp2
         }
         private void LoadStudentInfo()
         {
-            SQL = $"SELECT * FROM users WHERE username = '{username}'";
+            SQL = $"SELECT * FROM users WHERE username = '{Studusername}'";
             DataTable dt = dbManager.displayRecords(SQL);
 
             if (dt.Rows.Count == 0)

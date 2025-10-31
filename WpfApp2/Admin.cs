@@ -26,6 +26,11 @@ namespace WpfApp2
             return id;
         }
 
+        public String getUsername ()
+        {
+            return username;
+        }
+
         
         
 

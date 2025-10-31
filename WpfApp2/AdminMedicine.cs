@@ -18,7 +18,6 @@ namespace WpfApp2
     {
         Admin admin = new Admin();
         dbManager dbManager = new dbManager();
-        private String username = MainWindow.Username;
         
 
 
@@ -99,7 +98,7 @@ namespace WpfApp2
                             approveMedicineRequest(requestID);
 
                             string logSQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                                            $"VALUES ({admin.getID()}, '{username}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                                            $"VALUES ({admin.getID()}, '{admin.getUsername()}', 'Medicine Request Approved', 'Approved medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                            dbManager.sqlManager(logSQL);
 
                             string updateInventorySQL = $"UPDATE medicineinventory SET amount = amount - {quantityRequested} WHERE inventory_id = {inventoryID}";
@@ -138,7 +137,7 @@ namespace WpfApp2
 
 
                     String SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                          $"VALUES ({admin.getID()}, '{username}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                          $"VALUES ({admin.getID()}, '{admin.getUsername()}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     dbManager.sqlManager(SQL);
                 }
             }

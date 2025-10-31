@@ -15,7 +15,6 @@ namespace WpfApp2
     {
         Admin admin = new Admin();
         dbManager dbManager = new dbManager();
-        private String username = MainWindow.Username;
 
 
         public AdminOverview()

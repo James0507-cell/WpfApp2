@@ -51,7 +51,7 @@ namespace WpfApp2
                                     MessageBoxButton.OK, MessageBoxImage.Information);
 
                     SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                         $"VALUES ({admin.getID()}, '{username}', 'Update Medicine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                         $"VALUES ({admin.getID()}, '{admin.getUsername()}', 'Update Medicine Inventory', 'Added {amountToAdd} units to medicine ID {medId}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     dbManager.sqlManager(SQL);
 
                     TriggerAppointmentActivityPanelReload();
