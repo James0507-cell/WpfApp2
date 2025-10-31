@@ -75,25 +75,15 @@ namespace WpfApp2
 
         private void cmbStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cmbStatus.SelectedIndex == 0)
+            string selectedStatus = (cmbStatus.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+            if (selectedStatus == "All")
             {
                 displayAppointments("SELECT * FROM appointments");
-
             }
-            else if (cmbStatus.SelectedIndex == 1)
+            else
             {
-                displayAppointments("select * from appointments where status = 'Pending'");
-
-            }
-            else if (cmbStatus.SelectedIndex == 2)
-            {
-                displayAppointments("select * from appointments where status = 'Approved'");
-
-            }
-            else if (cmbStatus.SelectedIndex == 3)
-            {
-                displayAppointments("select * from appointments where status = 'Rejected'");
-
+                displayAppointments($"SELECT * FROM appointments WHERE status = '{selectedStatus}'");
             }
         }
 
@@ -343,25 +333,15 @@ namespace WpfApp2
 
         private void cboMedFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cboMedFilter.SelectedIndex == null)
+            string selectedStatus = (cboMedFilter.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+            if (string.IsNullOrEmpty(selectedStatus) || selectedStatus == "All")
             {
                 displayMedicineRequest("SELECT * FROM medicinerequests");
-            }
-            else if (cboMedFilter.SelectedIndex == 0)
-            {
-                displayMedicineRequest("SELECT * FROM medicinerequests");
-            }
-            else if (cboMedFilter.SelectedIndex == 1)
-            {
-                displayMedicineRequest("SELECT * FROM medicinerequests WHERE status = 'Pending'");
-            }
-            else if (cboMedFilter.SelectedIndex == 2)
-            {
-                displayMedicineRequest("SELECT * FROM medicinerequests WHERE status = 'Approved'");
             }
             else
             {
-                displayMedicineRequest("SELECT * FROM medicinerequests Where status = 'Rejected'");
+                displayMedicineRequest($"SELECT * FROM medicinerequests WHERE status = '{selectedStatus}'");
             }
         }
 

@@ -435,6 +435,14 @@
                           Height="30">
                                                         <ComboBoxItem Content="All"/>
                                                         <ComboBoxItem Content="Appointment Approved"/>
+                                                        <ComboBoxItem Content="Appointment Rejected"/>
+                                                        <ComboBoxItem Content="Medicine Request Approved"/>
+                                                        <ComboBoxItem Content="Medicine Request Rejected"/>
+                                                        <ComboBoxItem Content="Add New Student"/>
+                                                        <ComboBoxItem Content="Delete Student Info"/>
+                                                        <ComboBoxItem Content="Update Student Info"/>
+                                                        <ComboBoxItem Content="Update Medicine Inventory"/>
+                                                        <ComboBoxItem Content="Add New Medicine"/>
                                                     </ComboBox>
 
                                                 </Grid>

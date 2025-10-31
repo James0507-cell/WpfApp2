@@ -138,7 +138,7 @@ namespace WpfApp2
 
 
                     String SQL = $"INSERT INTO admin_activity_log (admin_id, username, activity_type, activity_desc, activity_date) " +
-                          $"VALUES ({admin.getID()}, '{username}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}. Reason: {rejectionReason}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+                          $"VALUES ({admin.getID()}, '{username}', 'Medicine Request Rejected', 'Rejected medicine request ID {requestID}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
                     dbManager.sqlManager(SQL);
                 }
             }
