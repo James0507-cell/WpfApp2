@@ -23,7 +23,6 @@ namespace WpfApp2
     {
         Admin admin = new Admin();
         dbManager dbManager = new dbManager();
-        String username = MainWindow.Username;
 
         public AdminInventory()
         {
@@ -309,9 +308,8 @@ namespace WpfApp2
             string genericName,
             string milligrams,
             string description,
-            int inventoryAmount,
-            
-            string adminUsername)
+            int inventoryAmount
+            )
         {
             string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string activityType = "Add New Medicine";
@@ -328,7 +326,7 @@ namespace WpfApp2
 
             string insertActivityLog =
                 $"INSERT INTO `admin_activity_log` (`activity_id`, `admin_id`, `username`, `activity_type`, `activity_desc`, `activity_date`) " +
-                $"VALUES (NULL, {admin.getID()}, '{adminUsername}', '{activityType}', '{activityDesc}', '{currentDateTime}')";
+                $"VALUES (NULL, {admin.getID()}, '{admin.getUsername()}', '{activityType}', '{activityDesc}', '{currentDateTime}')";
 
             string SQL = insertMedicineInfo + ";" + insertInventory + ";" + insertActivityLog;
 

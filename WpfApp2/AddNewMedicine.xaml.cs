@@ -7,9 +7,6 @@ namespace WpfApp2
 {
     public partial class AddNewMedicine : Window
     {
-        dbManager dbManager = new dbManager();
-        Admin admin = new Admin(); 
-        private String username = MainWindow.Username;
         AdminInventory inventory = new AdminInventory();
 
 
@@ -38,9 +35,8 @@ namespace WpfApp2
                 return;
             }
 
-            string adminUsername = username;
 
-            inventory.AddMedicine(medicineName, genericName, milligrams, description, inventoryAmount, adminUsername);
+            inventory.AddMedicine(medicineName, genericName, milligrams, description, inventoryAmount);
             AdminWindow activeMedicineRequest = Application.Current.Windows.OfType<AdminWindow>().SingleOrDefault(x => x.IsActive || x.IsVisible);
             if (activeMedicineRequest != null)
             {
