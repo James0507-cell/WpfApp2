@@ -19,6 +19,10 @@ namespace WpfApp2
         private String Weight = "";
         private String Name = "";
 
+        public String getUsername() { 
+            return username; 
+        }
+
         public void setId()
         {
             String SQL = $"select user_id from users where username = '{username}'";

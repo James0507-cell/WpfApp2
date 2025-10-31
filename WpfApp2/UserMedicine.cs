@@ -14,6 +14,7 @@ namespace WpfApp2
 {
     internal class UserMedicine
     {
+        
         dbManager dbManager = new dbManager();
 
         private Border CreateRequestStatusTag(string status)
@@ -452,10 +453,6 @@ namespace WpfApp2
             dbManager.sqlManager(insertRequest);
             dbManager.sqlManager(insertLog);
         }
-        public int setid(String username)
-        {
-            DataTable dt = dbManager.displayRecords($"SELECT * FROM users WHERE username = '{username}'");
-            return Convert.ToInt32(dt.Rows[0]["user_id"].ToString());
-        }
+        
     }
 }

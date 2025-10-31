@@ -31,7 +31,7 @@ namespace WpfApp2
             }
             else if (role == "Student")
             {
-                UserForm studentForm = new UserForm(Username);
+                UserForm studentForm = new UserForm();
                 studentForm.Show();
                 this.Close();
             }

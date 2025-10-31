@@ -40,7 +40,7 @@ namespace WpfApp2
         private void Button_Click_3(object sender, RoutedEventArgs e) { if (MyTabBooking.SelectedIndex > 0) MyTabBooking.SelectedIndex--; }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            UserForm userForm = new UserForm(username);
+            UserForm userForm = new UserForm();
             userForm.Show();
             this.Close();
         }

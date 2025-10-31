@@ -10,13 +10,12 @@ namespace WpfApp2
 {
     public partial class BookingAppointment : Window
     {
+        Users user = new Users();
         dbManager dbManager = new dbManager();
         private DateTime selectedDate = DateTime.MinValue;
         private string selectedTime;
         private UserBooking booking = new UserBooking();
         private String SQL = "";
-        private string username = MainWindow.Username;
-        private int userId = 0;
 
         public BookingAppointment()
         {
@@ -77,7 +76,7 @@ namespace WpfApp2
                 return;
             }
 
-            int userId = booking.GetUserId(username);
+            int userId = booking.GetUserId(user.getUsername());
             if (userId == -1)
             {
                 MessageBox.Show("User not found.");
@@ -86,7 +85,7 @@ namespace WpfApp2
 
             booking.InsertAppointment(
                 userId,
-                username,
+                user.getUsername(),
                 selectedDate,
                 selectedTime,
                 txtStudentID.Text,
@@ -110,7 +109,7 @@ namespace WpfApp2
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            UserForm userForm = new UserForm(username);
+            UserForm userForm = new UserForm();
             userForm.Show();
             this.Close();
         }
@@ -190,7 +189,7 @@ namespace WpfApp2
 
         public void setStudentInfo()
         {
-            SQL = "Select * from users where username = '" + username + "'";
+            SQL = "Select * from users where username = '" + user.getUsername() + "'";
             DataTable dt = dbManager.displayRecords(SQL);
             if (dt.Rows.Count > 0)
             {

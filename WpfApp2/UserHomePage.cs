@@ -14,7 +14,6 @@ namespace WpfApp2
     {
         Users user = new Users();
         dbManager dbManager = new dbManager();
-        String username = MainWindow.Username;
         String SQL = "";
 
 
@@ -250,7 +249,7 @@ namespace WpfApp2
 
             if (activeUserForm != null)
             {
-                activeUserForm.displayAppointment($"SELECT * FROM appointments WHERE username = '{username}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()");
+                activeUserForm.displayAppointment($"SELECT * FROM appointments WHERE username = '{user.getUsername()}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()");
                 activeUserForm.displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{user.getID}' ORDER BY activity_date DESC LIMIT 5");
             }
             else

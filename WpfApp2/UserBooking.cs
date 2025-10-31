@@ -12,8 +12,6 @@ namespace WpfApp2
    internal class UserBooking
     {
         dbManager dbManager = new dbManager();
-        private int userId;
-        private int studentId;
 
         public List<string> GetBookedTimes(DateTime date)
         {

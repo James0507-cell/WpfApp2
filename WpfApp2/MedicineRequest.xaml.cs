@@ -19,10 +19,9 @@ namespace WpfApp2
     
     public partial class MedicineRequest : Window
     {
+        Users user = new Users();
         dbManager dbManager = new dbManager();
-        public string username = MainWindow.Username;
-        String SQL = "";
-        private int userId = 0;
+
         public MedicineRequest()
         {
             InitializeComponent();
@@ -34,9 +33,8 @@ namespace WpfApp2
             displayMedicine("Select * from medicine_info");
 
             DataTable dt = new DataTable();
-            dt = dbManager.displayRecords($"select user_id from users where username = '{username}'");
-            userId = Convert.ToInt32(dt.Rows[0][0].ToString());
-            displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + userId);
+            dt = dbManager.displayRecords($"select user_id from users where username = '{user.getUsername()}'");
+            displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + user.getID());
         }
    
         public void displayMedicineRequest(String querry)
@@ -92,7 +90,7 @@ namespace WpfApp2
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            UserForm userForm = new UserForm(username); 
+            UserForm userForm = new UserForm(); 
             this.Close();
             userForm.Show();
         }

@@ -13,10 +13,9 @@ namespace WpfApp2
 {
     public partial class ShortCheck : Window
     {
+        Users user = new Users();
         UserShortCheck userShortCheck = new UserShortCheck();
         private String username = MainWindow.Username;
-        private String SQL = "";
-        private int userId = 0;
         public ShortCheck()
         {
             InitializeComponent();
@@ -24,7 +23,6 @@ namespace WpfApp2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            userId = userShortCheck.setID(username);
         }
 
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
@@ -51,7 +49,7 @@ namespace WpfApp2
             if (color != Brushes.Red) 
             {
 
-                userShortCheck.InsertBmiCheckup(userId.ToString(), heightCm, weightKg, bmiValue);
+                userShortCheck.InsertBmiCheckup(user.getID().ToString(), heightCm, weightKg, bmiValue);
             }
         }
 
@@ -63,7 +61,7 @@ namespace WpfApp2
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            UserForm userform = new UserForm(username);
+            UserForm userform = new UserForm();
             this.Close();
             userform.Show();
         }

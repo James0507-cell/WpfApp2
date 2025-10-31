@@ -21,9 +21,7 @@ namespace WpfApp2
     public partial class AdminWindow : Window
     {
         dbManager dbManager = new dbManager();  
-        private String SQL = "";
         Admin admin = new Admin();
-        private String username = MainWindow.Username;
         StudentManagement studentManagement = new StudentManagement();
         AdminOverview adminOverview = new AdminOverview();
         AdminAppointment adminAppointment = new AdminAppointment();

@@ -62,13 +62,6 @@ namespace WpfApp2
             dbManager.sqlManager(insertCheckup);
             dbManager.sqlManager(insertLog);
         }
-        public int setID(String username)
-        {
-            String SQL = $"Select user_id from users where username = '{username}'";
-            DataTable dt = new DataTable();
-            dt = dbManager.displayRecords(SQL);
-            return Convert.ToInt32(dt.Rows[0][0].ToString());
-
-        }
+        
     }
 }

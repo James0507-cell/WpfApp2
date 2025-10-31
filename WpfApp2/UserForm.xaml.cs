@@ -14,16 +14,13 @@ namespace WpfApp2
     {
         dbManager dbManager = new dbManager();
         UserHomePage userHomePage = new UserHomePage();
-        private string username;
         Users user = new Users();
-        private string SQL = "";
-        private int userId;
         
 
-        public UserForm(string username)
+        public UserForm()
         {
             InitializeComponent();
-            this.username = username;
+            
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -61,11 +58,8 @@ namespace WpfApp2
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            userId = user.getID();
-            SQL = $"SELECT * FROM appointments WHERE username = '{username}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()";
-            displayAppointment(SQL);
-            SQL = $"SELECT * FROM student_activity_log WHERE user_id = '{userId}' ORDER BY activity_date DESC LIMIT 5";
-            displayActivities(SQL);
+            displayAppointment($"SELECT * FROM appointments WHERE username = '{user.getUsername()}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()");
+            displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{user.getID()}' ORDER BY activity_date DESC LIMIT 5");
             getName();
             displayBMI();
             displayCheckupDate();
@@ -120,8 +114,6 @@ namespace WpfApp2
             lblName.Content = name;
         }
 
-       
-        
         public void displayBMI()
         {
             String BMI = user.getBMI();
@@ -212,7 +204,7 @@ namespace WpfApp2
 
         public void displaySixMonthsProgress()
         {
-            List<UserHomePage.MonthlyProgress> progressList = userHomePage.GetSixMonthsProgress(userId);
+            List<UserHomePage.MonthlyProgress> progressList = userHomePage.GetSixMonthsProgress(user.getID());
 
             for (int i = 0; i < 6; i++)
             {
