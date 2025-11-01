@@ -59,7 +59,7 @@
                              Height="30"
                              Padding="5"
                              BorderThickness="0"
-                             VerticalContentAlignment="Center" Background="{x:Null}"/>
+                             VerticalContentAlignment="Center" Background="{x:Null}" TextChanged="txtQuantity_TextChanged"/>
                 </Border>
             </StackPanel>
 

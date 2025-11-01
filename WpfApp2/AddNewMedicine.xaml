@@ -130,7 +130,7 @@
         <TextBox x:Name="TxtDescription" Grid.Row="3" Grid.Column="1" Margin="0,5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Height="80"/>
 
         <Label Content="Inventory Amount:" Grid.Row="4" Grid.Column="0"/>
-        <TextBox x:Name="TxtInventoryAmount" Grid.Row="4" Grid.Column="1"/>
+        <TextBox x:Name="TxtInventoryAmount" Grid.Row="4" Grid.Column="1" TextChanged="TxtInventoryAmount_TextChanged"/>
 
         <Button Content="Add Medicine" 
                 Grid.Row="7"

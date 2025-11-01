@@ -250,7 +250,7 @@ namespace WpfApp2
             if (activeUserForm != null)
             {
                 activeUserForm.displayAppointment($"SELECT * FROM appointments WHERE username = '{user.getUsername()}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()");
-                activeUserForm.displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{user.getID}' ORDER BY activity_date DESC LIMIT 5");
+                activeUserForm.displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{user.getID()}' ORDER BY activity_date DESC LIMIT 5");
             }
             else
             {
@@ -375,28 +375,29 @@ namespace WpfApp2
         {
             try
             {
-                string SQL = $@"
-            SELECT 
-                DATE_FORMAT(c.recorded_at, '%M') AS month_name, 
-                c.bmi,
-                c.weight_kg
-            FROM checkups c
-            INNER JOIN (
-                SELECT 
-                    YEAR(recorded_at) AS y,
-                    MONTH(recorded_at) AS m,
-                    MAX(recorded_at) AS max_date
-                FROM checkups
-                WHERE user_id = {userId}
-                  AND recorded_at >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-                GROUP BY YEAR(recorded_at), MONTH(recorded_at)
-            ) latest
-            ON YEAR(c.recorded_at) = latest.y
-            AND MONTH(c.recorded_at) = latest.m
-            AND c.recorded_at = latest.max_date
-            WHERE c.user_id = {userId}
-            ORDER BY latest.y, latest.m ASC;
-        ";
+                SQL = $@"
+                        SELECT 
+                            DATE_FORMAT(c.recorded_at, '%M') AS month_name, 
+                            c.bmi,
+                            c.weight_kg
+                        FROM checkups c
+                        INNER JOIN (
+                            SELECT 
+                                YEAR(recorded_at) AS y,
+                                MONTH(recorded_at) AS m,
+                                MAX(recorded_at) AS max_date
+                            FROM checkups
+                            WHERE user_id = {userId}
+                              AND recorded_at >= DATE_SUB(CURDATE(), INTERVAL 5 MONTH)
+                            GROUP BY YEAR(recorded_at), MONTH(recorded_at)
+                        ) latest
+                        ON YEAR(c.recorded_at) = latest.y
+                        AND MONTH(c.recorded_at) = latest.m
+                        AND c.recorded_at = latest.max_date
+                        WHERE c.user_id = {userId}
+                        ORDER BY latest.y, latest.m ASC;
+                    ";
+
 
                 DataTable dt = dbManager.displayRecords(SQL);
                 List<MonthlyProgress> list = new List<MonthlyProgress>();

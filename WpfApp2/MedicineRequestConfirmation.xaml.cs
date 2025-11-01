@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,15 +36,25 @@ namespace WpfApp2
 
         private void btnConfirmRequest_Click(object sender, RoutedEventArgs e)
         {
-            userMedicine.InsertMedicineRequest(user.getID().ToString(), medicineName, txtPurpose.Text, txtQuantity.Text);
-
-            MedicineRequest activeMedicineRequest = Application.Current.Windows.OfType<MedicineRequest>().SingleOrDefault(x => x.IsActive || x.IsVisible);
-            if (activeMedicineRequest != null)
+            if (AreAllFieldsFilled())
             {
-                activeMedicineRequest.displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + user.getID());
+                userMedicine.InsertMedicineRequest(user.getID().ToString(), medicineName, txtPurpose.Text, txtQuantity.Text);
+
+                MedicineRequest activeMedicineRequest = Application.Current.Windows.OfType<MedicineRequest>().SingleOrDefault(x => x.IsActive || x.IsVisible);
+                if (activeMedicineRequest != null)
+                {
+                    activeMedicineRequest.displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + user.getID());
+                }
+                MessageBox.Show("Request is send!");
+                this.Close();
             }
-            MessageBox.Show("Request is send!");
-            this.Close();
+            else
+            {
+                MessageBox.Show("Please fill out all required fields before proceeding.",
+                                "Incomplete Information",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning);
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -59,6 +70,38 @@ namespace WpfApp2
             this.Close();
         }
 
-        
+        private void txtQuantity_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            
+        }
+
+        private void txtQuantity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox == null)
+                return;
+
+            string input = textBox.Text;
+
+            if (!Regex.IsMatch(input, @"^[1-9][0-9]*$"))
+            {
+                string digitsOnly = new string(input.Where(char.IsDigit).ToArray());
+
+                if (digitsOnly.StartsWith("0"))
+                    digitsOnly = digitsOnly.TrimStart('0');
+
+                textBox.Text = digitsOnly;
+                textBox.CaretIndex = textBox.Text.Length;
+            }
+        }
+
+        private bool AreAllFieldsFilled()
+        {
+            if (string.IsNullOrWhiteSpace(txtQuantity.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtPurpose.Text)) return false;
+
+            return true;
+        }
+
     }
 }

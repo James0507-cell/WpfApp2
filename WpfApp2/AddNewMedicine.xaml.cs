@@ -18,31 +18,51 @@ namespace WpfApp2
 
         private void BtnAddMedicine_Click_1(object sender, RoutedEventArgs e)
         {
-            string medicineName = TxtMedicineName.Text.Trim().Replace("'", "''");
-            string genericName = TxtGenericName.Text.Trim().Replace("'", "''");
-            string milligrams = TxtMilligrams.Text.Trim().Replace("'", "''");
-            string description = TxtDescription.Text.Trim().Replace("'", "''");
-
-            if (!int.TryParse(TxtInventoryAmount.Text.Trim(), out int inventoryAmount) || inventoryAmount < 0)
+            if (AreAllFieldsFilled())
             {
-                MessageBox.Show("Please enter a valid, non-negative number for the Inventory Amount.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+                string medicineName = TxtMedicineName.Text.Trim().Replace("'", "''");
+                string genericName = TxtGenericName.Text.Trim().Replace("'", "''");
+                string milligrams = TxtMilligrams.Text.Trim().Replace("'", "''");
+                string description = TxtDescription.Text.Trim().Replace("'", "''");
 
-            if (string.IsNullOrEmpty(medicineName))
+                if (!int.TryParse(TxtInventoryAmount.Text.Trim(), out int inventoryAmount) || inventoryAmount < 0)
+                {
+                    MessageBox.Show("Please enter a valid, non-negative number for the Inventory Amount.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                inventory.AddMedicine(medicineName, genericName, milligrams, description, inventoryAmount);
+                AdminWindow activeMedicineRequest = Application.Current.Windows.OfType<AdminWindow>().SingleOrDefault(x => x.IsActive || x.IsVisible);
+                if (activeMedicineRequest != null)
+                {
+                    activeMedicineRequest.displayMedicineInv("select * from medicine_info");
+                }
+                this.Close();
+            } else
             {
-                MessageBox.Show("Medicine Name cannot be empty.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                MessageBox.Show("Please fill out all required fields before proceeding.",
+                                "Incomplete Information",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning);
             }
-
-
-            inventory.AddMedicine(medicineName, genericName, milligrams, description, inventoryAmount);
-            AdminWindow activeMedicineRequest = Application.Current.Windows.OfType<AdminWindow>().SingleOrDefault(x => x.IsActive || x.IsVisible);
-            if (activeMedicineRequest != null)
-            {
-                activeMedicineRequest.displayMedicineInv("select * from medicine_info");
-            }
-            this.Close();
         }
+
+        private void TxtInventoryAmount_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
+
+        private bool AreAllFieldsFilled()
+        {
+            if (string.IsNullOrWhiteSpace(TxtMedicineName.Text)) return false;
+            if (string.IsNullOrWhiteSpace(TxtGenericName.Text)) return false;
+            if (string.IsNullOrWhiteSpace(TxtDescription.Text)) return false;
+            if (string.IsNullOrWhiteSpace (TxtInventoryAmount.Text)) return false;
+            if (string.IsNullOrWhiteSpace (TxtMilligrams.Text)) return false;
+            
+
+            return true;
+        }
+
     }
 }

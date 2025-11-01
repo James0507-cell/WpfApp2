@@ -157,8 +157,18 @@ namespace WpfApp2
 
         private void NextButton2_Click(object sender, RoutedEventArgs e)
         {
-            PopulateConfirmationTab();
-            MyTabBooking.SelectedIndex = 2;
+            if (AreAllFieldsFilled())
+            {
+                PopulateConfirmationTab();
+                MyTabBooking.SelectedIndex = 2;
+            }
+            else
+            {
+                MessageBox.Show("Please fill out all required fields before proceeding.",
+                                "Incomplete Information",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning);
+            }
         }
 
         private void PopulateConfirmationTab()
@@ -242,6 +252,25 @@ namespace WpfApp2
                 cldDate.SelectedDate = DateTime.Today;
             }
             selectedDate = cldDate.SelectedDate.Value;
+        }
+
+        private bool AreAllFieldsFilled()
+        {
+            if (string.IsNullOrWhiteSpace(txtFirstName.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtLastName.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtStudentID.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtEmail.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtPhoneNumber.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtEmergencyContactName.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtEmergencyContactPhone.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtSymptoms.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtAllergies.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtCurrentMedication.Text)) return false;
+
+            if (cmbPurpose.SelectedItem == null) return false;
+            if (cmbPreviousVisit.SelectedItem == null) return false;
+
+            return true;
         }
     }
 }
