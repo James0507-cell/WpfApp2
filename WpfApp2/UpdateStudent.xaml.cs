@@ -66,39 +66,48 @@ namespace WpfApp2
 
         private void btnUpdateStudent_Click(object sender, RoutedEventArgs e)
         {
-            AdminStudent adminStudent = new AdminStudent();
+            if (AreAllFieldsFilled())
+            {
+                AdminStudent adminStudent = new AdminStudent();
 
-            adminStudent.UpdateStudent(
-            userId,
-            txtConfirmStudentID.Text,
-            txtFirstName.Text,
-            txtLastName.Text,
-            txtUsername.Text,
-            txtPassword.Text,
-            dpDatePicker.SelectedDate,
-            txtEmailAddress.Text,
-            txtPhoneNumber.Text,
-            txtAddress.Text,
-            cboCourse.SelectedValue?.ToString(),
-            cboYearLevel.SelectedValue?.ToString(),
-            cboEnrolledStatus.SelectedValue?.ToString(),
-            cboBloodType.Text,
-            cmbRole.Text,
-            txtECN1.Text,
-            txtECP.Text,
-            txtKnownAllergies.Text,
-            txtMedicalConditions.Text
-        );
-
-            MessageBox.Show("Student information updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            adminStudent.LogUpdateStudentAction(
-                
-                "Update Student Info",
-                $"Update Student {txtConfirmStudentID.Text}"
+                adminStudent.UpdateStudent(
+                userId,
+                txtConfirmStudentID.Text,
+                txtFirstName.Text,
+                txtLastName.Text,
+                txtUsername.Text,
+                txtPassword.Text,
+                dpDatePicker.SelectedDate,
+                txtEmailAddress.Text,
+                txtPhoneNumber.Text,
+                txtAddress.Text,
+                cboCourse.SelectedValue?.ToString(),
+                cboYearLevel.SelectedValue?.ToString(),
+                cboEnrolledStatus.SelectedValue?.ToString(),
+                cboBloodType.Text,
+                cmbRole.Text,
+                txtECN1.Text,
+                txtECP.Text,
+                txtKnownAllergies.Text,
+                txtMedicalConditions.Text
             );
-            studentManagement.displayUsers("SELECT * FROM users WHERE role = 'Student'");
 
+                MessageBox.Show("Student information updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                adminStudent.LogUpdateStudentAction(
+
+                    "Update Student Info",
+                    $"Update Student {txtConfirmStudentID.Text}"
+                );
+                studentManagement.displayUsers("SELECT * FROM users WHERE role = 'Student'");
+
+            } else
+            {
+                MessageBox.Show("Please fill out all required fields before proceeding.",
+                                "Incomplete Information",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning);
+            }
         }
         
         private void LoadComboBoxes()
@@ -172,6 +181,30 @@ namespace WpfApp2
             cboEnrolledStatus.Text = status;
             cboBloodType.Text = bloodType;
             cmbRole.Text = role;
+        }
+        private bool AreAllFieldsFilled()
+        {
+            if (string.IsNullOrWhiteSpace(txtFirstName.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtLastName.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtConfirmStudentID.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtUsername.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtPassword.Text)) return false;
+            if (string.IsNullOrWhiteSpace(cmbRole.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtEmailAddress.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtPhoneNumber.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtAddress.Text)) return false;
+            if (string.IsNullOrWhiteSpace(dpDatePicker.Text)) return false;
+            if (string.IsNullOrWhiteSpace(cboCourse.Text)) return false;
+            if (string.IsNullOrWhiteSpace(cboYearLevel.Text)) return false;
+            if (string.IsNullOrWhiteSpace(cboEnrolledStatus.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtECN1.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtECP.Text)) return false;
+            if (string.IsNullOrWhiteSpace(cboBloodType.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtKnownAllergies.Text)) return false;
+            if (string.IsNullOrWhiteSpace(txtMedicalConditions.Text)) return false;
+
+
+            return true;
         }
     }
 }

@@ -162,15 +162,27 @@ namespace WpfApp2
 
             DockPanel medicineContent = new DockPanel();
 
-            Border buttonWrapper = new Border
+
+            Grid buttonContainer = new Grid
             {
-                CornerRadius = new CornerRadius(6),
                 Margin = new Thickness(0, 15, 0, 0),
+            };
+            DockPanel.SetDock(buttonContainer, Dock.Bottom);
+
+            buttonContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            buttonContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+
+
+            Border updateQuantWrapper = new Border
+            {
+                CornerRadius = new CornerRadius(6, 0, 0, 6),
+                Margin = new Thickness(0, 0, 2, 0),
                 Background = buttonBlueBrush,
             };
-            DockPanel.SetDock(buttonWrapper, Dock.Bottom);
+            Grid.SetColumn(updateQuantWrapper, 0);
 
-            Button updateButton = new Button
+            Button updateQuantButton = new Button
             {
                 Content = "Update Quantity",
                 Background = Brushes.Transparent,
@@ -178,15 +190,57 @@ namespace WpfApp2
                 BorderThickness = new Thickness(0),
                 FontWeight = FontWeights.Bold,
                 FontSize = 13,
-                Padding = new Thickness(10),
+                Padding = new Thickness(5, 10, 5, 10),
                 Cursor = Cursors.Hand,
                 HorizontalAlignment = HorizontalAlignment.Stretch
             };
-            updateButton.Tag = new { MedicineId = medicineID, InventoryId = inventoryID };
-            updateButton.Click += UpdateMedicineInventory_Click;
+            updateQuantButton.Tag = new { MedicineId = medicineID, InventoryId = inventoryID };
+            updateQuantButton.Click += UpdateMedicineInventory_Click;
 
-            buttonWrapper.Child = updateButton;
-            medicineContent.Children.Add(buttonWrapper);
+            updateQuantWrapper.Child = updateQuantButton;
+            buttonContainer.Children.Add(updateQuantWrapper);
+
+
+
+            Border updateMedicineWrapper = new Border
+            {
+                CornerRadius = new CornerRadius(0, 6, 6, 0), 
+                Margin = new Thickness(2, 0, 0, 0),
+                Background = darkBlueBrush, 
+            };
+            Grid.SetColumn(updateMedicineWrapper, 1);
+
+            Button updateMedicineButton = new Button
+            {
+                Content = "Update Medicine", 
+                Background = Brushes.Transparent,
+                Foreground = Brushes.White,
+                BorderThickness = new Thickness(0),
+                FontWeight = FontWeights.Bold,
+                FontSize = 13,
+                Padding = new Thickness(5, 10, 5, 10),
+                Cursor = Cursors.Hand,
+                HorizontalAlignment = HorizontalAlignment.Stretch
+            };
+            updateMedicineButton.Tag = new
+            {
+                MedicineId = medicineID,
+                MedicineName = medicineName, 
+                InventoryId = inventoryID,
+                Description = description,
+                GenericName = genericName,
+                Dosage = dosage
+            };
+
+
+            updateMedicineButton.Click += NewUpdateMedicineDetails_Click; 
+
+            updateMedicineWrapper.Child = updateMedicineButton;
+            buttonContainer.Children.Add(updateMedicineWrapper);
+
+            medicineContent.Children.Add(buttonContainer);
+
+
 
             StackPanel mainContentStack = new StackPanel();
 
@@ -195,6 +249,7 @@ namespace WpfApp2
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             headerGrid.Margin = new Thickness(0, 0, 0, 10);
+
 
             Border iconWrapper = new Border
             {
@@ -277,6 +332,7 @@ namespace WpfApp2
             };
             mainContentStack.Children.Add(separator);
 
+            // NOTE: Assuming CreateDetailBlock method exists elsewhere in your class
             mainContentStack.Children.Add(CreateDetailBlock("Generic Name", genericName, darkBlueBrush));
             StackPanel descriptionBlock = CreateDetailBlock("Description", description, darkBlueBrush);
             descriptionBlock.Margin = new Thickness(0, 8, 0, 0);
@@ -287,6 +343,38 @@ namespace WpfApp2
 
             return cardBorder;
         }
+
+        private void NewUpdateMedicineDetails_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button clickedButton = sender as Button;
+                if (clickedButton == null) return;
+
+                dynamic tagData = clickedButton.Tag;
+                string medicineId = tagData.MedicineId.ToString();
+                string medicineName = tagData.MedicineName?.ToString();
+                string genericName = tagData.GenericName?.ToString();
+                string dosage = tagData.Dosage?.ToString();
+                string description = tagData.Description?.ToString();
+
+                UpdateMedicine updateMedicineWindow = new UpdateMedicine(
+                    medicineId,
+                    medicineName,
+                    genericName,
+                    dosage,
+                    description
+                );
+
+                updateMedicineWindow.ShowDialog(); // use ShowDialog() to make it modal
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open update window: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         public void TriggerAppointmentActivityPanelReload()
         {
             AdminWindow activeAdminWindow = Application.Current.Windows
@@ -342,6 +430,54 @@ namespace WpfApp2
                     "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
+
+        public void UpdateMedicineInfo(
+            int medicineId,
+            string newMedicineName,
+            string newGenericName,
+            string newMilligrams,
+            string newDescription
+)
+        {
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string activityType = "Update Medicine Info";
+            string activityDesc = $"Updated medicine (ID: {medicineId}) details to: " +
+                                  $"{newMedicineName} ({newMilligrams}).";
+
+            // SQL statements
+            string updateMedicineInfo =
+                $"UPDATE `medicine_info` " +
+                $"SET `medicine_name` = '{newMedicineName}', " +
+                $"`generic_name` = '{newGenericName}', " +
+                $"`milligrams` = '{newMilligrams}', " +
+                $"`description` = '{newDescription}' " +
+                $"WHERE `medicine_id` = {medicineId};";
+
+            string updateInventory =
+                $"UPDATE `medicineinventory` " +
+                $"SET `medicine_name` = '{newMedicineName}' " +
+                $"WHERE `medicine_id` = {medicineId};";
+
+            string insertActivityLog =
+                $"INSERT INTO `admin_activity_log` " +
+                $"(`activity_id`, `admin_id`, `username`, `activity_type`, `activity_desc`, `activity_date`) " +
+                $"VALUES (NULL, {admin.getID()}, '{admin.getUsername()}', '{activityType}', '{activityDesc}', '{currentDateTime}');";
+
+            string SQL = updateMedicineInfo + updateInventory + insertActivityLog;
+
+            try
+            {
+                dbManager.sqlManager(SQL);
+                MessageBox.Show($"Successfully updated {newMedicineName} and logged the activity.",
+                    "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Database operation failed: {ex.Message}",
+                    "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
     }
 }
