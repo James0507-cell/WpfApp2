@@ -1,38 +1,37 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Windows;
-using System.Windows.Documents;
+﻿using System.Data;
 
 namespace WpfApp2
 {
-    internal class Admin
+    internal class Admin : UserBase
     {
-        dbManager dbManager = new dbManager();
-        private String SQL = "";
-        private int id = 0;
-        private String username = MainWindow.Username;
+        public override void setId()
+        {
+            SQL = $"select user_id from users where username = '{username}' AND role='admin'";
+            DataTable dt = dbManager.displayRecords(SQL);
 
-        public void setId()
+            if (dt.Rows.Count > 0)
+            {
+                id = int.Parse(dt.Rows[0][0].ToString());
+            }
+            else
+            {
+                base.setId();
+            }
+        }
+
+        public override string getUsername()
+        {
+            return "ADMIN: " + base.getUsername();
+        }
+
+        public int getID(string username)
         {
             SQL = $"select user_id from users where username = '{username}'";
             DataTable dt = dbManager.displayRecords(SQL);
-            id = int.Parse(dt.Rows[0][0].ToString());
-        }
-        public int getID()
-        {
-            setId();
-            return id;
-        }
 
-        public String getUsername ()
-        {
-            return username;
+            return (dt.Rows.Count > 0)
+                ? int.Parse(dt.Rows[0][0].ToString())
+                : -1;
         }
-
-        
-        
-
     }
 }

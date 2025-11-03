@@ -14,29 +14,6 @@ namespace WpfApp2
    internal class Login
     {
         dbManager dbManager = new dbManager();
-        private MySqlConnection dbConn;
-        private MySqlCommand dbCommand;
-        private MySqlDataAdapter da;
-        private DataTable dt;
-
-        private String strConn = "server=localhost;user id=root;password=;database=db_medicaremmcm";
-
-        public void dbConnection ()
-        {
-            dbConn = new MySqlConnection(strConn);
-            dbConn.Open();
-            dbConn.Close();
-        }
-        public DataTable displayRecords (String stQuerry)
-        {
-            dbConn.Open();
-            da = new MySqlDataAdapter(stQuerry, dbConn);
-            dt = new DataTable();
-            da.Fill(dt);
-            dbConn.Close();
-            return dt;
-
-        }
 
         public String loginUser(String username, String password)
         {

@@ -19,7 +19,7 @@ namespace WpfApp2
         public ShortCheck()
         {
             InitializeComponent();
-        }
+        }   
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
