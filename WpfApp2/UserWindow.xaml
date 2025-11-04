@@ -272,7 +272,7 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" Content="Request Medicine" FontSize="10" FontWeight="DemiBold" Foreground="#FF00235B" Padding="0,0,0,0" VerticalAlignment="Center"/>
-                                <Label Grid.Row="1" Content="Request Available medicine" FontSize="8" Foreground="#FFC8C8C8" Padding="0,0,0,0" VerticalAlignment="Center"/>
+                                <Label Grid.Row="1" Content="Request available medicine" FontSize="8" Foreground="#FFC8C8C8" Padding="0,0,0,0" VerticalAlignment="Center"/>
                             </Grid>
 
                             <Label Grid.Column="2" Content="✚" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0"/>

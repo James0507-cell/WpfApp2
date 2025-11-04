@@ -111,7 +111,7 @@ namespace WpfApp2
         private void getName()
         {
             String name = user.getName();
-            lblName.Content = name;
+            lblName.Content = name+"!";
         }
 
         public void displayBMI()

@@ -448,7 +448,7 @@ namespace WpfApp2
 
             string insertLog = $@"
                 INSERT INTO student_activity_log (user_id, activity_type, activity_desc)
-                VALUES ('{userId}', 'Appointment', 'Request Medicine for {purpose}')";
+                VALUES ('{userId}', 'Medicine Request', 'Request Medicine for {purpose}')";
 
             dbManager.sqlManager(insertRequest);
             dbManager.sqlManager(insertLog);
