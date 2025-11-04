@@ -17,7 +17,7 @@ namespace WpfApp2
 
         public String loginUser(String username, String password)
         {
-            String sql = $"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'";
+            String sql = $"SELECT * FROM users WHERE BINARY username = '{username}' AND BINARY password = '{password}'";
             DataTable dt = dbManager.displayRecords(sql);
             if (dt.Rows.Count > 0)
             {

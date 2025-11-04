@@ -46,7 +46,7 @@
 
             <TextBox x:Name="txtusername" HorizontalAlignment="Left" Margin="106,197,0,0"
                 TextWrapping="Wrap"
-                VerticalAlignment="Top" Width="165" Height="22">
+                VerticalAlignment="Top" Width="165" Height="28">
                 <TextBox.Template>
                     <ControlTemplate TargetType="{x:Type TextBox}">
                         <Border CornerRadius="5"
@@ -59,20 +59,26 @@
                 </TextBox.Template>
             </TextBox>
 
-            <TextBox x:Name="txtpassword" HorizontalAlignment="Left" Margin="106,258,0,0"
-                TextWrapping="Wrap"
-                VerticalAlignment="Top" Width="165" Height="22">
-                <TextBox.Template>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
+            <PasswordBox x:Name="txtpassword"
+    HorizontalAlignment="Left"
+    Margin="106,258,0,0"
+    VerticalAlignment="Top"
+    Width="165"
+    Height="28"
+    BorderThickness="1"
+    Padding="5">
+                <PasswordBox.Template>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
                         <Border CornerRadius="5"
-                            BorderBrush="Gray"
-                            BorderThickness="1"
-                            Background="White">
-                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    Background="White">
+                            <ScrollViewer x:Name="PART_ContentHost" />
                         </Border>
                     </ControlTemplate>
-                </TextBox.Template>
-            </TextBox>
+                </PasswordBox.Template>
+            </PasswordBox>
+
 
             <Label Content="Access your medical records and stay updated with your school’s health services." HorizontalAlignment="Left" Margin="90,137,0,0" VerticalAlignment="Top" Width="564" FontSize="8" Foreground="#FF7A7878"/>
 

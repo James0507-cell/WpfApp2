@@ -10,16 +10,19 @@ namespace WpfApp2
         public static string Username { get; private set; }
         private string password = "";
 
+
         public MainWindow()
         {
             InitializeComponent();
+            
+
         }
 
         private void BtnSignIn_Click_1(object sender, RoutedEventArgs e)
         {
 
             Username = txtusername.Text.Trim();
-            password = txtpassword.Text.Trim();
+            password = txtpassword.Password.Trim();
 
             string role = login.loginUser(Username, password);
 
@@ -39,6 +42,11 @@ namespace WpfApp2
             {
                 MessageBox.Show("Invalid username or password.");
             }
+        }
+
+        private void txtpassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
         }
     }
 }
