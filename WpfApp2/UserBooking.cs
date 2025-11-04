@@ -15,36 +15,67 @@ namespace WpfApp2
 
         public List<string> GetBookedTimes(DateTime date)
         {
-            var bookedTimes = new List<string>();
+            // ============================
+            // FACTS: Retrieve rows from DB
+            // ============================
+
             string dateString = date.ToString("yyyy-MM-dd");
 
             string query = $@"
-                            SELECT appointment_time 
-                            FROM appointments 
-                            WHERE appointment_date = '{dateString}' 
-                            AND (status = 'Pending' OR status = 'Approved')";
+        SELECT appointment_time, status
+        FROM appointments
+        WHERE appointment_date = '{dateString}'";
+
+            DataTable dt;
 
             try
             {
-                DataTable dt = dbManager.displayRecords(query);
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    string dbTime = row["appointment_time"].ToString();
-
-                    if (DateTime.TryParse(dbTime, out DateTime parsedTime))
-                    {
-                        bookedTimes.Add(parsedTime.ToString("h:mm tt", System.Globalization.CultureInfo.InvariantCulture));
-                    }
-                }
+                dt = dbManager.displayRecords(query);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error fetching booked times: {ex.Message}");
+                return new List<string>();
             }
+
+            // Convert DataRows to appointment facts
+            var facts = dt.AsEnumerable()
+                          .Select(row => new
+                          {
+                              Time = row["appointment_time"]?.ToString(),
+                              Status = row["status"]?.ToString()
+                          })
+                          .ToList();
+
+            // =======================
+            // RULES: Logic predicates
+            // =======================
+
+            bool IsBooked(string status) =>
+                status == "Pending" || status == "Approved";
+
+            bool IsValidTime(string time) =>
+                DateTime.TryParse(time, out _);
+
+            DateTime ParseTime(string time) =>
+                DateTime.Parse(time);
+
+            // =====================
+            // QUERY: Apply the rules
+            // =====================
+
+            var bookedTimes =
+                facts
+                    .Where(f => IsBooked(f.Status))          // rule 1
+                    .Where(f => IsValidTime(f.Time))         // rule 2
+                    .Select(f => ParseTime(f.Time))          // transform
+                    .Select(t => t.ToString("h:mm tt",
+                               System.Globalization.CultureInfo.InvariantCulture))
+                    .ToList();
 
             return bookedTimes;
         }
+
 
         public void InsertAppointment(int userId, string username, DateTime selectedDate, string selectedTime, string studentId,
             string email, string phone, string purpose, string allergies, string medication, string prevVisit,
