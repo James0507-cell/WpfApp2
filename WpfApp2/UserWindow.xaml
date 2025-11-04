@@ -352,7 +352,7 @@
                         <Border BorderThickness="1" Margin="10,7,10,0" CornerRadius="8" Background="#FFB9FFE3">
                             <Grid Height="48">
                                 <Image HorizontalAlignment="Left" Height="31" Margin="4,0,0,0" VerticalAlignment="Center" Width="32" Source="/Screenshot 2025-10-16 181635.png"/>
-                                <Label Content="Last Check-up" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF818181" FontSize="9" Padding="5,7,5,0" Margin="35,5,0,0"/>
+                                <Label Content="Last Check" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF818181" FontSize="9" Padding="5,7,5,0" Margin="35,5,0,0"/>
                                 <Label x:Name="lblCheck" Content="October 12, 2025" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="DemiBold" Padding="0,0,0,0" FontSize="8" Margin="40,24,0,0"/>
                             </Grid>
                         </Border>
