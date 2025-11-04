@@ -36,7 +36,7 @@ namespace WpfApp2
                 Background = lightBackground,
                 CornerRadius = new CornerRadius(5),
                 Margin = new Thickness(10, 4, 10, 4),
-                Padding = new Thickness(12, 8, 12, 8), // Increased padding for a better look
+                Padding = new Thickness(12, 8, 12, 8), 
                 HorizontalAlignment = HorizontalAlignment.Stretch,
             };
 
@@ -44,8 +44,8 @@ namespace WpfApp2
 
 
             Grid headerGrid = new Grid();
-            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // For Username
-            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // For ID Tag
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); 
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             headerGrid.Margin = new Thickness(0, 0, 0, 4);
 
             TextBlock txtUsername = new TextBlock

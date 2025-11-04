@@ -14,7 +14,7 @@ namespace WpfApp2
    internal class Login
     {
         dbManager dbManager = new dbManager();
-
+                
         public String loginUser(String username, String password)
         {
             String sql = $"SELECT * FROM users WHERE BINARY username = '{username}' AND BINARY password = '{password}'";
