@@ -126,7 +126,7 @@ namespace WpfApp2
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             String yearLevel = cmbYear.SelectedItem as String;
-            SQL = "SELECT * FROM users WHERE year_level LIKE '%" + yearLevel + "%'";
+            SQL = "SELECT * FROM users WHERE role = 'Student' AND year_level LIKE '%" + yearLevel + "%'";
             displayUsers(SQL);
             if (yearLevel == "All Year Levels")
             {
