@@ -15,10 +15,7 @@ namespace WpfApp2
 
         public List<string> GetBookedTimes(DateTime date)
         {
-            // ============================
-            // FACTS: Retrieve rows from DB
-            // ============================
-
+    
             string dateString = date.ToString("yyyy-MM-dd");
 
             string query = $@"
@@ -38,7 +35,6 @@ namespace WpfApp2
                 return new List<string>();
             }
 
-            // Convert DataRows to appointment facts
             var facts = dt.AsEnumerable()
                           .Select(row => new
                           {
@@ -47,9 +43,7 @@ namespace WpfApp2
                           })
                           .ToList();
 
-            // =======================
-            // RULES: Logic predicates
-            // =======================
+   
 
             bool IsBooked(string status) =>
                 status == "Pending" || status == "Approved";
@@ -60,15 +54,12 @@ namespace WpfApp2
             DateTime ParseTime(string time) =>
                 DateTime.Parse(time);
 
-            // =====================
-            // QUERY: Apply the rules
-            // =====================
-
+  
             var bookedTimes =
                 facts
-                    .Where(f => IsBooked(f.Status))          // rule 1
-                    .Where(f => IsValidTime(f.Time))         // rule 2
-                    .Select(f => ParseTime(f.Time))          // transform
+                    .Where(f => IsBooked(f.Status))          
+                    .Where(f => IsValidTime(f.Time))         
+                    .Select(f => ParseTime(f.Time))          
                     .Select(t => t.ToString("h:mm tt",
                                System.Globalization.CultureInfo.InvariantCulture))
                     .ToList();
