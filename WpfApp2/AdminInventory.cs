@@ -444,7 +444,6 @@ namespace WpfApp2
             string activityDesc = $"Updated medicine (ID: {medicineId}) details to: " +
                                   $"{newMedicineName} ({newMilligrams}).";
 
-            // SQL statements
             string updateMedicineInfo =
                 $"UPDATE `medicine_info` " +
                 $"SET `medicine_name` = '{newMedicineName}', " +

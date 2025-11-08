@@ -59,7 +59,7 @@ namespace WpfApp2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             displayAppointment($"SELECT * FROM appointments WHERE username = '{user.getUsername()}' AND CONCAT(appointment_date, ' ', appointment_time) >= NOW()");
-            displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{user.getID()}' ORDER BY activity_date DESC LIMIT 5");
+            displayActivities($"SELECT * FROM student_activity_log WHERE user_id = '{user.getID()}'");
             getName();
             displayBMI();
             displayCheckupDate();

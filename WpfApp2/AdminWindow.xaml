@@ -443,6 +443,7 @@
                                                         <ComboBoxItem Content="Update Student Info"/>
                                                         <ComboBoxItem Content="Update Medicine Inventory"/>
                                                         <ComboBoxItem Content="Add New Medicine"/>
+                                                        <ComboBoxItem Content="Update Medicine Info"/>
                                                     </ComboBox>
 
                                                 </Grid>
