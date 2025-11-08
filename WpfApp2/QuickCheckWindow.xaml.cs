@@ -14,7 +14,7 @@ namespace WpfApp2
     public partial class ShortCheck : Window
     {
         Users user = new Users();
-        UserShortCheck userShortCheck = new UserShortCheck();
+        UserQuickCheck userShortCheck = new UserQuickCheck();
         private String username = MainWindow.Username;
         public ShortCheck()
         {

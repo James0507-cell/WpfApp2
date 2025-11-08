@@ -118,7 +118,7 @@
                         </Button>
 
                         <StackPanel Grid.Column="1" Margin="10,10,0,0" VerticalAlignment="Top">
-                            <Label FontSize="16" FontWeight="SemiBold" Foreground="#FF00104D" Content="Short Check" Padding="0"/>
+                            <Label FontSize="16" FontWeight="SemiBold" Foreground="#FF00104D" Content="Quick Check" Padding="0"/>
                             <Label Content="Use this for the record you height weight and BMI." Foreground="#FF8A8A8A" Padding="0,0,0,0"/>
                         </StackPanel>
                     </Grid>

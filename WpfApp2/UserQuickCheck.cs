@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace WpfApp2
 {
-    internal class UserShortCheck
+    internal class UserQuickCheck
     {
 
         dbManager dbManager = new dbManager();
