@@ -108,7 +108,7 @@ namespace WpfApp2
             return wrapperPanel;
         }
 
-        public Border medicineRequestPanels(String medicineName, String reason, String quantity, String status, String requestedAt, String approvedAt, String rejectReason)
+        public Border medicineRequestPanels(String medicineName, String reason, String quantity, String status, String requestedAt, String approvedAt, String rejectReason, String requestID)
         {
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
             Brush lightGrayBrush = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230)); // Background for icon
@@ -178,7 +178,16 @@ namespace WpfApp2
                 FontSize = 13,
                 Foreground = Brushes.Gray
             };
+
             nameQuantityPanel.Children.Add(txtQuantity);
+            TextBlock txtRequestID = new TextBlock
+            {
+                Text = $"Request ID: {requestID}",
+                FontWeight = FontWeights.SemiBold,
+                FontSize = 13,
+                Foreground = Brushes.Gray
+            };
+            nameQuantityPanel.Children.Add(txtRequestID);
 
             Grid.SetColumn(nameQuantityPanel, 1);
             headerGrid.Children.Add(nameQuantityPanel);
@@ -361,7 +370,6 @@ namespace WpfApp2
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             headerGrid.Margin = new Thickness(0, 0, 0, 10);
 
-            // Icon 
             Border iconWrapper = new Border
             {
                 Background = new SolidColorBrush(Color.FromArgb(255, 255, 230, 230)),
