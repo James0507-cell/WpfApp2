@@ -62,11 +62,9 @@ namespace WpfApp2
         private StackPanel CreateIconDetailBlock(string title, string content, Brush colorBrush, string icon)
         {
             Grid grid = new Grid();
-            // Grid columns: Icon | Text Details
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-            // 1. Icon (Emoji)
             TextBlock iconBlock = new TextBlock
             {
                 Text = icon,
@@ -77,7 +75,6 @@ namespace WpfApp2
             Grid.SetColumn(iconBlock, 0);
             grid.Children.Add(iconBlock);
 
-            // 2. Text Details
             StackPanel textPanel = new StackPanel();
 
             TextBlock titleBlock = new TextBlock
@@ -111,8 +108,8 @@ namespace WpfApp2
         public Border medicineRequestPanels(String medicineName, String reason, String quantity, String status, String requestedAt, String approvedAt, String rejectReason, String requestID)
         {
             Brush darkBlueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00104D"));
-            Brush lightGrayBrush = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230)); // Background for icon
-            Brush redBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD70000")); // Red color for rejection reason
+            Brush lightGrayBrush = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230)); 
+            Brush redBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD70000")); 
 
             Border cardBorder = new Border
             {
@@ -129,9 +126,9 @@ namespace WpfApp2
             StackPanel requestContent = new StackPanel();
 
             Grid headerGrid = new Grid();
-            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Icon
-            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Name & Quantity
-            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Status Tag
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); 
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); 
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); 
             headerGrid.Margin = new Thickness(0, 0, 0, 15);
 
             Border iconWrapper = new Border
@@ -158,7 +155,6 @@ namespace WpfApp2
             headerGrid.Children.Add(iconWrapper);
 
 
-            // 1b. Name & Quantity
             StackPanel nameQuantityPanel = new StackPanel();
 
             TextBlock txtName = new TextBlock
