@@ -24,7 +24,7 @@ namespace WpfApp2
             return "ADMIN: " + base.getUsername();
         }
 
-        public int getID(string username)
+        public  int getID(string username)
         {
             SQL = $"select user_id from users where username = '{username}'";
             DataTable dt = dbManager.displayRecords(SQL);

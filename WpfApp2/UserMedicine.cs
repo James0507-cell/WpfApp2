@@ -26,19 +26,19 @@ namespace WpfApp2
             switch (statusText)
             {
                 case "PENDING":
-                    bgColor = (Color)ColorConverter.ConvertFromString("#FFFDE7"); // Light Yellow
-                    fgColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFC107")); // Amber
+                    bgColor = (Color)ColorConverter.ConvertFromString("#FFFDE7"); 
+                    fgColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFC107")); 
                     break;
                 case "APPROVED":
-                    bgColor = (Color)ColorConverter.ConvertFromString("#E8F5E9"); // Light Green
-                    fgColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#388E3C")); // Dark Green
+                    bgColor = (Color)ColorConverter.ConvertFromString("#E8F5E9");
+                    fgColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#388E3C")); 
                     break;
                 case "DENIED":
-                    bgColor = (Color)ColorConverter.ConvertFromString("#FFEBEE"); // Light Red
-                    fgColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D32F2F")); // Dark Red
+                    bgColor = (Color)ColorConverter.ConvertFromString("#FFEBEE"); 
+                    fgColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D32F2F")); 
                     break;
                 default:
-                    bgColor = (Color)ColorConverter.ConvertFromString("#E0E0E0"); // Light Gray
+                    bgColor = (Color)ColorConverter.ConvertFromString("#E0E0E0"); 
                     fgColor = Brushes.Gray;
                     break;
             }
