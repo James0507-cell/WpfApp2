@@ -15,57 +15,59 @@ namespace WpfApp2
 
         public List<string> GetBookedTimes(DateTime date)
         {
-    
             string dateString = date.ToString("yyyy-MM-dd");
 
             string query = $@"
-        SELECT appointment_time, status
-        FROM appointments
-        WHERE appointment_date = '{dateString}'";
+                SELECT appointment_time, status
+                FROM appointments
+                WHERE appointment_date = '{dateString}'";
 
-            DataTable dt;
+            Func<string, bool> isBooked =
+                status => status is "Pending" or "Approved";
 
-            try
-            {
-                dt = dbManager.displayRecords(query);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error fetching booked times: {ex.Message}");
-                return new List<string>();
-            }
+            Func<string, bool> isValidTime =
+                time => DateTime.TryParse(time, out _);
 
-            var facts = dt.AsEnumerable()
-                          .Select(row => new
-                          {
-                              Time = row["appointment_time"]?.ToString(),
-                              Status = row["status"]?.ToString()
-                          })
-                          .ToList();
+            Func<string, DateTime> parseTime =
+                time => DateTime.Parse(time);
 
-   
+            DataTable dt = SafeQuery(query);
 
-            bool IsBooked(string status) =>
-                status == "Pending" || status == "Approved";
-
-            bool IsValidTime(string time) =>
-                DateTime.TryParse(time, out _);
-
-            DateTime ParseTime(string time) =>
-                DateTime.Parse(time);
-
-  
-            var bookedTimes =
-                facts
-                    .Where(f => IsBooked(f.Status))          
-                    .Where(f => IsValidTime(f.Time))         
-                    .Select(f => ParseTime(f.Time))          
-                    .Select(t => t.ToString("h:mm tt",
-                               System.Globalization.CultureInfo.InvariantCulture))
-                    .ToList();
-
-            return bookedTimes;
+            return dt.AsEnumerable()
+                     .Select(row => new
+                     {
+                         Time = row["appointment_time"]?.ToString(),
+                         Status = row["status"]?.ToString()
+                     })
+                     .Where(x => isBooked(x.Status))
+                     .Where(x => isValidTime(x.Time))
+                     .Select(x => parseTime(x.Time))
+                     .Select(t => t.ToString(
+                         "h:mm tt",
+                         System.Globalization.CultureInfo.InvariantCulture))
+                     .ToList();
         }
+
+
+        private DataTable SafeQuery(string query) =>
+     TryExtensions.Try(() => dbManager.displayRecords(query))
+                  .GetOrElse(new DataTable());
+
+        private static class TryExtensions
+        {
+            public static TryResult<T> Try<T>(Func<T> func)
+            {
+                try { return new TryResult<T>(func(), null); }
+                catch (Exception ex) { return new TryResult<T>(default, ex); }
+            }
+        }
+
+        private record TryResult<T>(T Value, Exception Error)
+        {
+            public T GetOrElse(T fallback) =>
+                Error == null ? Value : fallback;
+        }
+
 
 
         public void InsertAppointment(int userId, string username, DateTime selectedDate, string selectedTime, string studentId,

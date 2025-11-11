@@ -34,9 +34,9 @@ namespace WpfApp2
 
             DataTable dt = new DataTable();
             dt = dbManager.displayRecords($"select user_id from users where username = '{user.getUsername()}'");
-            displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + user.getID());
+            displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + user.getID() + " ORDER BY request_id DESC");
         }
-   
+
         public void displayMedicineRequest(String querry)
         {
             UserMedicine medicine = new UserMedicine();

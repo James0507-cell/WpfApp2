@@ -85,7 +85,7 @@ namespace WpfApp2
             }
         }
 
-        public void displayAppointments(String querry)
+        public void displayAppointments(String querry)  
         {
 
             DataTable dt = new DataTable();

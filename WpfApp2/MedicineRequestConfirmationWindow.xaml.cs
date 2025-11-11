@@ -43,7 +43,8 @@ namespace WpfApp2
                 MedicineRequest activeMedicineRequest = Application.Current.Windows.OfType<MedicineRequest>().SingleOrDefault(x => x.IsActive || x.IsVisible);
                 if (activeMedicineRequest != null)
                 {
-                    activeMedicineRequest.displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + user.getID());
+                    activeMedicineRequest.displayMedicineRequest("SELECT * FROM medicinerequests WHERE user_id = " + user.getID() + " ORDER BY request_id DESC");
+                        ;
                 }
                 MessageBox.Show("Request is send!");
                 this.Close();
